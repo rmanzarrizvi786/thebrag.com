@@ -250,10 +250,4 @@ $page_template = get_page_template_slug();
 
   <main>
 
-    <div id="skin">
-      <?php
-      render_ad_tag('skin');
-      ?>
-      <a href="https://thebrag.media?1600x1200" target="_blank"><img src="http://placehold.it/1600x1200/ff6600/fff"></a>
-    </div>
     <div class="content">

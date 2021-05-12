@@ -1,5 +1,12 @@
 </div><!-- .content -->
 
+<div id="skin">
+  <?php
+  render_ad_tag('skin');
+  ?>
+  <a href="https://thebrag.media?1600x1200" target="_blank"><img src="http://placehold.it/1600x1200/FA785C/fff"></a>
+</div>
+
 </main>
 <noscript id="deferred-styles">
   <link href="https://fonts.googleapis.com/css?family=Poppins:500,800|Roboto:400,700&display=swap" rel="stylesheet">
@@ -90,7 +97,7 @@
   jQuery(document).ready(function($) {
     $(window).scroll(function() {
       winTop = $(this).scrollTop();
-      if(winTop >= $('header').outerHeight()) {
+      if (winTop >= $('header').outerHeight()) {
         $('#skin').addClass('fixed');
       } else {
         $('#skin').removeClass('fixed');
