@@ -2,6 +2,8 @@ plugins/*
 
 # ignore specific themes
 themes/twenty*/
+themes/tbm-brag/
+themes/tbm-brag-2021-05-10-1620/
 
 # ignore node dependency directories
 node_modules/
