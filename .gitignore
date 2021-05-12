@@ -1,3 +1,5 @@
+plugins/*
+
 # ignore specific themes
 themes/twenty*/
 
