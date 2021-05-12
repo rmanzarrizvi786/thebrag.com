@@ -1,0 +1,16 @@
+{
+    "name": "scribu/posts-to-posts",
+    "type": "wordpress-plugin",
+    "homepage": "http://wordpress.org/plugins/posts-to-posts",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {
+        "composer/installers": "~1.0",
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/scribu/wp-lib-posts-to-posts"
+        }
+    ]
+}

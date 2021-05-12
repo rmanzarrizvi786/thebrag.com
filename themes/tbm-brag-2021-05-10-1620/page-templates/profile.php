@@ -1,0 +1,488 @@
+<?php
+/*
+ * Template Name: Profile
+ */
+use \DrewM\MailChimp\MailChimp;
+
+if ( ! is_user_logged_in() ) :
+  // wp_redirect( home_url() );
+  require_once(  ABSPATH . 'sso-sp/simplesaml/lib/_autoload.php');
+  $auth = new SimpleSAML_Auth_Simple('default-sp');
+  $auth->requireAuth([
+    'ReturnTo' => wp_get_referer() ? : home_url( '/profile/' ),
+    'KeepPost' => FALSE,
+  ]);
+  \SimpleSAML\Session::getSessionFromRequest()->cleanup();
+  exit;
+endif;
+
+$current_user = wp_get_current_user();
+
+$returnTo = isset( $_REQUEST['returnTo'] ) ? $_REQUEST['returnTo'] : home_url( '/profile?success=1' );
+
+$errors = [];
+$messages = [];
+
+if ( isset( $_GET['success'] ) ) {
+  $messages[] = 'Your details have been saved.';
+}
+
+$profile_strength = 0;
+$current_user = wp_get_current_user();
+
+if ( get_user_meta( $current_user->ID, 'profile_strength', true ) ) {
+  $profile_strength = get_user_meta( $current_user->ID, 'profile_strength', true );
+} else {
+  if( get_user_meta( $current_user->ID, 'first_name', true ) )
+    $profile_strength += 20;
+
+  if( get_user_meta( $current_user->ID, 'last_name', true ) )
+    $profile_strength += 20;
+
+  if( get_user_meta( $current_user->ID, 'state', true ) )
+    $profile_strength += 20;
+
+  if( get_user_meta( $current_user->ID, 'birthday', true ) )
+    $profile_strength += 20;
+
+  if( get_user_meta( $current_user->ID, 'gender', true ) )
+    $profile_strength += 20;
+
+  update_user_meta( $current_user->ID, 'profile_strength', $profile_strength );
+}
+
+if ( $profile_strength < 20 ) {
+  $profile_complete_class = 'text-danger';
+} else if ( $profile_strength <= 40 ) {
+  $profile_complete_class = 'text-warning';
+} else if ( $profile_strength <= 60 ) {
+  $profile_complete_class = 'text-info';
+} else if ( $profile_strength <= 80 ) {
+  $profile_complete_class = 'text-primary';
+} else if ( $profile_strength <= 100 ) {
+  $profile_complete_class = 'text-success';
+}
+
+if ( isset( $_POST ) && isset( $_POST['action'] ) && 'save-profile' == $_POST['action'] ) {
+  $post_vars = stripslashes_deep( $_POST );
+
+  $user_data = [
+    'ID' => $current_user->ID
+  ];
+
+  $required_fields = [
+    // 'first_name',
+    // 'last_name',
+    // 'birthday_day',
+    // 'birthday_month',
+    // 'birthday_year',
+    // 'state',
+    // 'gender',
+  ];
+
+  if ( get_user_meta( $current_user->ID, 'is_imported', true ) === '1' ) {
+    // array_push( $required_fields, 'password', 'confirm_password' );
+  }
+
+  foreach ( $required_fields as $required_field ) {
+    if( ! isset( $post_vars[ $required_field ] ) || '' == trim( $post_vars[ $required_field ] ) ) {
+      $errors[] = 'Please complete all required fields.';
+      break;
+    }
+  }
+
+  /*
+  * Enable in Phase 2, allowing users to update email address after verification email
+  if ( isset( $post_vars['email'] ) && $post_vars['email'] != $current_user->user_email ) {
+    $user_data['user_email'] = $post_vars['email'];
+  }
+  */
+
+  $user_data['first_name'] = $post_vars['first_name'];
+  $user_data['last_name'] = $post_vars['last_name'];
+  $user_data['display_name'] = $post_vars['first_name'] . ' ' . $post_vars['last_name'];
+
+  if (
+    isset( $post_vars['birthday_month'] ) &&
+    isset( $post_vars['birthday_day'] ) &&
+    isset( $post_vars['birthday_year'] ) &&
+    '0' != trim( $post_vars['birthday_month'] ) &&
+    '0' != trim( $post_vars['birthday_day'] ) &&
+    '0' != trim( $post_vars['birthday_year'] )
+  ) {
+    if (
+      ! checkdate ( $post_vars['birthday_month'], $post_vars['birthday_day'], $post_vars['birthday_year'] ) ||
+      new DateTime( $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'] ) >= new DateTime()
+    ) {
+      $errors[] = 'Please input valid birthday.';
+    }
+  }
+
+  if ( '0' == $post_vars['state'] ) {
+    $errors[] = 'Please select your state.';
+  }
+
+  if ( isset( $post_vars['password'] ) && '' != $post_vars['password'] ) {
+    if ( ! isset( $post_vars['confirm_password'] ) || $post_vars['password'] != $post_vars['confirm_password'] ) {
+      $errors[] = 'Please make sure the password and confirm password are same if you want to change password.';
+    } else {
+      $user_data['user_pass'] = $post_vars['password'];
+    }
+  }
+
+  $update_user = wp_update_user( $user_data );
+
+  // var_dump( $update_user ); exit;
+
+  if ( is_wp_error( $update_user ) ) {
+    $errors[] = $update_user->get_error_messages()[0];
+  }
+
+  if ( count( $errors ) == 0 ) {
+    if (
+      isset( $post_vars['birthday_month'] ) &&
+      isset( $post_vars['birthday_day'] ) &&
+      isset( $post_vars['birthday_year'] ) &&
+      '0' != trim( $post_vars['birthday_month'] ) &&
+      '0' != trim( $post_vars['birthday_day'] ) &&
+      '0' != trim( $post_vars['birthday_year'] )
+    ) {
+      update_user_meta( $current_user->ID, 'birthday', $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'] );
+      delete_user_meta( $current_user->ID, 'predicted_birthday' );
+    } else {
+      delete_user_meta( $current_user->ID, 'birthday' );
+    }
+
+    if ( isset( $post_vars['state'] ) ) {
+      if( '' != trim( $post_vars['state'] ) ) {
+        update_user_meta( $current_user->ID, 'state', $post_vars['state'] );
+        delete_user_meta( $current_user->ID, 'predicted_state' );
+
+        update_user_meta( $current_user->ID, 'incomplete_profile', "false" );
+      } else {
+        delete_user_meta( $current_user->ID, 'state' );
+      }
+    }
+
+
+    if ( isset( $post_vars['gender'] ) ) {
+      if( '' != trim( $post_vars['gender'] ) ) {
+        update_user_meta( $current_user->ID, 'gender', $post_vars['gender'] );
+        delete_user_meta( $current_user->ID, 'predicted_gender' );
+      } else {
+        delete_user_meta( $current_user->ID, 'gender' );
+      }
+    }
+
+    delete_user_meta( $current_user->ID, 'is_imported' );
+
+    $query_subs = "
+      SELECT
+        s.id,
+        s.list_id,
+        s.status,
+        l.interest_id
+      FROM
+        {$wpdb->prefix}observer_subs s
+          JOIN {$wpdb->prefix}observer_lists l
+            ON s.list_id = l.id
+      WHERE
+        s.user_id = '{$current_user->ID}'
+      ";
+      $subs = $wpdb->get_results( $query_subs );
+
+      // echo '<pre>'; print_r( $subs ); exit;
+
+      require_once( get_template_directory() . '/MailChimp.php');
+      $api_key = '727643e6b14470301125c15a490425a8-us1';
+      $MailChimp = new MailChimp( $api_key );
+
+      $data = array(
+        'email_address' => $current_user->user_email,
+        'status' => 'subscribed',
+      );
+      $subscribe = $MailChimp->post( "lists/5f6dd9c238/members", $data );
+
+      $subscriber_hash = $MailChimp->subscriberHash( $current_user->user_email );
+
+      $profile_strength = 0;
+      if( get_user_meta( $current_user->ID, 'first_name', true ) )
+        $profile_strength += 20;
+
+      if( get_user_meta( $current_user->ID, 'last_name', true ) )
+        $profile_strength += 20;
+
+      if( get_user_meta( $current_user->ID, 'state', true ) )
+        $profile_strength += 20;
+
+      if( get_user_meta( $current_user->ID, 'birthday', true ) )
+        $profile_strength += 20;
+
+      if( get_user_meta( $current_user->ID, 'gender', true ) )
+        $profile_strength += 20;
+
+      update_user_meta( $current_user->ID, 'profile_strength', $profile_strength );
+
+      $merge_fields = [
+        'FNAME' => $user_data['first_name'],
+        'LNAME' => $user_data['last_name'],
+        // 'BIRTHDATE' => $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'],
+        'STATE' => $post_vars['state'],
+        // 'GENDER' => $post_vars['gender'],
+        'STRENGTH' => $profile_strength,
+      ];
+
+      if (
+        isset( $post_vars['birthday_month'] ) &&
+        isset( $post_vars['birthday_day'] ) &&
+        isset( $post_vars['birthday_year'] ) &&
+        '0' != trim( $post_vars['birthday_month'] ) &&
+        '0' != trim( $post_vars['birthday_day'] ) &&
+        '0' != trim( $post_vars['birthday_year'] )
+      ) {
+        $merge_fields['BIRTHDATE'] = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
+      }
+
+      if ( isset( $post_vars['gender'] ) && '' != trim( $post_vars['gender'] ) ) {
+        $merge_fields['GENDER'] = $post_vars['gender'];
+      }
+
+      // Token
+      if ( ! get_user_meta( $current_user->ID, 'oc_token', true ) ) :
+        $oc_token = md5( $current_user->ID . time() ); // creates md5 code to verify later
+        update_user_meta( $current_user->ID, 'oc_token', $oc_token );
+      endif;
+
+      $unserialized_oc_token = [
+        'id' => $current_user->ID,
+        'oc_token' => get_user_meta( $current_user->ID, 'oc_token', true ),
+      ]; // makes it into a code to send it to user via email
+
+      $merge_fields['OC_TOKEN'] = base64_encode( serialize( $unserialized_oc_token ) );
+
+      $update_subscriber = $MailChimp->patch("lists/5f6dd9c238/members/$subscriber_hash", [
+        'merge_fields' => $merge_fields
+      ]);
+    wp_redirect( $returnTo ); exit;
+  } // If $errors is empty
+} // IF $_POST
+
+// get_header();
+get_template_part( 'page-templates/brag-observer/header' );
+?>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div id="update-profile" class="col-12 col-lg-10 my-5">
+      <main class="site-main" role="main">
+
+        <?php
+        /* Start the Loop */
+        while ( have_posts() ) :
+          the_post();
+        ?>
+        <h1 class="title text-center">
+          <?php the_title(); ?>
+        </h1>
+        <?php the_content(); ?>
+        <?php
+
+        ?>
+          <div class="text-center mx-auto mb-3" style="max-width: 100%;">
+            <p><strong>Profile Strength: <a href="<?php echo home_url( '/profile/' ); ?>" class="<?php echo $profile_complete_class; ?>"><?php echo $profile_strength; ?>%</a> complete</strong></p>
+            <div class="progress profile-strength">
+              <?php for( $i = 20; $i <= 100; $i+=20 ) : ?>
+              <div class="profile-strength-step<?php echo $i <= $profile_strength ? '-active' : ''; ?>" style="width: 20%; <?php echo $i != 20 ? 'border-left: 2px solid #fff;' : ''; ?>">
+                <?php if ( 0 == $profile_strength && $i == 20 ) : ?>
+                  <div style="position: relative;">
+                    <div class="profile-strength-start d-flex justify-content-center align-items-center <?php echo $profile_complete_class; ?>">
+                      <i class="fa fa-check"></i>
+                    </div>
+                  </div>
+                <?php elseif ( $profile_strength != 100 && $i == $profile_strength ) : ?>
+                  <div style="position: relative;">
+                    <div class="profile-strength-complete d-flex justify-content-center align-items-center <?php echo $profile_complete_class; ?>">
+                      <i class="fa fa-check"></i>
+                    </div>
+                  </div>
+                <?php elseif ( $i == 100 ) : ?>
+                  <div style="position: relative;">
+                    <div class="profile-strength-complete d-flex justify-content-center align-items-center text-primary">
+                      <i class="fa fa-star"></i>
+                    </div>
+                  </div>
+                <?php endif; ?>
+              </div>
+              <?php endfor; ?>
+            </div>
+          </div>
+
+        <?php if ( ! empty( $errors ) ) : ?>
+          <div class="alert alert-danger">
+            <?php foreach( $errors as $error ) : ?>
+              <div><?php echo $error; ?></div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+
+        <?php if ( ! empty( $messages ) ) : ?>
+          <div class="alert alert-success">
+            <?php foreach( $messages as $message ) : ?>
+              <div><?php echo $message; ?></div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+
+        <?php
+
+        if ( isset( $_GET['err'] ) ) : ?>
+          <div class="alert alert-info">
+            <?php if ( isset( $_GET['err'] ) && 'new' == $_GET['err'] ) : ?>
+            <h3 class="text-center mt-3">Welcome to The Brag Observer</h3>
+            <p class="text-center">Boost your profile to receive more personalised and relevant content.</p>
+            <?php elseif ( ( isset( $_GET['err'] ) && 'incomplete' == $_GET['err'] ) ) : ?>
+            <div class="text-center">Boost your profile to receive more personalised and relevant content.</div>
+            <?php elseif ( ( isset( $_GET['err'] ) && 'tastemaker' == $_GET['err'] ) ) : ?>
+            <div class="text-center">Boost your profile to stay up-to-date on future Tastemaker competitions and all the news that matters to you.</div>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
+
+        <form action="<?php echo home_url( 'profile' ); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
+
+          <input type="hidden" name="returnTo" value="<?php echo $returnTo; ?>">
+
+          <input type="hidden" name="action" value="save-profile">
+
+          <div class="row">
+            <!--
+            <div class="col-12">
+              <h4>Email <small class="text-danger">*</small></h4>
+              <input type="text" name="email" id="email" class="form-control" value="<?php // echo isset( $post_vars ) && isset( $post_vars['email'] ) ? $post_vars['email'] : ( strpos( $current_user->user_email, '@privaterelay.appleid.com' ) === FALSE ? $current_user->user_email : '' ); ?>" required>
+            </div>
+            -->
+
+            <?php if ( strpos( $current_user->user_email, '@privaterelay.appleid.com' ) === FALSE ) : ?>
+            <div class="col-12">
+              <h4>Email Address</h4>
+              <?php echo preg_replace('/(?:^|.@).\K|.\.[^@]*$(*SKIP)(*F)|.(?=.*?\.)/', '*', $current_user->user_email ); ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="col-12 mt-3 col-md-6">
+              <?php $first_name = isset( $post_vars ) && isset( $post_vars['first_name'] ) ? $post_vars['first_name'] : get_user_meta( $current_user->ID, 'first_name', true ); ?>
+              <h4>First name</h4>
+              <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $first_name; ?>">
+            </div>
+
+            <div class="col-12 mt-3 col-md-6">
+              <?php $last_name = isset( $post_vars ) && isset( $post_vars['last_name'] ) ? $post_vars['last_name'] : get_user_meta( $current_user->ID, 'last_name', true ); ?>
+              <h4>Last name</h4>
+              <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo  $last_name; ?>">
+            </div>
+
+            <div class="col-12 mt-3 col-md-4">
+              <?php
+              $user_state = get_user_meta( $current_user->ID, 'state', true );
+              ?>
+              <h4>State</h4>
+              <select aria-label="State" name="state" id="state" title="State" class="form-control">
+                <option value=""></option>
+                <?php foreach( getStates() as $state_abbr => $state ) : ?>
+                  <option value="<?php echo $state_abbr; ?>"<?php echo
+                  ( isset( $post_vars ) && isset( $post_vars['state'] ) && $post_vars['state'] == $state_abbr ) ?
+                  ' selected' :
+                  ( isset( $user_state ) && $user_state == $state_abbr ? ' selected' : '' ); ?>><?php echo $state; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="col-12 mt-3 col-md-5">
+              <?php
+              $birthday = get_user_meta( $current_user->ID, 'birthday', true );
+              $birthday = $birthday ? explode( '-', $birthday ) : [];
+              ?>
+              <h4>Birthday</h4>
+              <div class="input-group">
+                <select aria-label="Day" name="birthday_day" id="day" title="Day" class="form-control">
+                  <option value="0">Day</option>
+                  <?php for( $birthday_day = 1; $birthday_day <= 31; $birthday_day++ ) : ?>
+                    <option value="<?php echo $birthday_day; ?>"<?php
+                    echo
+                      ( isset( $post_vars ) && isset( $post_vars['birthday_day'] ) && $post_vars['birthday_day'] == $birthday_day ) ?
+                      ' selected' :
+                      ( isset( $birthday[2] ) && $birthday[2] == $birthday_day ? ' selected' : '' ); ?>><?php echo $birthday_day; ?></option>
+                  <?php endfor; ?>
+                </select>
+
+                <select aria-label="Month" name="birthday_month" id="month" title="Month" class="form-control">
+                  <option value="0">Month</option>
+                  <?php
+                  $months = array(1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
+                  ?>
+                  <?php foreach( $months as $month_no => $month ) : ?>
+                    <option value="<?php echo $month_no; ?>"<?php echo
+                    ( isset( $post_vars ) && isset( $post_vars['birthday_month'] ) && $post_vars['birthday_month'] == $month_no ) ?
+                    ' selected' :
+                    ( isset( $birthday[1] ) && $birthday[1] == $month_no ? ' selected' : '' ); ?>><?php echo $month; ?></option>
+                  <?php endforeach; ?>
+                </select>
+
+                <select aria-label="Year" name="birthday_year" id="year" title="Year" class="form-control">
+                  <option value="0">Year</option>
+                  <?php for( $birthday_year = date('Y'); $birthday_year >= date('Y') - 115; $birthday_year-- ) : ?>
+                    <option value="<?php echo $birthday_year; ?>"<?php echo
+                    ( isset( $post_vars ) && isset( $post_vars['birthday_year'] ) && $post_vars['birthday_year'] == $birthday_year ) ?
+                    ' selected' :
+                    ( isset( $birthday[0] ) && $birthday[0] == $birthday_year ? ' selected' : '' ); ?>><?php echo $birthday_year; ?></option>
+                  <?php endfor; ?>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div class="col-12 mt-3 col-md-3">
+              <?php
+              $user_gender = get_user_meta( $current_user->ID, 'gender', true );
+              ?>
+              <h4>Gender</h4>
+              <select aria-label="Gender" name="gender" id="gender" title="Gender" class="form-control">
+                <option value=""></option>
+                <?php foreach( getGenders() as $gender ) : ?>
+                  <option value="<?php echo $gender; ?>"<?php echo
+                  ( isset( $post_vars ) && isset( $post_vars['gender'] ) && $post_vars['gender'] == $gender ) ?
+                  ' selected' :
+                  ( isset( $user_gender ) && $user_gender == $gender ? ' selected' : '' ); ?>><?php echo $gender; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <?php if ( 0 && get_user_meta( $current_user->ID, 'is_imported', true ) === '1' ) { ?>
+              <div class="col-12 mt-3 col-md-6">
+                <h4>Password <small class="text-danger">*</small></h4>
+                <input type="password" name="password" id="password" class="form-control" value="" autocomplete="new-password">
+              </div>
+
+              <div class="col-12 mt-3 col-md-6">
+                <h4>Confirm Password <small class="text-danger">*</small></h4>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" autocomplete="new-password">
+              </div>
+            <?php } ?>
+
+            <div class="col-12 mt-3">
+              <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Save">
+            </div>
+          </div>
+        </form>
+        <?php
+        endwhile; // End of the loop.
+        ?>
+      </main><!-- main tag -->
+    </div><!-- #primary -->
+  </div><!-- .row -->
+</div><!-- .container -->
+
+<?php
+// get_footer();
+get_template_part( 'page-templates/brag-observer/footer' );

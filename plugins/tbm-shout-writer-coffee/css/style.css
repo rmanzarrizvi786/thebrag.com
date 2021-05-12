@@ -1,0 +1,17 @@
+.btn-shout-writer-coffee {
+    border-top-right-radius: .25rem !important;
+    /*border-bottom-right-radius: .25rem !important;*/
+}
+.fa-coffee:before {content: "\f0f4";}
+.shout-writer-coffee-amount, .shout-writer-coffe-message {
+    box-shadow: none !important;
+    border: 1px solid #ced4da !important;
+}
+.form-shout-writer-coffee .input-group-text {
+    border-bottom-left-radius: 0 !important;
+}
+.form-shout-writer-coffee textarea.shout-writer-coffe-message {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    height: 100px;
+}

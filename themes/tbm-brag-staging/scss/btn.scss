@@ -1,0 +1,15 @@
+.btn {
+    outline: none;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10rem;
+
+    .btn-img {
+        width: 18px;
+    }
+}
+.btn-primary {
+    background-color: $primaryColor;
+    color: $primaryBlack;
+    font-weight: 700;
+}

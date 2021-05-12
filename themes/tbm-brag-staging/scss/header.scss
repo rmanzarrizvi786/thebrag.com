@@ -1,0 +1,63 @@
+header {
+    z-index: 30000;
+    // width: $containerWidth;
+    height: 115px;
+    margin: auto;
+    background-color: $primaryBlack;
+    color: #fff;
+    position: relative;
+
+    &.fixed-top {
+        position: fixed;
+        top: 0;
+        background-color: $primaryBlack;
+        width: 100%;
+    }
+
+    .network-socials-wrap,
+    .user-wrap {
+        width: calc(100% / 3);
+    }
+
+    .network-socials {
+        padding: 0.5rem 1rem;
+        width: 150px;
+        max-width: 100%;
+
+        .arrow-down {
+            margin-left: 0.25rem;
+        }
+    }
+
+    .logo-wrap {
+        text-align: center;
+        a {
+            display: block;
+            img {
+                width: 200px;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+
+    .user-wrap {
+        .user-ico {
+            width: 18px;
+            margin-right: .25rem;
+        }
+        .user-name .arrow-down {
+            margin-left: .25rem;
+        }
+        align-items: flex-end;
+    }
+
+    .socials-top {
+        margin-top: 1rem;
+
+        a {
+            display: block;
+            width: 18px;
+            height: 18px;
+        }
+    }
+}

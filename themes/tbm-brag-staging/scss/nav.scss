@@ -1,0 +1,53 @@
+.nav-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    .search-wrap {
+        min-width: 18px;
+    }
+}
+nav#nav-primary {
+    margin: 1rem auto;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        li {
+            flex: auto;
+            text-align: center;
+            position: relative;
+            a {
+                padding: 0.5rem;
+                display: block;
+                color: #fff;
+                text-decoration: none;
+                &:hover {
+                    color: $primaryColor;
+                }
+            }
+            ul {
+                display: none;
+                // display: flex;
+                position: absolute;
+                top: 2rem;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: $primaryColor;
+            }
+            &:hover ul {
+                display: flex;
+            }
+        }
+    }
+}
+/* Responsive Nav Bar */
+@media all and (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+    }
+    nav ul li {
+        text-align: center;
+    }
+}
