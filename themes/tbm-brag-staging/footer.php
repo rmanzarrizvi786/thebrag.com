@@ -9,7 +9,8 @@
 
 </main>
 <noscript id="deferred-styles">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:500,800|Roboto:400,700&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,500|Roboto:400,700&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200&family=Poppins:wght@200;300;500&display=swap" rel="stylesheet">
   <?php if (!is_page_template('page-quiz.php')) : ?>
     <link rel="stylesheet" id="site-css" href="<?php echo get_template_directory_uri(); ?>/css/style.css?v=<?php echo time(); ?>" type="text/css" media="all" />
   <?php endif; ?>
@@ -103,6 +104,7 @@
         $('#skin').removeClass('fixed');
       }
     });
+    $(window).trigger('scroll');
   });
 </script>
 

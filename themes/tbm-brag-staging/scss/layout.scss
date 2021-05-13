@@ -1,6 +1,12 @@
 .w-100 {
     width: 100%;
 }
+.h-100 {
+    height: 100%;
+}
+.text-center {
+    text-align: center;
+}
 .d-flex {
     display: flex;
     align-items: center;
@@ -12,8 +18,14 @@
 .justify-content-end {
     justify-content: flex-end;
 }
+.align-items-start {
+    align-items: start;
+}
 .align-items-end {
     align-items: end;
+}
+.flex-wrap {
+    flex-wrap: wrap;
 }
 
 .flex-column {
@@ -29,45 +41,92 @@
     margin: auto;
 }
 
-@for $i from 1 through 5 {
+@for $i from 0 through 5 {
     .m-#{$i} {
         margin: #{$i/2}rem;
     }
-    .mx-#{$i} {
-        margin-left: #{$i/2}rem;
-        margin-right: #{$i/2}rem;
+    .ml-#{$i}, .mx-#{$i} {
+        margin-left: #{$i/2}rem !important;
     }
-    .my-#{$i} {
-        margin-top: #{$i/2}rem;
-        margin-bottom: #{$i/2}rem;
+    .mr-#{$i}, .mx-#{$i} {
+        margin-right: #{$i/2}rem !important;
     }
-    .ml-#{$i} {
-        margin-left: #{$i/2}rem;
+    .mt-#{$i}, .my-#{$i} {
+        margin-top: #{$i/2}rem !important;
     }
-    .mr-#{$i} {
-        margin-right: #{$i/2}rem;
+    .mb-#{$i}, .my-#{$i} {
+        margin-bottom: #{$i/2}rem !important;
     }
 
     .p-#{$i} {
         padding: #{$i/2}rem;
     }
-    .px-#{$i} {
-        padding-left: #{$i/2}rem;
-        padding-right: #{$i/2}rem;
+    .pt-#{$i}, .py-#{$i} {
+        padding-top: #{$i/2}rem !important;
     }
-    .py-#{$i} {
-        padding-top: #{$i/2}rem;
-        padding-bottom: #{$i/2}rem;
+    .pb-#{$i}, .py-#{$i} {
+        padding-bottom: #{$i/2}rem !important;
     }
-    .pl-#{$i} {
-        padding-left: #{$i/2}rem;
+    .pl-#{$i}, .px-#{$i} {
+        padding-left: #{$i/2}rem !important;
     }
-    .pr-#{$i} {
-        padding-right: #{$i/2}rem;
+    .pr-#{$i}, .px-#{$i} {
+        padding-right: #{$i/2}rem !important;
     }
 }
 
 .mx-auto {
     margin-left: auto;
     margin-right: auto;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.rounded {
+    border-radius: $roudedRadius;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+}
+
+.subheading {
+    font-family: $headingFonts;
+    font-weight: 500;
+}
+
+.border-bottom {
+    border-bottom: 1px solid $borderColor;
+}
+
+.bg-yellow {
+    background-color: $colorYellow;
+}
+.bg-white {
+    background-color: #fff;
+}
+
+.col-12 {
+    flex: 0 0 100%;
+}
+.col-6 {
+    flex: 0 0 50%;
+}
+.col-4 {
+    flex: 0 0 25%;
+}
+.col-3 {
+    flex: 0 0 33.3333%;
+}
+.col-2 {
+    flex: 0 0 16.6666%;
+}
+.col-1 {
+    flex: 0 0 8.3333%;
 }

@@ -249,5 +249,4 @@ $page_template = get_page_template_slug();
   </header>
 
   <main>
-
     <div class="content">
