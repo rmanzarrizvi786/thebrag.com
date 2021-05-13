@@ -41,3 +41,13 @@ function load_js_css()
     // wp_enqueue_script('lazysizes', get_template_directory_uri() . '/js/lazysizes.min.js', array(), '20181128', true);
 }
 // add_action('wp_enqueue_scripts', 'load_js_css');
+
+function string_limit_words($string, $word_limit)
+{
+    $words = explode(' ', $string, ($word_limit + 1));
+    if (count($words) > $word_limit) {
+        array_pop($words);
+        return implode(' ', $words) . '...';
+    }
+    return implode(' ', $words);
+}
