@@ -22,6 +22,9 @@ nav#nav-primary {
                 display: block;
                 color: #fff;
                 text-decoration: none;
+                font-family: $headingFonts;
+                font-size: .825rem;
+                font-weight: 500;
                 &:hover {
                     color: $primaryColor;
                 }

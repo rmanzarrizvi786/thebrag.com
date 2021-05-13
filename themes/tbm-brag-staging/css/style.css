@@ -447,15 +447,15 @@ h6 {
 }
 
 h1 {
-  font-size: 3rem;
-}
-
-h2 {
   font-size: 2rem;
 }
 
-h3 {
+h2 {
   font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
 }
 
 p {
@@ -953,6 +953,9 @@ nav#nav-primary ul li a {
   display: block;
   color: #fff;
   text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.825rem;
+  font-weight: 500;
 }
 nav#nav-primary ul li a:hover {
   color: #fa785c;
@@ -1097,7 +1100,7 @@ nav#nav-primary ul li:hover ul {
 
 .trending-story-category {
   color: #fa785c;
-  font-size: 80%;
+  font-size: 0.825rem;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
@@ -1106,7 +1109,7 @@ nav#nav-primary ul li:hover ul {
   border-radius: 1rem;
   display: block;
   background-color: #181715;
-  font-size: 0.9rem;
+  font-size: 0.825rem;
   font-weight: 200;
   line-height: 1.25;
 }
@@ -1147,7 +1150,7 @@ nav#nav-primary ul li:hover ul {
   flex: 1 1 0;
 }
 .spotlight .spotlight-stories a h3 {
-  font-size: 0.9rem;
+  font-size: 0.825rem;
 }
 .spotlight .spotlight-stories a .img-wrap {
   min-width: 100px;
@@ -1168,7 +1171,7 @@ nav#nav-primary ul li:hover ul {
 }
 .spotlight .spotlight-stories .spotlight-story-category {
   color: #79746b;
-  font-size: 80%;
+  font-size: 0.825rem;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
@@ -1198,7 +1201,7 @@ nav#nav-primary ul li:hover ul {
   display: block;
 }
 .latest article h3 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1.4;
 }
 .latest a {
@@ -1207,7 +1210,7 @@ nav#nav-primary ul li:hover ul {
 }
 .latest .cat {
   color: #79746b;
-  font-size: 80%;
+  font-size: 0.825rem;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
@@ -1286,7 +1289,7 @@ nav#nav-primary ul li:hover ul {
 .footer-menu-2 ul li a {
   color: #79746b;
   display: block;
-  font-size: 0.9rem;
+  font-size: 0.825rem;
   font-family: "Poppins", sans-serif;
   font-weight: 100;
   padding: 1rem;

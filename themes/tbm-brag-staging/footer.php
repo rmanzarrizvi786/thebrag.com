@@ -1,6 +1,5 @@
-</div><!-- .content -->
-
 <?php get_template_part('modules/footer/footer'); ?>
+</div><!-- .content -->
 
 <div id="skin">
   <?php render_ad_tag('skin'); ?>

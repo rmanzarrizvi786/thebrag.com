@@ -11,7 +11,7 @@ $no_of_columns = 2;
 if ($news_query->have_posts()) :
     $count = 1;
 ?>
-    <section class="container latest">
+    <section class="container latest pb-3">
         <div class="m-2">
             <h2 class="p-1 pt-0 mb-0 mx-1 h-latest border-bottom">Latest</h2>
             <div class="d-flex flex-wrap align-items-start mt-2">
@@ -110,7 +110,7 @@ if ($news_query->have_posts()) :
                 </div>
             </div>
         </div>
-        <div class="text-center">
+        <div class="d-flex">
             <a href="<?php echo home_url('/page/2'); ?>" class="btn btn-dark text-uppercase">More Stories</a>
         </div>
     </section>

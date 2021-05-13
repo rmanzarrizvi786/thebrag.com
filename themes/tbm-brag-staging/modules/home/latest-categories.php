@@ -70,14 +70,14 @@ foreach ($cats_home as $i => $cat_home) :
                         <article class="my-3">
                             <div class="ad-mrec mt-5">
                                 <div class="mx-auto text-center">
-                                    <?php render_ad_tag('vrec_1'); ?>
+                                    <?php render_ad_tag('vrec_' . ($i+2)); ?>
                                 </div>
                             </div>
                         </article>
                     </div>
                 </div>
             </div>
-            <div class="text-center">
+            <div class="d-flex">
                 <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More Stories</a>
             </div>
         </section>

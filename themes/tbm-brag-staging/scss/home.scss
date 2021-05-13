@@ -105,7 +105,7 @@
 
 .trending-story-category {
     color: $primaryColor;
-    font-size: 80%;
+    font-size: .825rem;
     font-family: $headingFonts;
     font-weight: 500;
 }
@@ -115,7 +115,7 @@
         border-radius: $roudedRadius;
         display: block;
         background-color: #181715;
-        font-size: 0.9rem;
+        font-size: .825rem;
         font-weight: 200;
         line-height: 1.25;
         .img-wrap {
@@ -158,7 +158,7 @@
             line-height: 1.2;
             flex: 1 1 0;
             h3 {
-                font-size: 0.9rem;
+                font-size: .825rem;
             }
             .img-wrap {
                 min-width: 100px;
@@ -180,7 +180,7 @@
         }
         .spotlight-story-category {
             color: $lightGray;
-            font-size: 80%;
+            font-size: .825rem;
             font-family: $headingFonts;
             font-weight: 500;
         }
@@ -220,7 +220,7 @@
         // padding-right: 1rem;
         // margin: auto 1rem;
         h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             line-height: 1.4;
         }
     }
@@ -230,7 +230,7 @@
     }
     .cat {
         color: $lightGray;
-        font-size: 80%;
+        font-size: .825rem;
         font-family: $headingFonts;
         font-weight: 500;
     }
