@@ -14,7 +14,7 @@ if ($news_query->have_posts()) :
     <section class="container latest">
         <div class="m-2">
             <h2 class="p-1 pt-0 mb-0 mx-1 h-latest border-bottom">Latest</h2>
-            <div class="d-flex flex-wrap align-items-start py-2">
+            <div class="d-flex flex-wrap align-items-start mt-2">
                 <?php
                 while ($news_query->have_posts()) :
                     $news_query->the_post();
@@ -22,7 +22,7 @@ if ($news_query->have_posts()) :
                 ?>
                     <div class="article-wrap col-3">
                         <article class="my-3">
-                            <div class="mb-4 mx-2">
+                            <div class="mb-4 mx-3">
                                 <a href="<?php the_permalink(); ?>">
                                     <div class="mb-2 text-uppercase cat">
                                         <?php if ('snaps' == $post->post_type) : ?>
@@ -70,7 +70,7 @@ if ($news_query->have_posts()) :
                                             if ($alt_text == '') {
                                                 $alt_text = trim(strip_tags(get_the_title()));
                                             }
-                                            $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'medium_large');
+                                            $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'thumbnail');
                                         ?>
                                             <img src="<?php echo $img_src[0]; ?>" alt="<?php echo $alt_text; ?>" title="<?php echo $alt_text; ?>" loading="lazy">
                                         <?php endif; ?>

@@ -7,6 +7,11 @@
 .text-center {
     text-align: center;
 }
+
+.d-block {
+    display: block;
+}
+
 .d-flex {
     display: flex;
     align-items: center;
@@ -129,4 +134,18 @@
 }
 .col-1 {
     flex: 0 0 8.3333%;
+}
+
+.p-r {
+    position: relative;
+}
+.p-a-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overflow-hidden {
+    overflow: hidden;
 }

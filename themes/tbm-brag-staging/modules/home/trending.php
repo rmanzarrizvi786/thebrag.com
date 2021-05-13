@@ -164,7 +164,7 @@
                                         endif; // If there are categories for the post 
                                         ?>
                                     </div><!-- Cats -->
-                                    <h3 class="h6"><?php the_title(); ?></h3>
+                                    <h3><?php the_title(); ?></h3>
                                 </div>
                                 <div class="img-wrap rounded ml-1">
                                     <?php if ($img_src && $img_src[0]) : ?>
@@ -180,7 +180,7 @@
             ?>
             <div class="ad-mrec">
                 <div class="mx-auto text-center">
-                    <?php render_ad_tag('vrec_1');
+                    <?php render_ad_tag('vrec_2');
                     ?>
                     <a href="https://thebrag.media?300x250" target="_blank"><img src="http://placehold.it/300x250/663366/fff?text=300x250"></a>
                 </div>

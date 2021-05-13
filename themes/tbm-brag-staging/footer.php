@@ -103,6 +103,12 @@
       } else {
         $('#skin').removeClass('fixed');
       }
+
+      /* if (winTop >= $(window).height()) {
+        $('.nav-wrap').slideUp();
+      } else {
+        $('.nav-wrap').slideDown();
+      } */
     });
     $(window).trigger('scroll');
   });
