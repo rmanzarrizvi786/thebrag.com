@@ -103,14 +103,15 @@ if ($news_query->have_posts()) :
                     <article class="my-3">
                         <div class="ad-mrec mt-5">
                             <div class="mx-auto text-center">
-                                <?php render_ad_tag('vrec_1');
-                                ?>
-                                <a href="https://thebrag.media?300x250" target="_blank"><img src="http://placehold.it/300x250/663366/fff?text=300x250"></a>
+                                <?php render_ad_tag('vrec_1'); ?>
                             </div>
                         </div>
                     </article>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
+            <a href="<?php echo home_url('/page/2'); ?>" class="btn btn-dark text-uppercase">More Stories</a>
         </div>
     </section>
 <?php endif;

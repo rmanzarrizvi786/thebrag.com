@@ -192,12 +192,6 @@
         font-weight: 500;
     }
     .article-wrap {
-        &:nth-of-type(3n + 1) article {
-            // padding-left: 0;
-        }
-        &:nth-of-type(3n) article {
-            // padding-right: 0;
-        }
         &:nth-of-type(3n + 2) article {
             position: relative;
             &:before,

@@ -180,9 +180,7 @@
             ?>
             <div class="ad-mrec">
                 <div class="mx-auto text-center">
-                    <?php render_ad_tag('vrec_2');
-                    ?>
-                    <a href="https://thebrag.media?300x250" target="_blank"><img src="http://placehold.it/300x250/663366/fff?text=300x250"></a>
+                    <?php render_ad_tag('vrec_2'); ?>
                 </div>
             </div>
         </div>

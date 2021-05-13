@@ -30,8 +30,8 @@
                         <div class="p-r overflow-hidden" style="cursor:pointer;" title="Click to play video" class="yt-lazy-load" data-id="<?php echo $featured_yt_vid_id; ?>" id="<?php echo $featured_yt_vid_id; ?>">
                         <?php endif; // If $tbm_featured_video_link  
                         ?>
-                        <div class="rounded youtube-player" data-id="<?php echo $featured_yt_vid_id; ?>" style="height: 100%">
-                            <img class="p-a-center rounded" src="<?php echo $featured_video_img; ?>" style="width: 100%; z-index: 1;" alt="<?php esc_html(get_option('tb_featured_video_artist_title')) . ' - ' . esc_html(get_option('tb_featured_video_song_title')); ?>" title="<?php esc_html(get_option('tb_featured_video_artist_title')) . ' - ' . esc_html(get_option('tb_featured_video_song_title')); ?>" loading="lazy">
+                        <div class="rounded youtube-player player-wrap" data-id="<?php echo $featured_yt_vid_id; ?>" style="background-image:url(<?php echo $featured_video_img; ?>);">
+                            
                             <img class="p-a-center play-button" src="<?php echo get_template_directory_uri(); ?>/images/controller-play.svg" alt="Play" title="Play" loading="lazy">
                         </div>
                         <?php if ($tbm_featured_video_link) : ?>

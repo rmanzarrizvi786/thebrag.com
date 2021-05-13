@@ -17,7 +17,7 @@ foreach ($cats_home as $i => $cat_home) :
     if ($news_query->have_posts()) :
         $count = 1;
 ?>
-        <section class="container latest">
+        <section class="container latest py-3">
             <div class="m-2">
                 <h2 class="p-1 pt-0 mb-0 mx-1 h-latest border-bottom"><?php echo $category->name; ?></h2>
                 <div class="d-flex flex-wrap align-items-start mt-2">
@@ -32,7 +32,6 @@ foreach ($cats_home as $i => $cat_home) :
                                     <a href="<?php the_permalink(); ?>">
                                         <div class="post-thumbnail">
                                             <?php
-
                                             if ('' !== get_the_post_thumbnail()) :
                                                 $alt_text = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
                                                 if ($alt_text == '') {
@@ -71,14 +70,15 @@ foreach ($cats_home as $i => $cat_home) :
                         <article class="my-3">
                             <div class="ad-mrec mt-5">
                                 <div class="mx-auto text-center">
-                                    <?php render_ad_tag('vrec_1');
-                                    ?>
-                                    <a href="https://thebrag.media?300x250" target="_blank"><img src="http://placehold.it/300x250/663366/fff?text=300x250"></a>
+                                    <?php render_ad_tag('vrec_1'); ?>
                                 </div>
                             </div>
                         </article>
                     </div>
                 </div>
+            </div>
+            <div class="text-center">
+                <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More Stories</a>
             </div>
         </section>
 <?php endif;

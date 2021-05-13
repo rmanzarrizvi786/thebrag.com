@@ -1,4 +1,7 @@
 <?php
+
+define('ICONS_URL', get_template_directory_uri() . '/images/');
+
 register_nav_menus(array(
     'get_in_touch' => __('Get In Touch', 'thebrag'),
     'top' => __('Top Menu', 'thebrag'),
@@ -50,4 +53,17 @@ function string_limit_words($string, $word_limit)
         return implode(' ', $words) . '...';
     }
     return implode(' ', $words);
+}
+
+
+/*
+* Check unique refer code (Brag Observer Invites)
+*/
+function check_unique_refer_code($unique)
+{
+    global $wpdb;
+    $result = $wpdb->get_var("SELECT meta_value from $wpdb->usermeta where meta_key='refer_code' AND meta_value = '{$unique}'");
+    if (!$result)
+        return true;
+    return false;
 }

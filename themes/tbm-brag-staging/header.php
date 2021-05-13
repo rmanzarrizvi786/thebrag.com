@@ -199,31 +199,39 @@ $page_template = get_page_template_slug();
       <div class="network-socials-wrap">
         <div class="network-socials">
           <div class="d-flex flex-row justify-content-between">
-            <div class="brag-media-top"><img src="<?php echo get_template_directory_uri() . '/images/TheBMedia_web.svg'; ?>"></div>
-            <div class="arrow-down"><img src="<?php echo get_template_directory_uri() . '/images/triangle-down-color.svg'; ?>"></div>
+            <div class="brag-media-top"><img src="<?php echo ICONS_URL; ?>TheBMedia_web.svg"></div>
+            <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg"></div>
           </div>
           <div class="socials-top d-flex justify-content-between">
-            <a href="#"><img src="<?php echo get_template_directory_uri() . '/images/facebook.svg'; ?>"></a>
-            <a href="#"><img src="<?php echo get_template_directory_uri() . '/images/twitter.svg'; ?>"></a>
-            <a href="#"><img src="<?php echo get_template_directory_uri() . '/images/instagram.svg'; ?>"></a>
-            <a href="#"><img src="<?php echo get_template_directory_uri() . '/images/youtube.svg'; ?>"></a>
-            <a href="#"><img src="<?php echo get_template_directory_uri() . '/images/mail.svg'; ?>"></a>
+            <a href="#"><img src="<?php echo ICONS_URL; ?>facebook.svg"></a>
+            <a href="#"><img src="<?php echo ICONS_URL; ?>twitter.svg"></a>
+            <a href="#"><img src="<?php echo ICONS_URL; ?>instagram.svg"></a>
+            <a href="#"><img src="<?php echo ICONS_URL; ?>youtube.svg"></a>
+            <a href="#"><img src="<?php echo ICONS_URL; ?>mail.svg"></a>
           </div>
         </div>
       </div>
       <div class="logo-wrap">
-        <a href="<?php echo site_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/images/The-Brag_combo-white.svg'; ?>"></a>
+        <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg"></a>
       </div>
       <div class="user-wrap d-flex flex-column justify-content-end pr-2">
         <div class="user-info d-flex flex-row my-1">
-          <!-- <div class="user-ico"><img src="<?php echo get_template_directory_uri() . '/images/user.svg'; ?>"></div> -->
-          <div class="user-name d-flex flex-row"><span>Luke Girgis</span>
-            <div class="arrow-down"><img src="<?php echo get_template_directory_uri() . '/images/triangle-down.svg'; ?>"></div>
-          </div>
+          <?php
+          if (is_user_logged_in()) :
+            $current_user = wp_get_current_user();
+            $user_info = get_userdata($current_user->ID);
+          ?>
+            <div class="user-name d-flex flex-row btn" style="padding-top: 0; padding-bottom: 0;">
+              <span><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
+              <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg"></div>
+            </div>
+          <?php else : ?>
+            <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
+          <?php endif; ?>
         </div>
         <button class="btn btn-primary">
           Pick Your Niche
-          <img src="<?php echo get_template_directory_uri() . '/images/mail.svg'; ?>" class="btn-img">
+          <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img">
         </button>
       </div>
     </div>

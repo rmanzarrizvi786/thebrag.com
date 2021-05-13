@@ -8,9 +8,7 @@ get_header();
 
 <div class="ad-billboard container py-4">
     <div class="mx-auto text-center">
-        <?php render_ad_tag('leaderboard');
-        ?>
-        <a href="https://thebrag.media?970x250" target="_blank"><img src="http://placehold.it/970x250/663366/fff?text=970x250"></a>
+        <?php render_ad_tag('leaderboard'); ?>
     </div>
 </div>
 
@@ -19,9 +17,7 @@ get_header();
 <div class="container bg-yellow">
     <div class="container py-4">
         <div class="mx-auto text-center">
-            <?php render_ad_tag('incontent_1');
-            ?>
-            <a href="https://thebrag.media?970x250" target="_blank"><img src="http://placehold.it/970x250/663366/fff?text=970x250"></a>
+            <?php render_ad_tag('incontent_1'); ?>
         </div>
     </div>
 
@@ -31,9 +27,7 @@ get_header();
 
     <div class="container mb-4">
         <div class="mx-auto text-center">
-            <?php render_ad_tag('incontent_2');
-            ?>
-            <a href="https://thebrag.media?970x250" target="_blank"><img src="http://placehold.it/970x250/663366/fff?text=970x250"></a>
+            <?php render_ad_tag('incontent_2'); ?>
         </div>
     </div>
 

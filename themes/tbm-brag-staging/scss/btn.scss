@@ -3,13 +3,19 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 10rem;
+    font-family: $headingFonts;
+    cursor: pointer;
 
     .btn-img {
         width: 18px;
     }
 }
 .btn-primary {
-    background-color: $primaryColor;
-    color: $primaryBlack;
+    background-color: $primaryColor !important;
+    color: $primaryBlack !important;
     font-weight: 700;
+}
+.btn-dark {
+    background-color: $primaryBlack !important;
+    color: #fff !important;
 }

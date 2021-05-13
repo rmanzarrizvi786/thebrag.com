@@ -1,10 +1,9 @@
 </div><!-- .content -->
 
+<?php get_template_part('modules/footer/footer'); ?>
+
 <div id="skin">
-  <?php
-  render_ad_tag('skin');
-  ?>
-  <a href="https://thebrag.media?1600x1200" target="_blank"><img src="http://placehold.it/1600x1200/FA785C/fff"></a>
+  <?php render_ad_tag('skin'); ?>
 </div>
 
 </main>
