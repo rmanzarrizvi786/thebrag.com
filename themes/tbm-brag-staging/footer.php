@@ -1,6 +1,8 @@
 <?php get_template_part('modules/footer/footer'); ?>
 </div><!-- .content -->
 
+<?php get_template_part('modules/network'); ?>
+
 <div id="skin">
   <?php render_ad_tag('skin'); ?>
 </div>
@@ -107,6 +109,25 @@
       } else {
         $('.nav-wrap').slideDown();
       } */
+    });
+
+    $('.btn-media-top').on('click', function() {
+      $("body").toggleClass("modal-open");
+      $('#overlay').toggleClass('d-none');
+      if ($("body").hasClass("modal-open")) {
+        $("#network").slideDown();
+      } else {
+        $("#network").slideUp();
+      }
+    });
+
+    $('.btn-toggle-menu').on('click', function() {
+      $('.nav-wrap').toggleClass('d-none');
+      $(body).toggleClass('fixed');
+    });
+
+    $('#overlay').on('click', function() {
+      $('#network, #overlay').toggleClass('d-none');
     });
     $(window).trigger('scroll');
   });

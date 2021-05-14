@@ -1,0 +1,25 @@
+#network {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30000;
+}
+.other-brands {
+    // border: 5px solid $primaryBlack;
+    border-radius: 0 0 1rem 1rem;
+    // border-top-width: 0;
+}
+.brand-box {
+    border-right: 1px solid $primaryBlack;
+    border-bottom: 1px solid $primaryBlack;
+    height: 114px;
+    flex: 0 0 calc(16.6666% - 1px);
+    &:nth-of-type(6n + 1) {
+        border-left: 1px solid $primaryBlack;
+        flex: 0 0 calc(16.6666% - 2px);
+    }
+    &:nth-of-type(6n) {
+        border-right: none;
+        flex: 0 0 16.6666%;
+    }
+}

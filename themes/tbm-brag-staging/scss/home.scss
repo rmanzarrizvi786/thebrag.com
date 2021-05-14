@@ -1,16 +1,18 @@
 .trending {
-    display: flex;
     background-color: $primaryBlack;
-    border-radius: $roudedRadius * 2 $roudedRadius * 2 0 0;
+    border-radius: $roudedRadius $roudedRadius 0 0;
+    @media (min-width: $tablet) {
+        border-radius: $roudedRadius * 2 $roudedRadius * 2 0 0;
+    }
     // padding: 1rem;
     color: #fff;
     font-weight: 400;
-    .left {
+    /* .left {
         width: 65%;
     }
     .right {
         width: 35%;
-    }
+    } */
     .trending-main {
         position: relative;
         .badge {
@@ -71,6 +73,9 @@
         // flex: 2 1 0;
         // margin-left: .5rem;
         // margin-left: -100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
         position: absolute;
         top: 0;
         left: 0;
@@ -79,6 +84,7 @@
         z-index: 1;
         // position: relative;
         overflow: hidden;
+        opacity: 0.5;
         img {
             position: absolute;
             top: 50%;
@@ -88,7 +94,6 @@
             // width: 120%;
             width: auto;
             max-width: none;
-            opacity: 0.5;
         }
     }
 }
@@ -105,7 +110,7 @@
 
 .trending-story-category {
     color: $primaryColor;
-    font-size: .825rem;
+    font-size: 0.825rem;
     font-family: $headingFonts;
     font-weight: 500;
 }
@@ -115,10 +120,10 @@
         border-radius: $roudedRadius;
         display: block;
         background-color: #181715;
-        font-size: .825rem;
+        font-size: 0.825rem;
         font-weight: 200;
         line-height: 1.25;
-        .img-wrap {
+        .post-thumbnail {
             min-width: 100px;
             width: 100px;
             height: 60px;
@@ -136,7 +141,7 @@
             }
         }
         h3 {
-            font-size: 1rem;
+            font-size: 0.875rem;
         }
     }
     a {
@@ -158,7 +163,7 @@
             line-height: 1.2;
             flex: 1 1 0;
             h3 {
-                font-size: .825rem;
+                font-size: 0.825rem;
             }
             .img-wrap {
                 min-width: 100px;
@@ -180,7 +185,7 @@
         }
         .spotlight-story-category {
             color: $lightGray;
-            font-size: .825rem;
+            font-size: 0.825rem;
             font-family: $headingFonts;
             font-weight: 500;
         }
@@ -230,7 +235,7 @@
     }
     .cat {
         color: $lightGray;
-        font-size: .825rem;
+        font-size: 0.825rem;
         font-family: $headingFonts;
         font-weight: 500;
     }
@@ -257,6 +262,16 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
+    }
+    .youtube-player.player-wrap:after {
+        content: "";
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
     }
     .play-button {
         width: 100px;

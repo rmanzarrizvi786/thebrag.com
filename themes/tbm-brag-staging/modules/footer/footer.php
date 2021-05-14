@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="footer-menu pt-5 border-top mt-5 px-2">
-        <div class="d-flex">
+        <div class="d-flex flex-column flex-md-row align-items-start">
             <div class="left px-3">
                 <nav>
                     <ul>
@@ -34,7 +34,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="right px-3" style="opacity: .2;">
+            <div class="right px-3 mt-3 mt-md-0" style="opacity: .2;">
                 We acknowledge that we meet and work on indigenous lands across this nation and that sovereignty of the land was never ceded. We pay respect to elders, past and present, and ackownedge the pivotal role that Aboriginal and Torres Strait Islander people continue to play within the Australian community.
             </div>
         </div>

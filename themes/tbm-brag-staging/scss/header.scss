@@ -20,13 +20,9 @@ header {
     }
 
     .network-socials {
-        padding: .5rem 1rem .5rem 0;
+        padding: 0.5rem 1rem 0.5rem 0;
         width: 150px;
         max-width: 100%;
-
-        .arrow-down {
-            margin-left: 0.25rem;
-        }
     }
 
     .logo-wrap {
@@ -35,7 +31,6 @@ header {
             display: block;
             img {
                 width: 200px;
-                padding: 0.5rem 1rem;
             }
         }
     }
@@ -43,10 +38,10 @@ header {
     .user-wrap {
         .user-ico {
             width: 18px;
-            margin-right: .25rem;
+            margin-right: 0.25rem;
         }
         .user-name .arrow-down {
-            margin-left: .25rem;
+            margin-left: 0.25rem;
         }
         align-items: flex-end;
     }
@@ -59,5 +54,13 @@ header {
             width: 18px;
             height: 18px;
         }
+    }
+}
+
+.btn-media-top {
+    width: 150px;
+    padding: 0.25rem 0 !important;
+    .brag-media-top img {
+        width: 130px;
     }
 }

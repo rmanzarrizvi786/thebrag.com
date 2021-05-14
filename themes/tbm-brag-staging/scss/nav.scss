@@ -6,8 +6,8 @@
         min-width: 18px;
     }
 }
-nav#nav-primary {
-    margin: .5rem auto;
+#nav-primary {
+    background-color: $primaryBlack;
     ul {
         list-style-type: none;
         margin: 0;
@@ -43,14 +43,5 @@ nav#nav-primary {
                 display: flex;
             }
         }
-    }
-}
-/* Responsive Nav Bar */
-@media all and (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-    }
-    nav ul li {
-        text-align: center;
     }
 }

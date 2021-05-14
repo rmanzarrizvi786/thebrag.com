@@ -36,7 +36,7 @@
                         endif;
                     ?>
                         <a href="<?php the_permalink(); ?>" class="story p-2 pb-0 mb-2">
-                            <div class="d-flex flex-row">
+                            <div class="d-flex flex-column flex-md-row align-items-start">
                                 <div class="img-wrap rounded mr-1">
                                     <?php if ($img_src && $img_src[0]) : ?>
                                         <img src="<?php echo $img_src[0]; ?>" alt="<?php echo $alt_text; ?>" title="<?php echo $alt_text; ?>" class="rounded" loading="lazy">
