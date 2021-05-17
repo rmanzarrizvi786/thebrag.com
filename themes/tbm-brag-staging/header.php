@@ -252,7 +252,7 @@ $page_template = get_page_template_slug();
       <div class="search-wrap">
         <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
       </div>
-      <div id="nav-primary" class="nav w-100 my-0 my-md-1">
+      <div id="nav-primary" class="nav w-100 my-0">
         <?php
         wp_nav_menu(array(
           'theme_location' => 'top',

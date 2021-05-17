@@ -3,7 +3,8 @@
 
 <?php get_template_part('modules/network'); ?>
 
-<div id="skin">
+<div id="skin" class="d-none d-md-block">
+  <img src="http://placehold.it/1600x1200/999933/fff?text=1600x1200">
   <?php render_ad_tag('skin'); ?>
 </div>
 

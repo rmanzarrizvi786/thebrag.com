@@ -958,7 +958,8 @@ header .user-wrap .user-name .arrow-down {
   margin-left: 0.25rem;
 }
 header .socials-top {
-  margin-top: 1rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 header .socials-top a {
   display: block;
@@ -974,13 +975,10 @@ header .socials-top a {
   width: 130px;
 }
 
-@media (max-width: 36rem) {
-  .btn-observer-top {
-    padding: 0.25rem 0.5rem !important;
-    border-radius: 10rem !important;
-  }
+.btn-observer-top {
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 10rem !important;
 }
-
 .nav-wrap {
   display: flex;
   flex-wrap: nowrap;
@@ -1010,7 +1008,7 @@ header .socials-top a {
   color: #fff;
   text-decoration: none;
   font-family: "Poppins", sans-serif;
-  font-size: 1rem;
+  font-size: 0.825rem;
   font-weight: 500;
 }
 #nav-primary ul li a:hover {

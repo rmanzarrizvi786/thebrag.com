@@ -47,7 +47,8 @@ header {
     }
 
     .socials-top {
-        margin-top: 1rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
 
         a {
             display: block;
@@ -66,8 +67,8 @@ header {
 }
 
 .btn-observer-top {
-    @media (max-width: $mobile) {
-        padding: .25rem .5rem !important;
-        border-radius: 10rem !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 10rem !important;
+    @media (min-width: $tablet) {
     }
 }
