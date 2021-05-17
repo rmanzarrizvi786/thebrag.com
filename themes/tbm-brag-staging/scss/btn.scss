@@ -1,13 +1,18 @@
 .btn {
     outline: none;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem .5rem;
     border: none;
-    border-radius: 10rem;
+    border-radius: .25rem;
     font-family: $headingFonts;
     cursor: pointer;
 
     .btn-img {
         width: 18px;
+    }
+
+    @media (min-width: $tablet) {
+        border-radius: 10rem;
+        padding: 0.5rem 1rem;
     }
 }
 .btn-primary {
@@ -17,5 +22,10 @@
 }
 .btn-dark {
     background-color: $primaryBlack !important;
+    color: #fff !important;
+}
+
+.btn-danger {
+    background-color: $colorDanger !important;
     color: #fff !important;
 }

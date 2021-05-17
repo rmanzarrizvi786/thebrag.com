@@ -14,8 +14,12 @@
     text-align: right;
 }
 
+.text-primary,
 .text-color-primary {
     color: $primaryColor;
+}
+.text-dark {
+    color: $secondaryBlack;
 }
 
 .font-primary {

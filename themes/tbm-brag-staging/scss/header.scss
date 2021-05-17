@@ -68,5 +68,6 @@ header {
 .btn-observer-top {
     @media (max-width: $mobile) {
         padding: .25rem .5rem !important;
+        border-radius: 10rem !important;
     }
 }

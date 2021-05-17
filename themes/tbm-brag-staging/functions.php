@@ -2995,7 +2995,7 @@ function ssm_inject_ads($content)
     $after_para = 4;
 
     ob_start();
-    render_ad_tag('content_1', '', $count_articles);
+    render_ad_tag('incontent_1', '', $count_articles);
     $content_ad_tag = ob_get_contents();
     ob_end_clean();
     $content = ssm_insert_after_paragraph('<div class="my-2 text-center">' . $content_ad_tag . '</div>', $after_para, $content);

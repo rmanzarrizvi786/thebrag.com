@@ -19,7 +19,30 @@
     border-radius: $roudedRadius;
 }
 
+h1 {
+    font-size: $h1Size*.75;
+}
+h2 {
+    font-size: $h2Size*.75;
+}
+h3 {
+    font-size: $h3Size*.75;
+}
+p {
+    margin-bottom: 1rem;
+}
+
 @media (min-width: $tablet) {
+    h1 {
+        font-size: $h1Size;
+    }
+    h2 {
+        font-size: $h2Size;
+    }
+    h3 {
+        font-size: $h3Size;
+    }
+
     .d-md-none {
         display: none !important;
     }

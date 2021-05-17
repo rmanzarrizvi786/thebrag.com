@@ -5,12 +5,17 @@
 @import "nav";
 @import "btn";
 
+
 @import "home";
+
+@import "single";
 
 @import "footer";
 @import "network";
 
 @import "media-queries";
+
+@import "temporary";
 
 /* body:after {
     content: "";
@@ -44,4 +49,15 @@
 main {
     position: relative;
     margin-top: 115px;
+}
+
+.form-control {
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
