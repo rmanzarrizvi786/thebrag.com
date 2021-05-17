@@ -916,7 +916,7 @@ a {
   transform: rotate(180deg);
 }
 
-body.fixed {
+body.fixed, body.modal-open {
   position: fixed;
   height: 100vh;
 }
@@ -978,6 +978,12 @@ header .socials-top a {
 }
 .btn-media-top .brag-media-top img {
   width: 130px;
+}
+
+@media (max-width: 36rem) {
+  .btn-observer-top {
+    padding: 0.25rem 0.5rem !important;
+  }
 }
 
 .nav-wrap {
@@ -1053,7 +1059,7 @@ header .socials-top a {
 
 .trending {
   background-color: #0f0c0c;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 0;
   color: #fff;
   font-weight: 400;
   /* .left {
@@ -1114,6 +1120,12 @@ header .socials-top a {
   font-weight: 300;
   font-size: 2.5rem;
   line-height: 1.2;
+}
+@media (max-width: 36rem) {
+  .story-hero .details-wrap .story-title {
+    font-size: 1.5rem;
+    width: 100%;
+  }
 }
 .story-hero .details-wrap .read-article img {
   margin-right: 0.25rem;
@@ -1306,6 +1318,15 @@ header .socials-top a {
   transition: 0.25s all linear;
 }
 
+.ad-billboard {
+  background-color: #0f0c0c;
+}
+@media (min-width: 48rem) {
+  .ad-billboard {
+    background-color: transparent;
+  }
+}
+
 .footer {
   background-color: #0f0c0c;
   color: #fff;
@@ -1341,11 +1362,17 @@ header .socials-top a {
 }
 .footer-menu ul li a {
   display: block;
-  font-size: 3rem;
+  font-size: 2rem;
   font-family: "Poppins", sans-serif;
   font-weight: 100;
-  padding: 1rem 0.25rem;
+  padding: 0.5rem 0;
   text-decoration: none;
+}
+@media (min-width: 48rem) {
+  .footer-menu ul li a {
+    font-size: 3rem;
+    padding: 1rem 0.25rem;
+  }
 }
 
 .footer-menu-2 ul li {
@@ -1366,6 +1393,8 @@ header .socials-top a {
   top: 0;
   left: 0;
   z-index: 30000;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .other-brands {
@@ -1843,11 +1872,11 @@ header .socials-top a {
   }
 
   header {
-    height: 75px !important;
+    height: 50px !important;
   }
 
   main {
-    margin-top: 75px !important;
+    margin-top: 50px !important;
   }
 
   .logo-wrap a img {

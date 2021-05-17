@@ -181,7 +181,7 @@
     transform: rotate(180deg);
 }
 
-body.fixed {
+body.fixed, body.modal-open {
     position: fixed;
     height: 100vh;
 }

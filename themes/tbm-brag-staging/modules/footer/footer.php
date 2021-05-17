@@ -1,23 +1,23 @@
-<footer class="container footer mb-1 p-5">
-    <div class="py-4 px-2 d-flex align-items-start">
-        <div class="left px-3">
+<footer class="container footer mb-1 p-2 p-md-5">
+    <div class="py-4 px-2 d-flex flex-column flex-md-row align-items-start">
+        <div class="left px-3 mb-3 mb-md-0">
             <img src="<?php echo ICONS_URL; ?>text.svg" class="ico">
             <h3 class="mt-1">The original street press.</h3>
             <p class="my-3">The Brag started as a street press gig guide in 2003 and has grown from strength-to-strength. Before it went exclusively digital, it was on every street corner, in every cool cafe and pub in Sydney.</p>
             <a href="#">View our first press</a>
         </div>
-        <div class="right px-3">
+        <div class="right px-3 mt-3 mt-md-0">
             <img src="<?php echo ICONS_URL; ?>funnel.svg" class="ico">
             <h3 class="mt-1">Choose your niche</h3>
             <p class="my-3">The ultimate newsletter network for Australians with over 32+ niche and passion options. The newsletter network covers; music, fast-food, travel, gaming, mone, film + TV just to name a few.</p>
             <a href="#">View your niche</a>
         </div>
     </div>
-    <div class="d-flex justify-content-between px-2 py-3 mt-3">
+    <div class="d-flex justify-content-between flex-column flex-md-row px-2 py-3 mt-3">
         <div class="left px-3">
             <a href="<?php echo site_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/images/The-Brag_combo-white.svg'; ?>" width="200"></a>
         </div>
-        <div class="right px-3 text-right d-flex justify-content-end">
+        <div class="right px-3 text-right d-flex mt-3 mt-md-0 justify-content-end">
             <span class="mr-1 text-color-primary font-primary" style="font-size: .9rem; font-weight: 500">CULTURE BY</span>
             <span><img src="<?php echo get_template_directory_uri() . '/images/TheBMedia_web.svg'; ?>" width="150"></span>
         </div>

@@ -64,3 +64,9 @@ header {
         width: 130px;
     }
 }
+
+.btn-observer-top {
+    @media (max-width: $mobile) {
+        padding: .25rem .5rem !important;
+    }
+}

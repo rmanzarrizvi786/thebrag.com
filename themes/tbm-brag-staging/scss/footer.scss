@@ -30,11 +30,15 @@
             list-style: none;
             a {
                 display: block;
-                font-size: 3rem;
+                font-size: 2rem;
                 font-family: $headingFonts;
                 font-weight: 100;
-                padding: 1rem 0.25rem;
+                padding: .5rem 0;
                 text-decoration: none;
+                @media (min-width: $tablet) {
+                    font-size: 3rem;
+                    padding: 1rem 0.25rem;
+                }
             }
         }
     }

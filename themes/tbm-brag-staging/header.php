@@ -194,7 +194,7 @@ $page_template = get_page_template_slug();
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <header class="fixed-top py-2 py-md-0">
+  <header class="fixed-top py-1 py-md-0">
     <div class="d-flex justify-content-between container">
       <div class="network-socials-wrap d-none d-md-block">
         <div class="network-socials">
@@ -213,17 +213,17 @@ $page_template = get_page_template_slug();
       </div><!-- .network-socials-wrap -->
 
       <div class="w-auto d-md-none pl-1 btn-toggle-menu">
-        <svg viewBox="0 0 60 30" width="60" height="30" style="width: 40px; height: auto;">
-          <rect width="50" height="6" rx="3" style="fill: #fff"></rect>
+        <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
+          <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
+          <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
           <rect y="24" width="30" height="6" rx="3" style="fill: #fff"></rect>
-          <rect y="12" width="50" height="6" rx="3" style="fill: #fff"></rect>
         </svg>
       </div>
 
       <div class="logo-wrap">
         <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg"></a>
       </div>
-      <div class="user-wrap d-flex flex-column justify-content-end pr-2 w-sm-auto">
+      <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
         <div class="user-info d-none d-md-flex flex-row my-1">
           <?php
           if (is_user_logged_in()) :
@@ -238,7 +238,7 @@ $page_template = get_page_template_slug();
             <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
           <?php endif; ?>
         </div>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary btn-observer-top">
           Pick Your Niche
           <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img">
         </button>

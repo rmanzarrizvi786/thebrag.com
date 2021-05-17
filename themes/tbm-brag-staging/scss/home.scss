@@ -1,6 +1,6 @@
 .trending {
     background-color: $primaryBlack;
-    border-radius: $roudedRadius $roudedRadius 0 0;
+    border-radius: 0;
     @media (min-width: $tablet) {
         border-radius: $roudedRadius * 2 $roudedRadius * 2 0 0;
     }
@@ -61,6 +61,10 @@
             font-size: 2.5rem;
             line-height: 1.2;
             // width: 140%;
+            @media (max-width: $mobile) {
+                font-size: 1.5rem;
+                width: 100%;
+            }
         }
         .read-article {
             img {
@@ -277,5 +281,12 @@
         width: 100px;
         z-index: 2;
         transition: 0.25s all linear;
+    }
+}
+
+.ad-billboard {
+    background-color: $primaryBlack;
+    @media (min-width: $tablet) {
+        background-color: transparent;
     }
 }
