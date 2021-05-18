@@ -157,8 +157,6 @@
 
 
 
-
-
 .p-r {
     position: relative;
 }
@@ -194,12 +192,18 @@
     transform: rotate(180deg);
 }
 
-body.fixed, body.modal-open {
+/* body.fixed, body.modal-open {
     position: fixed;
     height: 100vh;
-}
+} */
 
 .sticky-ad-right {
     position: sticky;
     top: 115px;
+}
+
+.ad-billboard {
+    @media (min-width: $tablet) {
+        // background-color: transparent;
+    }
 }

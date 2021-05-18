@@ -1,4 +1,7 @@
-<?php extract($args); ?>
+<?php
+extract($args);
+$exclude_posts = [];
+?>
 <section class="trending container d-flex flex-column flex-md-row pb-2 align-items-start">
     <?php
     $trending_story_args = [
@@ -46,9 +49,9 @@
                 ];
 
                 if (get_field('image_has_text', $trending_story_image_id)) {
-                    get_template_part('modules/home/featured', null, $featured_args);
+                    get_template_part('template-parts/home/featured', null, $featured_args);
                 } else {
-                    get_template_part('modules/home/featured', 'overlay', $featured_args);
+                    get_template_part('template-parts/home/featured', 'overlay', $featured_args);
                 }
             endif; // If Trending Story
         endif;

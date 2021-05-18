@@ -1,6 +1,8 @@
 .single-article {
     background-color: $colorYellow;
-    border-radius: $roudedRadius;
+    &-1 {
+        border-radius: $roudedRadius $roudedRadius 0 0;
+    }
     a {
         color: $primaryBlack;
         text-decoration: underline;
@@ -49,10 +51,21 @@
             line-height: 1.875rem;
         }
         @media (min-width: $tablet) {
-            blockquote, img {
+            figure {
+                margin-bottom: 1rem !important;
+            }
+            blockquote,
+            img,
+            figure {
                 width: 35.625rem;
                 margin-left: -3.3125rem;
-                max-width: 39.625rem;
+                margin: auto;
+                max-width: 35.625rem !important;
+                overflow: hidden;
+            }
+            figure img {
+                width: 100%;
+                margin: auto;
             }
         }
     }
@@ -64,9 +77,33 @@
 }
 .load-more {
     font-size: 1rem;
-    background:$colorYellow;
+    background: $colorYellow;
     text-align: center;
     border-radius: $roudedRadius;
     margin: 1rem auto;
-    opacity: .25;
+    opacity: 0.25;
+}
+
+.yt-lazy-load {
+    position: relative;
+    @media (min-width: $tablet) {
+        width: 35.625rem;
+        margin-left: -3.3125rem !important;
+        max-width: 35.625rem !important;
+    }
+    overflow: hidden;
+    cursor: pointer;
+    img {
+        width: 100%;
+        margin: auto !important;
+    }
+    .play-button {
+        width: 100px !important;
+        z-index: 2;
+        transition: 0.25s all linear;
+    }
+}
+
+.ad-billboard-infinite {
+    background-color: $colorYellow;
 }

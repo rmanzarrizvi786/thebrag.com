@@ -1,8 +1,11 @@
-<div class="ad-billboard container py-2 py-md-4">
-    <div class="mx-auto text-center">
-        <?php render_ad_tag('leaderboard'); ?>
+<?php extract($args); ?>
+<?php if ($count_articles === 1) : ?>
+    <div class="ad-billboard container py-2 py-md-4">
+        <div class="mx-auto text-center">
+            <?php render_ad_tag('leaderboard', $count_articles); ?>
+        </div>
     </div>
-</div>
+<?php endif; ?>
 
 <?php
 $the_post_id = get_the_ID();
@@ -32,7 +35,14 @@ if (!post_password_required($post)) :
     endif; // If custom author is set
 ?>
 
-    <article class="single-article p-3" id="<?php the_ID(); ?>">
+    <?php if ($count_articles > 1) : ?>
+        <div class="ad-billboard ad-billboard-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?> container py-2 py-md-4">
+            <div class="mx-auto text-center">
+                <?php render_ad_tag('leaderboard', $count_articles); ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <article class="single-article p-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
         <?php
         $title = get_post_meta($the_post_id, '_yoast_wpseo_title', true) ? get_post_meta($the_post_id, '_yoast_wpseo_title', true) : get_the_title();
         if (strpos($title, '%%title%%') !== FALSE) {
@@ -309,7 +319,7 @@ if (!post_password_required($post)) :
         </div><!-- Row 2 -->
 
         <div>
-            <?php get_template_part('modules/single/spotlight'); ?>
+            <?php get_template_part('template-parts/single/spotlight'); ?>
         </div>
     </article><!-- .container .single_story -->
 <?php elseif ($count_articles == 1) :

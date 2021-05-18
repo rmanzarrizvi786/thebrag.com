@@ -194,7 +194,7 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 function load_js_css()
 {
     // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210317', true);
-    wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), time(), true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
 
 
     if (is_single()) {
@@ -2170,7 +2170,7 @@ function ssm_inject_minutemedia($content)
             });
         </script>
     </div>
-    <?php
+<?php
     $tag = ob_get_clean();
     $content = $tag . $content;
     return $content;
@@ -2525,7 +2525,7 @@ function ssm_inject_fb_pixel()
 function ssm_youtube_lazy_load($content)
 {
     $pattern = '/<figure class=\"op-interactive\"><iframe(.*?)width=\"(.*)\"(.*?)height=\"(.*)\"(.*?)src=\"https:\/\/www.youtube.com\/embed\/(.*)\?(.*?)\" (.*)><\/iframe><\/figure>/';
-    $replacement = '<div style="text-align: center;"><div class="yt-lazy-load py-4" data-id="$6" id="yt-$6"><img data-src="https://i.ytimg.com/vi/$6/hqdefault.jpg" width="$2" height="$4" class="yt-img lazyload"><img class="play-button-red" src="' . get_template_directory_uri() . '/images/play-button-60px.png" alt="Play" title="Play"></div></div>';
+    $replacement = '<div class="yt-lazy-load my-2" data-id="$6" id="yt-$6"><img src="https://i.ytimg.com/vi/$6/hqdefault.jpg" width="$2" height="$4" class="yt-img" loading="lazy"><img class="p-a-center play-button" src="' . ICONS_URL . 'controller-play.svg" alt="Play" title="Play" loading="lazy"></div>';
     $lazy_content = preg_replace($pattern, $replacement, $content);
     return $lazy_content;
 }
@@ -3069,10 +3069,9 @@ function tbm_ajax_load_next_post()
         $main_post = false;
 
         if ('single-template-featured.php' == get_page_template_slug($post->ID)) :
-            include(get_template_directory() . '/partials/single-featured.php');
+        // include(get_template_directory() . '/partials/single-featured.php');
         else :
-            get_template_part('modules/single/single-post');
-            // include(get_template_directory() . '/modules/single/single-post.php');
+            get_template_part('template-parts/single/single', 'post', ['count_articles' => $count_articles]);
         endif;
         wp_reset_query();
         wp_reset_postdata();
@@ -3473,3 +3472,11 @@ function brands_network()
     ];
     return $pub_logos;
 } // brands_network()
+
+add_filter('next_posts_link_attributes', 'tbm_posts_link_attributes');
+add_filter('previous_posts_link_attributes', 'tbm_posts_link_attributes');
+
+function tbm_posts_link_attributes()
+{
+    return 'class="btn btn-dark"';
+}

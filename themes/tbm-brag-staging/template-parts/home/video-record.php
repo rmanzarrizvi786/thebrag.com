@@ -33,7 +33,7 @@
                         ?>
                         <div class="rounded youtube-player player-wrap" data-id="<?php echo $featured_yt_vid_id; ?>" style="background-image:url(<?php echo $featured_video_img; ?>);">
 
-                            <img class="p-a-center play-button" src="<?php echo get_template_directory_uri(); ?>/images/controller-play.svg" alt="Play" title="Play" loading="lazy">
+                            <img class="p-a-center play-button" src="<?php echo ICONS_URL; ?>controller-play.svg" alt="Play" title="Play" loading="lazy">
                         </div>
                         <?php if ($tbm_featured_video_link) : ?>
                     </a>

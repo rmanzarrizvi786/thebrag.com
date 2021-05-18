@@ -291,10 +291,3 @@
         transition: 0.25s all linear;
     }
 }
-
-.ad-billboard {
-    background-color: $primaryBlack;
-    @media (min-width: $tablet) {
-        background-color: transparent;
-    }
-}

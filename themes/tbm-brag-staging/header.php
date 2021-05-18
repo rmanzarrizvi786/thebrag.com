@@ -199,7 +199,7 @@ $page_template = get_page_template_slug();
       <div class="network-socials-wrap d-none d-md-block">
         <div class="network-socials">
           <div class="btn btn-media-top">
-            <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>TheBMedia_web.svg"></span>
+            <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png"></span>
             <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg"></span>
           </div>
           <div class="socials-top d-flex justify-content-between">

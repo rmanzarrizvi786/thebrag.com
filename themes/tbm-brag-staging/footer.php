@@ -1,7 +1,7 @@
-<?php get_template_part('modules/footer/footer'); ?>
+<?php get_template_part('template-parts/footer/footer'); ?>
 </div><!-- .content -->
 
-<?php get_template_part('modules/network'); ?>
+<?php get_template_part('template-parts/network'); ?>
 
 <div id="skin" class="d-none d-md-block">
   <?php render_ad_tag('skin'); ?>
