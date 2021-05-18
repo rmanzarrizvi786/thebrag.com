@@ -33,101 +33,106 @@ if (!post_password_required($post)) :
 ?>
 
     <article class="single-article p-3" id="<?php the_ID(); ?>">
-        <div class="d-flex align-items-start">
-            <div class="col-md-8">
+        <?php
+        $title = get_post_meta($the_post_id, '_yoast_wpseo_title', true) ? get_post_meta($the_post_id, '_yoast_wpseo_title', true) : get_the_title();
+        if (strpos($title, '%%title%%') !== FALSE) {
+            $title = get_the_title();
+        }
+
+        $tags = get_the_tags($the_post_id);
+        $TagsCD = '';
+        if ($tags) :
+            foreach ($tags as $tag) :
+                $TagsCD .= $tag->slug . ' ';
+            endforeach; // For Each Tag
+        endif; // If there are tags for the post
+
+        if ('dad' != get_post_type()) :
+            $categories = get_the_category($the_post_id);
+            $CategoryCD = '';
+            if ($categories) :
+                foreach ($categories as $category) :
+                    $CategoryCD .= $category->slug . ' ';
+                endforeach; // For Each Category
+            endif; // If there are categories for the post
+        ?>
+            <div class="cats mb-3 text-center" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
                 <?php
-                $title = get_post_meta(get_the_ID(), '_yoast_wpseo_title', true) ? get_post_meta(get_the_ID(), '_yoast_wpseo_title', true) : get_the_title();
-                if (strpos($title, '%%title%%') !== FALSE) {
-                    $title = get_the_title();
-                }
-
-                $tags = get_the_tags(get_the_ID());
-                $TagsCD = '';
-                if ($tags) :
-                    foreach ($tags as $tag) :
-                        $TagsCD .= $tag->slug . ' ';
-                    endforeach; // For Each Tag
-                endif; // If there are tags for the post
-
-                if ('dad' != get_post_type()) :
-                    $categories = get_the_category(get_the_ID());
-                    $CategoryCD = '';
-                    if ($categories) :
-                        foreach ($categories as $category) :
-                            $CategoryCD .= $category->slug . ' ';
-                        endforeach; // For Each Category
-                    endif; // If there are categories for the post
+                if (isset($categories)) :
+                    foreach ($categories as $category) :
+                        if ('Evergreen' == $category->cat_name) :
+                            continue;
+                        endif; // If category name is Evergreen
                 ?>
-                    <div class="cats mb-3 text-center" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
-                        <?php
-                        if (isset($categories)) :
-                            foreach ($categories as $category) :
-                                if ('Evergreen' == $category->cat_name) :
-                                    continue;
-                                endif; // If category name is Evergreen
-                        ?>
-                                <a class="text-uppercase cat" href="<?php echo get_category_link($category->term_id); ?>"><?php echo $category->cat_name; ?></a>
-                        <?php
-                            endforeach; // For Each Category
-                        endif; // If there are categories for the post 
-                        ?>
-                    </div><!-- Cats -->
-                <?php else : // Post type = Dad
-                    $categories = get_the_terms(get_the_ID(), 'dad-category');
-                    $CategoryCD = '';
-                    if ($categories) :
-                        foreach ($categories as $category) :
-                            $CategoryCD .= $category->slug . ' ';
-                        endforeach; // For Each Category
-                    endif; // If there are categories for the post
+                        <a class="text-uppercase cat mx-1" href="<?php echo get_category_link($category->term_id); ?>"><?php echo $category->cat_name; ?></a>
+                <?php
+                    endforeach; // For Each Category
+                endif; // If there are categories for the post 
                 ?>
-                    <div class="cats mb-3" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
-                        <?php
-                        if ($categories) :
-                            foreach ($categories as $category) :
-                                if ('Uncategorised' == $category->cat_name) :
-                                    continue;
-                                endif; // If category name is Uncategorised
-                        ?>
-                                <a class="text-uppercase cat" href="<?php echo get_term_link($category, 'dad-category'); ?>"><?php echo $category->cat_name; ?></a>
-                        <?php
-                            endforeach; // For Each Category
-                        endif; // If there are categories for the post 
-                        ?>
-                    </div><!-- Cats -->
-                <?php endif; // If Post Type != Dad 
+            </div><!-- Cats -->
+        <?php else : // Post type = Dad
+            $categories = get_the_terms($the_post_id, 'dad-category');
+            $CategoryCD = '';
+            if ($categories) :
+                foreach ($categories as $category) :
+                    $CategoryCD .= $category->slug . ' ';
+                endforeach; // For Each Category
+            endif; // If there are categories for the post
+        ?>
+            <div class="cats mb-3" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
+                <?php
+                if ($categories) :
+                    foreach ($categories as $category) :
+                        if ('Uncategorised' == $category->cat_name) :
+                            continue;
+                        endif; // If category name is Uncategorised
                 ?>
+                        <a class="text-uppercase cat" href="<?php echo get_term_link($category, 'dad-category'); ?>"><?php echo $category->cat_name; ?></a>
+                <?php
+                    endforeach; // For Each Category
+                endif; // If there are categories for the post 
+                ?>
+            </div><!-- Cats -->
+        <?php endif; // If Post Type != Dad 
+        ?>
 
-                <h1 id="story_title<?php echo get_the_ID(); ?>" class="story-title mb-3" data-href="<?php the_permalink(); ?>" data-title="<?php echo htmlentities($title); ?>" data-share-title="<?php echo urlencode($title); ?>" data-share-url="<?php echo urlencode(get_permalink()); ?>" data-article-number="<?php echo $count_articles; ?>"><?php the_title(); ?></h1>
+        <h1 id="story_title<?php echo $the_post_id; ?>" class="story-title mb-3" data-href="<?php the_permalink(); ?>" data-title="<?php echo htmlentities($title); ?>" data-share-title="<?php echo urlencode($title); ?>" data-share-url="<?php echo urlencode(get_permalink()); ?>" data-article-number="<?php echo $count_articles; ?>"><?php the_title(); ?></h1>
 
-                <div class="post-meta align-items-start justify-content-between d-block d-md-flex mb-3">
-                    <div class="align-items-center d-flex mb-3 mb-md-0">
+        <p class="text-center excerpt">
+            <?php
+            $metadesc = get_post_meta($the_post_id, '_yoast_wpseo_metadesc', true);
+            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt($the_post_id), 25);
+            echo $excerpt;
+            ?>
+        </p>
 
-                        <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
-                            <div class="pr-1 text-uppercase d-flex">
-                                <div class="mr-1"><?php echo $author_image; ?></div>
-                                <div><?php echo $author_byline; ?></div>
-                            </div>
-                            <div class="v-divider">|</div>
-                            <div class="pl-1">
-                                <time datetime="<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>" data-pubdate="<?php echo get_the_time('M d, Y'); ?>"><?php echo get_the_time('d.m.Y'); ?></time>
-                            </div>
-                        </div>
+        <div class="post-meta d-block d-md-flex my-3 justify-content-around">
+            <div class="d-flex mb-3 mb-md-0">
+                <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
+                    <div class="pr-1 text-uppercase d-flex">
+                        <div class="mr-1"><?php echo $author_image; ?></div>
+                        <div><?php echo $author_byline; ?></div>
                     </div>
-
-                    <hr class="h-divider">
-
-                    <div>
+                    <div class="v-divider">|</div>
+                    <div class="pl-1">
+                        <time datetime="<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>" data-pubdate="<?php echo get_the_time('M d, Y'); ?>"><?php echo get_the_time('d.m.Y'); ?></time>
+                    </div>
+                </div>
+            </div>
+            <!-- <div>
                         <?php
-                        if (shortcode_exists('shout_writer_beer')) :
+                        /* if (shortcode_exists('shout_writer_beer')) :
                             echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
                         elseif (shortcode_exists('shout_writer_coffee')) :
                             echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
-                        endif; // If shout writer shortcode exists
+                        endif; // If shout writer shortcode exists */
                         ?>
-                    </div>
-                </div><!-- Author, Coffee and Share buttons -->
+                    </div> -->
+        </div><!-- Author, Coffee and Share buttons -->
 
+        <hr class="h-divider mb-3">
+        <div class="d-flex align-items-start">
+            <div class="col-md-8">
                 <?php if (in_category('Op-Ed/Comment')) : ?>
                     <div style="padding: 10px 0; font-weight: bold;">COMMENT</div>
                 <?php endif; // If the post has a category Op-Ed/Comment 
@@ -141,7 +146,7 @@ if (!post_password_required($post)) :
                 <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
-                        $alt_text = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
+                        $alt_text = get_post_meta(get_post_thumbnail_id($the_post_id), '_wp_attachment_image_alt', true);
                         if ($alt_text == '') :
                             $alt_text = trim(strip_tags(get_the_title()));
                         endif; // If Alt text for featured image is empty
@@ -165,7 +170,7 @@ if (!post_password_required($post)) :
 
                 <?php
                 // if (shortcode_exists('observer_subscribe_category')) :
-                //     echo do_shortcode('[observer_subscribe_category id="' . get_the_ID() . '"]');
+                //     echo do_shortcode('[observer_subscribe_category id="' . $the_post_id . '"]');
                 // endif;
 
                 if (get_field('promoted_text') && '' != get_field('promoted_text')) :
@@ -211,7 +216,7 @@ if (!post_password_required($post)) :
                     <?php endif; // If issuu_link is set for Post type Issue
                     endif; // If the post type is Issue
 
-                    if (!get_field('paid_content', get_the_ID())) :
+                    if (!get_field('paid_content', $the_post_id)) :
                         $content = apply_filters('the_content', $post->post_content);
                         echo $content;
                         $args = array(
@@ -229,16 +234,6 @@ if (!post_password_required($post)) :
                         $content = apply_filters('the_content', $post->post_content);
                         echo $content;
                     endif; // If it's a paid content
-                    ?>
-
-                    <!-- Apester -->
-                    <!-- <interaction data-token="5decf535b7735f79ae29b691" data-context="true" data-tags="" data-fallback="true"></interaction> -->
-                    <?php // if( $count_articles > 1 ) : 
-                    ?>
-                    <script>
-                        // window.APESTER.reload()
-                    </script>
-                    <?php // endif; 
                     ?>
 
                     <?php if (in_category('Op-Ed/Comment')) : ?>
@@ -297,33 +292,17 @@ if (!post_password_required($post)) :
                 <!-- Story End -->
             </div><!-- Left panel - content, etc. -->
 
-            <div class="col-md-4 right-col-has-ad d-none d-md-block">
-                <div class="d-flex flex-column" style="height: 100%;">
-
+            <div class="col-md-4 right-col-has-ad d-none d-md-block ml-2 align-self-stretch">
+                <div class="d-flex flex-column h-100 justify-content-start">
                     <div class="align-self-center mb-3">
-                        <?php render_ad_tag('rail1', 'single', $count_articles); ?>
+                        <?php render_ad_tag('rail1', $count_articles); ?>
                     </div>
-
-                    <?php
-                    // include(get_template_directory() . '/partials/trending.php');
-                    ?>
-                    <!-- <a href="<?php // echo home_url( '/observer/' ); 
-                                    ?>"><img src="<?php // echo get_template_directory_uri(); 
-                                                    ?>/images/observer/mrec-600px.jpg"></a> -->
-
-                    <div class="sticky-ad">
+                    <div class="sticky-ad-right">
                         <div class="mt-3">
                             <?php
-                            // render_ad_tag( 'side_2', 'single', $count_articles );
-                            render_ad_tag('rail2', 'single', $the_post_id . $count_articles);
+                            render_ad_tag('rail2', $the_post_id . $count_articles);
                             ?>
                         </div>
-
-                        <!-- <div class="mt-3"> -->
-                        <?php // render_ad_tag( 'side_3', 'single', $count_articles ); 
-                        ?>
-                        <!-- </div> -->
-
                     </div>
                 </div>
             </div><!-- Right Pane - for desktop/tablet devices -->

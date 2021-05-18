@@ -22,7 +22,7 @@
         max-width: 100%;
     }
     .author {
-        // font-weight: 300;
+        color: $gray;
         font-size: 90%;
         position: relative;
         a {
@@ -39,4 +39,34 @@
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     }
+    .post-content {
+        max-width: 29rem;
+        margin: auto;
+        blockquote {
+            color: #666;
+            font-size: 1.125rem;
+            font-style: italic;
+            line-height: 1.875rem;
+        }
+        @media (min-width: $tablet) {
+            blockquote, img {
+                width: 35.625rem;
+                margin-left: -3.3125rem;
+                max-width: 39.625rem;
+            }
+        }
+    }
+    .excerpt {
+        font-weight: 500;
+        max-width: 39.625rem;
+        margin: auto;
+    }
+}
+.load-more {
+    font-size: 1rem;
+    background:$colorYellow;
+    text-align: center;
+    border-radius: $roudedRadius;
+    margin: 1rem auto;
+    opacity: .25;
 }

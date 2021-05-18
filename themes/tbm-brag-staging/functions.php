@@ -193,9 +193,8 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 
 function load_js_css()
 {
-    // wp_enqueue_script('bs', get_template_directory_uri() . '/bs/js/bootstrap.min.js', array('jquery'), '20190131', true);
     // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210317', true);
-    // wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), time(), true);
+    wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), time(), true);
 
 
     if (is_single()) {
@@ -211,67 +210,6 @@ function load_js_css()
     // wp_enqueue_script('lazysizes', get_template_directory_uri() . '/js/lazysizes.min.js', array(), '20181128', true);
 }
 add_action('wp_enqueue_scripts', 'load_js_css');
-
-/*
- * Get Next Post AJAX
- */
-function td_ajax_load_next_post()
-{
-    global $post;
-    global $wpdb;
-
-    if ('800215' == $_POST['id'] || get_field('paid_content', $_POST['id'])) :
-        wp_die();
-    endif;
-
-    $exclude_posts = (!is_null($_POST['exclude_posts']) && $_POST['exclude_posts'] != '') ? $_POST['exclude_posts'] : '';
-
-    $results = array(); //$wpdb->get_results($query);
-
-    if (0 && count($results) === 1) {
-        foreach ($results as $result) {
-            //            $data['exclude_post'] = $result->ID;
-            $prevPost = $result;
-        }
-    } else {
-        $post = get_post($_POST['id']);
-        $prevPost = get_previous_post();
-
-        $exclude_posts_array = explode(',', $exclude_posts);
-        if (in_array($prevPost->ID, $exclude_posts_array)) {
-            $data['content'] = '';
-            $data['loaded_post'] = $prevPost->ID;
-            //            $data['exclude_post'] = $prevPost->ID;
-            wp_send_json_success($data);
-            wp_die();
-        }
-    }
-    if ($prevPost) :
-        $post = $prevPost;
-        $data['exclude_post'] = $prevPost->ID;
-        ob_start();
-
-        $main_post = false;
-        //        get_template_part( 'partials/single-post' );
-        include('partials/single-post.php');
-        wp_reset_query();
-        //        get_template_part( 'partials/random-posts' );
-
-        if (!in_array($prevPost->post_type, array('shitshow'))) :
-            show_related_posts($prevPost->ID, 3, $main_post);
-        endif;
-
-        wp_reset_postdata();
-        $data['content'] = ob_get_clean();
-        $data['loaded_post'] = $prevPost->ID;
-        //        $data['page_title'] = $prevPost->post_title;
-        $data['page_title'] = html_entity_decode(get_the_title($prevPost));
-        wp_send_json_success($data);
-    endif;
-    wp_die();
-}
-add_action('wp_ajax_td_ajax_load_next_post', 'td_ajax_load_next_post');
-add_action('wp_ajax_nopriv_td_ajax_load_next_post', 'td_ajax_load_next_post');
 
 function get_post_excerpt_by_id($post_id)
 {
@@ -3133,7 +3071,8 @@ function tbm_ajax_load_next_post()
         if ('single-template-featured.php' == get_page_template_slug($post->ID)) :
             include(get_template_directory() . '/partials/single-featured.php');
         else :
-            include(get_template_directory() . '/partials/single-post.php');
+            get_template_part('modules/single/single-post');
+            // include(get_template_directory() . '/modules/single/single-post.php');
         endif;
         wp_reset_query();
         wp_reset_postdata();
