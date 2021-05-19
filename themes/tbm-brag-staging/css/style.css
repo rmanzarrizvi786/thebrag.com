@@ -2187,4 +2187,38 @@ main {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.search-form input[type=text],
+.search-form input[type=search] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0.75rem;
+}
+
+.search-form input[type=submit] {
+  padding: 0.75rem;
+  line-height: 1.3;
+  font-weight: normal;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page-nav-numbered * {
+  display: block;
+  padding: 0.25rem;
+  margin: auto 0.25rem;
+}
+.page-nav-numbered a,
+.page-nav-numbered span.page-numbers.current {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #181715;
+  border-radius: 0.5rem;
+}
+.page-nav-numbered a {
+  background-color: #181715;
+  color: #fff;
+}
+.page-nav-numbered span.page-numbers.current {
+  color: #181715;
+}
+
 /*# sourceMappingURL=style.css.map */
