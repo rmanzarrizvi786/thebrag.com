@@ -127,7 +127,9 @@
     });
 
     $('#overlay').on('click', function() {
-      $('#network, #overlay').toggleClass('d-none');
+      $("body").toggleClass("modal-open");
+      $("#network").slideUp();
+      $('#overlay').toggleClass('d-none');
     });
     $(window).trigger('scroll');
   });

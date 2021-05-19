@@ -1,15 +1,22 @@
 <?php
 extract($args);
 
-$news_args = array(
+$news_args = [
     'post_status' => 'publish',
-    'post_type' => array('post', 'snaps', 'dad'),
+    
     'ignore_sticky_posts' => 1,
     'posts_per_page' => 8,
-    'cat' => $cat_id,
     'post__not_in' => $exclude_posts,
     'paged' => $paged,
-);
+];
+if ( isset($cat_id) ) {
+    $news_args['cat'] = $cat_id;
+}
+if ( isset($post_type) ) {
+    $news_args['post_type'] = $post_type;
+} else {
+    $news_args['post_type'] = ['post', 'snaps', 'dad',];
+}
 $news_query = new WP_Query($news_args);
 $no_of_columns = 2;
 if ($news_query->have_posts()) :

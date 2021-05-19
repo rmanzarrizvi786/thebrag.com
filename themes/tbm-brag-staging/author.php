@@ -10,7 +10,7 @@ get_header();
     </div>
 </div>
 
-<div class="container bg-yellow pt-1 author">
+<div class="container bg-yellow pt-1 author rounded-top">
     <div>
         <div class="d-flex">
             <div>
@@ -35,7 +35,9 @@ get_header();
             </div>
         </div>
 
-        <p><?php echo nl2br($curauth->user_description); ?></p>
+        <div class="p-3">
+            <p><?php echo nl2br($curauth->user_description); ?></p>
+        </div>
 
     </div>
     <section class="container latest pb-3">
@@ -46,7 +48,7 @@ get_header();
                     the_post();
                     $post_id = get_the_ID();
 
-                    $category = '';
+                    $category = '&nbsp;';
 
                     if ('snaps' == $post->post_type) :
                         $category = 'GALLERY';

@@ -18,6 +18,9 @@
 .rounded {
     border-radius: $roudedRadius;
 }
+.rounded-top {
+    border-radius: $roudedRadius $roudedRadius 0 0;
+}
 
 h1 {
     font-size: $h1Size*.75;
@@ -119,6 +122,11 @@ p {
     }
     .d-lg-flex {
         display: flex !important;
+    }
+    @for $i from 1 through 12 {
+        .col-lg-#{$i} {
+            flex: 0 0 $i * 8.333333%;
+        }
     }
 }
 

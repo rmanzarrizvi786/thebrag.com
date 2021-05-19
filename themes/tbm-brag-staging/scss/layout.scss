@@ -29,10 +29,14 @@
 .d-block {
     display: block;
 }
+.row,
 .d-flex {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.row {
+    flex-wrap: wrap;
 }
 .flex-fill {
     flex: 1;
@@ -55,6 +59,9 @@
 }
 .align-items-end {
     align-items: end;
+}
+.align-items-stretch {
+    align-items: stretch;
 }
 .flex-wrap {
     flex-wrap: wrap;
@@ -155,8 +162,6 @@
     background-color: $primaryBlack;
 }
 
-
-
 .p-r {
     position: relative;
 }
@@ -184,7 +189,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,.7);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 3;
 }
 
@@ -192,10 +197,10 @@
     transform: rotate(180deg);
 }
 
-/* body.fixed, body.modal-open {
-    position: fixed;
-    height: 100vh;
-} */
+body.fixed,
+body.modal-open {
+    overflow: hidden;
+}
 
 .sticky-ad-right {
     position: sticky;

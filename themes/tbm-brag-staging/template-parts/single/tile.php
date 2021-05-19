@@ -54,9 +54,11 @@
                 <?php endif; ?>
             </div>
             <div class="pl-2 post-content align-self-start col-7">
-                <div class="mb-2 text-uppercase cat d-block d-md-none">
-                    <?php echo $category; ?>
-                </div>
+                <?php if (isset($category)) : ?>
+                    <div class="mb-2 text-uppercase cat d-none d-md-block">
+                        <?php echo $category; ?>
+                    </div>
+                <?php endif; ?>
                 <h3 class="my-2"><?php the_title(); ?></h3>
                 <p class="excerpt d-none d-md-block">
                     <?php

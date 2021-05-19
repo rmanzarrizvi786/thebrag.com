@@ -10,8 +10,6 @@ if ($category->parent > 0) {
     $cat_id = $category->term_id;
 }
 
-$exclude_posts = [];
-
 $hero_stories_args = [
     'post_status' => 'publish',
     'posts_per_page' => 3,
