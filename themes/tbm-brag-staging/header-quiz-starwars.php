@@ -113,7 +113,7 @@ body {
     line-height: 1.2rem;
     /*letter-spacing: 1px;*/
     font-family: 'ConduitITCStd-Light', Helvetica,Arial,Verdana,Sans-serif;
-    background-image: url(<?php echo get_template_directory_uri(); ?>/images/SW_Official_Background_Grey.jpg);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/quiz-starwars/SW_Official_Background_Grey.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -222,10 +222,10 @@ body {
     background-size: cover;
 }
 .quiz-answers .quiz-answer .quiz-answer-result-correct {
-    background-image: url(/wp-content/themes/ssm/images/quiz-starwars/sw-correct2.png);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/quiz-starwars/sw-correct2.png);
 }
 .quiz-answers .quiz-answer .quiz-answer-result-incorrect {
-    background-image: url(/wp-content/themes/ssm/images/quiz-starwars/sw-incorrect2.png);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/quiz-starwars/sw-incorrect2.png);
 }
 /*.quiz-answers .quiz-answer:nth-child(1) {
     margin-left: 0;

@@ -39,7 +39,7 @@
   src: url('<?php echo get_template_directory_uri(); ?>/fonts/GothamNarrow-Light.otf')  format('opentype');
 }
 
-@font-face{font-family:'FontAwesome';src:url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');src:url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),url('<?php echo get_template_directory_uri(); ?>/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-lg{font-size:1.33333333em;line-height:.75em;vertical-align:-15%}.fa-search:before{content:"\f002"}.fa-twitter:before{content:"\f099"}.fa-facebook:before{content:"\f09a"}.fa-bars:before{content:"\f0c9"}.fa-instagram:before{content:"\f16d"}.fa-youtube:before{content: "\f167"}
+@font-face{font-family:'FontAwesome';src:url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');src:url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),url('<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-lg{font-size:1.33333333em;line-height:.75em;vertical-align:-15%}.fa-search:before{content:"\f002"}.fa-twitter:before{content:"\f099"}.fa-facebook:before{content:"\f09a"}.fa-bars:before{content:"\f0c9"}.fa-instagram:before{content:"\f16d"}.fa-youtube:before{content: "\f167"}
 .clear{clear:both}
 a{color:#2982b3}
 img{max-width:100%;height:auto}
@@ -92,10 +92,7 @@ body {
     font-size: 14px;
     line-height: 21px;
     font-family: 'GothamNarrow-Book', 'Open Sans', Arial;
-    /*background-color: #fff !important;*/
-    /*background-image: url(<?php echo get_template_directory_uri(); ?>/images/The_College_AOS_2018bw.jpg);*/
     background-repeat: no-repeat;
-    /*background-position: center top;*/
 }
 
 .quiz-story-edu{
@@ -106,9 +103,6 @@ body {
     max-width:100%;
     padding: 0px;
     box-sizing:border-box;
-/*    background-image: url(<?php echo get_template_directory_uri(); ?>/images/The_College_AOS_2018bw.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;*/
     min-height: 100%;
     padding-bottom: 20px;
 }
@@ -232,7 +226,7 @@ margin: auto;
     /*color: #3A3537;*/
     color: #fff;
     background-color: #101010;
-    background-image: url(<?php echo get_template_directory_uri(); ?>/images/WSU_mobileLandingPage2.jpg);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_mobileLandingPage2.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right bottom -10px;
@@ -397,13 +391,13 @@ margin: auto;
     /*margin-left: -300px;*/
     left: 0;
     background-position: left top;
-    background-image: url(<?php echo get_template_directory_uri(); ?>/images/WSU_leftbanner3.jpg);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_leftbanner3.jpg);
 }
 .quiz-edu-skin-right {
     /*margin-left: 600px;*/
     right: 0;
     background-position: right top;
-    background-image: url(<?php echo get_template_directory_uri(); ?>/images/WSU_rightbanner2.jpg);
+    background-image: url(<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_rightbanner2.jpg);
 }
 .progress, .quiz-details {
     z-index: 2;
@@ -614,24 +608,24 @@ div.buttons-bottom a {
 
 <script>
 var header_images = [
-    '<?php echo get_template_directory_uri(); ?>/images/Afifa_2_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/wsu_questionpages.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/Jess_2_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw1.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw3.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Afifa_2_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/wsu_questionpages.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Jess_2_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw1.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw3.jpg',
     
-    '<?php echo get_template_directory_uri(); ?>/images/wsu_questionpages.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/Jess_2_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw1.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw3.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/wsu_questionpages.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Jess_2_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw1.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw3.jpg',
     
-    '<?php echo get_template_directory_uri(); ?>/images/wsu_questionpages.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/Jess_2_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw1.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw2.jpg',
-    '<?php echo get_template_directory_uri(); ?>/images/WSU_quiz_bw3.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/wsu_questionpages.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Jess_2_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw1.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw2.jpg',
+    '<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_quiz_bw3.jpg',
 ];
 </script>
 

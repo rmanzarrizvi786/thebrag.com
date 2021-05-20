@@ -345,7 +345,7 @@ wp_enqueue_script( 'quiz-edu-cricle-progress', get_template_directory_uri() . '/
     <div class="results">
         <div id="brag-logo">
             <a href="<?php echo site_url(); ?>" target="_blank">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/brag_logo_300x80.png" alt="Brag Magazine" width="175" />
+                <img src="<?php echo ICONS_URL; ?>The-Brag_combo.svg" alt="Brag Magazine" width="175" />
             </a>
         </div>
         <div class="quiz-header">
@@ -355,7 +355,7 @@ wp_enqueue_script( 'quiz-edu-cricle-progress', get_template_directory_uri() . '/
                 Finder.<br>
             </div>
             <div class="right">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/Afifa_1_results_TheCollegeLOGO2.jpg">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Afifa_1_results_TheCollegeLOGO2.jpg">
             </div>
             <div class="clear"></div>
         </div>
@@ -560,7 +560,7 @@ endforeach; ?>
     
     <div style="margin-top: 70px; text-align: center">
         <a href="https://ad.doubleclick.net/ddm/trackclk/N827107.3385141SEVENTHSTMEDIA/B22086547.235840487;dc_trk_aid=433411598;dc_trk_cid=109907617;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=" target="_blank">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/WSU_Logo_TheCollege.jpg" alt="Western Sydney University - The College" width="175" />
+            <img src="<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/WSU_Logo_TheCollege.jpg" alt="Western Sydney University - The College" width="175" />
         </a>
     </div>
     
@@ -647,7 +647,7 @@ $colors = array(
         <div class="questions-wrap" id="questions-wrap" style="display: none;">
             <div id="brag-logo">
                 <a href="<?php echo site_url(); ?>" target="_blank">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/brag_logo_300x80.png" alt="Brag Magazine" width="175" />
+                    <img src="<?php echo ICONS_URL; ?>The-Brag_combo.svg" alt="Brag Magazine" width="175" />
                 </a>
             </div>
             <div class="quiz-header">
@@ -657,7 +657,7 @@ $colors = array(
                     Finder.<br>
                 </div>
                 <div class="right">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/Afifa_2_bw2.jpg" id="hero-image">
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/wsu-quiz/Afifa_2_bw2.jpg" id="hero-image">
                 </div>
                 <div class="clear"></div>
             </div>

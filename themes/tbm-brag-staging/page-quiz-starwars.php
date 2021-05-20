@@ -14,9 +14,6 @@ wp_localize_script( 'quiz-starwars', 'quiz_starwars', $args );
 <?php if ( ! post_password_required() ) : ?>
 
 <div class="quiz-story" style="position: relative;">
-<!--    <div style="position: fixed; margin-left: -200px">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/quiz-starwars/quiz-bg.png" style="max-width: none;">
-    </div>-->
 <?php
     $results = array(
         array(
@@ -352,7 +349,7 @@ wp_localize_script( 'quiz-starwars', 'quiz_starwars', $args );
         <?php if ( $questions ) : ?>
         <div class="questions-wrap" id="questions-wrap">
             <div class="quiz-header">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/StarWarsIdentities_header.png">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/quiz-starwars/StarWarsIdentities_header.png">
                 <br>
                 <p style="text-align: right; font-size: .8rem; color: #999; margin: 0; padding: 0;">&copy; &amp; TM 2018 Lucasfilm Ltd. All Rights Reserved. Used Under Authorization.</p>
             </div>
