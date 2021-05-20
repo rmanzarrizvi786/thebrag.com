@@ -47,7 +47,7 @@
 
 main {
     position: relative;
-    margin-top: 115px;
+    margin-top: $headerHeight;
 }
 
 .form-control {
@@ -93,5 +93,14 @@ main {
     }
     span.page-numbers.current {
         color: $secondaryBlack;
+    }
+}
+
+.pswp {
+    top: $headerHeightMobile !important;
+    height: calc(100% - $headerHeightMobile) !important;
+    @media (min-width: $tablet) {
+        top: $headerHeight !important;
+        height: calc(100% - $headerHeight) !important;
     }
 }

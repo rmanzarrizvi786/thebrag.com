@@ -944,11 +944,16 @@ body.modal-open {
 
 header {
   z-index: 30000;
-  height: 115px;
+  height: 50px;
   margin: auto;
   background-color: #0f0c0c;
   color: #fff;
   position: relative;
+}
+@media (min-width: 48rem) {
+  header {
+    height: 115px;
+  }
 }
 header.fixed-top {
   position: fixed;
@@ -2088,14 +2093,12 @@ p {
     transform: translate(-50%, -50%);
   }
 
-  header {
-    height: 50px !important;
+  /* header {
+      height: 50px !important;
   }
-
   main {
-    margin-top: 50px !important;
-  }
-
+      margin-top: 50px !important;
+  } */
   .logo-wrap a img {
     width: 140px !important;
   }
@@ -2219,6 +2222,17 @@ main {
 }
 .page-nav-numbered span.page-numbers.current {
   color: #181715;
+}
+
+.pswp {
+  top: 50px !important;
+  height: calc(100% - $headerHeightMobile) !important;
+}
+@media (min-width: 48rem) {
+  .pswp {
+    top: 115px !important;
+    height: calc(100% - $headerHeight) !important;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

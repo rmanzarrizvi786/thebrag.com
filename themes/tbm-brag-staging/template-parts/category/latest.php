@@ -3,7 +3,6 @@ extract($args);
 
 $news_args = [
     'post_status' => 'publish',
-    
     'ignore_sticky_posts' => 1,
     'posts_per_page' => 8,
     'post__not_in' => $exclude_posts,

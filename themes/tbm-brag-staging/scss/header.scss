@@ -1,7 +1,10 @@
 header {
     z-index: 30000;
     // width: $containerWidth;
-    height: 115px;
+    height: $headerHeightMobile;
+    @media(min-width: $tablet) {
+        height: $headerHeight;
+    }
     margin: auto;
     background-color: $primaryBlack;
     color: #fff;
