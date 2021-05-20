@@ -208,7 +208,15 @@ body.modal-open {
 }
 
 .ad-billboard {
+    width: 320px;
+    height: 50px;
     @media (min-width: $tablet) {
-        // background-color: transparent;
+        width: 970px;
+        height: 250px;
     }
+}
+.ad-mrec {
+    width: 300px;
+    height: 250px;
+    margin: auto;
 }

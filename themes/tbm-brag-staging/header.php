@@ -194,11 +194,15 @@ $page_template = get_page_template_slug();
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <header class="fixed-top py-1 py-md-0">
+  <header class="fixed-top pb-1 py-md-0">
+    <div class="btn btn-media-top btn-toggle-slidedown d-flex d-md-none mb-1 mx-auto" data-target="network">
+      <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png"></span>
+      <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg"></span>
+    </div>
     <div class="d-flex justify-content-between container">
       <div class="network-socials-wrap d-none d-md-block">
         <div class="network-socials">
-          <div class="btn btn-media-top">
+          <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
             <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png"></span>
             <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg"></span>
           </div>
@@ -238,18 +242,21 @@ $page_template = get_page_template_slug();
             <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
           <?php endif; ?>
         </div>
-        <button class="btn btn-primary btn-observer-top">
-          Pick Your Niche
-          <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img">
+        <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
+          <span>Pick Your Niche</span>
+          <span class="ml-1">
+            <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img">
+            <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover">
+          </span>
         </button>
       </div>
     </div>
 
-    <div class="nav-wrap container d-none d-md-flex flex-column flex-md-row">
-      <div class="btn d-block d-md-none btn-toggle-menu" style="opacity: .5; align-self: flex-end;">
-        <img src="<?php echo ICONS_URL; ?>cross.svg" width="24" height="24">
+    <div class="nav-wrap container d-md-flex flex-column flex-md-row">
+      <div class="btn d-block d-md-none btn-close-menu">
+        <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24">
       </div>
-      <div class="search-wrap">
+      <div class="search-wrap mt-2 mt-md-0">
         <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
       </div>
       <div id="nav-primary" class="nav w-100 my-0">

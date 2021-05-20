@@ -2,7 +2,7 @@
     background-color: $primaryBlack;
     border-radius: 0;
     @media (min-width: $tablet) {
-        border-radius: $roudedRadius * 2 $roudedRadius * 2 0 0;
+        border-radius: $roundedRadius * 2 $roundedRadius * 2 0 0;
     }
     // padding: 1rem;
     color: #fff;
@@ -129,7 +129,7 @@
 
 .trending-stories {
     .story {
-        border-radius: $roudedRadius;
+        border-radius: $roundedRadius;
         display: block;
         background-color: $secondaryBlack;
         font-size: 0.825rem;
@@ -252,7 +252,7 @@
         font-weight: 500;
     }
     .post-thumbnail img {
-        border-radius: $roudedRadius/2 $roudedRadius/2 0 0;
+        border-radius: $roundedRadius/2 $roundedRadius/2 0 0;
     }
 }
 

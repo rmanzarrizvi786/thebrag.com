@@ -11,6 +11,7 @@
 
 @import "footer";
 @import "network";
+@import "observer-list-top";
 
 @import "media-queries";
 
@@ -85,7 +86,7 @@ main {
     span.page-numbers.current {
         padding: 0.25rem 0.5rem;
         border: 1px solid $secondaryBlack;
-        border-radius: $roudedRadius / 2;
+        border-radius: $roundedRadius / 2;
     }
     a {
         background-color: $secondaryBlack;

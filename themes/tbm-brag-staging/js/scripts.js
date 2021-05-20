@@ -27,6 +27,66 @@ jQuery(document).ready(function ($) {
   });
  */
 
+  $('.btn-toggle-slidedown').on('click', function () {
+    if ($(this).data('target')) {
+      var target = $('#' + $(this).data('target'));
+      if (target.hasClass('slidedown-active')) {
+        target.removeClass('slidedown-active');
+        $('#overlay').addClass('d-none');
+        $('body').removeClass('modal-open');
+        target.slideUp();
+      } else {
+        $('.slidedown-active').removeClass('slidedown-active').hide();
+        target.slideDown().addClass('slidedown-active');
+        $('#overlay').removeClass('d-none');
+        $('body').addClass('modal-open');
+      }
+    }
+  });
+
+  $('#overlay').on('click', function () {
+    $(this).addClass('d-none');
+    $('body').removeClass('modal-open');
+    $('.slidedown-active').removeClass('slidedown-active').slideUp();
+    // $('.nav-wrap').addClass('d-none');
+    $('.nav-wrap').removeClass('active');
+  })
+
+  $('.btn-toggle-menu').on('click', function () {
+    $('.nav-wrap').addClass('active');
+    $('#overlay').removeClass('d-none');
+    $('body').addClass('modal-open');
+  });
+
+  $('.btn-close-menu').on('click', function () {
+    $('.nav-wrap').removeClass('active');
+    $('#overlay').addClass('d-none');
+    $('body').removeClass('modal-open');
+  });
+
+  $('#observer-list-top .topics-active a').on('click', function (e) {
+    e.preventDefault();
+    var btn = $(this);
+
+    if (!btn.hasClass('subscribed')) {
+      var status = 'subscribed';
+    } else {
+      var status = 'unsubscribed';
+    }
+
+    var data = {
+      action: 'subscribe_observer',
+      formData: 'list=' + $(this).data('list') + '&status=' + status
+    };
+    $.post(brag_observer.url, data, function (res) {
+      if (res.success) {
+        btn.toggleClass('subscribed');
+      } else {
+        // btn.prop('disabled', false);
+      }
+    });
+  });
+
   $("body").on("click", ".yt-lazy-load", function () {
     var video_id = $(this).data("id");
     var player_id = $(this).prop("id");
@@ -152,6 +212,12 @@ jQuery(document).ready(function ($) {
     winTop = $(this).scrollTop();
 
     didScroll = true;
+
+    if (winTop >= $('header').outerHeight()) {
+      $('#skin').addClass('fixed');
+    } else {
+      $('#skin').removeClass('fixed');
+    }
 
     if ($(".single").length) {
       if ($("#articles-wrap").length && count_articles < 9) {

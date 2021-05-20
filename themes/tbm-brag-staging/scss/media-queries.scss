@@ -16,20 +16,20 @@
 }
 
 .rounded {
-    border-radius: $roudedRadius;
+    border-radius: $roundedRadius;
 }
 .rounded-top {
-    border-radius: $roudedRadius $roudedRadius 0 0;
+    border-radius: $roundedRadius $roundedRadius 0 0;
 }
 
 h1 {
-    font-size: $h1Size*.75;
+    font-size: $h1Size * 0.75;
 }
 h2 {
-    font-size: $h2Size*.75;
+    font-size: $h2Size * 0.75;
 }
 h3 {
-    font-size: $h3Size*.75;
+    font-size: $h3Size * 0.75;
 }
 p {
     margin-bottom: 1rem;
@@ -172,10 +172,27 @@ p {
     .nav-wrap {
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        left: -100%;
+        width: 75%;
         height: 100vh;
         background: $primaryBlack;
+        box-shadow: 10px 0 18px #000;
+        &.active {
+            left: 0;
+        }
+        transition: 0.25s left linear;
+        .btn-close-menu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            bottom: 0;
+            background: #000;
+            display: flex;
+            width: 50px;
+            img {
+                width: 100%;
+            }
+        }
     }
     #nav-primary {
         flex: 1 1 auto;

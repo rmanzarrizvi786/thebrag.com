@@ -2,6 +2,7 @@
 </div><!-- .content -->
 
 <?php get_template_part('template-parts/network'); ?>
+<?php get_template_part('template-parts/observer-list-top'); ?>
 
 <div id="skin" class="d-none d-md-block">
   <?php render_ad_tag('skin'); ?>
@@ -96,22 +97,7 @@
 
 <script>
   jQuery(document).ready(function($) {
-    $(window).scroll(function() {
-      winTop = $(this).scrollTop();
-      if (winTop >= $('header').outerHeight()) {
-        $('#skin').addClass('fixed');
-      } else {
-        $('#skin').removeClass('fixed');
-      }
-
-      /* if (winTop >= $(window).height()) {
-        $('.nav-wrap').slideUp();
-      } else {
-        $('.nav-wrap').slideDown();
-      } */
-    });
-
-    $('.btn-media-top').on('click', function() {
+    /* $('.btn-media-top').on('click', function() {
       $("body").toggleClass("modal-open");
       $('#overlay').toggleClass('d-none');
       if ($("body").hasClass("modal-open")) {
@@ -130,7 +116,7 @@
       $("body").toggleClass("modal-open");
       $("#network").slideUp();
       $('#overlay').toggleClass('d-none');
-    });
+    }); */
     $(window).trigger('scroll');
   });
 </script>

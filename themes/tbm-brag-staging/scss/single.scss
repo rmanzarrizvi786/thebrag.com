@@ -1,7 +1,7 @@
 .single-article {
     background-color: $colorYellow;
     &-1 {
-        border-radius: $roudedRadius $roudedRadius 0 0;
+        border-radius: $roundedRadius $roundedRadius 0 0;
     }
     a {
         color: $primaryBlack;
@@ -79,7 +79,7 @@
     font-size: 1rem;
     background: $colorYellow;
     text-align: center;
-    border-radius: $roudedRadius;
+    border-radius: $roundedRadius;
     margin: 1rem auto;
     opacity: 0.25;
 }

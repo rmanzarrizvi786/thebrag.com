@@ -5,6 +5,9 @@ if (!is_user_logged_in()) :
   exit;
 endif;
 
+$current_user = wp_get_current_user();
+$user_id = $current_user->ID;
+
 $my_sub_lists = [];
 $my_vote_lists = [];
 $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
