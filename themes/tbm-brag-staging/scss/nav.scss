@@ -23,7 +23,7 @@
                 color: #fff;
                 text-decoration: none;
                 font-family: $headingFonts;
-                font-size: .825rem;
+                font-size: 0.825rem;
                 font-weight: 500;
                 &:hover {
                     color: $primaryColor;
@@ -42,6 +42,27 @@
             &:hover ul {
                 display: flex;
             }
+        }
+    }
+}
+
+.nav-v ul {
+    align-items: flex-start;
+    li {
+        list-style: none;
+        &.active a {
+            @media (min-width: $tablet) {
+                border-right: 4px solid $primaryColor;
+                margin-right: -1px;
+            }
+            color: $primaryColor;
+            font-weight: bold;
+        }
+        a {
+            display: block;
+            padding: 0.75rem 0.5rem;
+            color: $primaryBlack;
+            font-weight: bold;
         }
     }
 }

@@ -100,96 +100,61 @@ if (0 && isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST
   }
 }
 
-get_template_part('page-templates/brag-observer/header');
+get_header();
+// get_template_part('page-templates/brag-observer/header');
 ?>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div id="change-password" class="col-12 col-lg-10 my-5">
-      <main class="site-main" role="main">
+<div class="container bg-yellow rounded-top p-2">
+  <div class="d-flex border-bottom pb-2">
+    <h1>My Dashboard</h1>
+  </div>
+  <div class="row justify-content-center align-items-start">
+    <?php get_template_part('template-parts/account/menu', 'left'); ?>
+    <div class="col-12 col-md-9 p-3">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div id="change-password" class="col-12">
 
-        <?php if (!empty($errors)) : ?>
-          <div class="alert alert-danger">
-            <?php foreach ($errors as $error) : ?>
-              <div><?php echo $error; ?></div>
-            <?php endforeach; ?>
-          </div>
-        <?php endif; ?>
-
-        <?php if (!empty($messages)) : ?>
-          <div class="alert alert-success">
-            <?php foreach ($messages as $message) : ?>
-              <div><?php echo $message; ?></div>
-            <?php endforeach; ?>
-          </div>
-        <?php endif;
-
-        /* Start the Loop */
-        while (have_posts()) :
-          the_post();
-        ?>
-          <h1 class="title text-center">
-            <?php the_title(); ?>
-          </h1>
-          <?php
-          the_content();
-          ?>
-
-          <form action="<?php echo home_url('/change-password/'); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
-          <input type="hidden" name="action" value="change-password">
-            <div class="text-center">
-              <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Email me the password reset link">
-            </div>
-          </form>
-          <?php
-          if (0) :
-          ?>
-
-            <form action="<?php echo home_url('/change-password/'); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
-
-              <input type="hidden" name="returnTo" value="<?php echo $returnTo; ?>">
-
-              <input type="hidden" name="action" value="change-password">
-
-              <?php if (get_user_meta($current_user->ID, 'is_imported', true) !== '1') { ?>
-
-                <div class="row">
-
-                  <div class="col-12 mt-3 col-md-6">
-                    <h4>Current Password</h4>
-                    <input type="password" name="current_password" id="current_password" class="form-control" value="" autocomplete="new-password">
-                  </div>
-
-                </div>
-
-              <?php } ?>
-
-              <div class="row">
-
-                <div class="col-12 mt-3 col-md-6">
-                  <h4>New Password</h4>
-                  <input type="password" name="password" id="password" class="form-control" value="" autocomplete="new-password">
-                </div>
-
-                <div class="col-12 mt-3 col-md-6">
-                  <h4>Confirm New Password</h4>
-                  <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" autocomplete="new-password">
-                </div>
-
-                <div class="col-12 mt-3">
-                  <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Save">
-                </div>
+            <?php if (!empty($errors)) : ?>
+              <div class="alert alert-danger">
+                <?php foreach ($errors as $error) : ?>
+                  <div><?php echo $error; ?></div>
+                <?php endforeach; ?>
               </div>
-            </form>
-        <?php
-          endif;
-        endwhile; // End of the loop.
-        ?>
-      </main><!-- main tag -->
-    </div><!-- #primary -->
-  </div><!-- .row -->
-</div><!-- .container -->
+            <?php endif; ?>
+
+            <?php if (!empty($messages)) : ?>
+              <div class="alert alert-success">
+                <?php foreach ($messages as $message) : ?>
+                  <div><?php echo $message; ?></div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif;
+
+            /* Start the Loop */
+            while (have_posts()) :
+              the_post();
+            ?>
+              <h2 class="title text-center">
+                <?php the_title(); ?>
+              </h2>
+              <?php the_content(); ?>
+              <form action="<?php echo home_url('/change-password/'); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
+                <input type="hidden" name="action" value="change-password">
+                <div class="text-center">
+                  <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Email me the password reset link">
+                </div>
+              </form>
+            <?php
+            endwhile; // End of the loop.
+            ?>
+          </div><!-- #primary -->
+        </div><!-- .row -->
+      </div><!-- .container -->
+    </div>
+  </div>
+</div>
 
 <?php
-// get_footer();
-get_template_part('page-templates/brag-observer/footer');
+get_footer();
+// get_template_part('page-templates/brag-observer/footer');

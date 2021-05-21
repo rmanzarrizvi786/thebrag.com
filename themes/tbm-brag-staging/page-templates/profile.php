@@ -327,15 +327,18 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   } // If $errors is empty
 } // IF $_POST
 
-// get_header();
-get_template_part('page-templates/brag-observer/header');
+get_header();
+// get_template_part('page-templates/brag-observer/header');
 ?>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div id="update-profile" class="col-12 col-lg-10 my-5">
-      <main class="site-main" role="main">
-
+<div class="container bg-yellow rounded-top p-2">
+  <div class="d-flex border-bottom pb-2">
+    <h1>My Dashboard</h1>
+  </div>
+  <div class="row justify-content-center align-items-start">
+    <?php get_template_part('template-parts/account/menu', 'left'); ?>
+    <div id="update-profile" class="col-12 col-md-9 p-3">
+      <div class="site-main">
         <?php
         /* Start the Loop */
         while (have_posts()) :
@@ -356,19 +359,19 @@ get_template_part('page-templates/brag-observer/header');
                   <?php if (0 == $profile_strength && $i == 20) : ?>
                     <div style="position: relative;">
                       <div class="profile-strength-start d-flex justify-content-center align-items-center <?php echo $profile_complete_class; ?>">
-                        <i class="fa fa-check"></i>
+                        <img src="<?php echo ICONS_URL; ?>check.svg" width="16" height="16">
                       </div>
                     </div>
                   <?php elseif ($profile_strength != 100 && $i == $profile_strength) : ?>
                     <div style="position: relative;">
                       <div class="profile-strength-complete d-flex justify-content-center align-items-center <?php echo $profile_complete_class; ?>">
-                        <i class="fa fa-check"></i>
+                        <img src="<?php echo ICONS_URL; ?>check.svg" width="16" height="16">
                       </div>
                     </div>
                   <?php elseif ($i == 100) : ?>
                     <div style="position: relative;">
                       <div class="profile-strength-complete d-flex justify-content-center align-items-center text-primary">
-                        <i class="fa fa-star"></i>
+                        <img src="<?php echo ICONS_URL; ?>star.svg" width="16" height="16">
                       </div>
                     </div>
                   <?php endif; ?>
@@ -430,7 +433,7 @@ get_template_part('page-templates/brag-observer/header');
                 </div>
               <?php endif; ?>
 
-              <div class="col-12 mt-3 col-md-6">
+              <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
                 <?php $first_name = isset($post_vars) && isset($post_vars['first_name']) ? $post_vars['first_name'] : (isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['first_name'])
                   ?
                   $auth0_user['user_metadata']['first_name']
@@ -440,7 +443,7 @@ get_template_part('page-templates/brag-observer/header');
                 <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $first_name; ?>">
               </div>
 
-              <div class="col-12 mt-3 col-md-6">
+              <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
                 <?php $last_name = isset($post_vars) && isset($post_vars['last_name']) ? $post_vars['last_name'] : (isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['last_name'])
                   ?
                   $auth0_user['user_metadata']['last_name']
@@ -450,7 +453,7 @@ get_template_part('page-templates/brag-observer/header');
                 <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo  $last_name; ?>">
               </div>
 
-              <div class="col-12 mt-3 col-md-4">
+              <div class="col-12 mt-3 col-md-4 px-0 px-md-1">
                 <?php
                 $user_state = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
                   ?
@@ -467,16 +470,16 @@ get_template_part('page-templates/brag-observer/header');
                 </select>
               </div>
 
-              <div class="col-12 mt-3 col-md-5">
+              <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
                 <?php
                 $birthday = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['birthday'])
-                ?
-                $auth0_user['user_metadata']['birthday']
-                : get_user_meta($current_user->ID, 'birthday', true);
+                  ?
+                  $auth0_user['user_metadata']['birthday']
+                  : get_user_meta($current_user->ID, 'birthday', true);
                 $birthday = $birthday ? explode('-', $birthday) : [];
                 ?>
                 <h4>Birthday</h4>
-                <div class="input-group">
+                <div class="input-group d-flex">
                   <select aria-label="Day" name="birthday_day" id="day" title="Day" class="form-control">
                     <option value="0">Day</option>
                     <?php for ($birthday_day = 1; $birthday_day <= 31; $birthday_day++) : ?>
@@ -509,12 +512,12 @@ get_template_part('page-templates/brag-observer/header');
 
 
 
-              <div class="col-12 mt-3 col-md-3">
+              <div class="col-12 mt-3 col-md-3 px-0 px-md-1">
                 <?php
                 $user_gender = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
-                ?
-                $auth0_user['user_metadata']['gender']
-                : get_user_meta($current_user->ID, 'gender', true);
+                  ?
+                  $auth0_user['user_metadata']['gender']
+                  : get_user_meta($current_user->ID, 'gender', true);
                 ?>
                 <h4>Gender</h4>
                 <select aria-label="Gender" name="gender" id="gender" title="Gender" class="form-control">
@@ -546,11 +549,11 @@ get_template_part('page-templates/brag-observer/header');
         <?php
         endwhile; // End of the loop.
         ?>
-      </main><!-- main tag -->
+      </div>
     </div><!-- #primary -->
   </div><!-- .row -->
 </div><!-- .container -->
 
 <?php
-// get_footer();
-get_template_part('page-templates/brag-observer/footer');
+get_footer();
+// get_template_part('page-templates/brag-observer/footer');
