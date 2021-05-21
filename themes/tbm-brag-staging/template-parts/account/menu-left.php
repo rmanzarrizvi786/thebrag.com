@@ -1,9 +1,12 @@
 <?php
-$pages = [
-    'profile' => [
+$pages = [];
+if (is_user_logged_in()) {
+    $pages['profile'] = [
         'link' => 'profile',
         'text' => 'Profile',
-    ],
+    ];
+}
+$pages += [
     'refer-a-friend' => [
         'link' => 'refer-a-friend',
         'text' => 'Earn rewards',
@@ -15,15 +18,16 @@ $pages = [
     'magazine-subscriptions' => [
         'link' => 'observer/magazine-subscriptions',
         'text' => 'Magazine subscriptions'
-    ],
-    'change-password' => [
-        'link' => 'change-password',
-        'text' => 'Settings',
     ]
 ];
+if (is_user_logged_in()) {
+    $pages['change-password'] = [
+        'link' => 'change-password',
+        'text' => 'Settings',
+    ];
+}
 $current_page = get_query_var('pagename'); // $wp_query->get_required_object();
 
-// echo $current_page; exit;
 ?>
 
 <div class="col-md-3 border-right align-self-stretch py-3">

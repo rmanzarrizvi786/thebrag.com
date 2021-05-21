@@ -121,9 +121,7 @@ if (is_user_logged_in()) {
 </style>
 
 <div class="container bg-yellow rounded-top p-2">
-  <div class="d-flex border-bottom pb-2">
-    <h1>My Dashboard</h1>
-  </div>
+  <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
     <?php get_template_part('template-parts/account/menu', 'left'); ?>
     <div class="col-12 col-md-9 p-3">
