@@ -48,8 +48,18 @@
 
 .nav-v ul {
     align-items: flex-start;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    @media (min-width: $tablet) {
+        flex-direction: column;
+    }
     li {
         list-style: none;
+        width: auto;
+        @media (min-width: $tablet) {
+            width: 100%;
+        }
         &.active a {
             @media (min-width: $tablet) {
                 border-right: 4px solid $primaryColor;

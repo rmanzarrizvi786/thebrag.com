@@ -32,7 +32,6 @@
                         <?php endif; // If $tbm_featured_video_link  
                         ?>
                         <div class="rounded youtube-player player-wrap" data-id="<?php echo $featured_yt_vid_id; ?>" style="background-image:url(<?php echo $featured_video_img; ?>);">
-
                             <img class="p-a-center play-button" src="<?php echo ICONS_URL; ?>controller-play.svg" alt="Play" title="Play" loading="lazy">
                         </div>
                         <?php if ($tbm_featured_video_link) : ?>
@@ -60,6 +59,9 @@
     <div class="record px-2 mt-3 mt-md-0">
         <h3 class="heading mb-2">Record <span>of the week</span></h3>
         <a href="<?php echo get_option('tbm_featured_album_link'); ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); ?>);">
+            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
+            -
+            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?>
         </a>
         <h4 class="mt-0 mt-md-3 text-center">
             <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>

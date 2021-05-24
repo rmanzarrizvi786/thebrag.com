@@ -1,3 +1,4 @@
+@import "utilities/variables";
 .w-100 {
     width: 100%;
 }
@@ -146,16 +147,6 @@
 .subheading {
     font-family: $headingFonts;
     font-weight: 500;
-}
-
-.border-top {
-    border-top: 1px solid $borderColor;
-}
-.border-bottom {
-    border-bottom: 1px solid $borderColor;
-}
-.border-right {
-    border-right: 1px solid $borderColor;
 }
 
 .bg-yellow {

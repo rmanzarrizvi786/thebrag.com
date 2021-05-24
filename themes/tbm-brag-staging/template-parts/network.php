@@ -1,6 +1,6 @@
 <div id="network" class="bg-dark p-1 p-md-2" style="display: none;">
     <div class="container">
-        <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
+        <div class="btn d-none d-md-block btn-media-top btn-toggle-slidedown" data-target="network">
             <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png"></span>
             <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" class="rotate180"></span>
         </div>

@@ -30,9 +30,9 @@ $current_page = get_query_var('pagename'); // $wp_query->get_required_object();
 
 ?>
 
-<div class="col-md-3 border-right align-self-stretch py-3">
+<div class="col-12 col-md-3 border-none border-md-right align-self-stretch py-3">
     <nav class="nav-v">
-        <ul>
+        <ul class="d-flex">
             <?php foreach ($pages as $page => $link_details) : ?>
                 <li class="<?php echo $page == $current_page ? 'active' : ''; ?>"><a href="<?php echo home_url('/' . $link_details['link'] . '/'); ?>"><?php echo $link_details['text']; ?></a></li>
             <?php endforeach; ?>

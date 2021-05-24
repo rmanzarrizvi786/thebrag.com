@@ -128,7 +128,7 @@ if (is_user_logged_in()) {
 
       <?php if ($new_competitions) : ?>
 
-        <h1 class="text-center mb-4">New Competitions</h1>
+        <h2 class="mb-4">New Competitions</h2>
 
         <div class="d-flex flex-wrap align-items-start">
           <?php
@@ -221,7 +221,7 @@ if (is_user_logged_in()) {
             }
           </style>
 
-          <h1 class="text-center mb-4">Competitions you have entered</h1>
+          <h2 class="my-4">Competitions you have entered</h2>
 
           <div class="container-fluid">
             <div class="row">

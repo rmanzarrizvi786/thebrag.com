@@ -331,6 +331,12 @@ get_header();
 // get_template_part('page-templates/brag-observer/header');
 ?>
 
+<div class="ad-billboard container py-2 py-md-4">
+    <div class="mx-auto text-center">
+        <?php render_ad_tag('leaderboard'); ?>
+    </div>
+</div>
+
 <div class="container bg-yellow rounded-top p-2">
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
@@ -342,14 +348,14 @@ get_header();
         while (have_posts()) :
           the_post();
         ?>
-          <h1 class="title text-center">
+          <h2 class="title px-0 px-md-1">
             <?php the_title(); ?>
-          </h1>
+          </h2>
           <?php the_content(); ?>
           <?php
 
           ?>
-          <div class="text-center mx-auto mb-3" style="max-width: 100%;">
+          <div class="mx-auto mb-3 px-0 px-md-1" style="max-width: 100%;">
             <p><strong>Profile Strength: <a href="<?php echo home_url('/profile/'); ?>" class="<?php echo $profile_complete_class; ?>"><?php echo $profile_strength; ?>%</a> complete</strong></p>
             <div class="progress profile-strength">
               <?php for ($i = 20; $i <= 100; $i += 20) : ?>
@@ -425,7 +431,7 @@ get_header();
             -->
 
               <?php if (strpos($current_user->user_email, '@privaterelay.appleid.com') === FALSE) : ?>
-                <div class="col-12">
+                <div class="col-12 px-0 px-md-1">
                   <h4>Email Address</h4>
                   <?php echo preg_replace('/(?:^|.@).\K|.\.[^@]*$(*SKIP)(*F)|.(?=.*?\.)/', '*', $current_user->user_email); ?>
                 </div>

@@ -50,6 +50,7 @@ jQuery(document).ready(function ($) {
     $('.slidedown-active').removeClass('slidedown-active').slideUp();
     // $('.nav-wrap').addClass('d-none');
     $('.nav-wrap').removeClass('active');
+    $('.modal').hide();
   })
 
   $('.btn-toggle-menu').on('click', function () {
@@ -60,6 +61,21 @@ jQuery(document).ready(function ($) {
 
   $('.btn-close-menu').on('click', function () {
     $('.nav-wrap').removeClass('active');
+    $('#overlay').addClass('d-none');
+    $('body').removeClass('modal-open');
+  });
+
+  $('[data-toggle="modal"]').on('click', function(e) {
+    e.preventDefault();
+    var target = $($(this).data('target'));
+    $('body').addClass('modal-open');
+    $('#overlay').removeClass('d-none');
+    target.fadeIn();
+  });
+  $('.modal .close').on('click', function(e) {
+    e.preventDefault();
+    var target = $(this).closest('.modal');
+    target.fadeOut();
     $('#overlay').addClass('d-none');
     $('body').removeClass('modal-open');
   });

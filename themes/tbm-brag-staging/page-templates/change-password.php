@@ -114,17 +114,17 @@ get_header();
           <div id="change-password" class="col-12">
 
             <?php if (!empty($errors)) : ?>
-              <div class="alert alert-danger">
+              <div class="alert alert-danger my-3">
                 <?php foreach ($errors as $error) : ?>
-                  <div><?php echo $error; ?></div>
+                  <div class="text-center"><?php echo $error; ?></div>
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>
 
             <?php if (!empty($messages)) : ?>
-              <div class="alert alert-success">
+              <div class="alert alert-success my-3">
                 <?php foreach ($messages as $message) : ?>
-                  <div><?php echo $message; ?></div>
+                  <div class="text-center"><?php echo $message; ?></div>
                 <?php endforeach; ?>
               </div>
             <?php endif;
@@ -133,13 +133,13 @@ get_header();
             while (have_posts()) :
               the_post();
             ?>
-              <h2 class="title text-center">
+              <h2 class="title">
                 <?php the_title(); ?>
               </h2>
               <?php the_content(); ?>
               <form action="<?php echo home_url('/change-password/'); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
                 <input type="hidden" name="action" value="change-password">
-                <div class="text-center">
+                <div class="mt-2">
                   <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Email me the password reset link">
                 </div>
               </form>

@@ -208,19 +208,23 @@ get_header();
   }
 </style>
 
+<div class="ad-billboard container py-2 py-md-4">
+  <div class="mx-auto text-center">
+    <?php render_ad_tag('leaderboard'); ?>
+  </div>
+</div>
+
 <div class="container bg-yellow rounded-top p-2">
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
     <?php get_template_part('template-parts/account/menu', 'left'); ?>
-    <div id="" class="col-12 col-md-9 p-3">
-
-      <div class="container bg-yellow rounded-top p-2">
+    <div id="" class="col-12 col-md-9 p-md-3">
+      <div class="container bg-yellow rounded-top p-md-2">
         <div class="row">
           <div class="col d-flex justify-content-between align-items-end">
-            <h3 class="m-0">
+            <h3 class="my-2">
               Share
               The Brag Observer
-              <i class="fas fa-arrow-right" aria-hidden="true"></i>
               Earn Rewards
             </h3>
           </div>
@@ -229,36 +233,15 @@ get_header();
         <div class="row">
           <div class="col">
             <div class="card">
-              <div class="card-body d-flex justify-content-center align-items-center p-2 p-md-4">
+              <div class="card-body d-flex justify-content-center align-items-center p-md-2 p-md-4">
                 <div class="row">
                   <div class="col-12">
-                    <div class="row d-none d-md-flex">
+                    <div class="d-flex">
                       <?php foreach ($rewards as $reward) : ?>
-                        <div class="col-md-2 text-center col-6 px-1">
+                        <div class="px-1">
                           <img src="<?php echo get_template_directory_uri(); ?>/images/observer/refer-a-friend/rewards_0<?php echo $reward->id; ?>.jpg">
                         </div>
                       <?php endforeach; ?>
-                    </div>
-                    <div class="d-block d-md-none">
-                      <div id="carouselRewardsIndicators" class="carousel slide show-neighbors" data-ride="carousel">
-                        <div class="carousel-inner">
-                          <?php foreach ($rewards as $key => $reward) : ?>
-                            <div class="carousel-item <?php echo 0 == $key ? 'active' : ''; ?>">
-                              <div class="item__third">
-                                <img class="d-block" src="<?php echo get_template_directory_uri(); ?>/images/observer/refer-a-friend/rewards_0<?php echo $reward->id; ?>.jpg" alt="<?php echo $reward->title; ?>">
-                              </div>
-                            </div>
-                          <?php endforeach; ?>
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselRewardsIndicators" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselRewardsIndicators" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -267,7 +250,7 @@ get_header();
           </div>
         </div>
 
-        <div class="row">
+        <div class="mt-3">
           <div class="col align-items-center d-block d-md-flex mb-1">
             <div class="dark-pill rounded mr-3">
               <span>Your Referral Count</span>
@@ -324,23 +307,35 @@ get_header();
             <div class="row mt-4">
               <div class="col">
                 <div class="row">
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex d-md-none justify-content-center">
-                    <a class="btn-social-icon sms-button" id="share_sms" href="#"><i class="fas fa-sms" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex d-md-none justify-content-center">
+                    <a class="btn-social-icon sms-button" id="share_sms" href="#">
+                      <img src="<?php echo ICONS_URL; ?>message.svg" width="32">
+                    </a>
                   </div>
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex d-md-none justify-content-center">
-                    <a class="btn-social-icon whatsapp-button" id="share_whatsapp" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex d-md-none justify-content-center">
+                    <a class="btn-social-icon whatsapp-button" id="share_whatsapp" href="#">
+                      <img src="<?php echo ICONS_URL; ?>whatsapp.svg" width="32">
+                    </a>
                   </div>
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex d-md-none justify-content-center">
-                    <a class="btn-social-icon messenger-button" id="share_messenger" href="#"><i class="fab fa-facebook-messenger" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex d-md-none justify-content-center">
+                    <a class="btn-social-icon messenger-button" id="share_messenger" href="#">
+                      <img src="<?php echo ICONS_URL; ?>messenger.svg" width="32">
+                    </a>
                   </div>
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex justify-content-center">
-                    <a class="btn-share btn-social-icon facebook-button" id="share_facebook" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex justify-content-center">
+                    <a class="btn-share btn-social-icon facebook-button" id="share_facebook" href="#">
+                      <img src="<?php echo ICONS_URL; ?>facebook.svg" width="32">
+                    </a>
                   </div>
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex justify-content-center">
-                    <a class="btn-share btn-social-icon twitter-button" id="share_twitter" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex justify-content-center">
+                    <a class="btn-share btn-social-icon twitter-button" id="share_twitter" href="#">
+                      <img src="<?php echo ICONS_URL; ?>twitter.svg" width="32">
+                    </a>
                   </div>
-                  <div class="col-lg-1 col-md-2 col-sm-3 col-4 mb-4 d-flex justify-content-center">
-                    <a class="btn-share btn-social-icon linkedin-button" id="share_linkedin" href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                  <div class="p-1 p-md-2 col-lg-1 col-md-2 col-4 mb-4 d-flex justify-content-center">
+                    <a class="btn-share btn-social-icon linkedin-button" id="share_linkedin" href="#">
+                      <img src="<?php echo ICONS_URL; ?>linkedin.svg" width="32">
+                    </a>
                   </div>
                 </div>
               </div>
@@ -414,14 +409,10 @@ get_header();
       ?>
         <div class="container bg-yellow p-2">
           <div class="container">
-            <div class="row">
-              <div class="col">
-                <h3 class="mt-4 mb-0">Your network</h3>
-              </div>
-            </div>
+            <h3 class="mt-4 mb-0">Your network</h3>
             <div class="row">
               <?php if (isset($referrals['confirmed']) && count($referrals['confirmed']) > 0) : ?>
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-md-6 col-12">
                   <div class="card mb-4 mt-3">
                     <div class="card-header bg-light text-dark">Confirmed</div>
                     <div class="card-body">
@@ -439,12 +430,12 @@ get_header();
               ?>
 
               <?php if (isset($referrals['unconfirmed']) && count($referrals['unconfirmed']) > 0) : ?>
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-md-6 col-12">
                   <div class="card mb-4 mt-3">
                     <div class="card-header bg-light text-dark">
                       Unconfirmed
                       <button class="btn btn-light" data-target="#unconfirmedModal" data-toggle="modal">
-                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        <img src="<?php echo ICONS_URL; ?>info.svg" width="16">
                       </button>
                     </div>
                     <div class="card-body">
@@ -471,12 +462,12 @@ You can also follow the link below to subscribe:
 
 ";
               ?>
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-md-6 col-12">
                   <div class="card mb-4 mt-3">
                     <div class="card-header bg-light text-dark">
                       Email Invite Sent
-                      <button class="btn btn-light" data-target="#emailInviteModal" data-toggle="modal">
-                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                      <button class="btn btn-sm btn-light" data-target="#emailInviteModal" data-toggle="modal">
+                        <img src="<?php echo ICONS_URL; ?>info.svg" width="16">
                       </button>
                     </div>
                     <div class="card-body">
@@ -654,8 +645,8 @@ add_action('wp_footer', function () {
             <p class="mt-2">See above image. Or click on their email to remind them to confirm their email address.</p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-dark rounded" data-dismiss="modal" type="button">
-              <i class="fas fa-thumbs-up mr-2" aria-hidden="true"></i>
+            <button class="btn btn-dark rounded close" data-dismiss="modal" type="button">
+              <img src="<?php echo ICONS_URL; ?>thumbs-up.svg" width="16" height="16">
               <span>Okay</span>
             </button>
           </div>
@@ -679,12 +670,12 @@ add_action('wp_footer', function () {
 Cheers
 ";
   ?>
-    <div aria-labelledby="emailInviteLabel" class="modal fade" id="emailInviteModal" role="dialog" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div aria-labelledby="emailInviteLabel" class="modal fade bg-white" id="emailInviteModal" role="dialog" tabindex="-1" style="display: none;" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header d-flex justify-content-between">
             <h5 class="modal-title" id="emailInviteLabel">FAQ</h5>
-            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <button aria-label="Close" class="close btn btn-sm" data-dismiss="modal" type="button">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -731,8 +722,8 @@ Cheers
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-dark rounded" data-dismiss="modal" type="button">
-              <i class="fas fa-thumbs-up mr-2" aria-hidden="true"></i>
+            <button class="btn btn-dark rounded close" data-dismiss="modal" type="button">
+              <img src="<?php echo ICONS_URL; ?>thumbs-up.svg" width="16" height="16">
               <span>Okay</span>
             </button>
           </div>
