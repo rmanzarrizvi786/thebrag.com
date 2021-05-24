@@ -1,9 +1,7 @@
+@import "utilities/variables";
 #observer-list-top {
     position: fixed;
     top: $headerHeightMobile;
-    @media (min-width: $tablet) {
-        top: $headerHeight;
-    }
     border-radius: 0 0 $roundedRadius $roundedRadius;
     border-bottom: 7px solid rgba(255, 255, 255, 0.5);
     left: 50%;

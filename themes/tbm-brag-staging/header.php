@@ -164,7 +164,10 @@ $page_template = get_page_template_slug();
     echo file_get_contents(get_template_directory() . '/css/reset.css');
     echo file_get_contents(get_template_directory() . '/css/layout.css');
     echo file_get_contents(get_template_directory() . '/css/header.css');
-    if (is_front_page() || is_home()) {
+    echo file_get_contents(get_template_directory() . '/css/nav.css');
+    echo file_get_contents(get_template_directory() . '/css/observer-list-top.css');
+    
+    if (is_front_page() || is_home() || is_archive() || is_category() ) {
       echo file_get_contents(get_template_directory() . '/css/home-trending.css');
     }
     ?>
@@ -247,7 +250,7 @@ $page_template = get_page_template_slug();
       </div>
     </div>
 
-    <div class="nav-wrap container d-md-flex flex-column flex-md-row">
+    <div class="nav-wrap container d-md-flex flex-column flex-md-row" style="width: 100%;">
       <div class="btn d-block d-md-none btn-close-menu">
         <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
       </div>

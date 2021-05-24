@@ -3,9 +3,6 @@ header {
     z-index: 5;
     // width: $containerWidth;
     height: $headerHeightMobile;
-    @media (min-width: $tablet) {
-        height: $headerHeight;
-    }
     margin: auto;
     background-color: $primaryBlack;
     color: #fff;
@@ -59,11 +56,6 @@ header {
             width: 28px;
             height: 28px;
             margin: 0.5rem 0.5rem 0;
-            @media (min-width: $tablet) {
-                margin: 0;
-                width: 18px;
-                height: 18px;
-            }
         }
     }
 }
@@ -81,9 +73,6 @@ header {
     border-radius: 10rem !important;
     transition: 0.25s all linear;
     font-size: 80%;
-    @media (min-width: $tablet) {
-        font-size: 100%;
-    }
     .btn-img.hover {
         display: none;
     }
@@ -102,13 +91,5 @@ header {
 @for $i from 1 through 12 {
     .col-#{$i} {
         flex: 0 0 $i * 8.333333%;
-    }
-}
-
-@media (min-width: $tablet) {
-    @for $i from 1 through 12 {
-        .col-md-#{$i} {
-            flex: 0 0 $i * 8.333333%;
-        }
     }
 }

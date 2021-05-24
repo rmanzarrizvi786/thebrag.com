@@ -2,9 +2,6 @@
 .trending {
     background-color: $primaryBlack;
     border-radius: 0;
-    @media (min-width: $tablet) {
-        border-radius: $roundedRadius * 2 $roundedRadius * 2 0 0;
-    }
     // padding: 1rem;
     color: #fff;
     font-weight: 400;
@@ -48,16 +45,11 @@
 
     &.story-hero-overlay {
         .story-title {
-            width: 75%;
+            font-size: 1.5rem;
+            width: 100%;
             font-family: $headingFonts;
             font-weight: 300;
-            font-size: 2.5rem;
             line-height: 1.2;
-            // width: 140%;
-            @media (max-width: $mobile) {
-                font-size: 1.5rem;
-                width: 100%;
-            }
         }
         .title-wrap {
             padding-bottom: 1rem;
@@ -68,7 +60,7 @@
         // flex: 2 2 0;
         padding: 1rem;
         z-index: 2;
-        
+
         .read-article-wrap {
             border-top: 1px solid rgba(48, 46, 43, 0.35);
         }

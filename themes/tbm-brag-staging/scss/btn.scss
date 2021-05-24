@@ -9,11 +9,6 @@
     .btn-img {
         width: 18px;
     }
-
-    @media (min-width: $tablet) {
-        border-radius: 10rem;
-        padding: 0.5rem 1rem;
-    }
 }
 .btn-primary {
     background-color: $primaryColor !important;

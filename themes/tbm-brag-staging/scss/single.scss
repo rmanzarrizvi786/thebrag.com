@@ -50,24 +50,6 @@
             font-style: italic;
             line-height: 1.875rem;
         }
-        @media (min-width: $tablet) {
-            figure {
-                margin-bottom: 1rem !important;
-            }
-            blockquote,
-            img,
-            figure {
-                width: 35.625rem;
-                margin-left: -3.3125rem;
-                margin: auto;
-                max-width: 35.625rem !important;
-                overflow: hidden;
-            }
-            figure img {
-                width: 100%;
-                margin: auto;
-            }
-        }
     }
     .excerpt {
         font-weight: 500;
@@ -86,11 +68,6 @@
 
 .yt-lazy-load {
     position: relative;
-    @media (min-width: $tablet) {
-        width: 35.625rem;
-        margin-left: -3.3125rem !important;
-        max-width: 35.625rem !important;
-    }
     overflow: hidden;
     cursor: pointer;
     img {
