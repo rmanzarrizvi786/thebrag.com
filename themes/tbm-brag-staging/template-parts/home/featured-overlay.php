@@ -42,7 +42,7 @@ $trending_story_ID = $trending_story->ID;
             <div class="read-article-wrap pt-2 w-100">
                 <div class="d-flex justify-content-between">
                     <div class="read-article d-flex">
-                        <span><img src="<?php echo get_template_directory_uri() . '/images/arrow-with-circle-right.svg'; ?>" width="20" height="20" alt=">"></span>
+                        <span><img src="<?php echo ICONS_URL; ?>arrow-with-circle-right.svg'; ?>" width="20" height="20" alt=">"></span>
                         <span>Read Article</span>
                     </div>
                     <?php

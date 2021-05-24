@@ -15,7 +15,7 @@
                 <?php endforeach; ?>
             </div><!-- .our-brands -->
 
-            <div class="text-center py-1 py-md-3" style="color: #3b3b3b; font-size: 1.5rem;">Australian Network in Partnership With <a href="https://pmc.com/" target="_blank"><img src="https://images.thebrag.com/common/pubs-white/pmc.svg" alt="PMC" title="PMC" width="100" style="height: 1.1rem; margin-top: -5px; margin-left: 5px;"></a></div>
+            <div class="text-center py-1 py-md-3" style="color: #3b3b3b; font-size: 1.5rem;">Australian Network in Partnership With <a href="https://pmc.com/" target="_blank" rel="noreferrer"><img src="https://images.thebrag.com/common/pubs-white/pmc.svg" alt="PMC" title="PMC" width="100" style="height: 1.1rem; margin-top: -5px; margin-left: 5px;"></a></div>
 
             <div class="d-flex flex-wrap justify-content-start bg-white other-brands">
                 <?php foreach (brands_network() as $brand => $brand_details) : ?>

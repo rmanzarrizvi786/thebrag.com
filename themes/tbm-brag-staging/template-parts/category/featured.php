@@ -6,7 +6,7 @@ $story_ID = $story->ID;
     <div class="story-hero text-white d-flex flex-column rounded py-2">
         <div class="featured-img rounded">
             <div>
-                <img src="<?php echo $story_src[0]; ?>" alt="<?php echo $story_alt_text; ?>" title="<?php echo $story_alt_text; ?>" class="rounded" loading="lazy">
+                <img src="<?php echo $story_src[0]; ?>" alt="<?php echo $story_alt_text; ?>" title="<?php echo $story_alt_text; ?>" class="rounded" loading="lazy" width="1200" height="625" style="width: 100%; height: auto;">
             </div>
         </div>
         <div class="details-wrap">
@@ -25,7 +25,7 @@ $story_ID = $story->ID;
             <div class="read-article-wrap pt-2">
                 <div class="d-flex justify-content-between">
                     <div class="read-article d-flex">
-                        <span><img src="<?php echo get_template_directory_uri() . '/images/arrow-with-circle-right.svg'; ?>" width="20" height="20" alt=">"></span>
+                        <span><img src="<?php echo ICONS_URL; ?>arrow-with-circle-right.svg'; ?>" width="20" height="20" alt=">"></span>
                         <span>Read Article</span>
                     </div>
                     <?php

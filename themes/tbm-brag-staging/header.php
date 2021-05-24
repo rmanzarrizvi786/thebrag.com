@@ -47,29 +47,13 @@ $page_template = get_page_template_slug();
   <link rel="dns-prefetch" href="https://cdn.onesignal.com/">
   <link rel="dns-prefetch" href="https://www.googletagservices.com/">
   <link rel="dns-prefetch" href="//cdn.publift.com/">
-  <link rel="dns-prefetch" href="https://idsync.rlcdn.com/">
-  <link rel="dns-prefetch" href="https://x.bidswitch.net/">
-  <link rel="dns-prefetch" href="https://ad.yieldmanager.com/">
-  <link rel="dns-prefetch" href="https://cm.g.doubleclick.net/">
-  <link rel="dns-prefetch" href="https://dpm.demdex.net/">
-  <link rel="dns-prefetch" href="https://fw.adsafeprotected.com/">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://tpc.googlesyndication.com">
   <link rel="dns-prefetch" href="https://adservice.google.com">
   <link rel="dns-prefetch" href="https://s.ytimg.com">
   <link rel="dns-prefetch" href="https://adservice.google.com.au">
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
-  <link rel="dns-prefetch" href="https://securepubads.g.doubleclick.net">
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <link rel="dns-prefetch" href="https://connect.facebook.net">
-  <link rel="dns-prefetch" href="https://bs.serving-sys.com">
   <link rel="dns-prefetch" href="https://bid.g.doubleclick.net">
-  <link rel="dns-prefetch" href="https://gum.criteo.com">
-  <link rel="dns-prefetch" href="https://sc.iasds01.com">
-  <link rel="dns-prefetch" href="https://dt.adsafeprotected.com">
-  <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
-  <link rel="dns-prefetch" href="https://secure-ds.serving-sys.com">
 
   <link rel="manifest" href="/manifest.json">
 
