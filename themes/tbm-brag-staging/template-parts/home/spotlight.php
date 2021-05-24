@@ -37,7 +37,7 @@
                     ?>
                         <a href="<?php the_permalink(); ?>" class="story m-1 m-md-2 pb-0">
                             <div class="d-flex flex-column flex-md-row align-items-start">
-                                <div class="img-wrap rounded mr-1">
+                                <div class="img-wrap rounded mr-0 mr-md-2">
                                     <?php if ($img_src && $img_src[0]) : ?>
                                         <img src="<?php echo $img_src[0]; ?>" alt="<?php echo $alt_text; ?>" title="<?php echo $alt_text; ?>" class="rounded" loading="lazy">
                                     <?php endif; ?>

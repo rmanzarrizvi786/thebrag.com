@@ -1,7 +1,7 @@
 <section class="container spotlight">
-    <div class="m-0 m-md-2">
+    <div class="m-2">
         <h2 class="text-center text-uppercase p-1 pt-0 mb-0 mx-1 h-spotlight">Spotlight</h2>
-        <div class="spotlight-stories d-flex flex-column flex-md-row align-items-start rounded bg-white mt-2">
+        <div class="spotlight-stories d-flex flex-row align-items-start rounded bg-white mt-2">
             <?php
             global $wpdb;
             $spotlight_article_ids = $wpdb->get_results(
@@ -35,9 +35,9 @@
                             $img_src = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'thumbnail');
                         endif;
                     ?>
-                        <a href="<?php the_permalink(); ?>" class="story m-0 my-1 m-md-2 pb-0">
-                            <div class="d-flex flex-row align-items-start">
-                                <div class="img-wrap rounded mr-1">
+                        <a href="<?php the_permalink(); ?>" class="story m-1 m-md-2 pb-0">
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="img-wrap rounded mr-0 mr-md-2">
                                     <?php if ($img_src && $img_src[0]) : ?>
                                         <img src="<?php echo $img_src[0]; ?>" alt="<?php echo $alt_text; ?>" title="<?php echo $alt_text; ?>" class="rounded" loading="lazy">
                                     <?php endif; ?>

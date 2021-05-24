@@ -250,7 +250,7 @@ $page_template = get_page_template_slug();
       </div>
     </div>
 
-    <div class="nav-wrap container d-md-flex flex-column flex-md-row" style="width: 100%;">
+    <div class="nav-wrap container d-md-flex flex-column flex-md-row">
       <div class="btn d-block d-md-none btn-close-menu">
         <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
       </div>

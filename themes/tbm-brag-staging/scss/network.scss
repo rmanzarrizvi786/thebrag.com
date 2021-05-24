@@ -2,14 +2,14 @@
     position: fixed;
     top: 30px;
     border-radius: 0 0 $roundedRadius $roundedRadius;
-    border-bottom: 7px solid rgba(255, 255, 255, 0.5);
+    border-bottom: .5rem solid rgba(255, 255, 255, 0.5);
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
     overflow-y: scroll;
     width: $containerWidth;
     max-width: 100%;
-    height: 100vh;
+    height: calc(100vh - 2rem);
 }
 .other-brands {
     border-radius: 0 0 1rem 1rem;

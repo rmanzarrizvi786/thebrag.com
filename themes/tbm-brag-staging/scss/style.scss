@@ -103,3 +103,41 @@ main {
     top: $headerHeightMobile !important;
     height: calc(100% - $headerHeightMobile) !important;
 }
+
+.spotlight {
+    .h-spotlight {
+        color: $gray;
+        font-size: 1rem;
+        font-weight: 500;
+        border-bottom: 1px solid #d8d2c3;
+    }
+    .spotlight-stories {
+        a {
+            text-decoration: none;
+            color: $secondaryBlack;
+            line-height: 1.2;
+            flex: 1 1 0;
+            h3 {
+                font-size: 0.825rem;
+            }
+            .img-wrap {
+                width: 100%;
+                height: auto;
+                position: relative;
+                overflow: hidden;
+                border-radius: 0.25rem;
+                img {
+                    border-radius: 0.25rem;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+        .spotlight-story-category {
+            color: $lightGray;
+            font-size: 0.825rem;
+            font-family: $headingFonts;
+            font-weight: 500;
+        }
+    }
+}
