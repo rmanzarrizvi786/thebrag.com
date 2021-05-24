@@ -25,7 +25,7 @@
                         }
                     }
                 ?>
-                    <a class="p-r d-block overflow-hidden player-wrap" href="<?php echo $tbm_featured_video_link; ?>" target="_blank">
+                    <a class="p-r d-block overflow-hidden player-wrap" href="<?php echo $tbm_featured_video_link; ?>" target="_blank" rel="noreferrer">
                     <?php else : // $tbm_featured_video_link is not set, so display video   
                     ?>
                         <div class="p-r overflow-hidden" style="cursor:pointer;" title="Click to play video" class="yt-lazy-load" data-id="<?php echo $featured_yt_vid_id; ?>" id="<?php echo $featured_yt_vid_id; ?>">
@@ -58,7 +58,7 @@
 
     <div class="record px-2 mt-3 mt-md-0">
         <h3 class="heading mb-2">Record <span>of the week</span></h3>
-        <a href="<?php echo get_option('tbm_featured_album_link'); ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); ?>);">
+        <a href="<?php echo get_option('tbm_featured_album_link'); ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); ?>);" rel="noreferrer">
             <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
             -
             <?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?>
