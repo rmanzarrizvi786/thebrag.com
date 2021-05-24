@@ -44,16 +44,16 @@ $page_template = get_page_template_slug();
   <?php endif; ?>
 
 
-  <link rel="dns-prefetch" href="https://cdn.onesignal.com/">
-  <link rel="dns-prefetch" href="https://www.googletagservices.com/">
-  <link rel="dns-prefetch" href="//cdn.publift.com/">
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-  <link rel="dns-prefetch" href="https://tpc.googlesyndication.com">
-  <link rel="dns-prefetch" href="https://adservice.google.com">
-  <link rel="dns-prefetch" href="https://s.ytimg.com">
-  <link rel="dns-prefetch" href="https://adservice.google.com.au">
-  <link rel="dns-prefetch" href="https://connect.facebook.net">
-  <link rel="dns-prefetch" href="https://bid.g.doubleclick.net">
+  <link rel="preconnect" href="https://cdn.onesignal.com/">
+  <link rel="preconnect" href="https://www.googletagservices.com/">
+  <link rel="preconnect" href="//cdn.publift.com/">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://tpc.googlesyndication.com">
+  <link rel="preconnect" href="https://adservice.google.com">
+  <link rel="preconnect" href="https://www.youtube.com">
+  <link rel="preconnect" href="https://adservice.google.com.au">
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="preconnect" href="https://bid.g.doubleclick.net">
 
   <link rel="manifest" href="/manifest.json">
 
@@ -161,8 +161,8 @@ $page_template = get_page_template_slug();
 
   <style>
     <?php
-    echo file_get_contents(get_template_directory() . '/css/layout.css');
     echo file_get_contents(get_template_directory() . '/css/reset.css');
+    echo file_get_contents(get_template_directory() . '/css/layout.css');
     echo file_get_contents(get_template_directory() . '/css/header.css');
     if (is_front_page() || is_home()) {
       echo file_get_contents(get_template_directory() . '/css/home-trending.css');

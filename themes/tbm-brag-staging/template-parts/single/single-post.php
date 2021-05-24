@@ -156,14 +156,14 @@ if (!post_password_required($post)) :
                 <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
-                        $alt_text = get_post_meta(get_post_thumbnail_id($the_post_id), '_wp_attachment_image_alt', true);
+                        /* $alt_text = get_post_meta(get_post_thumbnail_id($the_post_id), '_wp_attachment_image_alt', true);
                         if ($alt_text == '') :
                             $alt_text = trim(strip_tags(get_the_title()));
-                        endif; // If Alt text for featured image is empty
+                        endif; // If Alt text for featured image is empty */
 
                         echo get_the_post_thumbnail(null, 'medium_large', array(
-                            'alt' => $alt_text,
-                            'title' => $alt_text,
+                            // 'alt' => $alt_text,
+                            // 'title' => $alt_text,
                             'class' => 'img-fluid rounded',
                         ));
 

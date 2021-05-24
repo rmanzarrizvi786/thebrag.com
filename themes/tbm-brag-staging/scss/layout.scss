@@ -207,16 +207,235 @@ body.modal-open {
     top: 115px;
 }
 
-/* .ad-billboard {
-    width: 320px;
-    height: 50px;
-    @media (min-width: $tablet) {
-        width: 970px;
-        height: 250px;
+.d-none {
+    display: none;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+.flex-row {
+    flex-direction: row;
+}
+
+.rounded {
+    border-radius: $roundedRadius;
+}
+.rounded-top {
+    border-radius: $roundedRadius $roundedRadius 0 0;
+}
+
+h1 {
+    font-size: $h1Size * 0.75;
+}
+h2 {
+    font-size: $h2Size * 0.75;
+}
+h3 {
+    font-size: $h3Size * 0.75;
+}
+p {
+    margin-bottom: 1rem;
+}
+
+.border-top {
+    border-top: 1px solid $borderColor;
+}
+.border-bottom {
+    border-bottom: 1px solid $borderColor;
+}
+.border-right {
+    border-right: 1px solid $borderColor;
+}
+.border-none {
+    border: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: calc(50% - 1rem);
+    transform: translateX(-50%);
+    z-index: 10;
+    margin: 1rem;
+    padding: 2rem;
+    width: calc(100% - 2rem);
+    max-width: 550px;
+    max-height: calc(100% - 2rem);
+    overflow-y: scroll;
+}
+
+@media (min-width: $tablet) {
+    h1 {
+        font-size: $h1Size;
+    }
+    h2 {
+        font-size: $h2Size;
+    }
+    h3 {
+        font-size: $h3Size;
+    }
+
+    .border-md-right {
+        border-right: 1px solid $borderColor;
+    }
+
+    .d-md-none {
+        display: none !important;
+    }
+    .d-md-block {
+        display: block !important;
+    }
+    .d-md-flex {
+        display: flex !important;
+    }
+    .flex-md-row {
+        flex-direction: row;
+    }
+    .flex-md-column {
+        flex-direction: column;
+    }
+
+    .col-md-auto {
+        flex: auto;
+    }
+
+    @for $i from 0 through 5 {
+        .m-md-#{$i} {
+            margin: #{$i/2}rem;
+        }
+        .ml-md-#{$i},
+        .mx-md-#{$i} {
+            margin-left: #{$i/2}rem !important;
+        }
+        .mr-md-#{$i},
+        .mx-md-#{$i} {
+            margin-right: #{$i/2}rem !important;
+        }
+        .mt-md-#{$i},
+        .my-md-#{$i} {
+            margin-top: #{$i/2}rem !important;
+        }
+        .mb-md-#{$i},
+        .my-md-#{$i} {
+            margin-bottom: #{$i/2}rem !important;
+        }
+
+        .p-md-#{$i} {
+            padding: #{$i/2}rem;
+        }
+        .pt-md-#{$i},
+        .py-md-#{$i} {
+            padding-top: #{$i/2}rem !important;
+        }
+        .pb-md-#{$i},
+        .py-md-#{$i} {
+            padding-bottom: #{$i/2}rem !important;
+        }
+        .pl-md-#{$i},
+        .px-md-#{$i} {
+            padding-left: #{$i/2}rem !important;
+        }
+        .pr-md-#{$i},
+        .px-md-#{$i} {
+            padding-right: #{$i/2}rem !important;
+        }
     }
 }
-.ad-mrec {
-    width: 300px;
-    min-height: 250px;
-    margin: auto;
-} */
+@media (min-width: $desktop) {
+    .d-lg-none {
+        display: none !important;
+    }
+    .d-lg-block {
+        display: block !important;
+    }
+    .d-lg-flex {
+        display: flex !important;
+    }
+    @for $i from 1 through 12 {
+        .col-lg-#{$i} {
+            flex: 0 0 $i * 8.333333%;
+        }
+    }
+}
+
+@media (max-width: $mobile) {
+    .latest .post-thumbnail {
+        align-self: stretch;
+        overflow: hidden;
+        position: relative;
+        border-radius: 0.5rem;
+        img {
+            height: 100%;
+            width: auto;
+            max-width: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .logo-wrap {
+        a {
+            img {
+                width: 140px !important;
+            }
+        }
+    }
+
+    .w-sm-auto {
+        width: auto !important;
+    }
+    .h-sm-auto {
+        height: auto !important;
+    }
+
+    .nav-wrap {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        // width: 75%;
+        width: calc(100% - 50px);
+        height: 100vh;
+        background: $primaryBlack;
+        box-shadow: 10px 0 18px #000;
+        &.active {
+            left: 0;
+        }
+        transition: 0.25s left linear;
+        .btn-close-menu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            bottom: 0;
+            background: #000;
+            display: flex;
+            width: 50px;
+            img {
+                width: 100%;
+            }
+        }
+    }
+    #nav-primary {
+        flex: 1 1 auto;
+        nav {
+            height: 100%;
+            ul {
+                height: 100%;
+                li {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    a {
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-wrap .search-wrap img {
+        width: 32px;
+    }
+}
