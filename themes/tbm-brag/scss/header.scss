@@ -7,6 +7,7 @@ header {
     background-color: $primaryBlack;
     color: #fff;
     position: relative;
+    overflow-y: hidden;
 
     &.fixed-top {
         position: fixed;
