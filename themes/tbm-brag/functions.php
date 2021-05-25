@@ -2525,7 +2525,7 @@ function ssm_inject_fb_pixel()
 function ssm_youtube_lazy_load($content)
 {
     $pattern = '/<figure class=\"op-interactive\"><iframe(.*?)width=\"(.*)\"(.*?)height=\"(.*)\"(.*?)src=\"https:\/\/www.youtube.com\/embed\/(.*)\?(.*?)\" (.*)><\/iframe><\/figure>/';
-    $replacement = '<div class="yt-lazy-load my-2" data-id="$6" id="yt-$6"><img src="https://i.ytimg.com/vi/$6/hqdefault.jpg" width="$2" height="$4" class="yt-img" loading="lazy"><img class="p-a-center play-button" src="' . ICONS_URL . 'controller-play.svg" alt="Play" title="Play" loading="lazy"></div>';
+    $replacement = '<div class="yt-lazy-load my-2" data-id="$6" id="yt-$6"><img src="https://i.ytimg.com/vi/$6/hqdefault.jpg" width="$2" height="$4" class="yt-img" loading="lazy"><img class="p-a-center play-button" src="' . ICONS_URL . 'controller-play.svg" alt="Play" title="Play" loading="lazy" width="100" height="100"></div>';
     $lazy_content = preg_replace($pattern, $replacement, $content);
     return $lazy_content;
 }
