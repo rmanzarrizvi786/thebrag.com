@@ -1018,19 +1018,18 @@ p {
     top: 0;
 } */
 #skin {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 134px;
   left: 50%;
   transform: translateX(-50%) scale(1.0309278351);
   width: 1600px;
   z-index: 1;
 }
 
-#skin.fixed {
-  position: fixed;
-  top: 0;
-}
-
+/* #skin.fixed {
+    position: fixed;
+    top: 0;
+} */
 .content {
   z-index: 2;
   position: relative;
