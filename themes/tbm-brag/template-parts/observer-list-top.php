@@ -23,7 +23,9 @@
     FROM {$wpdb->prefix}observer_lists l
     WHERE
       l.status = 'active'
-      ORDER BY
+      AND
+      l.related_site = 'thebrag.com'
+    ORDER BY
       l.sub_count DESC 
     ";
     $lists = $wpdb->get_results($lists_query);
