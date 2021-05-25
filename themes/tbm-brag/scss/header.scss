@@ -97,3 +97,9 @@ header {
         flex: 0 0 $i * 8.333333%;
     }
 }
+
+@media (min-width: $tablet) {
+    .d-md-none {
+        display: none !important;
+    }
+}
