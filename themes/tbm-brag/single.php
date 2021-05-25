@@ -1,8 +1,9 @@
 <?php if ('dad' == get_post_type()) :
 // get_template_part( 'partials/header-dad' );
 else :
-    get_header();
-endif; ?>
+
+endif;
+get_header(); ?>
 
 <div id="articles-wrap" class="container">
     <?php
@@ -21,5 +22,6 @@ endif; ?>
 <?php if ('dad' == get_post_type()) :
 // get_template_part( 'partials/footer-dad' );
 else :
-    get_footer();
+
 endif;
+get_footer();
