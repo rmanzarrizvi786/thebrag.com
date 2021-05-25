@@ -52,6 +52,13 @@ p {
     overflow-y: scroll;
 }
 
+.post-content {
+    figure {
+        width: auto !important;
+        max-width: 100% !important;
+    }
+}
+
 @media (min-width: $tablet) {
     h1 {
         font-size: $h1Size;
