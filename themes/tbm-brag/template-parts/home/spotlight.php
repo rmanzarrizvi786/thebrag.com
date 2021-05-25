@@ -26,19 +26,12 @@
                     while ($spotlight_articles->have_posts()) :
                         $spotlight_articles->the_post();
                         $categories = get_the_category(get_the_ID());
-
-
-                        /* $alt_text = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
-                            if ($alt_text == '') {
-                                $alt_text = trim(strip_tags(get_the_title()));
-                            }
-                            $img_src = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'thumbnail'); */
                     ?>
                         <a href="<?php the_permalink(); ?>" class="story m-1 m-md-2 pb-0">
                             <div class="d-flex flex-column flex-md-row align-items-start">
                                 <div class="img-wrap rounded mr-0 mr-md-2">
                                     <?php if ('' !== get_the_post_thumbnail()) :
-                                    echo get_the_post_thumbnail(get_the_ID(), 'thumbnail');
+                                    the_post_thumbnail();
                                     endif; ?>
                                 </div>
                                 <div>

@@ -91,14 +91,6 @@ $exclude_posts = [];
                 while ($trending_articles->have_posts()) :
                     $trending_articles->the_post();
                     $categories = get_the_category(get_the_ID());
-
-                    if ('' !== get_the_post_thumbnail()) :
-                        $alt_text = get_post_meta(get_post_thumbnail_id(get_the_ID()), '_wp_attachment_image_alt', true);
-                        if ($alt_text == '') {
-                            $alt_text = trim(strip_tags(get_the_title()));
-                        }
-                        $img_src = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'thumbnail');
-                    endif;
                 ?>
                     <a href="<?php the_permalink(); ?>" class="story p-2 pb-0 mb-2">
                         <div class="mb-1 text-uppercase trending-story-category">
@@ -121,9 +113,9 @@ $exclude_posts = [];
                                 <h3><?php the_title(); ?></h3>
                             </div>
                             <div class="rounded ml-1 post-thumbnail mb-1">
-                                <?php if ($img_src && $img_src[0]) : ?>
-                                    <img src="<?php echo $img_src[0]; ?>" alt="<?php echo $alt_text; ?>" title="<?php echo $alt_text; ?>" class="rounded" loading="lazy">
-                                <?php endif; ?>
+                                <?php if ('' !== get_the_post_thumbnail()) :
+                                    the_post_thumbnail('thumbnail');
+                                endif; ?>
                             </div>
                         </div>
                     </a>
