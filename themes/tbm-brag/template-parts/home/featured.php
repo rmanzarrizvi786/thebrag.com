@@ -58,7 +58,7 @@ $trending_story_ID = $trending_story->ID;
                     ?>
                     <div class="align-items-center text-uppercase">
                         <div class="d-flex">
-                            <div class="author-avatar mr-1"><?php echo get_avatar($trending_story->post_author, 24, 'blank', '', array('class' => 'rounded-circle')); ?></div>
+                            <div class="author-avatar mr-1"><?php echo get_avatar($trending_story->post_author, 24, 'blank', '', array('class' => 'rounded')); ?></div>
                             <?php echo $author_byline; ?>
                         </div>
                     </div>
