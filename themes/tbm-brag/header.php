@@ -36,7 +36,7 @@ $page_template = get_page_template_slug();
                                           echo $src[0];
                                         } ?>">
 
-    <link rel="preconnect" href="<?php echo $src; ?>">
+    <link rel="preconnect" href="<?php echo $src[0]; ?>">
 
   <?php } // If single 
   ?>
