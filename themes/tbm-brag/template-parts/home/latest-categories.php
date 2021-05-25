@@ -36,7 +36,7 @@ foreach ($cats_home as $i => $cat_home) :
                         <article class="my-3">
                             <div class="ad-mrec mt-5">
                                 <div class="mx-auto text-center">
-                                    <?php render_ad_tag('vrec_2'); ?>
+                                    <?php render_ad_tag('vrec_' . $count); ?>
                                 </div>
                             </div>
                         </article>

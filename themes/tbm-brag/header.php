@@ -166,8 +166,8 @@ $page_template = get_page_template_slug();
     echo file_get_contents(get_template_directory() . '/css/header.css');
     echo file_get_contents(get_template_directory() . '/css/nav.css');
     echo file_get_contents(get_template_directory() . '/css/observer-list-top.css');
-    
-    if (is_front_page() || is_home() || is_archive() || is_category() ) {
+
+    if (is_front_page() || is_home() || is_archive() || is_category()) {
       echo file_get_contents(get_template_directory() . '/css/home-trending.css');
     }
     ?>
@@ -250,20 +250,26 @@ $page_template = get_page_template_slug();
       </div>
     </div>
 
-    <div class="nav-wrap container d-md-flex flex-column flex-md-row">
+    <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
+      <div id="top-search-wrap" style="position: absolute; top: 0; left: -100%; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000">
+        <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
+          <div class="btn btn-close-top-search" style="padding: .25rem">
+            <img src="<?php echo ICONS_URL; ?>chevron-thin-left-dark.svg" width="16" height="16" alt="<">
+          </div>
+          <div style="flex: 1 1 auto;">
+            <input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search" style="padding: .35rem; border: none; border-radius: .5rem; margin-left: .25rem;">
+          </div>
+          <button type="submit" class="btn p-2" aria-label="Search" style="padding: .25rem .25rem .5rem; background-color: #fff !important; border-radius: 0; border-radius: .5rem;">
+            <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
+        </form>
+      </div>
       <div class="btn d-block d-md-none btn-close-menu">
         <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
       </div>
-      <!-- <div class="search-wrap mt-2 mt-md-0">
+      <div class="d-none d-md-flex btn-open-top-search mt-2 mt-md-0">
         <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
-      </div> -->
-      <div class="socials-top d-flex d-md-none justify-content-between">
-        <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
-        <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
-        <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
-        <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-        <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
       </div>
+
       <div id="nav-primary" class="nav w-100 my-0">
         <?php
         wp_nav_menu(array(
@@ -276,6 +282,13 @@ $page_template = get_page_template_slug();
           'container' => 'nav',
         ));
         ?>
+      </div>
+      <div class="socials-top d-flex d-md-none justify-content-between">
+        <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
+        <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
+        <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
+        <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
+        <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
       </div>
     </div>
   </header>

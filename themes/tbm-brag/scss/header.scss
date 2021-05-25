@@ -88,6 +88,10 @@ header {
     }
 }
 
+#top-search-wrap.active {
+    left: 0 !important;
+}
+
 @for $i from 1 through 12 {
     .col-#{$i} {
         flex: 0 0 $i * 8.333333%;

@@ -80,6 +80,15 @@ jQuery(document).ready(function ($) {
     $('body').removeClass('modal-open');
   });
 
+  $('.btn-open-top-search').on('click', function() {
+    $('#top-search-wrap').addClass('active');
+  });
+  $('.btn-close-top-search').on('click', function() {
+    $('#top-search-wrap').removeClass('active');
+  });
+  
+
+
   $('#observer-list-top .topics-active a').on('click', function (e) {
     e.preventDefault();
     var btn = $(this);

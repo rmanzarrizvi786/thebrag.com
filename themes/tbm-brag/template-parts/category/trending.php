@@ -55,7 +55,7 @@ extract($args);
                 </a>
             <?php endforeach;
             ?>
-            <div class="ad-mrec">
+            <div class="ad-mrec" style="min-width: 300px;">
                 <div class="mx-auto text-center">
                     <?php render_ad_tag('vrec_1'); 
                     ?>

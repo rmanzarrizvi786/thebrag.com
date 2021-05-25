@@ -33,8 +33,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
-    //  scale(1.0309278351);
+    transform: translateX(-50%) scale(1.0309278351);
     width: 1600px;
     z-index: 1;
 }
