@@ -1,0 +1,88 @@
+.latest {
+    .h-latest {
+        font-weight: 500;
+    }
+    .article-wrap {
+        &:nth-of-type(3n + 2) article {
+            position: relative;
+            &:before,
+            &:after {
+                content: "";
+                position: absolute;
+                top: 10%;
+                height: 80%;
+                // border-left: 1px solid $borderColor;
+                // border-right: 1px solid $borderColor;
+                background-color: $borderColor;
+                width: 1px;
+                opacity: 0.35;
+            }
+            &:before {
+                left: 0;
+            }
+            &:after {
+                right: 0;
+            }
+        }
+    }
+    article {
+        display: block;
+        // padding-left: 1rem;
+        // padding-right: 1rem;
+        // margin: auto 1rem;
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
+    }
+    a {
+        text-decoration: none;
+        color: $primaryBlack;
+    }
+    .cat {
+        color: $lightGray;
+        font-size: 0.825rem;
+        font-family: $headingFonts;
+        font-weight: 500;
+    }
+    .post-thumbnail img {
+        border-radius: $roundedRadius/2 $roundedRadius/2 0 0;
+    }
+}
+
+.video-record {
+    background-color: $primaryBlack;
+    color: #fff;
+    .video {
+        flex: 2 1 0;
+    }
+    .record {
+        flex: 1 1 0;
+    }
+    .heading span {
+        color: $lightGray;
+        font-weight: 200;
+    }
+    .player-wrap {
+        height: 310px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        text-indent: -200%;
+    }
+    .youtube-player.player-wrap:after {
+        content: "";
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
+    }
+    .play-button {
+        width: 100px;
+        z-index: 2;
+        transition: 0.25s all linear;
+    }
+}

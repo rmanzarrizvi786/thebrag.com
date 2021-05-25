@@ -1,0 +1,99 @@
+@import "utilities/variables";
+header {
+    z-index: 5;
+    // width: $containerWidth;
+    height: $headerHeightMobile;
+    margin: auto;
+    background-color: $primaryBlack;
+    color: #fff;
+    position: relative;
+
+    &.fixed-top {
+        position: fixed;
+        top: 0;
+        background-color: $primaryBlack;
+        width: 100%;
+    }
+
+    .network-socials-wrap,
+    .user-wrap {
+        width: calc(100% / 3);
+    }
+
+    .network-socials {
+        padding: 0.5rem 1rem 0.5rem 0;
+        width: 150px;
+        max-width: 100%;
+    }
+
+    .logo-wrap {
+        text-align: center;
+        a {
+            display: block;
+            img {
+                width: 200px;
+            }
+        }
+    }
+
+    .user-wrap {
+        .user-ico {
+            width: 18px;
+            margin-right: 0.25rem;
+        }
+        .user-name .arrow-down {
+            margin-left: 0.25rem;
+        }
+        align-items: flex-end;
+    }
+
+    .socials-top {
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+
+        a {
+            display: block;
+            width: 28px;
+            height: 28px;
+            margin: 0.5rem 0.5rem 0;
+        }
+    }
+}
+
+.btn-media-top {
+    width: 150px;
+    padding: 0.25rem 0 !important;
+    .brag-media-top img {
+        width: 130px;
+    }
+}
+
+.btn-observer-top {
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 10rem !important;
+    transition: 0.25s all linear;
+    font-size: 80%;
+    .btn-img.hover {
+        display: none;
+    }
+    &:hover {
+        background-color: #fff !important;
+        color: $primaryColor;
+        .btn-img {
+            display: none;
+        }
+        .btn-img.hover {
+            display: inline;
+        }
+    }
+}
+
+#top-search-wrap.active {
+    left: 0 !important;
+}
+
+@for $i from 1 through 12 {
+    .col-#{$i} {
+        flex: 0 0 $i * 8.333333%;
+    }
+}
