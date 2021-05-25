@@ -25,7 +25,7 @@ $template_args = [
 ];
 ?>
 
-<div class="ad-billboard container py-2 py-md-4">
+<div class="ad-billboard container py-2">
     <div class="mx-auto text-center">
         <?php render_ad_tag('leaderboard'); ?>
     </div>
