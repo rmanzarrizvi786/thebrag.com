@@ -85,7 +85,7 @@
         "name": "<?php echo get_bloginfo('name'); ?>",
         "logo": {
           "@type": "ImageObject",
-          "url": "<?php echo get_template_directory_uri(); ?>/images/TheBragLOGOblackNOSHIELD.png"
+          "url": "<?php echo get_template_directory_uri(); ?>/images/The-Brag_combo-300px.png"
         }
       },
       "description": "<?php echo get_bloginfo('description'); ?>"

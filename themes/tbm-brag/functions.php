@@ -1440,7 +1440,7 @@ function ssm_amp_additional_css_styles($amp_template)
     }
     .amp-wp-header a {
     <?php if ('dad' != get_post_type()) : ?>
-        background-image: url( '<?php echo get_template_directory_uri(); ?>/images/brag-logo-300px.png' );
+        background-image: url( '<?php echo get_template_directory_uri(); ?>/images/The-Brag_combo-300px.png' );
     <?php else : ?>
         background-image: url( '<?php echo get_template_directory_uri(); ?>/images/the-brag-dad-400px.jpg' );
     <?php endif; ?>
