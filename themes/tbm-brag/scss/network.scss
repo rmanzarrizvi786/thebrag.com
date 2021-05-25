@@ -1,0 +1,23 @@
+#network {
+    position: fixed;
+    top: 30px;
+    border-radius: 0 0 $roundedRadius $roundedRadius;
+    border-bottom: .5rem solid rgba(255, 255, 255, 0.5);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    overflow-y: scroll;
+    width: $containerWidth;
+    max-width: 100%;
+    height: calc(100vh - 2rem);
+}
+.other-brands {
+    border-radius: 0 0 1rem 1rem;
+    background-color: $primaryBlack;
+}
+.brand-box {
+    background-color: #fff;
+    border-right: 1px solid $primaryBlack;
+    border-bottom: 1px solid $primaryBlack;
+    height: 75px;
+}
