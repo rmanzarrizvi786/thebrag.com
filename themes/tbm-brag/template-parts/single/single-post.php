@@ -304,11 +304,11 @@ if (!post_password_required($post)) :
 
             <div class="col-md-4 right-col-has-ad d-none d-md-block ml-2 align-self-stretch">
                 <div class="d-flex flex-column h-100 justify-content-start">
-                    <div class="align-self-center mb-3">
+                    <div class="align-self-center mb-3" style="min-width: 300px;">
                         <?php render_ad_tag('rail1', $count_articles); ?>
                     </div>
                     <div class="sticky-ad-right">
-                        <div class="mt-3">
+                        <div class="mt-3" style="min-width: 300px;">
                             <?php
                             render_ad_tag('rail2', $the_post_id . $count_articles);
                             ?>

@@ -842,15 +842,12 @@ p {
 
   .spotlight .spotlight-stories a .img-wrap {
     min-width: 100px;
-    width: 100px;
-    height: 100px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.25rem;
+    width: 100px !important;
+    height: 100px !important;
   }
   .spotlight .spotlight-stories a .img-wrap img {
-    height: 100%;
-    width: auto;
+    height: 100% !important;
+    width: auto !important;
     max-width: none;
     position: absolute;
     top: 50%;

@@ -3,7 +3,7 @@ extract($args);
 $trending_story_ID = $trending_story->ID;
 ?>
 <a href="<?php the_permalink($trending_story); ?>">
-    <div class="story-hero text-white d-flex flex-column rounded">
+    <div class="story-hero text-white d-flex flex-column rounded justify-content-start">
         <div class="featured-img rounded">
             <div>
                 <img src="<?php echo $trending_story_src[0]; ?>" alt="<?php echo $trending_story_alt_text; ?>" title="<?php echo $trending_story_alt_text; ?>" class="rounded" loading="lazy">
