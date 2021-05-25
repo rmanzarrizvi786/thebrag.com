@@ -6,7 +6,7 @@ $page_template = get_page_template_slug();
 
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
-  <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png" />
+  <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png?20210525" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="profile" href="http://gmpg.org/xfn/11">
