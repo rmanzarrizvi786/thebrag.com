@@ -95,28 +95,9 @@
 
 <div id="overlay" class="d-none"></div>
 
+
 <script>
   jQuery(document).ready(function($) {
-    /* $('.btn-media-top').on('click', function() {
-      $("body").toggleClass("modal-open");
-      $('#overlay').toggleClass('d-none');
-      if ($("body").hasClass("modal-open")) {
-        $("#network").slideDown();
-      } else {
-        $("#network").slideUp();
-      }
-    });
-
-    $('.btn-toggle-menu').on('click', function() {
-      $('.nav-wrap').toggleClass('d-none');
-      $(body).toggleClass('fixed');
-    });
-
-    $('#overlay').on('click', function() {
-      $("body").toggleClass("modal-open");
-      $("#network").slideUp();
-      $('#overlay').toggleClass('d-none');
-    }); */
     $(window).trigger('scroll');
   });
 </script>
