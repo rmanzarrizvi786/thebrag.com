@@ -91,7 +91,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  text-indent: -100%;
+  text-indent: -200%;
 }
 .video-record .youtube-player.player-wrap:after {
   content: "";

@@ -253,7 +253,7 @@ $page_template = get_page_template_slug();
     </div>
 
     <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
-      <div id="top-search-wrap" style="position: absolute; top: 0; left: -100%; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000">
+      <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: -100%; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000">
         <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
           <div class="btn btn-close-top-search" style="padding: .25rem">
             <img src="<?php echo ICONS_URL; ?>chevron-thin-left-dark.svg" width="16" height="16" alt="<">
@@ -268,7 +268,7 @@ $page_template = get_page_template_slug();
       <div class="btn d-block d-md-none btn-close-menu">
         <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
       </div>
-      <div class="d-none d-md-flex btn-open-top-search mt-2 mt-md-0">
+      <div class="d-none d-md-flex btn-open-top-search mt-2 mt-md-0" style="cursor: pointer;">
         <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
       </div>
 
