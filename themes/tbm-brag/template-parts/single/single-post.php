@@ -26,7 +26,7 @@ if (!post_password_required($post)) :
         if ($author_img_src) :
             $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded-circle">';
         else :
-            $author_image = '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" width="64" class="rounded-circle">';
+            $author_image = '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" width="64" height="64" class="rounded-circle">';
         endif; // If custom author image is set
     else : // If custom author has not bee set
 
