@@ -142,6 +142,7 @@
 }
 .single-article .author a {
   text-decoration: none;
+  font-weight: bold;
 }
 .single-article .author .v-divider {
   color: #181715;
