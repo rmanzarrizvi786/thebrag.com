@@ -28,10 +28,10 @@ if (!post_password_required($post)) :
         else :
             $author_image = '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" width="64" height="64" class="rounded-circle">';
         endif; // If custom author image is set
-    else : // If custom author has not bee set
-
+    else : // If custom author has not been set
         $author_byline = '<a href="' . get_author_posts_url($post->post_author) . '" class="text-dark">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
         $author_image = get_avatar($post->post_author, 64, get_template_directory_uri() . '/images/default-avatar.png', '', array('class' => 'rounded-circle'));
+        $author_name = get_the_author_meta('display_name', $post->post_author);
     endif; // If custom author is set
 ?>
 
@@ -129,15 +129,15 @@ if (!post_password_required($post)) :
                     </div>
                 </div>
             </div>
-            <!-- <div>
-                        <?php
-                        /* if (shortcode_exists('shout_writer_beer')) :
-                            echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
-                        elseif (shortcode_exists('shout_writer_coffee')) :
-                            echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
-                        endif; // If shout writer shortcode exists */
-                        ?>
-                    </div> -->
+            <div>
+                <?php
+                if (shortcode_exists('shout_writer_beer')) :
+                    echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
+                elseif (shortcode_exists('shout_writer_coffee')) :
+                    echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
+                endif; // If shout writer shortcode exists
+                ?>
+            </div>
         </div><!-- Author, Coffee and Share buttons -->
 
         <hr class="h-divider mb-3">

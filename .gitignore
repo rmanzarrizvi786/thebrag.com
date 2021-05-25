@@ -1,4 +1,5 @@
 plugins/*
+!plugins/tbm-shout-writer-beer
 
 # ignore specific themes
 themes/twenty*/
