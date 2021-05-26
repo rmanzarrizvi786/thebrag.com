@@ -104,3 +104,7 @@ header {
         display: none !important;
     }
 }
+
+.modal-open header {
+    overflow-y: initial;
+}
