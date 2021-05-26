@@ -1453,7 +1453,7 @@ function ssm_amp_additional_css_styles($amp_template)
     text-indent: -9999px;
     background-position: center;
     }
-    .amp-wp-title { color: #333; }
+    .amp-wp-title { color: #0f0c0c; }
     .amp-wp-article, .amp-wp-article-header { margin-top: 0; background: #fff; }
     .amp-wp-article { padding: 10px 0; }
     #pagination { border-top: 1px solid #ccc; }
@@ -1500,11 +1500,11 @@ function ssm_amp_additional_css_styles($amp_template)
     }
     amp-sidebar {
     width: 318px;
-    background-color: #000;
+    background-color: #0f0c0c;
     }
     amp-sidebar .menu {
     margin: 0;
-    background-color: #000;
+    background-color: #0f0c0c;
     box-shadow: 0 100vh 0 100vh #000;
     }
     amp-sidebar .menu li {
