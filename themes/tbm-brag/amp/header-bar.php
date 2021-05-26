@@ -28,7 +28,7 @@
         <?php endif; ?>
     </div>
 </header>
-<div style="position: absolute; top: 0; z-index: 9999999999; height: 45px; display: flex;">
+<div style="position: fixed; top: 0; z-index: 9999999999; height: 45px; display: flex;">
     <amp-sidebar id="amp_side_menu" class="i-amphtml-layout-nodisplay i-amphtml-element i-amphtml-overlay i-amphtml-scrollable i-amphtml-built i-amphtml-layout" role="menu" tabindex="-1" hidden layout="nodisplay" side="left">
         <button class="btn hamburger left" on="tap:amp_side_menu.toggle" style="height: 45px; width: 100%; padding-left: 1.25rem;">
             <span class="icon-bar"></span>
