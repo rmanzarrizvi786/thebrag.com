@@ -16,6 +16,7 @@ foreach ($cats_home as $i => $cat_home) :
     $no_of_columns = 2;
     if ($news_query->have_posts()) :
         $count = 1;
+        $vrec = 3;
 ?>
         <section class="container latest py-3">
             <div class="m-2">
@@ -35,7 +36,7 @@ foreach ($cats_home as $i => $cat_home) :
                         <article class="my-3">
                             <div class="ad-mrec mt-5">
                                 <div class="mx-auto text-center">
-                                    <?php render_ad_tag('vrec_' . $count); ?>
+                                    <?php render_ad_tag('vrec_' . $vrec); ?>
                                 </div>
                             </div>
                         </article>
@@ -53,5 +54,6 @@ foreach ($cats_home as $i => $cat_home) :
         </div>
 <?php
         $count++;
+        $vrec++;
     endif;
 endforeach;
