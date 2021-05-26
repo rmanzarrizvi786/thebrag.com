@@ -2101,6 +2101,7 @@ add_action('rest_api_init', function () {
     register_rest_route('ssm_posts/v1', '/month-year/(?P<month_year>\d+(\%7C)\d+)', array(
         'methods' => 'GET',
         'callback' => 'ssm_number_of_posts_func',
+        'permission_callback' => '__return_true',
     ));
 });
 

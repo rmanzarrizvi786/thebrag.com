@@ -13,14 +13,18 @@ $amp_post_id = $this->get('post_id'); ?>
     <!--<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>-->
     <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
     <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
-    <?php if (0) : // Disabled 30 July 2020 
-    ?>
-        <script async custom-element="amp-minute-media-player" src="https://cdn.ampproject.org/v0/amp-minute-media-player-0.1.js"></script>
-    <?php endif; ?>
     <script async custom-element="amp-apester-media" src="https://cdn.ampproject.org/v0/amp-apester-media-0.1.js"></script>
+    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
 </head>
 
 <body class="<?php echo esc_attr($this->get('body_class')); ?>">
+    <amp-sidebar id="sidebar" class="sample-sidebar" layout="nodisplay" side="right">
+        <h3>Sidebar</h3>
+        <button on="tap:sidebar.close">Close sidebar</button>
+        <button on="tap:sidebar.toggle">Toggle sidebar</button>
+    </amp-sidebar>
+    <button on="tap:sidebar.toggle">Toggle sidebar</button>
+    <button on="tap:sidebar.open">Open sidebar</button>
     <?php
     if (isset($_GET['screenshot'])) {
         $pagepath = 'screenshot';
@@ -119,19 +123,6 @@ $amp_post_id = $this->get('post_id'); ?>
         <div class="related-stories-wrap">
             <h2 class="title">You may also like</h2>
             <?php
-            /*
-        if ( !function_exists( 'filter_where2' ))  {
-            function filter_where2( $where = '' ) {
-                // posts in the last 7 days
-                $where .= " AND post_date > '" . date('Y-m-d', strtotime('-6 weeks')) . "'";
-                return $where;
-            }
-        }
-        add_filter( 'posts_where', 'filter_where2' );
-        $posts2 = query_posts('orderby=rand&showposts=4&ignore_sticky_posts=1&post_status=publish');
-         *
-         */
-
             $post_id = get_the_ID();
             // Related Posts from tags
             $tags = wp_get_post_tags($post_id);
@@ -159,11 +150,7 @@ $amp_post_id = $this->get('post_id'); ?>
                         <div class="post-thumbnail">
                             <?php if ('' !== get_the_post_thumbnail()) : ?>
                                 <a href="<?php echo get_permalink() . 'amp'; ?>">
-                                    <?php // the_post_thumbnail( 'thumbnail' ); 
-                                    ?>
-                                    <?php
-                                    $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
-                                    ?>
+                                    <?php $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail'); ?>
                                     <figure class="amp-wp-article-featured-image wp-caption">
                                         <amp-img src="<?php echo $thumbnail[0]; ?>" class="attachment-large size-large wp-post-image amp-wp-enforced-sizes" width="150" height="75"></amp-img>
                                     </figure>
@@ -172,8 +159,11 @@ $amp_post_id = $this->get('post_id'); ?>
                         </div><!-- .post-thumbnail -->
                         <div class="post-content">
                             <h2><a href="<?php echo get_permalink() . 'amp'; ?>"><?php the_title(); ?></a></h2>
-                            <p class="excerpt"><?php $excerpt = get_the_excerpt();
-                                                echo string_limit_words($excerpt, 25); ?></p>
+                            <p class="excerpt">
+                                <?php
+                                $excerpt = get_the_excerpt();
+                                echo string_limit_words($excerpt, 25); ?>
+                            </p>
                         </div>
                     </div>
                 <?php

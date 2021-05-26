@@ -2,6 +2,20 @@ plugins/*
 !plugins/tbm-shout-writer-beer
 !plugins/tbm-adm
 
+!plugins/brag-observer
+plugins/brag-observer/*
+!plugins/brag-observer/classes
+plugins/brag-observer/classes/*
+!plugins/brag-observer/classes/api.class.php
+
+!plugins/ssm-ga
+plugins/ssm-ga/*
+!plugins/ssm-ga/ssm-ga.php
+
+!tbm-users
+
+!plugins/ssm-articles-json
+
 # ignore specific themes
 themes/twenty*/
 themes/tbm-brag-2021-05-10-1620/
