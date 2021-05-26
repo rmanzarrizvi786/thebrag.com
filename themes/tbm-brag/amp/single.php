@@ -48,7 +48,7 @@ $amp_post_id = $this->get('post_id'); ?>
             <?php $this->load_parts(apply_filters('amp_post_article_header_meta', array('meta-author', 'meta-time'))); ?>
         </header>
 
-        <div class="amp-social-share-bar">
+        <div class="amp-social-share-bar" style="text-align: center;">
             <amp-social-share type="email" width="40" height="40"></amp-social-share>
             <amp-social-share type="facebook" data-param-app_id="812299355633906" width="40" height="40"></amp-social-share>
             <amp-social-share type="linkedin" width="40" height="40"></amp-social-share>
