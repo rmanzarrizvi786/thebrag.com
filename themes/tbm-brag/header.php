@@ -206,7 +206,7 @@ $page_template = get_page_template_slug();
           $current_user = wp_get_current_user();
           $user_info = get_userdata($current_user->ID);
         ?>
-          <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn" style="padding: 0;">
+          <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
             <?php echo get_avatar($current_user, 16, '', $user_info->first_name, ['class' => 'rounded-circle']); ?>
           </a>
         <?php else : ?>
@@ -249,7 +249,7 @@ $page_template = get_page_template_slug();
             // $current_user = wp_get_current_user();
             // $user_info = get_userdata($current_user->ID);
           ?>
-            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn" style="padding: 0;">
+            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
               <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
               <span class="ml-2"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
               <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
