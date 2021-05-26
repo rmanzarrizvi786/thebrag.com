@@ -167,7 +167,7 @@ $page_template = get_page_template_slug();
     echo file_get_contents(get_template_directory() . '/css/layout.css');
     echo file_get_contents(get_template_directory() . '/css/header.css');
     echo file_get_contents(get_template_directory() . '/css/nav.css');
-    echo file_get_contents(get_template_directory() . '/css/observer-list-top.css');
+    echo file_get_contents(get_template_directory() . '/css/observer-list.css');
 
     if (is_front_page() || is_home() || is_archive() || is_category()) {
       echo file_get_contents(get_template_directory() . '/css/home-trending.css');

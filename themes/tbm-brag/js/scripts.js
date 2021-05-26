@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
   
 
 
-  $('#observer-list-top .topics-active a').on('click', function (e) {
+  $('.observer-list .topics-active a').on('click', function (e) {
     e.preventDefault();
     var btn = $(this);
 
@@ -99,13 +99,16 @@ jQuery(document).ready(function ($) {
       var status = 'unsubscribed';
     }
 
+    var list = $(this).data('list');
+
     var data = {
       action: 'subscribe_observer',
-      formData: 'list=' + $(this).data('list') + '&status=' + status
+      formData: 'list=' + list + '&status=' + status
     };
     $.post(brag_observer.url, data, function (res) {
       if (res.success) {
-        btn.toggleClass('subscribed');
+        // btn.toggleClass('subscribed');
+        $('a[data-list=' + list + ']').toggleClass('subscribed');
       } else {
         // btn.prop('disabled', false);
       }
