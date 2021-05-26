@@ -1,5 +1,5 @@
 <footer class="container footer mb-1 p-2 p-md-5">
-    <div class="d-flex justify-content-between flex-column flex-md-row px-2 py-3 mt-3">
+    <div class="d-flex justify-content-between flex-column flex-md-row px-0 px-md-2 py-3 mt-3">
         <div class="left px-3">
             <a href="<?php echo site_url(); ?>"><img src="<?php echo get_template_directory_uri() . '/images/The-Brag_combo-white.svg'; ?>" width="200" height="36" alt="The Brag" title="The Brag"></a>
         </div>
