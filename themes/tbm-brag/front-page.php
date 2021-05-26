@@ -15,11 +15,11 @@ get_header();
 <?php get_template_part('template-parts/home/trending'); ?>
 
 <div class="container bg-yellow">
-    <div class="container py-4">
+    <!-- <div class="container py-4">
         <div class="mx-auto text-center">
-            <?php render_ad_tag('incontent_1'); ?>
+            <?php // render_ad_tag('incontent_1'); ?>
         </div>
-    </div>
+    </div> -->
 
     <?php get_template_part('template-parts/home/spotlight'); ?>
 
@@ -27,7 +27,7 @@ get_header();
 
     <div class="container mb-4">
         <div class="mx-auto text-center">
-            <?php render_ad_tag('incontent_2'); ?>
+            <?php render_ad_tag('incontent_1'); ?>
         </div>
     </div>
 

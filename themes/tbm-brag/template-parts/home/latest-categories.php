@@ -47,5 +47,10 @@ foreach ($cats_home as $i => $cat_home) :
                 <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More Stories</a>
             </div>
         </section>
+        <div class="container mb-4">
+            <div class="mx-auto text-center">
+                <?php render_ad_tag('incontent_' . ($count + 1)); ?>
+            </div>
+        </div>
 <?php endif;
 endforeach;
