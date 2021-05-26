@@ -251,7 +251,7 @@ $page_template = get_page_template_slug();
           ?>
             <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
               <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-              <span class="ml-2"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
+              <span class="ml-1"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
               <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
             </a>
           <?php else : ?>
