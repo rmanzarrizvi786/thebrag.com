@@ -1480,6 +1480,50 @@ function ssm_amp_additional_css_styles($amp_template)
     .share-buttons-bottom {
     position:fixed; text-align: center; bottom: 0; padding-top: 10px; width: 100%; background: #fff; z-index: 9999;
     }
+    .hamburger {
+    position: relative;
+    padding: 9px 10px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    }
+    .hamburger .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #888;
+    }
+    .hamburger .icon-bar+.icon-bar {
+    margin-top: 4px;
+    }
+    amp-sidebar {
+    width: 318px;
+    background-color: #000;
+    }
+    amp-sidebar .menu {
+    margin: 0;
+    background-color: #000;
+    box-shadow: 0 100vh 0 100vh #000;
+    }
+    amp-sidebar .menu li {
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #303030;
+    }
+    amp-sidebar .menu li a {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    padding: .8125rem 1.25rem;
+    color: #fff;
+    text-decoration: none;
+    line-height: 1;
+    }
 <?php
 }
 add_filter('amp_content_max_width', 'ssm_amp_change_content_width');

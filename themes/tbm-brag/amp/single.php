@@ -18,13 +18,6 @@ $amp_post_id = $this->get('post_id'); ?>
 </head>
 
 <body class="<?php echo esc_attr($this->get('body_class')); ?>">
-    <amp-sidebar id="sidebar" class="sample-sidebar" layout="nodisplay" side="right">
-        <h3>Sidebar</h3>
-        <button on="tap:sidebar.close">Close sidebar</button>
-        <button on="tap:sidebar.toggle">Toggle sidebar</button>
-    </amp-sidebar>
-    <button on="tap:sidebar.toggle">Toggle sidebar</button>
-    <button on="tap:sidebar.open">Open sidebar</button>
     <?php
     if (isset($_GET['screenshot'])) {
         $pagepath = 'screenshot';
