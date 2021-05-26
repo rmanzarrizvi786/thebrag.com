@@ -231,16 +231,18 @@ $page_template = get_page_template_slug();
         </div><!-- .network-socials.hide-m -->
       </div><!-- .network-socials-wrap -->
 
-      <div class="w-auto d-flex d-md-none pl-1 btn-toggle-menu">
-        <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
-          <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
-          <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
-          <rect y="24" width="30" height="6" rx="3" style="fill: #fff"></rect>
-        </svg>
-      </div>
+      <div class="d-flex">
+        <div class="w-auto d-flex d-md-none mr-1 pl-1 btn-toggle-menu">
+          <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
+            <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
+            <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
+            <rect y="24" width="30" height="6" rx="3" style="fill: #fff"></rect>
+          </svg>
+        </div>
 
-      <div class="logo-wrap">
-        <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+        <div class="logo-wrap">
+          <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+        </div>
       </div>
       <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
         <div class="user-info d-none d-md-flex flex-row my-1">
