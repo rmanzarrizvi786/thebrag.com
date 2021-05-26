@@ -30,7 +30,6 @@ foreach ($cats_home as $i => $cat_home) :
                             <?php get_template_part('template-parts/single/tile'); ?>
                         </div>
                     <?php
-                        $count++;
                     endwhile; ?>
                     <div class="article-wrap col-6 col-md-4">
                         <article class="my-3">
@@ -52,5 +51,7 @@ foreach ($cats_home as $i => $cat_home) :
                 <?php render_ad_tag('incontent_' . ($count + 1)); ?>
             </div>
         </div>
-<?php endif;
+<?php
+        $count++;
+    endif;
 endforeach;
