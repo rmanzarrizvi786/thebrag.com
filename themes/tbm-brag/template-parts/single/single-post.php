@@ -24,14 +24,15 @@ if (!post_password_required($post)) :
 
         $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture'), 'thumbnail');
         if ($author_img_src) :
-            $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded-circle">';
+            $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded">';
         else :
-            $author_image = '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" width="64" height="64" class="rounded-circle">';
+            $author_image = '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" width="64" height="64" class="rounded">';
         endif; // If custom author image is set
     else : // If custom author has not been set
-        $author_byline = '<a href="' . get_author_posts_url($post->post_author) . '" class="text-dark">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
-        $author_image = get_avatar($post->post_author, 64, get_template_directory_uri() . '/images/default-avatar.png', '', array('class' => 'rounded-circle'));
         $author_name = get_the_author_meta('display_name', $post->post_author);
+        $author_byline = '<a href="' . get_author_posts_url($post->post_author) . '" class="text-dark">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
+        $author_image = get_avatar($post->post_author, 64, get_template_directory_uri() . '/images/default-avatar.png', $author_name, array('class' => 'rounded'));
+
     endif; // If custom author is set
 ?>
 
