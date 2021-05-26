@@ -1,4 +1,7 @@
 <?php
+$count = 1;
+$vrec = 3;
+$incontent = 2;
 $cats_home = array('food-drink', 'travel', 'comedy', 'culture');
 foreach ($cats_home as $i => $cat_home) :
     $category = get_category_by_slug($cat_home);
@@ -13,11 +16,7 @@ foreach ($cats_home as $i => $cat_home) :
         'category__in' => $category->term_id,
     );
     $news_query = new WP_Query($news_args);
-    $no_of_columns = 2;
     if ($news_query->have_posts()) :
-        $count = 1;
-        $vrec = 3;
-        $incontent = 2;
 ?>
         <section class="container latest py-3">
             <div class="m-2">
@@ -57,5 +56,7 @@ foreach ($cats_home as $i => $cat_home) :
         $count++;
         $vrec++;
         $incontent++;
+        ?>
+        <?php
     endif;
 endforeach;
