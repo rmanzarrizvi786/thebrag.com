@@ -1,4 +1,5 @@
-<div id="observer-list-top" class="p-2 bg-dark text-white" style="display: none;">
+<?php extract($args); ?>
+<div id="<?php echo isset($container_id) ? $container_id : 'observer-list-top'; ?>" class="observer-list p-2 bg-dark text-white" <?php echo isset($show) && $show ? '' : 'style="display: none;'; ?>>
     <h2><strong>Pick your niche.</strong> Follow the topics you want.</h2>
     <p class="font-primary desc">Tick to subscribe, untick to unsubscribe from any newsletters below:</p>
 

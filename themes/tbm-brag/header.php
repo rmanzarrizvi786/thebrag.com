@@ -252,6 +252,36 @@ $page_template = get_page_template_slug();
       </div>
     </div>
 
+    <?php
+    /* $my_sub_lists = [];
+
+    if (is_user_logged_in()) :
+      $current_user = wp_get_current_user();
+      $user_id = $current_user->ID;
+      $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
+      $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
+    endif;
+
+    $lists_query = "
+    SELECT l.id, l.title, l.slug, l.description, l.image_url, l.frequency, sub_count,
+    CASE l.frequency
+      WHEN 'Daily' THEN 1
+      WHEN 'Weekly' THEN 2
+      WHEN 'Fortnightly' THEN 3
+      WHEN 'Breaking News' THEN 4
+    END frequency_weight
+    FROM {$wpdb->prefix}observer_lists l
+    WHERE
+      l.status = 'active'
+      AND
+      l.related_site = 'thebrag.com'
+    ORDER BY
+      l.sub_count DESC 
+    ";
+    $lists = $wpdb->get_results($lists_query); */
+    // get_template_part('template-parts/observer-list-top', null, ['lists' => $lists, 'my_sub_lists' => $my_sub_lists,]);
+    ?>
+
     <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
       <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: -100%; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000">
         <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
@@ -274,15 +304,39 @@ $page_template = get_page_template_slug();
 
       <div id="nav-primary" class="nav w-100 my-0">
         <?php
-        wp_nav_menu(array(
-          'theme_location' => 'top',
-          'menu_id'        => 'menu_main-love',
-          'menu_class' => 'nav flex-column flex-md-row',
-          'fallback_cb'   => false,
-          'add_li_class'  => 'nav-item',
-          'link_class'   => 'nav-link',
-          'container' => 'nav',
-        ));
+        /* if (isset($my_sub_lists) && !empty($my_sub_lists)) :
+          $menu_cats = get_categories(
+            array(
+              'parent' => null,
+              'hide_empty' => '0',
+              'meta_query' => array(
+                array(
+                  'key'     => 'observer-topic',
+                  'value'   => $my_sub_lists,
+                  'compare' => 'IN',
+                )
+              )
+            )
+          ); */
+        ?>
+          <!-- <nav class="menu-top-menu-container">
+            <ul id="menu_main" class="nav flex-column flex-md-row">
+            
+            </ul>
+          </nav> -->
+        <?php
+          // var_dump($menu_cats); exit;
+        // else :
+          wp_nav_menu(array(
+            'theme_location' => 'top',
+            'menu_id'        => 'menu_main',
+            'menu_class' => 'nav flex-column flex-md-row',
+            'fallback_cb'   => false,
+            'add_li_class'  => 'nav-item',
+            'link_class'   => 'nav-link',
+            'container' => 'nav',
+          ));
+        // endif;
         ?>
       </div>
       <div class="socials-top d-flex d-md-none justify-content-between">
@@ -296,4 +350,4 @@ $page_template = get_page_template_slug();
   </header>
 
   <main>
-    <div class="content">
+    <div class="content container">
