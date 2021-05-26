@@ -140,7 +140,8 @@
     text-transform: uppercase;
 }
 
-.rounded-circle {
+.rounded-circle,
+.author img.avatar {
     border-radius: 50%;
 }
 
@@ -179,7 +180,7 @@
 .post-content a {
     text-decoration: underline;
 }
-a{
+a {
     color: $primaryColor;
 }
 
