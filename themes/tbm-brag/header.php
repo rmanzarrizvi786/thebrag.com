@@ -195,9 +195,24 @@ $page_template = get_page_template_slug();
   </script>
 
   <header class="fixed-top pb-1 py-md-0">
-    <div class="btn btn-media-top btn-toggle-slidedown d-flex d-md-none mb-1 mx-auto" data-target="network">
-      <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
-      <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
+    <div class="d-flex d-md-none  justify-content-between mb-1">
+      <div class="btn btn-media-top btn-toggle-slidedown d-flex" data-target="network">
+        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
+        <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
+      </div>
+      <div class="user-info d-md-none d-flex flex-row m-1">
+        <?php
+        if (is_user_logged_in()) :
+          $current_user = wp_get_current_user();
+          $user_info = get_userdata($current_user->ID);
+        ?>
+          <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn" style="padding: 0;">
+            <?php echo get_avatar($current_user, 16, '', $user_info->first_name, ['class' => 'rounded-circle']); ?>
+          </a>
+        <?php else : ?>
+          <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
+        <?php endif; ?>
+      </div>
     </div>
     <div class="d-flex justify-content-between container">
       <div class="network-socials-wrap d-none d-md-block">
@@ -231,11 +246,12 @@ $page_template = get_page_template_slug();
         <div class="user-info d-none d-md-flex flex-row my-1">
           <?php
           if (is_user_logged_in()) :
-            $current_user = wp_get_current_user();
-            $user_info = get_userdata($current_user->ID);
+            // $current_user = wp_get_current_user();
+            // $user_info = get_userdata($current_user->ID);
           ?>
             <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn" style="padding: 0;">
-              <span><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
+              <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
+              <span class="ml-2"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
               <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
             </a>
           <?php else : ?>
@@ -244,7 +260,7 @@ $page_template = get_page_template_slug();
         </div>
         <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
           <span>Pick Your Niche</span>
-          <span class="ml-1">
+          <span class="ml-1 d-xs-none">
             <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
             <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
           </span>

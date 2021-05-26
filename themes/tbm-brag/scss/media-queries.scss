@@ -381,3 +381,9 @@ p {
         }
     }
 }
+
+@media (max-width: $extraSmall) {
+    .d-xs-none {
+        display: none !important;
+    }
+}

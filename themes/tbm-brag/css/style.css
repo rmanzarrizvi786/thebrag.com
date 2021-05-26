@@ -1014,6 +1014,11 @@ p {
     display: none !important;
   }
 }
+@media (max-width: 20rem) {
+  .d-xs-none {
+    display: none !important;
+  }
+}
 /* body:after {
     content: "";
     position: absolute;
