@@ -301,7 +301,7 @@ if (!post_password_required($post)) :
                         <?php render_ad_tag('rail1', $count_articles); ?>
                     </div>
                     <div class="sticky-ad-right">
-                        <div class="mt-3" style="min-width: 300px;">
+                        <div class="" style="min-width: 300px;">
                             <?php
                             render_ad_tag('rail2', $the_post_id . $count_articles);
                             ?>
