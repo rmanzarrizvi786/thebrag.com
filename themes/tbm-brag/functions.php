@@ -1455,7 +1455,7 @@ function ssm_amp_additional_css_styles($amp_template)
     }
     .amp-wp-title { color: #333; }
     .amp-wp-article, .amp-wp-article-header { margin-top: 0; background: #fff; }
-    .amp-wp-article { padding: 10px 0; }
+    .amp-wp-article { padding: 55px 0 10px 0; }
     #pagination { border-top: 1px solid #ccc; }
     #pagination .prev a, #pagination .next a {
     display: block;
