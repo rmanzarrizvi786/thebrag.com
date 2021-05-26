@@ -36,7 +36,10 @@ foreach ($cats_home as $i => $cat_home) :
                         <article class="my-3">
                             <div class="ad-mrec mt-5">
                                 <div class="mx-auto text-center">
-                                    <?php render_ad_tag('vrec_' . $vrec); ?>
+                                    <?php
+                                    render_ad_tag('vrec_' . $vrec);
+                                    $vrec++;
+                                    ?>
                                 </div>
                             </div>
                         </article>
@@ -49,14 +52,17 @@ foreach ($cats_home as $i => $cat_home) :
         </section>
         <div class="container mb-4">
             <div class="mx-auto text-center">
-                <?php render_ad_tag('incontent_' . $incontent); ?>
+                <?php
+                if ($count % 2 !== 0) {
+                    render_ad_tag('incontent_' . $incontent);
+                    $incontent++;
+                }
+                ?>
             </div>
         </div>
-<?php
-        $count++;
-        $vrec++;
-        $incontent++;
-        ?>
         <?php
+        $count++;
+        ?>
+<?php
     endif;
 endforeach;
