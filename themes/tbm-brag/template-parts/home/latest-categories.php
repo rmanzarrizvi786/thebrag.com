@@ -29,18 +29,18 @@ foreach ($cats_home as $i => $cat_home) :
                         <div class="article-wrap col-12 col-md-4">
                             <?php get_template_part('template-parts/single/tile'); ?>
                         </div>
-                        <div class="article-wrap col-6 col-md-4">
-                            <article class="my-3">
-                                <div class="ad-mrec mt-5">
-                                    <div class="mx-auto text-center">
-                                        <?php render_ad_tag('vrec_' . $count); ?>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
                     <?php
                         $count++;
                     endwhile; ?>
+                    <div class="article-wrap col-6 col-md-4">
+                        <article class="my-3">
+                            <div class="ad-mrec mt-5">
+                                <div class="mx-auto text-center">
+                                    <?php render_ad_tag('vrec_' . $count); ?>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
             <div class="d-flex">
