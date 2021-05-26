@@ -234,10 +234,10 @@ $page_template = get_page_template_slug();
             $current_user = wp_get_current_user();
             $user_info = get_userdata($current_user->ID);
           ?>
-            <div class="user-name d-flex flex-row btn" style="padding: 0;">
+            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn" style="padding: 0;">
               <span><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
-              <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div>
-            </div>
+              <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
+            </a>
           <?php else : ?>
             <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
           <?php endif; ?>
@@ -319,23 +319,23 @@ $page_template = get_page_template_slug();
             )
           ); */
         ?>
-          <!-- <nav class="menu-top-menu-container">
+        <!-- <nav class="menu-top-menu-container">
             <ul id="menu_main" class="nav flex-column flex-md-row">
             
             </ul>
           </nav> -->
         <?php
-          // var_dump($menu_cats); exit;
+        // var_dump($menu_cats); exit;
         // else :
-          wp_nav_menu(array(
-            'theme_location' => 'top',
-            'menu_id'        => 'menu_main',
-            'menu_class' => 'nav flex-column flex-md-row',
-            'fallback_cb'   => false,
-            'add_li_class'  => 'nav-item',
-            'link_class'   => 'nav-link',
-            'container' => 'nav',
-          ));
+        wp_nav_menu(array(
+          'theme_location' => 'top',
+          'menu_id'        => 'menu_main',
+          'menu_class' => 'nav flex-column flex-md-row',
+          'fallback_cb'   => false,
+          'add_li_class'  => 'nav-item',
+          'link_class'   => 'nav-link',
+          'container' => 'nav',
+        ));
         // endif;
         ?>
       </div>
