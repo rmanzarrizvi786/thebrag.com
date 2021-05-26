@@ -10,7 +10,7 @@
     </div>
     <div class="footer-menu pt-5 border-top mt-5 px-2">
         <div class="d-flex flex-column flex-md-row align-items-start">
-            <div class="left px-3">
+            <div class="left px-2 px-md-3">
                 <nav>
                     <ul>
                         <li><a href="https://thebrag.media/" target="_blank" rel="noreferrer">Advertise</a></li>
