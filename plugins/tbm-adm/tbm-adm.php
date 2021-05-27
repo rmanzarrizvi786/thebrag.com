@@ -88,9 +88,11 @@ class TBMAds
     } else if (is_home() || is_front_page()) {
       $pagepath = 'homepage';
     } else {
-      $pagepath_uri = substr(str_replace('/', '', $_SERVER['REQUEST_URI']), 0, 40);
+      // echo $_SERVER['HTTP_REFERER'];
+      // $pagepath = $_SERVER['HTTP_REFERER'];
+      /* $pagepath_uri = substr(str_replace('/', '', $_SERVER['REQUEST_URI']), 0, 40);
       $pagepath_e = explode('?', $pagepath_uri);
-      $pagepath = $pagepath_e[0];
+      $pagepath = $pagepath_e[0]; */
     }
 
     if (function_exists('amp_is_request') && amp_is_request()) {
@@ -151,8 +153,13 @@ class TBMAds
         }
       }
 
+      if (!is_null($post_id)) {
+        // $the_post = get_post($post_id);
+        $pagepath = get_the_permalink($post_id);
+      }
+
       if (isset($section)) {
-        if ( !isset($fuse_tags[$section][$ad_location])) {
+        if (!isset($fuse_tags[$section][$ad_location])) {
           return;
         }
         $fuse_id = $fuse_tags[$section][$ad_location];
