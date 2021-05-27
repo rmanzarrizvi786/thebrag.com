@@ -2,7 +2,7 @@
 extract($args);
 $exclude_posts = [];
 ?>
-<section class="trending container d-flex flex-column flex-md-row pb-2 align-items-start px-0 px-md-2">
+<section class="trending container d-flex flex-column flex-md-row pb-2 align-items-start px-0 px-md-2" style="overflow: hidden;">
     <?php
     $trending_story_args = [
         'post_status' => 'publish',
