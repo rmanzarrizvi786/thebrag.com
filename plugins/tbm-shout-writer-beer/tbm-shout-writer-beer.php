@@ -220,7 +220,7 @@ class TBM_Shout_Writer_Beer
         });
       });
     </script>
-    <div style="width: auto; max-width: 100%; margin: 0 auto;">
+    <div style="width: auto; max-width: 100%;">
       <div class="btn-shout-writer-beer" data-toggle="form-shout-writer-beer">
         <div style="display: flex; align-items: center;">
           <a href="https://younghenrys.com/" target="_blank" class="l-logo-beer">
