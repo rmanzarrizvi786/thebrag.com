@@ -219,6 +219,8 @@ jQuery(document).ready(function ($) {
     var billboardHeight = $('.ad-billboard').length ? $('.ad-billboard').height() : 0;
     if (winTop >= mainTop + billboardHeight) {
       $('.sticky-ad-bottom').show();
+    } else {
+      $('.sticky-ad-bottom').hide();
     }
 
     if ($(".single").length) {
