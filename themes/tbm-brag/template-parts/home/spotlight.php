@@ -13,13 +13,14 @@
                     LIMIT 10"
             );
             if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
-                $spotlight_articles_args = array(
+                $spotlight_articles_args = [
                     'post_status' => 'publish',
-                    'post_type' => array('post', 'country'),
+                    // 'post_type' => array('post', 'country'),
                     'ignore_sticky_posts' => 1,
                     'posts_per_page' => 3,
+                    'orderby'        => 'rand',
                     'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
-                );
+                ];
                 $spotlight_articles = new WP_Query($spotlight_articles_args);
                 if ($spotlight_articles->have_posts()) :
             ?>
