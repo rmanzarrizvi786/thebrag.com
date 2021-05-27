@@ -108,6 +108,12 @@ main {
     .d-md-none {
         display: none !important;
     }
+    .d-md-block {
+        display: block !important;
+    }
+    .d-md-flex {
+        display: flex !important;
+    }
 }
 
 .modal-open header {
