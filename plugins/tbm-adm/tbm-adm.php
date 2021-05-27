@@ -176,18 +176,12 @@ class TBMAds
        });
        </script>';
       } else {
-        $html .= $pagepath;
         $html .= '<script type="text/javascript">';
         if (isset($category)) {
           $html .= 'fusetag.setTargeting("fuse_category", ["' . $category . '"]);';
         }
         if (isset($pagepath)) {
           $html .= 'fusetag.setTargeting("pagepath", ["' . $pagepath . '"]);';
-        } else {
-          // $html .= "
-          // var pagepath = location.pathname;
-          // fusetag.setTargeting(\"pagepath\", [pagepath]);
-          // ";
         }
         $html .= '</script>';
       }
