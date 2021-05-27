@@ -3,7 +3,7 @@ extract($args);
 $story_ID = $story->ID;
 ?>
 <a href="<?php the_permalink($story); ?>">
-    <div class="story-hero story-hero-overlay text-white rounded py-2">
+    <div class="story-hero story-hero-overlay text-white rounded py-2" style="height: 100% !important">
         <div class="featured-img-overlay rounded" style="background-image: url(<?php echo $story_src[0]; ?>);">
             <div>
                 <img src="<?php echo $story_src[0]; ?>" alt="<?php echo $story_alt_text; ?>" title="<?php echo $story_alt_text; ?>" class="rounded" loading="lazy">
