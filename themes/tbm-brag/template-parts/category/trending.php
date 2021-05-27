@@ -1,7 +1,7 @@
 <?php
 extract($args);
 ?>
-<section class="trending container d-flex flex-column flex-md-row pb-2 align-items-start px-0 px-md-2">
+<section class="trending container d-flex flex-column flex-md-row pb-2 align-items-start px-0 px-md-2" style="overflow: hidden;">
     <div class="left trending-main m-2 mr-md-0 align-self-stretch col-12 col-md-8">
         <?php
         if ($hero_stories[0]) :
