@@ -2975,18 +2975,13 @@ function ssm_inject_ads($content)
     $count_articles = isset($_POST['count_articles']) ? (int) $_POST['count_articles'] : 1;
 
     $closing_p = '</p>';
-
+    $after_para = 4;
 
     ob_start();
     render_ad_tag('incontent_1', $count_articles);
     $content_ad_tag = ob_get_contents();
     ob_end_clean();
-
-    $after_para_mobile = 2;
-    $content = ssm_insert_after_paragraph('<div class="my-2 text-center d-block d-md-none">' . $content_ad_tag . '</div>', $after_para_mobile, $content);
-   
-    $after_para = 4;
-    $content = ssm_insert_after_paragraph('<div class="my-2 text-center d-none d-md-block">' . $content_ad_tag . '</div>', $after_para, $content);
+    $content = ssm_insert_after_paragraph('<div class="my-2 text-center">' . $content_ad_tag . '</div>', $after_para, $content);
 
     return $content;
 }
