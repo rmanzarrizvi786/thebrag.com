@@ -61,6 +61,11 @@ header {
     }
 }
 
+main {
+    position: relative;
+    margin-top: $headerHeightMobile;
+}
+
 .btn-media-top {
     width: 150px;
     padding: 0.25rem 0 !important;
