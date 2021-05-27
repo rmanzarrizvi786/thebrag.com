@@ -211,6 +211,11 @@ body.modal-open {
     overflow: hidden;
 }
 
+main {
+    position: relative;
+    margin-top: $headerHeightMobile;
+}
+
 .sticky-ad-right {
     position: sticky;
     top: 115px;
