@@ -29,6 +29,7 @@
 .logo-beer img {
   height: 50px !important;
   width: auto;
+  max-width: none;
 }
 .shout-writer-beer-amount, .shout-writer-coffe-message {
   box-shadow: none !important;

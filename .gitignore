@@ -13,6 +13,7 @@ plugins/ssm-ga/*
 !plugins/ssm-ga/ssm-ga.php
 
 !tbm-users
+!tbm-shout-writer-beer
 
 !plugins/ssm-articles-json
 
