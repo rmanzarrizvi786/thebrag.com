@@ -1,6 +1,6 @@
 <?php
 extract($args);
-$posts_per_page = 1 === $paged ? 5 : 12;
+$posts_per_page = 1 === $paged ? 5 : 11;
 $news_args = array(
     'post_status' => 'publish',
     'post_type' => array('post', 'snaps', 'dad'),
