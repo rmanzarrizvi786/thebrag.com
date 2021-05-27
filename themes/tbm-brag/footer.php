@@ -102,6 +102,19 @@
   });
 </script>
 
+<div class="sticky-ad-bottom" style="
+display: none;
+position: fixed;
+    bottom: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    z-index: 5999999;
+    width: 100%;">
+  <?php render_ad_tag('mob_sticky'); ?>
+</div>
+
 </body>
 
 </html>
