@@ -254,6 +254,14 @@ jQuery(document).ready(function ($) {
                 $("#articles-wrap").append(res.data.content);
                 $("#articles-wrap").append(button);
 
+                fusetag.setTargeting("fuse_category", [
+                  "'" + res.data.category + "'",
+                ]);
+
+                fusetag.setTargeting("pagepath", [
+                  "'" + res.data.pagepath + "'",
+                ]);
+
                 loading = false;
               } else {
                 button.remove();

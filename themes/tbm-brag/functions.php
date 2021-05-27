@@ -193,7 +193,7 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 
 function load_js_css()
 {
-    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210526.1', true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210526.2', true);
     // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
 
 
@@ -3131,6 +3131,20 @@ function tbm_ajax_load_next_post()
             $author = get_field('Author', $prevPost->ID);
         }
         $data['author'] = $author;
+
+        $categories = get_the_category($prevPost->ID);
+        if ($categories) {
+            foreach ($categories as $category_obj) :
+                $category = $category_obj->slug;
+                break;
+            endforeach;
+            $data['category'] = $category;
+        }
+
+        $pagepath = parse_url(get_the_permalink($prevPost->ID), PHP_URL_PATH);
+        $pagepath = substr(str_replace('/', '', $pagepath), 0, 40);
+        $data['pagepath'] = $pagepath;
+
         wp_send_json_success($data);
     endif;
     wp_die();
