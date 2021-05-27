@@ -110,7 +110,7 @@ position: fixed;
     padding: 0;
     margin: 0;
     text-align: center;
-    z-index: 5999999;
+    z-index: 4;
     width: 100%;">
   <?php render_ad_tag('mob_sticky'); ?>
 </div>
