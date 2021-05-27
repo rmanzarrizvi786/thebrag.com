@@ -103,7 +103,6 @@
 </script>
 
 <div class="sticky-ad-bottom" style="
-display: none;
 position: fixed;
     bottom: 0;
     border: 0;
