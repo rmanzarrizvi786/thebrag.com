@@ -65,14 +65,14 @@ jQuery(document).ready(function ($) {
     $('body').removeClass('modal-open');
   });
 
-  $('[data-toggle="modal"]').on('click', function(e) {
+  $('[data-toggle="modal"]').on('click', function (e) {
     e.preventDefault();
     var target = $($(this).data('target'));
     $('body').addClass('modal-open');
     $('#overlay').removeClass('d-none');
     target.fadeIn();
   });
-  $('.modal .close').on('click', function(e) {
+  $('.modal .close').on('click', function (e) {
     e.preventDefault();
     var target = $(this).closest('.modal');
     target.fadeOut();
@@ -80,13 +80,13 @@ jQuery(document).ready(function ($) {
     $('body').removeClass('modal-open');
   });
 
-  $('.btn-open-top-search').on('click', function() {
+  $('.btn-open-top-search').on('click', function () {
     $('#top-search-wrap').addClass('active');
   });
-  $('.btn-close-top-search').on('click', function() {
+  $('.btn-close-top-search').on('click', function () {
     $('#top-search-wrap').removeClass('active');
   });
-  
+
 
 
   $('.observer-list .topics-active a').on('click', function (e) {
@@ -167,36 +167,6 @@ jQuery(document).ready(function ($) {
     );
   });
 
-  var didScroll;
-  var lastScrollTop = 0;
-  var delta = 5;
-  var navbarHeight = $("#header").outerHeight();
-
-  setInterval(function () {
-    if (didScroll) {
-      hasScrolled();
-      didScroll = false;
-    }
-  }, 250);
-
-  function hasScrolled() {
-    var st = $(this).scrollTop();
-
-    // Make sure they scroll more than delta
-    if (Math.abs(lastScrollTop - st) <= delta) return;
-
-    // if (st > lastScrollTop && st > navbarHeight){
-    if (st <= $("#header-wrap").outerHeight()) {
-      $("#header").removeClass("fixed-top");
-    } else {
-      // Scroll Up
-      if (st + $(window).height() < $(document).height()) {
-        $("#header").addClass("fixed-top");
-      }
-    }
-    lastScrollTop = st;
-  }
-
   if ($("#articles-wrap").length) {
     $("#articles-wrap").append(
       '<div class="load-more">Loading...</div>'
@@ -239,12 +209,16 @@ jQuery(document).ready(function ($) {
   $(window).scroll(function () {
     winTop = $(this).scrollTop();
 
-    didScroll = true;
-
-    if (winTop >= $('header').outerHeight()) {
+    /* if (winTop >= $('header').outerHeight()) {
       $('#skin').addClass('fixed');
     } else {
       $('#skin').removeClass('fixed');
+    } */
+
+    var mainTop = $('main').length ? $('main').offset().top : 0;
+    var billboardHeight = $('.ad-billboard').length ? $('.ad-billboard').height() : 0;
+    if (winTop >= mainTop + billboardHeight) {
+      $('.sticky-ad-bottom').show();
     }
 
     if ($(".single").length) {
