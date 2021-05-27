@@ -130,15 +130,13 @@ if (!post_password_required($post)) :
                     </div>
                 </div>
             </div>
-            <div>
-                <?php
-                if (shortcode_exists('shout_writer_beer')) :
-                    echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
-                elseif (shortcode_exists('shout_writer_coffee')) :
-                    echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
-                endif; // If shout writer shortcode exists
-                ?>
-            </div>
+            <?php
+            if (shortcode_exists('shout_writer_beer')) :
+                echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
+            elseif (shortcode_exists('shout_writer_coffee')) :
+                echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
+            endif; // If shout writer shortcode exists
+            ?>
         </div><!-- Author, Coffee and Share buttons -->
 
         <hr class="h-divider mb-3">
