@@ -34,7 +34,7 @@ class TBMUsers
     remove_action('wp_head', '_admin_bar_bump_cb');
 
     // WP Logout
-    add_action('wp_logout', [$this, '_wp_logout']);
+    // add_action('wp_logout', [$this, '_wp_logout']);
 
     // Lost Password
     add_action('lost_password', [$this, '_lost_password']);
