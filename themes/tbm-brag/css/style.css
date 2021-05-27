@@ -313,14 +313,6 @@
   left: -2px;
 }
 
-.flex-column {
-  flex-direction: column;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
 .rounded {
   border-radius: 1rem;
 }
