@@ -21,7 +21,7 @@
                     </div>
                 <?php endif; ?>
                 <h3 class="my-2"><?php the_title(); ?></h3>
-                <p class="excerpt d-none d-md-block">
+                <p class="excerpt d-block d-md-none">
                     <?php
                     $author_name =
                         get_field('photographer') ? get_field('photographer') : (get_field('author') ? get_field('author') : (get_field('Author') ? get_field('Author') : get_the_author_meta('first_name', $post->post_author) . ' ' . get_the_author_meta('last_name', $post->post_author)));
