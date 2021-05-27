@@ -193,7 +193,7 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 
 function load_js_css()
 {
-    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210527.2', true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210526.1', true);
     // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
 
 
@@ -2978,7 +2978,7 @@ function ssm_inject_ads($content)
     $after_para = 4;
 
     ob_start();
-    render_ad_tag('incontent_1', '', $count_articles);
+    render_ad_tag('incontent_1', $count_articles);
     $content_ad_tag = ob_get_contents();
     ob_end_clean();
     $content = ssm_insert_after_paragraph('<div class="my-2 text-center">' . $content_ad_tag . '</div>', $after_para, $content);
