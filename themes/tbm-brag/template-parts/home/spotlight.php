@@ -10,7 +10,7 @@
                     ORDER BY `created_at` DESC LIMIT 10
                     ) AS temptable
                     ORDER BY RAND()
-                    LIMIT 10"
+                    LIMIT 20"
             );
             if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
                 $spotlight_articles_args = [
