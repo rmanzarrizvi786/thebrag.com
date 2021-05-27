@@ -10,13 +10,14 @@
                     ORDER BY `created_at` DESC LIMIT 10
                     ) AS temptable
                     ORDER BY RAND()
-                    LIMIT 3"
+                    LIMIT 10"
             );
             if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
                 $spotlight_articles_args = array(
                     'post_status' => 'publish',
                     'post_type' => array('post', 'country'),
                     'ignore_sticky_posts' => 1,
+                    'posts_per_page' => 3,
                     'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
                 );
                 $spotlight_articles = new WP_Query($spotlight_articles_args);
