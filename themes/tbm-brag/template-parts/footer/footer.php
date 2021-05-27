@@ -21,7 +21,7 @@
                 </nav>
             </div>
             <div class="right mt-3 mt-md-0">
-                <?php get_template_part('template-parts/observer-list', null, ['show' => true, 'container_id' => 'observer-list-footer']); ?>
+                <?php // get_template_part('template-parts/observer-list', null, ['show' => true, 'container_id' => 'observer-list-footer']); ?>
             </div>
         </div>
     </div>
