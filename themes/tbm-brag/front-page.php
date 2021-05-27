@@ -4,6 +4,8 @@
  * Template name: homepage
  */
 get_header();
+
+$paged = (get_query_var('page')) ? get_query_var('page') : 1;
 ?>
 
 <div class="ad-billboard container py-2">
@@ -12,29 +14,38 @@ get_header();
     </div>
 </div>
 
-<?php get_template_part('template-parts/home/trending'); ?>
+<?php
+if (1 === $paged) {
+    get_template_part('template-parts/home/trending');
+}
+?>
 
 <div class="container bg-yellow">
     <!-- <div class="container py-4">
         <div class="mx-auto text-center">
-            <?php // render_ad_tag('incontent_1'); ?>
+            <?php // render_ad_tag('incontent_1'); 
+            ?>
         </div>
     </div> -->
 
-    <?php get_template_part('template-parts/home/spotlight'); ?>
+    <?php if (1 === $paged) {
+        get_template_part('template-parts/home/spotlight');
+    } ?>
 
-    <?php get_template_part('template-parts/home/latest'); ?>
+    <?php get_template_part('template-parts/home/latest', null, ['paged' => $paged]); ?>
 
-    <div class="container mb-4">
-        <div class="mx-auto text-center">
-            <?php render_ad_tag('incontent_1'); ?>
+    <?php if (1 === $paged) { ?>
+        <div class="container mb-4">
+            <div class="mx-auto text-center">
+                <?php render_ad_tag('incontent_1'); ?>
+            </div>
         </div>
-    </div>
 
-    <?php get_template_part('template-parts/home/video-record'); ?>
+        <?php get_template_part('template-parts/home/video-record'); ?>
 
-    <?php get_template_part('template-parts/home/latest-categories'); ?>
-
+        <?php get_template_part('template-parts/home/latest-categories'); ?>
+    <?php } // If front page
+    ?>
 </div>
 
 <?php
