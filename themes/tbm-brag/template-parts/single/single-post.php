@@ -122,7 +122,7 @@ if (!post_password_required($post)) :
                 <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
                     <div class="pr-1 text-uppercase d-flex">
                         <div class="mr-1"><?php echo $author_image; ?></div>
-                        <div><strong><?php echo $author_byline; ?><strong></div>
+                        <div><strong><?php echo $author_byline; ?></strong></div>
                     </div>
                     <div class="v-divider">|</div>
                     <div class="pl-1">
