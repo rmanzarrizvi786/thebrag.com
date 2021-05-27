@@ -117,7 +117,7 @@ if (!post_password_required($post)) :
             ?>
         </p>
 
-        <div class="post-meta d-block d-md-flex my-3 justify-content-between">
+        <div class="post-meta d-block d-md-flex my-3 justify-content-around">
             <div class="d-flex mb-3 mb-md-0">
                 <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
                     <div class="pr-1 text-uppercase d-flex">
