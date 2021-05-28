@@ -88,11 +88,10 @@ class TBMAds
     } else if (is_home() || is_front_page()) {
       $pagepath = 'homepage';
     } else {
-      // echo $_SERVER['HTTP_REFERER'];
-      // $pagepath = $_SERVER['HTTP_REFERER'];
-      /* $pagepath_uri = substr(str_replace('/', '', $_SERVER['REQUEST_URI']), 0, 40);
+      $pagepath = $_SERVER['HTTP_REFERER'];
+      $pagepath_uri = substr(str_replace('/', '', $_SERVER['REQUEST_URI']), 0, 40);
       $pagepath_e = explode('?', $pagepath_uri);
-      $pagepath = $pagepath_e[0]; */
+      $pagepath = $pagepath_e[0];
     }
 
     if (function_exists('amp_is_request') && amp_is_request()) {
