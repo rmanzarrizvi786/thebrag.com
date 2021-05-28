@@ -24,8 +24,6 @@ if (isset($_GET['oc'])) {
 
   $data = @unserialize(base64_decode($_GET['oc']));
 
-  // error_log(' ----|' . print_r($_GET, true) . '|----');
-
   if (!$data) {
     if (isset($_GET['fl']) && 0 == $_GET['fl']) { // Force Login, if 0 => redirect to intended URL without logging in
       wp_redirect($redirectTo);
