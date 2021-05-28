@@ -2156,7 +2156,27 @@ function ssm_autoblank($content)
     $content = preg_replace("/<a(.*?)>/", "<a$1 target=\"_blank\">", $content);
     return $content;
 }
-add_filter('the_content', 'ssm_autoblank');
+// add_filter('the_content', 'ssm_autoblank');
+
+function tbm_add_rel_to_links($content)
+{
+    $content = preg_replace_callback(
+        '/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
+        function ($m) {
+            if ((strpos(strtolower($m[1]), $_SERVER['HTTP_HOST']) !== false) || (substr($m[1], 0, 1) == "#")) {
+                // return $m[0];
+                return '<a href="' . $m[1] . '" target="_blank">' . $m[2] . '</a>';
+            } else {
+                return '<a href="' . $m[1] . '" rel="noreferrer" target="_blank">' . $m[2] . '</a>';
+            }
+        },
+        $content
+    );
+
+    return $content;
+}
+
+add_filter('the_content', 'tbm_add_rel_to_links', 100);
 
 
 // Inject Unruly code
