@@ -117,28 +117,6 @@ if (!post_password_required($post)) :
             ?>
         </p>
 
-        <div class="post-meta d-block d-md-flex my-3 justify-content-around">
-            <div class="d-flex mb-3 mb-md-0">
-                <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
-                    <div class="pr-1 text-uppercase d-flex">
-                        <div class="mr-1"><?php echo $author_image; ?></div>
-                        <div><strong><?php echo $author_byline; ?></strong></div>
-                    </div>
-                    <div class="v-divider">|</div>
-                    <div class="pl-1">
-                        <time datetime="<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>" data-pubdate="<?php echo get_the_time('M d, Y'); ?>"><?php echo get_the_time('d.m.Y'); ?></time>
-                    </div>
-                </div>
-            </div>
-            <?php
-            if (shortcode_exists('shout_writer_beer')) :
-                echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
-            elseif (shortcode_exists('shout_writer_coffee')) :
-                echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
-            endif; // If shout writer shortcode exists
-            ?>
-        </div><!-- Author, Coffee and Share buttons -->
-
         <hr class="h-divider mb-3">
         <div class="d-flex align-items-start">
             <div class="col-md-8">
@@ -168,6 +146,28 @@ if (!post_password_required($post)) :
                     </div><!-- .post-thumbnail -->
                 <?php endif; // If post has thumbnail AND post type is not issue 
                 ?>
+
+                <div class="post-meta d-block d-md-flex my-3 justify-content-around">
+                    <div class="d-flex mb-3 mb-md-0">
+                        <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
+                            <div class="pr-1 text-uppercase d-flex">
+                                <div class="mr-1"><?php echo $author_image; ?></div>
+                                <div><strong><?php echo $author_byline; ?></strong></div>
+                            </div>
+                            <div class="v-divider">|</div>
+                            <div class="pl-1">
+                                <time datetime="<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>" data-pubdate="<?php echo get_the_time('M d, Y'); ?>"><?php echo get_the_time('d.m.Y'); ?></time>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    if (shortcode_exists('shout_writer_beer')) :
+                        echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
+                    elseif (shortcode_exists('shout_writer_coffee')) :
+                        echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
+                    endif; // If shout shortcode exists
+                    ?>
+                </div><!-- Author, Shout -->
 
 
                 <?php
