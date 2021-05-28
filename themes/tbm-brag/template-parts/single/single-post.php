@@ -147,7 +147,7 @@ if (!post_password_required($post)) :
                 <?php endif; // If post has thumbnail AND post type is not issue 
                 ?>
 
-                <div class="post-meta d-block d-md-flex my-3 justify-content-around">
+                <div class="post-meta d-block d-md-flex my-3 justify-content-around align-items-start">
                     <div class="d-flex mb-3 mb-md-0">
                         <div class="author d-flex font-primary" data-author="<?php echo $author_name; ?>">
                             <div class="pr-1 text-uppercase d-flex">
