@@ -2,7 +2,7 @@
 </div><!-- .content -->
 
 <?php get_template_part('template-parts/network'); ?>
-<?php get_template_part('template-parts/observer-list'); ?>
+<?php // get_template_part('template-parts/observer-list'); ?>
 
 <div id="skin" class="d-none d-md-block">
   <?php render_ad_tag('skin'); ?>
