@@ -2,11 +2,11 @@
 
 </div><!-- /#main.wrap -->
 
-<div id="footer" class="pb-3 pt-3 mt-5 container-fluid">
+<div id="footer" class="pb-3 pt-3 mt-5 container-fluid" style="background-color: #333;">
   <div class="row align-items-center">
     <div id="footer-frequency-details" class="col-md-6">
       <div class="mt-3 mb-3 text-left">
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column text-white">
           <div class="my-2"><strong class="p-1 bg-danger">Breaking news</strong> as it happens, in real time</div>
           <div class="my-2"><strong class="p-1 bg-danger">Daily</strong> every day of the week</div>
           <div class="my-2"><strong class="p-1 bg-danger">Weekly</strong> once a week</div>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div id="footer-copyright" class="col-md-6 mt-3 text-md-right text-center">
+    <div id="footer-copyright" class="col-md-6 mt-3 text-md-right text-center text-white">
       <p>
         <a href="https://thebrag.com/media/" target="_blank">
           <img src="https://thebrag.com/media/wp-content/themes/bragm/images/TheBragMedia_LOGO_v7_white@100x.png" alt="The Brag" class="img-fluid" style="max-width: 300px;">

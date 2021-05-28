@@ -8,6 +8,11 @@ plugins/*
 !plugins/brag-observer
 plugins/brag-observer/*
 !plugins/brag-observer/brag-observer.php
+
+!plugins/brag-observer/partials
+plugins/brag-observer/partials/*
+!plugins/brag-observer/partials/newsletter-template.php
+
 !plugins/brag-observer/classes
 plugins/brag-observer/classes/*
 !plugins/brag-observer/classes/api.class.php
