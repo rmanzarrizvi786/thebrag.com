@@ -235,11 +235,14 @@ if ($observer_slug) {
               <?php else : ?>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="flex-fill observer-action-wrap">
-                    <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $tastemaker->title; ?>" data-list="<?php echo $tastemaker->id; ?>" data-desc="<?php echo $tastemaker->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $tastemaker->id, 'code' => md5(time() . 'tbm')]));
-                                                                                                                                                                                                                                                                                                                                                                                          echo $apple_signin_state; ?>">
-                      <div><i class="fa fa-envelope mr-2 d-none d-xl-inline"></i> <span class="btn-text">Subscribe</span></div>
-                      <!-- <div><i class="fa fa-caret-right"></i></div> -->
-                    </button>
+                    <?php if (is_user_logged_in()) : ?>
+                      <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $tastemaker->title; ?>" data-list="<?php echo $tastemaker->id; ?>" data-desc="<?php echo $tastemaker->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $tastemaker->id, 'code' => md5(time() . 'tbm')]));
+                                                                                                                                                                                                                                                                                                                                                                                            echo $apple_signin_state; ?>">
+                        <div><i class="fa fa-envelope mr-2 d-none d-xl-inline"></i> <span class="btn-text">Subscribe</span></div>
+                      </button>
+                    <?php else : ?>
+                      <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block" target="_blank">Subscribe</a>
+                    <?php endif; ?>
                     <div class="loading" style="display: none;">
                       <div class="spinner">
                         <div class="double-bounce1"></div>
