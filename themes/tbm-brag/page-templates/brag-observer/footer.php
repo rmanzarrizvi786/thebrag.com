@@ -63,6 +63,7 @@
 </noscript>
 
 <script src="https://www.youtube.com/iframe_api" defer></script>
+<script src="<?php echo get_template_directory_uri(); ?>/bs/js/bootstrap.min.js" defer></script>
 
 <script>
   var BASE = "<?php echo home_url() ?>";
