@@ -413,7 +413,7 @@ if ($observer_slug) {
                   <div><i class="fa fa-caret-right"></i></div>
                 </button>
               <?php else : ?>
-                <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
+                <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Vote</a>
               <?php endif; ?>
               <div class="loading" style="display: none;">
                 <div class="spinner">
