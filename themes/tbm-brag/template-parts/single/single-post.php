@@ -245,7 +245,7 @@ if (!post_password_required($post)) :
                                     <div class="col-2 text-right"><?php echo $author_image; ?></div>
                                     <div class="author col-10 align-self-center">
                                         <div class="d-flex flex-row justify-content-between">
-                                            <h5 data-author="<?php echo $author_name; ?>" class="align-self-center"><?php echo $author_byline; ?></h5>
+                                            <div data-author="<?php echo $author_name; ?>" class="align-self-center"><?php echo $author_byline; ?></div>
                                             <?php if (get_field('author') || get_field('Author')) :
                                             else :
                                                 $author = get_userdata(intval($post->post_author));
