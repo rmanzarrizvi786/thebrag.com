@@ -224,10 +224,10 @@ class TBM_Shout_Writer_Beer
       <div class="btn-shout-writer-beer" data-toggle="form-shout-writer-beer">
         <div style="display: flex; align-items: center;">
           <a href="https://younghenrys.com/" target="_blank" class="l-logo-beer" rel="noreferrer">
-            <span class="logo-beer">
+            <span class="logo-beer" style="display: none;">
               <img src="<?php echo plugins_url('images/yh-logo-blk.png', __FILE__); ?>" loading="lazy" alt="Young Henrys" width="85" height="50">
-              <span style="text-indent: -999px; display: inline-block;">Young Henrys</span>
             </span>
+            <span style="text-indent: -999px; display: inline-block;">Young Henrys</span>
           </a>
           <span class="ico-beer"></span>
 
