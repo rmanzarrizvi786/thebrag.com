@@ -236,12 +236,12 @@ if ($observer_slug) {
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="flex-fill observer-action-wrap">
                     <?php if (is_user_logged_in()) : ?>
-                      <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $tastemaker->title; ?>" data-list="<?php echo $tastemaker->id; ?>" data-desc="<?php echo $tastemaker->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $tastemaker->id, 'code' => md5(time() . 'tbm')]));
-                                                                                                                                                                                                                                                                                                                                                                                            echo $apple_signin_state; ?>">
+                      <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer-l d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $tastemaker->title; ?>" data-list="<?php echo $tastemaker->id; ?>" data-desc="<?php echo $tastemaker->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $tastemaker->id, 'code' => md5(time() . 'tbm')]));
+                                                                                                                                                                                                                                                                                                                                                echo $apple_signin_state; ?>">
                         <div><i class="fa fa-envelope mr-2 d-none d-xl-inline"></i> <span class="btn-text">Subscribe</span></div>
                       </button>
                     <?php else : ?>
-                      <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block" target="_blank">Subscribe</a>
+                      <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
                     <?php endif; ?>
                     <div class="loading" style="display: none;">
                       <div class="spinner">
@@ -307,11 +307,15 @@ if ($observer_slug) {
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="flex-fill observer-action-wrap">
 
-                      <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $list->id, 'code' => md5(time() . 'tbm')]));
-                                                                                                                                                                                                                                                                                                                                                                          echo $apple_signin_state; ?>">
-                        <div><i class="fa fa-envelope mr-2 d-none d-xl-inline"></i> <span class="btn-text">Subscribe</span></div>
-                        <!-- <div><i class="fa fa-caret-right d-xs-none"></i></div> -->
-                      </button>
+                      <?php if (is_user_logged_in()) : ?>
+                        <button type="button" class="btn btn-dark rounded btn-block btn-subscribe-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#subscribeobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $list->id, 'code' => md5(time() . 'tbm')]));
+                                                                                                                                                                                                                                                                                                                                                                            echo $apple_signin_state; ?>">
+                          <div><i class="fa fa-envelope mr-2 d-none d-xl-inline"></i> <span class="btn-text">Subscribe</span></div>
+                          <!-- <div><i class="fa fa-caret-right d-xs-none"></i></div> -->
+                        </button>
+                      <?php else : ?>
+                        <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
+                      <?php endif; ?>
                       <div class="loading" style="display: none;">
                         <div class="spinner">
                           <div class="double-bounce1"></div>
@@ -403,10 +407,14 @@ if ($observer_slug) {
 
               <a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fab fa-twitter"></i></a>
             <?php else : ?>
-              <button type="button" class="btn btn-dark rounded btn-block btn-vote-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#voteobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-votes="<?php echo $list->votes_count; ?>">
-                <div><i class="fa fa-thumbs-up mr-2"></i> <span class="btn-text">Vote</span></div>
-                <div><i class="fa fa-caret-right"></i></div>
-              </button>
+              <?php if (is_user_logged_in()) : ?>
+                <button type="button" class="btn btn-dark rounded btn-block btn-vote-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#voteobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-votes="<?php echo $list->votes_count; ?>">
+                  <div><i class="fa fa-thumbs-up mr-2"></i> <span class="btn-text">Vote</span></div>
+                  <div><i class="fa fa-caret-right"></i></div>
+                </button>
+              <?php else : ?>
+                <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
+              <?php endif; ?>
               <div class="loading" style="display: none;">
                 <div class="spinner">
                   <div class="double-bounce1"></div>
