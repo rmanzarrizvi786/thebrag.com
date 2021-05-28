@@ -133,7 +133,7 @@ if (!post_password_required($post)) :
                 <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
-                        the_post_thumbnail('full', array(
+                        the_post_thumbnail('medium_large', array(
                             'class' => 'img-fluid rounded',
                         ));
 
