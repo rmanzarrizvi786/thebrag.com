@@ -88,7 +88,6 @@ class TBMAds
     } else if (is_home() || is_front_page()) {
       $pagepath = 'homepage';
     } else {
-      $pagepath = $_SERVER['REQUEST_URI'];
       $pagepath_uri = substr(str_replace('/', '', $_SERVER['REQUEST_URI']), 0, 40);
       $pagepath_e = explode('?', $pagepath_uri);
       $pagepath = $pagepath_e[0];
