@@ -154,7 +154,7 @@ class TBMAds
 
       if (!is_null($post_id)) {
         // $the_post = get_post($post_id);
-        $pagepath = get_the_permalink($post_id);
+        // $pagepath = get_the_permalink($post_id);
       }
 
       if (isset($section)) {
