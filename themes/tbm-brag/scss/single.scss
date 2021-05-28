@@ -63,11 +63,24 @@
 }
 .load-more {
     font-size: 1rem;
-    background: $colorYellow;
+    // background: $colorYellow;
     text-align: center;
     border-radius: $roundedRadius;
     margin: 1rem auto;
-    opacity: 0.25;
+    // opacity: 0.25;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: .25;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .25;
+    }
 }
 
 .yt-lazy-load {
