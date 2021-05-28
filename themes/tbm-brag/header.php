@@ -197,7 +197,7 @@ $page_template = get_page_template_slug();
   <header class="fixed-top pb-1 py-md-0">
     <div class="d-flex d-md-none  justify-content-between mb-1">
       <div class="btn btn-media-top btn-toggle-slidedown d-flex" data-target="network">
-        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
+        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
         <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
       </div>
       <div class="user-info d-md-none d-flex flex-row m-1">
