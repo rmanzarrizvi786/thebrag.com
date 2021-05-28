@@ -8,11 +8,14 @@
         text-decoration: underline;
     }
     .cat {
-        color: $primaryColor;
         font-size: 90%;
         font-family: $headingFonts;
         text-decoration: none;
         font-weight: 500;
+        color: $lightGray;
+        background: #fff;
+        padding: 0.25rem;
+        border-radius: 0.25rem;
     }
     .story-title {
         font-weight: 300;
