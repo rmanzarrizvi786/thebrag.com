@@ -175,7 +175,7 @@ if (isset($city_state_map[$city])) :
     </div>
   </div>
 
-  <div class="row">
+  <div class="row align-items-stretch">
     <div class="col-md-8">
       <?php
       if (isset($_GET['search'])) :
