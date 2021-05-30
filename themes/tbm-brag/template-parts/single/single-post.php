@@ -120,16 +120,6 @@ if (!post_password_required($post)) :
         <hr class="h-divider mb-3">
         <div class="d-flex align-items-start">
             <div class="col-md-8">
-                <?php if (in_category('Op-Ed/Comment')) : ?>
-                    <div style="padding: 10px 0; font-weight: bold;">COMMENT</div>
-                <?php endif; // If the post has a category Op-Ed/Comment 
-                ?>
-
-                <?php if (in_category('Fiction')) : ?>
-                    <div style="padding: 10px 0; font-weight: bold;">FICTION</div>
-                <?php endif; // If the post has a category Fiction 
-                ?>
-
                 <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
