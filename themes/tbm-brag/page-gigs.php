@@ -64,19 +64,17 @@ if (!$city) :
 endif;
 ?>
 <div class="container">
-  <div class="row py-4 my-4" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
-    <div class="col-12">
-      <ul class="nav nav-pills justify-content-center nav-wrap">
-        <?php foreach ($city_state_map as $the_city => $state) : ?>
-          <li class="nav-item">
-            <a class="p-1 btn nav-link<?php echo $city == $the_city ? ' active btn-dark' : ''; ?>" href="/gigs/<?php echo $the_city; ?>/"><?php echo strtoupper($the_city); ?></a>
-          </li>
-        <?php endforeach; ?>
-        <li class="nav-item d-none d-md-block ml-2">
-          <a href="/submit-gig" class="btn btn-primary btn-sm nav-link">SUBMIT A GIG</a>
+  <div class="row py-4 my-4 justify-content-around" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+    <ul class="nav nav-pills justify-content-center nav-wrap">
+      <?php foreach ($city_state_map as $the_city => $state) : ?>
+        <li class="nav-item">
+          <a class="p-1 btn nav-link<?php echo $city == $the_city ? ' active btn-dark' : ''; ?>" href="/gigs/<?php echo $the_city; ?>/"><?php echo strtoupper($the_city); ?></a>
         </li>
-      </ul>
-    </div>
+      <?php endforeach; ?>
+      <li class="nav-item d-none d-md-block ml-2">
+        <a href="/submit-gig" class="btn btn-primary btn-sm nav-link">SUBMIT A GIG</a>
+      </li>
+    </ul>
   </div>
 </div>
 <?php
@@ -182,7 +180,7 @@ if (isset($city_state_map[$city])) :
         include(get_template_directory() . '/gigs/gig-search.php');
       else :
       ?>
-        <div class="row">
+        <div class="px-2">
           <div class="col-12">
             <div class="row d-flex my-3">
               <div class="col-3 text-left align-self-center pr-0"><a href="/gigs/<?php echo $city; ?>/<?php echo $prev_date; ?>" class="btn btn-primary"><?php echo date('j M', strtotime($prev_date)); ?></a></div>
