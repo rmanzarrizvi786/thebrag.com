@@ -10,7 +10,7 @@ $post = $wp_query->post;
 }
 </style>
 <div class="container">
-    <div class="row">
+    <div class="row align-items-stretch">
         <div class="col-md-8">
             <?php
             if (have_posts()) :
