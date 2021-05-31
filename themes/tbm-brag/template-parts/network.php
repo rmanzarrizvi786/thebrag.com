@@ -1,4 +1,4 @@
-<div id="network" class="bg-dark p-1 p-md-2" style="display: none;">
+<div class="bg-dark p-1 p-md-2">
     <div class="container">
         <div class="btn d-none d-md-block btn-media-top btn-toggle-slidedown" data-target="network">
             <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png"></span>

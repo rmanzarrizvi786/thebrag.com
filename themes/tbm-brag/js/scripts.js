@@ -44,10 +44,16 @@ jQuery(document).ready(function ($) {
     }
   });
 
+  $('.btn-toggle-network-mobile').on('click', function() {
+    $('#network-mobile').slideToggle();
+    $('#search-nav-wrap').slideToggle();
+
+  });
+
   $('#overlay').on('click', function () {
     $(this).addClass('d-none');
     $('body').removeClass('modal-open');
-    $('.slidedown-active').removeClass('slidedown-active').slideUp();
+    $('.slidedown-active').removeClass('slidedown-active').hide(); // .slideUp();
     // $('.nav-wrap').addClass('d-none');
     $('.nav-wrap').removeClass('active');
     $('.modal').hide();

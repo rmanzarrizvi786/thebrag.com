@@ -1,7 +1,9 @@
 <?php get_template_part('template-parts/footer/footer'); ?>
 </div><!-- .content -->
 
-<?php get_template_part('template-parts/network'); ?>
+<div id="network" class="network" style="display: none;">
+  <?php get_template_part('template-parts/network'); ?>
+</div>
 <?php get_template_part('template-parts/observer-list'); ?>
 
 <div id="skin" class="d-none d-md-block">
@@ -12,9 +14,11 @@
 <noscript id="deferred-styles">
   <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,500|Roboto:400,700&display=swap" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&family=Poppins:wght@200;300;500&display=swap" rel="stylesheet">
-  <?php // if (!is_page_template('page-quiz.php')) : ?>
-    <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/style.css?v=<?php echo time(); ?>" type="text/css" media="all" />
-  <?php // endif; ?>
+  <?php // if (!is_page_template('page-quiz.php')) : 
+  ?>
+  <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/style.css?v=<?php echo time(); ?>" type="text/css" media="all" />
+  <?php // endif; 
+  ?>
 </noscript>
 
 <script src="https://www.youtube.com/iframe_api" defer></script>

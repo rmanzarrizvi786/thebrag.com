@@ -195,44 +195,10 @@ $page_template = get_page_template_slug();
   </script>
 
   <header class="fixed-top pb-1 py-md-0">
-    <div class="d-flex d-md-none  justify-content-between mb-1">
-      <div class="btn btn-media-top btn-toggle-slidedown d-flex" data-target="network">
-        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
-        <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
-      </div>
-      <div class="user-info d-md-none d-flex flex-row m-1">
-        <?php
-        if (is_user_logged_in()) :
-          $current_user = wp_get_current_user();
-          $user_info = get_userdata($current_user->ID);
-        ?>
-          <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
-            <?php echo get_avatar($current_user, 16, '', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-          </a>
-        <?php else : ?>
-          <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
-        <?php endif; ?>
-      </div>
-    </div>
-    <div class="d-flex justify-content-between container">
-      <div class="network-socials-wrap d-none d-md-block">
-        <div class="network-socials">
-          <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
-            <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
-            <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
-          </div>
-          <div class="socials-top d-flex justify-content-between">
-            <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
-            <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
-            <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
-            <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-            <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
-          </div>
-        </div><!-- .network-socials.hide-m -->
-      </div><!-- .network-socials-wrap -->
 
+    <div class="d-flex d-md-none justify-content-between header-mobile">
       <div class="d-flex">
-        <div class="w-auto d-flex d-md-none mr-1 pl-1 btn-toggle-menu">
+        <div class="w-auto d-flex d-md-none mr-1 pl-1 btn-toggle-slidedown" data-target="mobile-nav-wrap">
           <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
             <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
             <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
@@ -240,38 +206,163 @@ $page_template = get_page_template_slug();
           </svg>
         </div>
 
+
         <div class="logo-wrap">
-          <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+          <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag-light.svg" width="140" height="25" alt="The Brag" title="The Brag"></a>
         </div>
       </div>
-      <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
-        <div class="user-info d-none d-md-flex flex-row my-1">
+
+      <div class="d-flex">
+        <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
+          <div class="user-info d-flex flex-row my-1">
+            <?php
+            if (is_user_logged_in()) :
+              $current_user = wp_get_current_user();
+              $user_info = get_userdata($current_user->ID);
+            ?>
+              <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
+                <span class="">
+                  <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
+                  <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
+                </span>
+              </button>
+              <a href="<?php echo home_url('/profile/'); ?>" class="ml-1 user-name d-flex flex-row btn user text-white" style="padding: 0;">
+                <?php echo get_avatar($current_user, 24, 'mystery', $user_info->first_name, ['class' => 'rounded-circle']); ?>
+              </a>
+            <?php else : ?>
+              <a href="<?php echo wp_login_url(); ?>" class="text-white btn btn-primary">Login</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mobile-nav-wrap" class="nav-wrap container flex-column p-r justify-content-between" style="display: none;">
+      <div id="search-nav-wrap" class="w-100 d-flex flex-column flex-fill">
+        <div id="top-search-wrap-mobile" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: transparent; border-radius: .5rem; width: 320px; transition: .25s left linear; border: 1px solid rgba(255,255,255,.15);">
+          <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
+            <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
+              <img src="<?php echo ICONS_URL; ?>cross-dark.svg" width="16" height="16" alt="<" style="width: 8px; height: auto;">
+            </div>
+            <div style="flex: 1 1 auto;">
+              <input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search" style="padding: .35rem; border: none; border-radius: .5rem; margin-left: .25rem; background-color: transparent;">
+            </div>
+            <button type="submit" class="btn p-2" aria-label="Search" style="padding: .25rem .5rem .5rem; background-color: rgba(255,255,255,.15) !important; border-radius: 0; border-radius: .5rem;">
+              <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
+          </form>
+        </div>
+
+        <div id="nav-primary" class="nav w-100 my-0 flex-fill">
+          <?php
+          wp_nav_menu(array(
+            'theme_location' => 'top',
+            'menu_id'        => 'menu_main',
+            'menu_class' => 'nav flex-column flex-md-row',
+            'fallback_cb'   => false,
+            'add_li_class'  => 'nav-item',
+            'link_class'   => 'nav-link',
+            'container' => 'nav',
+          ));
+          ?>
+        </div>
+
+
+        <div class="socials-top d-flex d-md-none justify-content-between" style="max-width: 320px; margin: 1rem auto;">
+          <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
+          <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
+          <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
+          <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
+          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+        </div>
+
+      </div>
+
+      <div class="my-2 btn btn-media-top btn-toggle-network-mobile d-flex" style="width: 100%;">
+        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;"></span>
+        <span class="arrow-down ml-1"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="15" height="14" alt="▼"></span>
+      </div>
+      <div id="network-mobile" class="network" style="display: none;">
+        <?php get_template_part('template-parts/network'); ?>
+      </div>
+    </div><!-- Header on mobile -->
+
+    <div class="d-none d-md-block">
+      <div class="d-flex d-md-none  justify-content-between mb-1">
+        <div class="btn btn-media-top btn-toggle-slidedown d-flex" data-target="network">
+          <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
+          <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
+        </div>
+        <div class="user-info d-md-none d-flex flex-row m-1">
           <?php
           if (is_user_logged_in()) :
-            // $current_user = wp_get_current_user();
-            // $user_info = get_userdata($current_user->ID);
+            $current_user = wp_get_current_user();
+            $user_info = get_userdata($current_user->ID);
           ?>
-            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
-              <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-              <span class="ml-1"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
-              <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
+            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
+              <?php echo get_avatar($current_user, 16, '', $user_info->first_name, ['class' => 'rounded-circle']); ?>
             </a>
           <?php else : ?>
             <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
           <?php endif; ?>
         </div>
-        <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
-          <span>Pick Your Niche</span>
-          <span class="ml-1 d-xs-none">
-            <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
-            <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
-          </span>
-        </button>
       </div>
-    </div>
+      <div class="d-flex justify-content-between container">
+        <div class="network-socials-wrap d-none d-md-block">
+          <div class="network-socials">
+            <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
+              <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
+              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
+            </div>
+            <div class="socials-top d-flex justify-content-between">
+              <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
+              <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
+              <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
+              <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
+              <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+            </div>
+          </div><!-- .network-socials.hide-m -->
+        </div><!-- .network-socials-wrap -->
 
-    <?php
-    /* $my_sub_lists = [];
+        <div class="d-flex">
+          <!-- <div class="w-auto d-flex d-md-none mr-1 pl-1 btn-toggle-menu">
+            <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
+              <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
+              <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
+              <rect y="24" width="30" height="6" rx="3" style="fill: #fff"></rect>
+            </svg>
+          </div> -->
+          <div class="logo-wrap">
+            <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+          </div>
+        </div>
+        <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
+          <div class="user-info d-none d-md-flex flex-row my-1">
+            <?php
+            if (is_user_logged_in()) :
+              // $current_user = wp_get_current_user();
+              // $user_info = get_userdata($current_user->ID);
+            ?>
+              <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
+                <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
+                <span class="ml-1"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
+                <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
+              </a>
+            <?php else : ?>
+              <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
+            <?php endif; ?>
+          </div>
+          <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
+            <span>Pick Your Niche</span>
+            <span class="ml-1 d-xs-none">
+              <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
+              <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <?php
+      /* $my_sub_lists = [];
 
     if (is_user_logged_in()) :
       $current_user = wp_get_current_user();
@@ -297,32 +388,32 @@ $page_template = get_page_template_slug();
       l.sub_count DESC 
     ";
     $lists = $wpdb->get_results($lists_query); */
-    // get_template_part('template-parts/observer-list-top', null, ['lists' => $lists, 'my_sub_lists' => $my_sub_lists,]);
-    ?>
+      // get_template_part('template-parts/observer-list-top', null, ['lists' => $lists, 'my_sub_lists' => $my_sub_lists,]);
+      ?>
 
-    <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
-      <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000; display: none;">
-        <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
-          <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
-            <img src="<?php echo ICONS_URL; ?>cross-dark.svg" width="16" height="16" alt="<" style="width: 8px; height: auto;">
-          </div>
-          <div style="flex: 1 1 auto;">
-            <input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search" style="padding: .35rem; border: none; border-radius: .5rem; margin-left: .25rem;">
-          </div>
-          <button type="submit" class="btn p-2" aria-label="Search" style="padding: .25rem .5rem .5rem; background-color: #fff !important; border-radius: 0; border-radius: .5rem;">
-            <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
-        </form>
-      </div>
-      <div class="btn d-block d-md-none btn-close-menu">
-        <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
-      </div>
-      <div class="d-none d-md-flex btn-open-top-search mt-2 mt-md-0" style="cursor: pointer;">
-        <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
-      </div>
+      <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
+        <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000; display: none;">
+          <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
+            <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
+              <img src="<?php echo ICONS_URL; ?>cross-dark.svg" width="16" height="16" alt="<" style="width: 8px; height: auto;">
+            </div>
+            <div style="flex: 1 1 auto;">
+              <input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search" style="padding: .35rem; border: none; border-radius: .5rem; margin-left: .25rem;">
+            </div>
+            <button type="submit" class="btn p-2" aria-label="Search" style="padding: .25rem .5rem .5rem; background-color: #fff !important; border-radius: 0; border-radius: .5rem;">
+              <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
+          </form>
+        </div>
+        <div class="btn d-block d-md-none btn-close-menu">
+          <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
+        </div>
+        <div class="d-none d-md-flex btn-open-top-search mt-2 mt-md-0" style="cursor: pointer;">
+          <img src="<?php echo ICONS_URL; ?>magnifying-glass.svg" width="24" height="24">
+        </div>
 
-      <div id="nav-primary" class="nav w-100 my-0">
-        <?php
-        /* if (isset($my_sub_lists) && !empty($my_sub_lists)) :
+        <div id="nav-primary" class="nav w-100 my-0">
+          <?php
+          /* if (isset($my_sub_lists) && !empty($my_sub_lists)) :
           $menu_cats = get_categories(
             array(
               'parent' => null,
@@ -336,33 +427,34 @@ $page_template = get_page_template_slug();
               )
             )
           ); */
-        ?>
-        <!-- <nav class="menu-top-menu-container">
+          ?>
+          <!-- <nav class="menu-top-menu-container">
             <ul id="menu_main" class="nav flex-column flex-md-row">
             
             </ul>
           </nav> -->
-        <?php
-        // var_dump($menu_cats); exit;
-        // else :
-        wp_nav_menu(array(
-          'theme_location' => 'top',
-          'menu_id'        => 'menu_main',
-          'menu_class' => 'nav flex-column flex-md-row',
-          'fallback_cb'   => false,
-          'add_li_class'  => 'nav-item',
-          'link_class'   => 'nav-link',
-          'container' => 'nav',
-        ));
-        // endif;
-        ?>
-      </div>
-      <div class="socials-top d-flex d-md-none justify-content-between">
-        <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
-        <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
-        <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
-        <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-        <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+          <?php
+          // var_dump($menu_cats); exit;
+          // else :
+          wp_nav_menu(array(
+            'theme_location' => 'top',
+            'menu_id'        => 'menu_main',
+            'menu_class' => 'nav flex-column flex-md-row',
+            'fallback_cb'   => false,
+            'add_li_class'  => 'nav-item',
+            'link_class'   => 'nav-link',
+            'container' => 'nav',
+          ));
+          // endif;
+          ?>
+        </div>
+        <div class="socials-top d-flex d-md-none justify-content-between">
+          <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
+          <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
+          <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
+          <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
+          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+        </div>
       </div>
     </div>
   </header>
