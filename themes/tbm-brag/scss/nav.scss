@@ -30,6 +30,12 @@
                     color: $primaryColor;
                 }
             }
+            &.secondary {
+                opacity: .25;
+                &:hover {
+                    opacity: 1;
+                }
+            }
             ul {
                 display: flex;
                 @media (min-width: $tablet) {

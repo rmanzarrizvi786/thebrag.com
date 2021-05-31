@@ -184,6 +184,7 @@ $page_template = get_page_template_slug();
 
   <?php
   $top_menu = '';
+  $number_of_menu_items = 8;
 
   $my_sub_lists = [];
 
@@ -199,8 +200,8 @@ $page_template = get_page_template_slug();
   if (isset($my_sub_lists) && !empty($my_sub_lists)) :
     $menu_cats = get_categories(
       array(
-        'parent' => null,
-        // 'hide_empty' => '0',
+        // 'parent' => null,
+        'hide_empty' => '0',
         'meta_query' => array(
           array(
             'key'     => 'observer-topic',
@@ -210,6 +211,10 @@ $page_template = get_page_template_slug();
         )
       )
     );
+
+    $menu_cats_ids = wp_list_pluck($menu_cats, 'term_id');
+
+    
   ?>
     <nav class="menu-top-menu-container">
       <ul id="menu_main" class="nav flex-column flex-md-row">
@@ -220,11 +225,6 @@ $page_template = get_page_template_slug();
               <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
             </li>
           <?php else : ?>
-            <?php if (in_array(21, $my_sub_lists)) : ?>
-              <li>
-                <a href="<?php echo get_post_type_archive_link('dad'); ?>">Dad</a>
-              </li>
-            <?php endif; ?>
             <?php if ($i == 8) : ?>
               <li class="menu-more d-flex">
                 <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
@@ -239,7 +239,33 @@ $page_template = get_page_template_slug();
                 </ul>
               </li>
             <?php endif; ?>
+            <?php if (0 && in_array(21, $my_sub_lists)) : ?>
+              <li>
+                <a href="<?php echo get_post_type_archive_link('dad'); ?>">Dad</a>
+              </li>
+            <?php endif; ?>
 
+            <?php if (count($menu_cats) < 8) :
+              $menu_cats2 = get_categories(
+                array(
+                  'parent' => null,
+                  'orderby'    => 'count',
+                  'order' => 'DESC',
+                  'exclude' => $menu_cats_ids,
+                  'number' => $number_of_menu_items - count($menu_cats)
+                )
+              );
+
+              // echo '<pre>'; print_r($menu_cats2);exit;
+              foreach ($menu_cats2 as $cat) :
+            ?>
+                <li class="secondary">
+                  <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
+                </li>
+            <?php
+              endforeach;
+            endif; // If less than 8 items in menu 
+            ?>
       </ul>
     </nav>
   <?php
@@ -365,25 +391,6 @@ $page_template = get_page_template_slug();
     </div><!-- Header on mobile -->
 
     <div class="d-none d-md-block">
-      <div class="d-flex d-md-none  justify-content-between mb-1">
-        <div class="btn btn-media-top btn-toggle-slidedown d-flex" data-target="network">
-          <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
-          <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
-        </div>
-        <div class="user-info d-md-none d-flex flex-row m-1">
-          <?php
-          if (is_user_logged_in()) :
-            $current_user = wp_get_current_user();
-            $user_info = get_userdata($current_user->ID);
-          ?>
-            <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user" style="padding: 0;">
-              <?php echo get_avatar($current_user, 16, '', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-            </a>
-          <?php else : ?>
-            <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
-          <?php endif; ?>
-        </div>
-      </div>
       <div class="d-flex justify-content-between container">
         <div class="network-socials-wrap d-none d-md-block">
           <div class="network-socials">
@@ -412,8 +419,8 @@ $page_template = get_page_template_slug();
             if (is_user_logged_in()) :
             ?>
               <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
-                <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-                <span class="ml-1"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
+                <?php echo get_avatar($current_user, 24, 'mystery', $user_info->first_name, ['class' => 'rounded-circle']); ?>
+                <!-- <span class="ml-1"><?php // echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span> -->
               </a>
             <?php else : ?>
               <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
