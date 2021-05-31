@@ -31,9 +31,25 @@
                 }
             }
             &.secondary {
-                opacity: .25;
+                .plus, .plus-hover {
+                    line-height: 1;
+                }
+                .plus-hover {
+                    display: none;
+                }
                 &:hover {
-                    opacity: 1;
+                    .plus {
+                        display: none;
+                    }
+                    .plus-hover {
+                        display: inline-block;
+                    }
+                }
+                a {
+                    opacity: 0.25;
+                    &:hover {
+                        opacity: 1;
+                    }
                 }
             }
             ul {
@@ -60,7 +76,7 @@
                 cursor: pointer;
                 span.arrow-down {
                     display: none;
-                    @media(min-width: $tablet) {
+                    @media (min-width: $tablet) {
                         display: inline-block;
                     }
                 }

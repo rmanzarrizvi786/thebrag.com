@@ -200,8 +200,10 @@ $page_template = get_page_template_slug();
   if (isset($my_sub_lists) && !empty($my_sub_lists)) :
     $menu_cats = get_categories(
       array(
-        // 'parent' => null,
+        'parent' => null,
         'hide_empty' => '0',
+        'orderby'    => 'count',
+        'order' => 'DESC',
         'meta_query' => array(
           array(
             'key'     => 'observer-topic',
@@ -214,7 +216,7 @@ $page_template = get_page_template_slug();
 
     $menu_cats_ids = wp_list_pluck($menu_cats, 'term_id');
 
-    
+
   ?>
     <nav class="menu-top-menu-container">
       <ul id="menu_main" class="nav flex-column flex-md-row">
@@ -251,7 +253,7 @@ $page_template = get_page_template_slug();
                   'parent' => null,
                   'orderby'    => 'count',
                   'order' => 'DESC',
-                  'exclude' => $menu_cats_ids,
+                  'exclude' => array_merge($menu_cats_ids, [303097]),
                   'number' => $number_of_menu_items - count($menu_cats)
                 )
               );
@@ -259,7 +261,9 @@ $page_template = get_page_template_slug();
               // echo '<pre>'; print_r($menu_cats2);exit;
               foreach ($menu_cats2 as $cat) :
             ?>
-                <li class="secondary">
+                <li class="secondary d-flex flex-row">
+                  <span class="text-primary plus"><img src="<?php echo ICONS_URL; ?>plus.svg" width="16" height="16" alt="+"></span>
+                  <span class="text-primary plus-hover"><img src="<?php echo ICONS_URL; ?>plus-color.svg" width="16" height="16" alt="+"></span>
                   <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
                 </li>
             <?php
@@ -420,7 +424,8 @@ $page_template = get_page_template_slug();
             ?>
               <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
                 <?php echo get_avatar($current_user, 24, 'mystery', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-                <!-- <span class="ml-1"><?php // echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span> -->
+                <!-- <span class="ml-1"><?php // echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; 
+                                        ?></span> -->
               </a>
             <?php else : ?>
               <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
