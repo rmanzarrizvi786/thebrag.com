@@ -2897,7 +2897,7 @@ function tbm_inject_ads($content)
 
     $closing_p = '</p>';
     $paragraphs = explode($closing_p, $content);
-    $after_para = 4;
+    $after_para = 2;
 
     if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
         return $content;
