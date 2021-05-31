@@ -313,7 +313,7 @@ p {
         // width: calc(100% - 50px);
         width: 100%;
         height: 100vh;
-        padding-bottom: $headerHeightMobile;
+        padding-bottom: $headerHeightMobile * 2;
         background: $primaryBlack;
         // box-shadow: 10px 0 18px #000;
         transition: 0.25s left linear;
