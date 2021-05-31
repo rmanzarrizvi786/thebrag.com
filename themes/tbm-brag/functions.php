@@ -2995,7 +2995,7 @@ function ssm_inject_ads($content)
     $count_articles = isset($_POST['count_articles']) ? (int) $_POST['count_articles'] : 1;
 
     $closing_p = '</p>';
-    $after_para = 4;
+    $after_para = 2;
 
     ob_start();
     render_ad_tag('incontent_1', $count_articles);
