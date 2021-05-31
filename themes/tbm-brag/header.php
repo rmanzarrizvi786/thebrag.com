@@ -182,6 +182,83 @@ $page_template = get_page_template_slug();
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQC6WRH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+  <?php
+  $top_menu = '';
+
+  $my_sub_lists = [];
+
+  if (is_user_logged_in()) :
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
+    $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
+  endif;
+
+  ob_start();
+
+  if (isset($my_sub_lists) && !empty($my_sub_lists)) :
+    $menu_cats = get_categories(
+      array(
+        'parent' => null,
+        // 'hide_empty' => '0',
+        'meta_query' => array(
+          array(
+            'key'     => 'observer-topic',
+            'value'   => $my_sub_lists,
+            'compare' => 'IN',
+          )
+        )
+      )
+    );
+  ?>
+    <nav class="menu-top-menu-container">
+      <ul id="menu_main" class="nav flex-column flex-md-row">
+        <?php foreach ($menu_cats as $i => $cat) :
+          if ($i < 8) :
+        ?>
+            <li>
+              <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
+            </li>
+          <?php else : ?>
+            <?php if (in_array(21, $my_sub_lists)) : ?>
+              <li>
+                <a href="<?php echo get_post_type_archive_link('dad'); ?>">Dad</a>
+              </li>
+            <?php endif; ?>
+            <?php if ($i == 8) : ?>
+              <li class="menu-more d-flex">
+                <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
+                <ul>
+                <?php endif; ?>
+                <li>
+                  <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
+                </li>
+              <?php endif; ?>
+            <?php endforeach; ?>
+            <?php if (count($menu_cats) > 8) : ?>
+                </ul>
+              </li>
+            <?php endif; ?>
+
+      </ul>
+    </nav>
+  <?php
+  // var_dump($menu_cats); exit;
+  else :
+    wp_nav_menu(array(
+      'theme_location' => 'top',
+      'menu_id'        => 'menu_main',
+      'menu_class' => 'nav flex-column flex-md-row',
+      'fallback_cb'   => false,
+      'add_li_class'  => 'nav-item',
+      'link_class'   => 'nav-link',
+      'container' => 'nav',
+    ));
+  endif;
+
+  $top_menu = ob_get_clean();
+  ?>
+
   <div id="fb-root"></div>
   <script>
     (function(d, s, id) {
@@ -254,7 +331,8 @@ $page_template = get_page_template_slug();
 
         <div id="nav-primary" class="nav w-100 my-0 flex-fill">
           <?php
-          wp_nav_menu(array(
+          echo $top_menu;
+          /* wp_nav_menu(array(
             'theme_location' => 'top',
             'menu_id'        => 'menu_main',
             'menu_class' => 'nav flex-column flex-md-row',
@@ -262,7 +340,7 @@ $page_template = get_page_template_slug();
             'add_li_class'  => 'nav-item',
             'link_class'   => 'nav-link',
             'container' => 'nav',
-          ));
+          )); */
           ?>
         </div>
 
@@ -324,13 +402,6 @@ $page_template = get_page_template_slug();
         </div><!-- .network-socials-wrap -->
 
         <div class="d-flex">
-          <!-- <div class="w-auto d-flex d-md-none mr-1 pl-1 btn-toggle-menu">
-            <svg viewBox="0 0 40 30" width="40" height="30" style="width: 24px; height: auto;">
-              <rect width="40" height="6" rx="3" style="fill: #fff"></rect>
-              <rect y="12" width="40" height="6" rx="3" style="fill: #fff"></rect>
-              <rect y="24" width="30" height="6" rx="3" style="fill: #fff"></rect>
-            </svg>
-          </div> -->
           <div class="logo-wrap">
             <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
           </div>
@@ -339,13 +410,10 @@ $page_template = get_page_template_slug();
           <div class="user-info d-none d-md-flex flex-row my-1">
             <?php
             if (is_user_logged_in()) :
-              // $current_user = wp_get_current_user();
-              // $user_info = get_userdata($current_user->ID);
             ?>
               <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
                 <?php echo get_avatar($current_user, 16, 'blank', $user_info->first_name, ['class' => 'rounded-circle']); ?>
                 <span class="ml-1"><?php echo $user_info->first_name != '' ? $user_info->first_name : 'My profile'; ?></span>
-                <!-- <div class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down.svg" width="10" height="20" alt="▼"></div> -->
               </a>
             <?php else : ?>
               <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
@@ -360,36 +428,6 @@ $page_template = get_page_template_slug();
           </button>
         </div>
       </div>
-
-      <?php
-      /* $my_sub_lists = [];
-
-    if (is_user_logged_in()) :
-      $current_user = wp_get_current_user();
-      $user_id = $current_user->ID;
-      $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
-      $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
-    endif;
-
-    $lists_query = "
-    SELECT l.id, l.title, l.slug, l.description, l.image_url, l.frequency, sub_count,
-    CASE l.frequency
-      WHEN 'Daily' THEN 1
-      WHEN 'Weekly' THEN 2
-      WHEN 'Fortnightly' THEN 3
-      WHEN 'Breaking News' THEN 4
-    END frequency_weight
-    FROM {$wpdb->prefix}observer_lists l
-    WHERE
-      l.status = 'active'
-      AND
-      l.related_site = 'thebrag.com'
-    ORDER BY
-      l.sub_count DESC 
-    ";
-    $lists = $wpdb->get_results($lists_query); */
-      // get_template_part('template-parts/observer-list-top', null, ['lists' => $lists, 'my_sub_lists' => $my_sub_lists,]);
-      ?>
 
       <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
         <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000; display: none;">
@@ -413,39 +451,7 @@ $page_template = get_page_template_slug();
 
         <div id="nav-primary" class="nav w-100 my-0">
           <?php
-          /* if (isset($my_sub_lists) && !empty($my_sub_lists)) :
-          $menu_cats = get_categories(
-            array(
-              'parent' => null,
-              'hide_empty' => '0',
-              'meta_query' => array(
-                array(
-                  'key'     => 'observer-topic',
-                  'value'   => $my_sub_lists,
-                  'compare' => 'IN',
-                )
-              )
-            )
-          ); */
-          ?>
-          <!-- <nav class="menu-top-menu-container">
-            <ul id="menu_main" class="nav flex-column flex-md-row">
-            
-            </ul>
-          </nav> -->
-          <?php
-          // var_dump($menu_cats); exit;
-          // else :
-          wp_nav_menu(array(
-            'theme_location' => 'top',
-            'menu_id'        => 'menu_main',
-            'menu_class' => 'nav flex-column flex-md-row',
-            'fallback_cb'   => false,
-            'add_li_class'  => 'nav-item',
-            'link_class'   => 'nav-link',
-            'container' => 'nav',
-          ));
-          // endif;
+          echo $top_menu;
           ?>
         </div>
         <div class="socials-top d-flex d-md-none justify-content-between">

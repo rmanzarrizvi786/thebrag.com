@@ -1,10 +1,41 @@
 <?php
+if (is_user_logged_in()) :
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
+    $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
+endif;
+
 $count = 1;
 $vrec = 3;
 $incontent = 2;
+
 $cats_home = array('food-drink', 'travel', 'comedy', 'culture');
-foreach ($cats_home as $i => $cat_home) :
-    $category = get_category_by_slug($cat_home);
+if (isset($my_sub_lists) && !empty($my_sub_lists)) :
+    $cats_home = get_categories(
+        array(
+            'parent' => null,
+            // 'hide_empty' => '0',
+            'meta_query' => array(
+                array(
+                    'key'     => 'observer-topic',
+                    'value'   => $my_sub_lists,
+                    'compare' => 'IN',
+                )
+            )
+        )
+    );
+else :
+    $cats_home = get_categories(
+        array(
+            'parent' => null,
+            'slug' => ['food-drink', 'travel', 'comedy', 'culture'],
+        )
+    );
+endif;
+
+foreach ($cats_home as $i => $category) :
+    // $category = get_category_by_slug($cat_home);
     if (!$category)
         continue;
     $news_args = array(
@@ -17,6 +48,8 @@ foreach ($cats_home as $i => $cat_home) :
     );
     $news_query = new WP_Query($news_args);
     if ($news_query->have_posts()) :
+        if ($vrec > 7)
+            $vrec = 3;
 ?>
         <section class="container latest py-3">
             <div class="m-2">

@@ -54,6 +54,9 @@ p {
 }
 
 @media (min-width: $tablet) {
+    #mobile-nav-wrap {
+        display: none !important
+    }
     h1 {
         font-size: $h1Size;
     }
@@ -313,10 +316,11 @@ p {
         // width: calc(100% - 50px);
         width: 100%;
         height: 100vh;
-        padding-bottom: $headerHeightMobile * 2;
+        padding-bottom: $headerHeightMobile;
         background: $primaryBlack;
         // box-shadow: 10px 0 18px #000;
         transition: 0.25s left linear;
+        overflow-y: scroll;
 
         .btn-close-menu {
             transition: 0.25s left linear;
