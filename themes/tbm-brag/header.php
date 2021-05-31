@@ -267,13 +267,7 @@ $page_template = get_page_template_slug();
         </div>
 
 
-        <div class="socials-top d-flex d-md-none justify-content-between" style="max-width: 320px; margin: 1rem auto;">
-          <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
-          <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
-          <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
-          <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
-        </div>
+
 
       </div>
 
@@ -283,6 +277,14 @@ $page_template = get_page_template_slug();
       </div>
       <div id="network-mobile" class="network" style="display: none;">
         <?php get_template_part('template-parts/network'); ?>
+      </div>
+
+      <div class="socials-top d-flex d-md-none justify-content-between" style="max-width: 320px; margin: 1rem auto;">
+        <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
+        <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
+        <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
+        <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
+        <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
       </div>
     </div><!-- Header on mobile -->
 
