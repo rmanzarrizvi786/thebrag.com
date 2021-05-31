@@ -220,7 +220,7 @@ $page_template = get_page_template_slug();
               $current_user = wp_get_current_user();
               $user_info = get_userdata($current_user->ID);
             ?>
-              <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
+              <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top" style="padding: .15rem .45rem !important">
                 <span class="">
                   <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
                   <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
