@@ -150,13 +150,6 @@ if (!post_password_required($post)) :
                             </div>
                         </div>
                     </div>
-                    <?php
-                    if (shortcode_exists('shout_writer_beer')) :
-                        echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
-                    elseif (shortcode_exists('shout_writer_coffee')) :
-                        echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
-                    endif; // If shout shortcode exists
-                    ?>
                 </div><!-- Author, Shout -->
 
 
@@ -276,6 +269,16 @@ if (!post_password_required($post)) :
                     <?php endif; ?>
 
                 </div><!-- /.post-content -->
+
+                <div style="width: 300px; margin: auto;">
+                    <?php
+                    if (shortcode_exists('shout_writer_beer')) :
+                        echo do_shortcode('[shout_writer_beer author="' . $author_name . '"]');
+                    elseif (shortcode_exists('shout_writer_coffee')) :
+                        echo do_shortcode('[shout_writer_coffee author="' . $author_name . '"]');
+                    endif; // If shout shortcode exists
+                    ?>
+                </div>
                 <?php
                 if (get_field('impression_tag')) :
                     echo str_replace('[timestamp]', time(), get_field('impression_tag'));
