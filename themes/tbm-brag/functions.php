@@ -2689,7 +2689,7 @@ add_action('admin_init', 'modify_dad_capability');
 /*
  * Custom Post Type - Dad
  */
-add_action('init', 'register_cpt_dad');
+/* add_action('init', 'register_cpt_dad');
 
 function register_cpt_dad()
 {
@@ -2758,7 +2758,7 @@ register_taxonomy(
         'show_ui' => true,
         'public' => true
     )
-);
+); */
 
 /*
 * Modify Header for Dad listing
