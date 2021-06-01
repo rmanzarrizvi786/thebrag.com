@@ -186,6 +186,8 @@ $page_template = get_page_template_slug();
   $top_menu = '';
   $number_of_menu_items = 8;
 
+  $top_menu_items = [];
+
   $my_sub_lists = [];
 
   if (is_user_logged_in()) :
@@ -213,63 +215,69 @@ $page_template = get_page_template_slug();
         )
       )
     );
-
     $menu_cats_ids = wp_list_pluck($menu_cats, 'term_id');
 
+    foreach ($menu_cats as $cat) :
+      array_push($top_menu_items, [
+        'link' => get_category_link($cat),
+        'text' => $cat->name,
+      ]);
+    endforeach;
 
+    if (count($menu_cats) < $number_of_menu_items) :
+      $menu_cats2 = get_categories(
+        array(
+          'parent' => null,
+          'orderby'    => 'count',
+          'order' => 'DESC',
+          'exclude' => array_merge($menu_cats_ids, [303097]),
+          'number' => $number_of_menu_items - count($menu_cats)
+        )
+      );
+
+      // echo '<pre>'; print_r($menu_cats2);exit;
+      foreach ($menu_cats2 as $cat) :
+        array_push($top_menu_items, [
+          'link' => get_category_link($cat),
+          'text' => '<span class="plus"><img src="' . ICONS_URL . 'plus.svg" width="16" height="16" alt="+"></span>
+          <span class="plus-hover"><img src="' . ICONS_URL . 'plus-color.svg" width="16" height="16" alt="+"></span>
+          <span class="text-muted">' . $cat->name . '</span>',
+          'class' => 'secondary',
+        ]);
+      endforeach;
+    endif;
+
+    array_push($top_menu_items, [
+      'link' => home_url('/observer/competitions/'),
+      'text' => 'Competitions',
+    ]);
   ?>
     <nav class="menu-top-menu-container">
       <ul id="menu_main" class="nav flex-column flex-md-row">
-        <?php foreach ($menu_cats as $i => $cat) :
-          if ($i < 8) :
+        <?php
+        foreach ($top_menu_items as $i => $top_menu_item) :
+          if ($i < $number_of_menu_items) :
         ?>
-            <li>
-              <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
+            <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
+              <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
             </li>
-          <?php else : ?>
-            <?php if ($i == 8) : ?>
+            <?php
+          else :
+            if ($i == $number_of_menu_items) : ?>
               <li class="menu-more d-flex">
                 <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
                 <ul>
-                <?php endif; ?>
-                <li>
-                  <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
+                <?php endif; // $number_of_menu_items th menu item 
+                ?>
+                <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
+                  <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
                 </li>
               <?php endif; ?>
             <?php endforeach; ?>
-            <?php if (count($menu_cats) > 8) : ?>
+            <?php if (count($top_menu_items) > $number_of_menu_items) : ?>
                 </ul>
               </li>
             <?php endif; ?>
-            <?php if (0 && in_array(21, $my_sub_lists)) : ?>
-              <li>
-                <a href="<?php echo get_post_type_archive_link('dad'); ?>">Dad</a>
-              </li>
-            <?php endif; ?>
-
-            <?php if (count($menu_cats) < 8) :
-              $menu_cats2 = get_categories(
-                array(
-                  'parent' => null,
-                  'orderby'    => 'count',
-                  'order' => 'DESC',
-                  'exclude' => array_merge($menu_cats_ids, [303097]),
-                  'number' => $number_of_menu_items - count($menu_cats)
-                )
-              );
-
-              // echo '<pre>'; print_r($menu_cats2);exit;
-              foreach ($menu_cats2 as $cat) :
-            ?>
-                <li class="secondary d-flex flex-row">
-                  <span class="text-primary plus"><img src="<?php echo ICONS_URL; ?>plus.svg" width="16" height="16" alt="+"></span>
-                  <span class="text-primary plus-hover"><img src="<?php echo ICONS_URL; ?>plus-color.svg" width="16" height="16" alt="+"></span>
-                  <a href="<?php echo get_category_link($cat); ?>"><?php echo $cat->name; ?></a>
-                </li>
-            <?php
-              endforeach;
-            endif; // If less than 8 items in menu 
-            ?>
       </ul>
     </nav>
   <?php
