@@ -187,6 +187,7 @@ $page_template = get_page_template_slug();
   $number_of_menu_items = 8;
   $top_menu_items = [];
   $my_sub_lists = [];
+  $exclude_cats = [288366];
 
   if (is_user_logged_in()) :
     $current_user = wp_get_current_user();
@@ -204,6 +205,7 @@ $page_template = get_page_template_slug();
         'hide_empty' => '0',
         'orderby'    => 'count',
         'order' => 'DESC',
+        'exclude' => $exclude_cats,
         'meta_query' => array(
           array(
             'key'     => 'observer-topic',
@@ -228,7 +230,7 @@ $page_template = get_page_template_slug();
           'parent' => null,
           'orderby'    => 'count',
           'order' => 'DESC',
-          'exclude' => array_merge($menu_cats_ids, [303097]),
+          'exclude' => array_merge($exclude_cats, $menu_cats_ids, [303097]),
           'number' => $number_of_menu_items - count($menu_cats)
         )
       );
