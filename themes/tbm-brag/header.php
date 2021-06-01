@@ -444,7 +444,7 @@ $page_template = get_page_template_slug();
           </div>
         </div>
         <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
-          <div class="user-info d-none d-md-flex flex-row my-1">
+          <div class="user-info d-none d-md-flex flex-row mb-1">
             <?php
             if (is_user_logged_in()) :
             ?>
@@ -454,12 +454,12 @@ $page_template = get_page_template_slug();
                                         ?></span> -->
               </a>
             <?php else : ?>
-              <a href="<?php echo wp_login_url(); ?>" class="text-white">Login / Signup</a>
+              <a href="<?php echo wp_login_url(); ?>" class="text-white" style="font-size: 0.9rem;">Login / Signup</a>
             <?php endif; ?>
           </div>
           <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
             <span>Pick Your Niche</span>
-            <span class="ml-1 d-xs-none">
+            <span class="ml-1 d-xs-none" style="margin-top: -1px;">
               <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
               <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
             </span>

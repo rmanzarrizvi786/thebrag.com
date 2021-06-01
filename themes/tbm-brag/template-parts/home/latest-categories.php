@@ -9,6 +9,7 @@ endif;
 $count = 1;
 $vrec = 3;
 $incontent = 2;
+$exclude_cats = [288366]; // Evergreen
 
 $cats_home = array('food-drink', 'travel', 'comedy', 'culture');
 if (isset($my_sub_lists) && !empty($my_sub_lists)) :
@@ -19,6 +20,7 @@ if (isset($my_sub_lists) && !empty($my_sub_lists)) :
             'meta_query' => array(
                 array(
                     'key'     => 'observer-topic',
+                    'exclude' => $exclude_cats,
                     'value'   => $my_sub_lists,
                     'compare' => 'IN',
                 )
@@ -29,7 +31,10 @@ else :
     $cats_home = get_categories(
         array(
             'parent' => null,
-            'slug' => ['food-drink', 'travel', 'comedy', 'culture'],
+            // 'slug' => ['food-drink', 'travel', 'comedy', 'culture'],
+            'exclude' => $exclude_cats,
+            'orderby'    => 'count',
+            'order' => 'DESC',
         )
     );
 endif;

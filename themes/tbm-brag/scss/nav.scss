@@ -62,7 +62,7 @@
                     // left: 0;
                     background-color: $primaryColor;
                     width: 150px;
-                    border-radius: 0 0 $roundedRadius $roundedRadius;
+                    border-radius: 0 0 $roundedRadius/2 $roundedRadius/2;
                 }
                 flex-direction: column;
                 li a {
