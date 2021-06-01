@@ -200,7 +200,7 @@ $page_template = get_page_template_slug();
   if (isset($my_sub_lists) && !empty($my_sub_lists)) :
     $menu_cats = get_categories(
       array(
-        'parent' => null,
+        // 'parent' => null,
         'hide_empty' => '0',
         'orderby'    => 'count',
         'order' => 'DESC',
