@@ -31,7 +31,8 @@
                 }
             }
             &.secondary {
-                .plus, .plus-hover {
+                .plus,
+                .plus-hover {
                     line-height: 1;
                 }
                 .plus-hover {
@@ -67,8 +68,10 @@
                 flex-direction: column;
                 li a {
                     text-align: left;
-                    &:hover {
-                        color: $primaryBlack;
+                    @media (min-width: $tablet) {
+                        &:hover {
+                            color: $primaryBlack;
+                        }
                     }
                 }
             }
