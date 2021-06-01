@@ -111,3 +111,8 @@ header {
 .header-mobile {
     height: $headerHeightMobile;
 }
+@media (min-width: $tablet) {
+    header {
+        height: $headerHeight;
+    }
+}
