@@ -29,7 +29,7 @@
         <li class="nav-item"><a target="_blank" href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" class="nav-link px-2 text-light"><i class="fab fa-youtube fa-lg" aria-hidden=true></i></a></li>
       </ul>
 
-      <ul class="nav flex-column flex-md-row justify-content-end">
+      <ul class="nav flex-column flex-md-row justify-content-center">
         <li class="nav-item">
           <a target="_blank" title="Privacy policy" href="https://thebrag.com/media/privacy-policy/" class="nav-link text-light">Privacy policy</a>
         </li>
