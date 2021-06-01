@@ -2689,6 +2689,7 @@ add_action('admin_init', 'modify_dad_capability');
 /*
  * Custom Post Type - Dad
  */
+/*
 add_action('init', 'register_cpt_dad');
 
 function register_cpt_dad()
@@ -2740,6 +2741,7 @@ function register_cpt_dad()
 
     register_post_type('dad', $args);
 }
+*/
 
 register_taxonomy(
     'dad-category',
