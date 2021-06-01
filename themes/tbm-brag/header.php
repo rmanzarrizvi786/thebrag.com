@@ -183,11 +183,9 @@ $page_template = get_page_template_slug();
   <!-- End Google Tag Manager (noscript) -->
 
   <?php
-  $top_menu = '';
+  $top_menu_html = '';
   $number_of_menu_items = 8;
-
   $top_menu_items = [];
-
   $my_sub_lists = [];
 
   if (is_user_logged_in()) :
@@ -246,43 +244,61 @@ $page_template = get_page_template_slug();
         ]);
       endforeach;
     endif;
+  else : // Show all categories
+    $menu_cats = get_categories(
+      array(
+        'parent' => null,
+        'orderby'    => 'count',
+        'order' => 'DESC',
+        'exclude' => [303097],
+      )
+    );
 
-    array_push($top_menu_items, [
-      'link' => home_url('/observer/competitions/'),
-      'text' => 'Competitions',
-    ]);
+    // echo '<pre>'; print_r($menu_cats2);exit;
+    foreach ($menu_cats as $cat) :
+      array_push($top_menu_items, [
+        'link' => get_category_link($cat),
+        'text' => $cat->name,
+      ]);
+    endforeach;
+  endif; // If user picked niche
+
+  array_push($top_menu_items, [
+    'link' => home_url('/observer/competitions/'),
+    'text' => 'Competitions',
+  ]);
   ?>
-    <nav class="menu-top-menu-container">
-      <ul id="menu_main" class="nav flex-column flex-md-row">
-        <?php
-        foreach ($top_menu_items as $i => $top_menu_item) :
-          if ($i < $number_of_menu_items) :
-        ?>
-            <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
-              <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
-            </li>
-            <?php
-          else :
-            if ($i == $number_of_menu_items) : ?>
-              <li class="menu-more d-flex">
-                <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
-                <ul>
-                <?php endif; // $number_of_menu_items th menu item 
-                ?>
-                <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
-                  <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
-                </li>
-              <?php endif; ?>
-            <?php endforeach; ?>
-            <?php if (count($top_menu_items) > $number_of_menu_items) : ?>
-                </ul>
+  <nav class="menu-top-menu-container">
+    <ul id="menu_main" class="nav flex-column flex-md-row">
+      <?php
+      foreach ($top_menu_items as $i => $top_menu_item) :
+        if ($i < $number_of_menu_items) :
+      ?>
+          <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
+            <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
+          </li>
+          <?php
+        else :
+          if ($i == $number_of_menu_items) : ?>
+            <li class="menu-more d-flex">
+              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
+              <ul>
+              <?php endif; // $number_of_menu_items th menu item 
+              ?>
+              <li class="<?php echo isset($top_menu_item['class']) ? $top_menu_item['class'] : ''; ?>">
+                <a href="<?php echo $top_menu_item['link']; ?>"><?php echo $top_menu_item['text']; ?></a>
               </li>
             <?php endif; ?>
-      </ul>
-    </nav>
+          <?php endforeach; ?>
+          <?php if (count($top_menu_items) > $number_of_menu_items) : ?>
+              </ul>
+            </li>
+          <?php endif; ?>
+    </ul>
+  </nav>
   <?php
   // var_dump($menu_cats); exit;
-  else :
+  /* else :
     wp_nav_menu(array(
       'theme_location' => 'top',
       'menu_id'        => 'menu_main',
@@ -292,9 +308,9 @@ $page_template = get_page_template_slug();
       'link_class'   => 'nav-link',
       'container' => 'nav',
     ));
-  endif;
+   */
 
-  $top_menu = ob_get_clean();
+  $top_menu_html = ob_get_clean();
   ?>
 
   <div id="fb-root"></div>
@@ -369,7 +385,7 @@ $page_template = get_page_template_slug();
 
         <div id="nav-primary" class="nav w-100 my-0 flex-fill">
           <?php
-          echo $top_menu;
+          echo $top_menu_html;
           /* wp_nav_menu(array(
             'theme_location' => 'top',
             'menu_id'        => 'menu_main',
@@ -471,7 +487,7 @@ $page_template = get_page_template_slug();
 
         <div id="nav-primary" class="nav w-100 my-0">
           <?php
-          echo $top_menu;
+          echo $top_menu_html;
           ?>
         </div>
         <div class="socials-top d-flex d-md-none justify-content-between">
