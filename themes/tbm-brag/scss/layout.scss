@@ -227,7 +227,14 @@ main {
     margin: auto;
 }
 
+.author-avatar img {
+    border-radius: 50%;
+}
+
 @media (min-width: $tablet) {
+    main {
+        margin-top: $headerHeight !important;
+    }
     .d-md-none {
         display: none !important;
     }
@@ -243,8 +250,4 @@ main {
     .flex-md-column {
         flex-direction: column;
     }
-}
-
-.author-avatar img {
-    border-radius: 50%;
 }
