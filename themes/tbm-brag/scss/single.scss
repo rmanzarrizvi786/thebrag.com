@@ -61,6 +61,10 @@
         max-width: 39.625rem;
         margin: auto;
     }
+    .post-thumbnail img {
+        margin: auto;
+        display: block;
+    }
 }
 .load-more {
     font-size: 1rem;
@@ -74,13 +78,13 @@
 
 @keyframes pulse {
     0% {
-        opacity: .25;
+        opacity: 0.25;
     }
     50% {
         opacity: 1;
     }
     100% {
-        opacity: .25;
+        opacity: 0.25;
     }
 }
 
