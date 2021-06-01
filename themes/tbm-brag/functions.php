@@ -2713,7 +2713,7 @@ function register_cpt_dad()
         'hierarchical' => false,
         'description' => 'Brag Dad Articles',
         'supports' => array('title', 'editor', 'thumbnail', 'author'),
-        'taxonomies' => array('dad-category', 'post_tag'),
+        'taxonomies' => array('dad-category', 'post_tag', 'category'),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
