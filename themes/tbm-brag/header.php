@@ -202,7 +202,7 @@ $page_template = get_page_template_slug();
     $menu_cats = get_categories(
       array(
         // 'parent' => null,
-        'hide_empty' => '0',
+        // 'hide_empty' => '0',
         'orderby'    => 'count',
         'order' => 'DESC',
         'exclude' => $exclude_cats,

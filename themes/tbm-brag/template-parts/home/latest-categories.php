@@ -9,7 +9,7 @@ endif;
 $count = 1;
 $vrec = 3;
 $incontent = 2;
-$exclude_cats = [288366]; // Evergreen
+$exclude_cats = [303097, 288366, 288238, 284732]; // Evergreen, Competitions, News, Features
 
 $cats_home = array('food-drink', 'travel', 'comedy', 'culture');
 if (isset($my_sub_lists) && !empty($my_sub_lists)) :
