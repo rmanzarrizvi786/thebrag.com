@@ -252,7 +252,7 @@ $page_template = get_page_template_slug();
         'parent' => null,
         'orderby'    => 'count',
         'order' => 'DESC',
-        'exclude' => [303097],
+        'exclude' => $exclude_cats,
       )
     );
 
