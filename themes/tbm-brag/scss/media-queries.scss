@@ -383,3 +383,8 @@ p {
         display: none !important;
     }
 }
+
+
+.btn-media-top.active .arrow-down{
+    transform: rotate(180deg);
+}
