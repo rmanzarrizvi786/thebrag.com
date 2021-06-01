@@ -160,7 +160,6 @@ class TBMUsers
    */
   public function _show_admin_bar()
   {
-    return false;
     return current_user_can('edit_posts');
   }
 
