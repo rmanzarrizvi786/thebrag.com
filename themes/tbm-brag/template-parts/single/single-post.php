@@ -43,7 +43,7 @@ if (!post_password_required($post)) :
             </div>
         </div>
     <?php endif; ?>
-    <article class="single-article p-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
+    <article class="single-article p-2 p-md-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
         <?php
         $title = get_post_meta($the_post_id, '_yoast_wpseo_title', true) ? get_post_meta($the_post_id, '_yoast_wpseo_title', true) : get_the_title();
         if (strpos($title, '%%title%%') !== FALSE) {
