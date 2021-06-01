@@ -231,7 +231,7 @@ $page_template = get_page_template_slug();
           'orderby'    => 'count',
           'order' => 'DESC',
           'exclude' => array_merge($exclude_cats, $menu_cats_ids),
-          'number' => $number_of_menu_items - count($menu_cats) - 1
+          'number' => $number_of_menu_items - count($menu_cats)
         )
       );
 
@@ -267,10 +267,7 @@ $page_template = get_page_template_slug();
 
   array_push($top_menu_items, [
     'link' => home_url('/observer/competitions/'),
-    'text' => '<span class="plus"><img src="' . ICONS_URL . 'plus.svg" width="16" height="16" alt="+"></span>
-    <span class="plus-hover"><img src="' . ICONS_URL . 'plus-color.svg" width="16" height="16" alt="+"></span>
-    <span class="text-muted">Competitions</span>',
-    'class' => 'secondary',
+    'text' => 'Competitions',
   ]);
   ?>
   <nav class="menu-top-menu-container">
