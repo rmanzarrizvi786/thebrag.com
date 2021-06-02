@@ -107,7 +107,9 @@ if (!post_password_required($post)) :
         <?php endif; // If Post Type != Dad 
         ?>
 
-        <h1 id="story_title<?php echo $the_post_id; ?>" class="story-title mb-3" data-href="<?php the_permalink(); ?>" data-title="<?php echo htmlentities($title); ?>" data-share-title="<?php echo urlencode($title); ?>" data-share-url="<?php echo urlencode(get_permalink()); ?>" data-article-number="<?php echo $count_articles; ?>"><?php the_title(); ?></h1>
+        <h1 id="story_title<?php echo $the_post_id; ?>" class="story-title mb-3" data-href="<?php the_permalink(); ?>" data-title="<?php echo htmlentities($title); ?>" data-share-title="<?php echo urlencode($title); ?>" data-share-url="<?php echo urlencode(get_permalink()); ?>" data-article-number="<?php echo $count_articles; ?>" style="text-align: center;">
+            <?php the_title(); ?>
+        </h1>
 
         <p class="text-center excerpt">
             <?php
