@@ -40,14 +40,24 @@ $story_ID = $story->ID;
                             $author_byline = get_field('Author', $story_ID);
                         endif; // If custom author is set
 
-                        $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture', $story), 'thumbnail');
+                        $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail');
                     else : // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $story->post_author);
                     endif; // If custom author is set
                     ?>
                     <div class="align-items-center text-uppercase">
                         <div class="d-flex">
-                            <div class="author-avatar mr-1"><?php echo get_avatar($story->post_author, 24, 'blank', '', array('class' => 'rounded-circle')); ?></div>
+                            <div class="author-avatar mr-1">
+                                <?php
+                                if (isset($author_img_src)) {
+                                    if ($author_img_src) {
+                                        echo  '<img src="' . $author_img_src . '" class="rounded">';
+                                    }
+                                } else {
+                                    get_avatar($story->post_author, 24, 'blank', '', array('class' => 'rounded'));
+                                }
+                                ?>
+                            </div>
                             <?php echo $author_byline; ?>
                         </div>
                     </div>
