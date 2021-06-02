@@ -412,7 +412,7 @@ $page_template = get_page_template_slug();
       </div>
 
       <div class="my-2 btn btn-media-top btn-toggle-network-mobile d-flex" style="width: 100%;">
-        <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;"></span>
+        <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;" loading="lazy"></span>
         <span class="arrow-down ml-1"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="15" height="14" alt="▼"></span>
       </div>
       <div id="network-mobile" class="network" style="display: none;">
@@ -440,7 +440,7 @@ $page_template = get_page_template_slug();
 
         <div class="d-flex">
           <div class="logo-wrap">
-            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag" loading="lazy"></a>
           </div>
         </div>
         <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
