@@ -47,6 +47,8 @@
     }
     .post-thumbnail img {
         border-radius: $roundedRadius/2 $roundedRadius/2 0 0;
+        width: 100%;
+        height: auto;
     }
 }
 
