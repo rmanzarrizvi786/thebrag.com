@@ -227,7 +227,7 @@ class TBM_Shout_Writer_Beer
             <span class="logo-beer" style="display: none;">
               <img src="<?php echo plugins_url('images/yh-logo-blk.png', __FILE__); ?>" loading="lazy" alt="Young Henrys" width="85" height="50">
             </span>
-            <span style="text-indent: -9999px; display: inline-block;">Young Henrys</span>
+            <span style="text-indent: -99999px; display: inline-block;">Young Henrys</span>
           </a>
           <span class="ico-beer"></span>
 
