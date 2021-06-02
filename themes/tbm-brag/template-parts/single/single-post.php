@@ -58,54 +58,28 @@ if (!post_password_required($post)) :
             endforeach; // For Each Tag
         endif; // If there are tags for the post
 
-        if ('dad' != get_post_type()) :
-            $categories = get_the_category($the_post_id);
-            $CategoryCD = '';
-            if ($categories) :
+        $categories = get_the_category($the_post_id);
+        $CategoryCD = '';
+        if ($categories) :
+            foreach ($categories as $category) :
+                $CategoryCD .= $category->slug . ' ';
+            endforeach; // For Each Category
+        endif; // If there are categories for the post
+        ?>
+        <div class="cats mb-3 text-center" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
+            <?php
+            if (isset($categories)) :
                 foreach ($categories as $category) :
-                    $CategoryCD .= $category->slug . ' ';
+                    if ('Evergreen' == $category->cat_name) :
+                        continue;
+                    endif; // If category name is Evergreen
+            ?>
+                    <a class="text-uppercase cat mx-1" href="<?php echo get_category_link($category->term_id); ?>" style="color: #79746b;"><?php echo $category->cat_name; ?></a>
+            <?php
                 endforeach; // For Each Category
-            endif; // If there are categories for the post
-        ?>
-            <div class="cats mb-3 text-center" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
-                <?php
-                if (isset($categories)) :
-                    foreach ($categories as $category) :
-                        if ('Evergreen' == $category->cat_name) :
-                            continue;
-                        endif; // If category name is Evergreen
-                ?>
-                        <a class="text-uppercase cat mx-1" href="<?php echo get_category_link($category->term_id); ?>"><?php echo $category->cat_name; ?></a>
-                <?php
-                    endforeach; // For Each Category
-                endif; // If there are categories for the post 
-                ?>
-            </div><!-- Cats -->
-        <?php else : // Post type = Dad
-            $categories = get_the_terms($the_post_id, 'dad-category');
-            $CategoryCD = '';
-            if ($categories) :
-                foreach ($categories as $category) :
-                    $CategoryCD .= $category->slug . ' ';
-                endforeach; // For Each Category
-            endif; // If there are categories for the post
-        ?>
-            <div class="cats mb-3" data-category="<?php echo $CategoryCD; ?>" data-tags="<?php echo $TagsCD; ?>">
-                <?php
-                if ($categories) :
-                    foreach ($categories as $category) :
-                        if ('Uncategorised' == $category->cat_name) :
-                            continue;
-                        endif; // If category name is Uncategorised
-                ?>
-                        <a class="text-uppercase cat" href="<?php echo get_term_link($category, 'dad-category'); ?>"><?php echo $category->cat_name; ?></a>
-                <?php
-                    endforeach; // For Each Category
-                endif; // If there are categories for the post 
-                ?>
-            </div><!-- Cats -->
-        <?php endif; // If Post Type != Dad 
-        ?>
+            endif; // If there are categories for the post 
+            ?>
+        </div><!-- Cats -->
 
         <h1 id="story_title<?php echo $the_post_id; ?>" class="story-title mb-3" data-href="<?php the_permalink(); ?>" data-title="<?php echo htmlentities($title); ?>" data-share-title="<?php echo urlencode($title); ?>" data-share-url="<?php echo urlencode(get_permalink()); ?>" data-article-number="<?php echo $count_articles; ?>" style="text-align: center;">
             <?php the_title(); ?>
