@@ -63,7 +63,13 @@ $trending_story_ID = $trending_story->ID;
                         <div class="d-flex">
                             <div class="author-avatar mr-1">
                                 <?php
-                                echo isset($author_img_src) ? '<img src="' . $author_img_src . '" class="rounded">' : get_avatar($trending_story->post_author, 24, 'blank', '', array('class' => 'rounded'));
+                                if (isset($author_img_src)) {
+                                    if ($author_img_src) {
+                                        echo  '<img src="' . $author_img_src . '" class="rounded">';
+                                    }
+                                } else {
+                                    get_avatar($trending_story->post_author, 24, 'blank', '', array('class' => 'rounded'));
+                                }
                                 ?>
                             </div>
                             <?php echo $author_byline; ?>
