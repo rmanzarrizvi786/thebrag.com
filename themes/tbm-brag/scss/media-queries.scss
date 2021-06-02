@@ -71,12 +71,6 @@ p {
         border-right: 1px solid $borderColor;
     }
 
-    
-
-    .col-md-auto {
-        flex: auto;
-    }
-
     @for $i from 1 through 12 {
         .col-md-#{$i} {
             flex: 0 0 $i * 8.333333%;
