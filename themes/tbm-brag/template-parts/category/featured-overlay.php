@@ -40,7 +40,7 @@ $story_ID = $story->ID;
                             $author_byline = get_field('Author', $story_ID);
                         endif; // If custom author is set
 
-                        $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail');
+                        $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : ICONS_URL . 'default-avatar-v4.png';
                     else : // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $story->post_author);
                     endif; // If custom author is set
