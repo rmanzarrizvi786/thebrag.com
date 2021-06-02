@@ -94,7 +94,7 @@ if (!is_null($topic_id)) {
                 </div>
               </div>
             </form>
-            <div class="alert alert-info d-none js-msg-subscribe mt-2"></div>
+            <div class="alert alert-success d-none js-msg-subscribe mt-2"></div>
             <div class="alert alert-danger d-none js-errors-subscribe mt-2"></div>
           </div>
         </div>
