@@ -165,7 +165,7 @@ $page_template = get_page_template_slug();
     <?php
     echo file_get_contents(CDN_URL . 'css/reset.css');
     echo file_get_contents(CDN_URL . 'css/layout.css');
-    echo file_get_contents(CDN_URL . 'css/header.css');
+    echo file_get_contents(CDN_URL . 'css/header.css?v=1');
     echo file_get_contents(CDN_URL . 'css/nav.css');
     echo file_get_contents(CDN_URL . 'css/observer-list.css');
 
