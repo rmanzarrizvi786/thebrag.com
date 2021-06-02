@@ -62,7 +62,7 @@ $trending_story_ID = $trending_story->ID;
                                 <?php
                                 if (isset($author_img_src)) {
                                     if ($author_img_src) {
-                                        echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24>';
+                                        echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
                                     }
                                 } else {
                                     get_avatar($trending_story->post_author, 24, 'blank', '', array('class' => 'rounded'));
