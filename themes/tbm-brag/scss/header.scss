@@ -114,6 +114,7 @@ header {
 .ad-billboard-top {
     height: calc(50px + 1rem);
 }
+
 @media (min-width: $tablet) {
     header {
         height: $headerHeight;

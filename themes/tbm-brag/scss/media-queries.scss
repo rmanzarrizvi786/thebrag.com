@@ -6,19 +6,6 @@
     border-radius: $roundedRadius $roundedRadius 0 0;
 }
 
-h1 {
-    font-size: $h1Size * 0.75;
-}
-h2 {
-    font-size: $h2Size * 0.75;
-}
-h3 {
-    font-size: $h3Size * 0.75;
-}
-p {
-    margin-bottom: 1rem;
-}
-
 .border-top {
     border-top: 1px solid $borderColor;
 }
