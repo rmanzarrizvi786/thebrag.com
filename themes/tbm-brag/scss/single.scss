@@ -124,8 +124,7 @@
         margin-left: -3.3125rem;
     }
     form {
-        background-color: #fff;
-        border-radius: .25rem;
+        border-radius: 10rem;
     }
     a {
         text-decoration: underline;
@@ -146,6 +145,7 @@
         line-height: 1;
         color: #000;
         border: none;
+        border-radius: 10rem;
     }
     .img-wrap {
         flex: 0 0 40%;
@@ -155,10 +155,6 @@
         img {
             max-width: 100% !important;
         }
-    }
-
-    .submit-wrap {
-        border: 1px solid #fff;
     }
 
     .spinner {
