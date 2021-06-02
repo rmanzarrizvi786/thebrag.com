@@ -89,7 +89,7 @@ if (!is_null($topic_id)) {
                 <?php if(!is_user_logged_in()) : ?>
                 <input type="email" name="email" class="form-control observer-sub-email" placeholder="Your email" value="">
                 <?php endif; ?>
-                <div class="d-flex submit-wrap rounded">
+                <div class="d-flex submit-wrap rounded pr-1 py-0 py-md-1">
                   <input type="submit" value="Join" name="subscribe" class="btn btn-primary rounded">
                 </div>
               </div>
