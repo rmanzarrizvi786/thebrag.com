@@ -163,14 +163,14 @@ $page_template = get_page_template_slug();
 
   <style>
     <?php
-    echo file_get_contents(CDN_URL . 'css/reset.css');
-    echo file_get_contents(CDN_URL . 'css/layout.css');
-    echo file_get_contents(CDN_URL . 'css/header.css?v=1');
-    echo file_get_contents(CDN_URL . 'css/nav.css');
-    echo file_get_contents(CDN_URL . 'css/observer-list.css');
+    echo file_get_contents(get_template_directory() . '/css/reset.css');
+    echo file_get_contents(get_template_directory() . '/css/layout.css');
+    echo file_get_contents(get_template_directory() . '/css/header.css');
+    echo file_get_contents(get_template_directory() . '/css/nav.css');
+    echo file_get_contents(get_template_directory() . '/css/observer-list.css');
 
     if (is_front_page() || is_home() || is_archive() || is_category()) {
-      echo file_get_contents(CDN_URL . 'css/home-trending.css');
+      echo file_get_contents(get_template_directory() . '/css/home-trending.css');
     }
     ?>
   </style>
