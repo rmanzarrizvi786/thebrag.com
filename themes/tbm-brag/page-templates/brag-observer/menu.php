@@ -10,7 +10,7 @@ $logo_alt = isset( $logo_alt ) ? $logo_alt : 'The Brag';
 </div>
     <div class="brand my-3">
         <a class="header-logo" href="<?php echo $logo_link; ?>">
-            <img src="<?php echo $logo_url; ?>" alt="<?php echo $logo_alt; ?>" class="img-fluid" style="max-width: 150px;">
+            <img src="<?php echo $logo_url; ?>" alt="<?php echo $logo_alt; ?>" class="img-fluid" style="max-width: 150px;" loading="lazy">
         </a>
     </div>
     <nav aria-label="Menu Social" class="mb-3">
