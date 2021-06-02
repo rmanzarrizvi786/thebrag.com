@@ -13,7 +13,9 @@
 .observer-list {
     max-width: 100%;
     .desc {
-        color: #3b3b3b;
+        // color: #3b3b3b;
+        color: #fff;
+        opacity: .5;
     }
 
     .topics a {
