@@ -112,7 +112,7 @@ header {
     height: $headerHeightMobile;
 }
 .ad-billboard-top {
-    height: calc(50px + 2rem);
+    height: calc(50px + 1rem);
 }
 @media (min-width: $tablet) {
     header {

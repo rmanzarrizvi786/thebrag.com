@@ -208,7 +208,7 @@ get_header();
   }
 </style>
 
-<div class="ad-billboard container py-2 py-md-4">
+<div class="ad-billboard ad-billboard-top container py-1 py-md-2">
   <div class="mx-auto text-center">
     <?php render_ad_tag('leaderboard'); ?>
   </div>
