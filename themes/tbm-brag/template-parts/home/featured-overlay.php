@@ -54,7 +54,7 @@ $trending_story_ID = $trending_story->ID;
                             $author_byline = get_field('Author', $trending_story_ID);
                         endif; // If custom author is set
 
-                        $author_img_src = get_field('author_profile_picture', $storytrending_story->ID_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $trending_story->ID), 'thumbnail') : ICONS_URL . 'default-avatar-v4.png';
+                        $author_img_src = get_field('author_profile_picture', $storytrending_story->ID_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $trending_story->ID), 'thumbnail') : CDN_URL . 'default-avatar.png';
                     else : // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $trending_story->post_author);
                     endif; // If custom author is set
@@ -68,7 +68,7 @@ $trending_story_ID = $trending_story->ID;
                                         echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
                                     }
                                 } else {
-                                    echo get_avatar($trending_story->post_author, 24, ICONS_URL . 'default-avatar-v4.png', '', array('class' => 'rounded'));
+                                    echo get_avatar($trending_story->post_author, 24, CDN_URL . 'default-avatar.png', '', array('class' => 'rounded'));
                                 }
                                 ?>
                             </div>
