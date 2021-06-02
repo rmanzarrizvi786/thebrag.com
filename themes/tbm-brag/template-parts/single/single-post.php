@@ -1,6 +1,6 @@
 <?php extract($args); ?>
 <?php if ($count_articles === 1) : ?>
-    <div class="ad-billboard container py-2">
+    <div class="ad-billboard ad-billboard-top container py-2">
         <div class="mx-auto text-center">
             <?php render_ad_tag('leaderboard', $count_articles); ?>
         </div>

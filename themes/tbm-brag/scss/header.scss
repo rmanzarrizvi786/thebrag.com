@@ -111,6 +111,9 @@ header {
 .header-mobile {
     height: $headerHeightMobile;
 }
+.ad-billboard-top {
+    height: 50px;
+}
 @media (min-width: $tablet) {
     header {
         height: $headerHeight;
@@ -133,5 +136,8 @@ header {
     }
     .trending {
         min-height: 600px;
+    }
+    .ad-billboard-top {
+        height: calc(250px + 2rem) !important;
     }
 }
