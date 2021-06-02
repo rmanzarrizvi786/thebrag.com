@@ -14,8 +14,7 @@ plugins/brag-observer/*
 
 
 !plugins/brag-observer/classes
-plugins/brag-observer/classes/*
-!plugins/brag-observer/classes/api.class.php
+!plugins/brag-observer/classes/*
 
 !plugins/ssm-ga
 plugins/ssm-ga/*
