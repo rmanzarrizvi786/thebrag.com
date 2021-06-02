@@ -44,7 +44,7 @@ $story_ID = $story->ID;
                     ?>
                     <div class="align-items-center text-uppercase">
                         <div class="d-flex">
-                            <div class="author-avatar mr-1">
+                            <span class="author-avatar mr-1">
                                 <?php
                                 if (isset($author_img_src)) {
                                     if ($author_img_src) {
@@ -54,7 +54,7 @@ $story_ID = $story->ID;
                                     echo get_avatar($story->post_author, 24, ICONS_URL . 'default-avatar-v4.png', '', array('class' => 'rounded'));
                                 }
                                 ?>
-                            </div>
+                            </span>
                             <?php echo $author_byline; ?>
                         </div>
                     </div>
