@@ -193,8 +193,8 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 
 function load_js_css()
 {
-    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210602', true);
-    // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
+    // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210602', true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
 
 
     if (is_single()) {
@@ -3559,3 +3559,22 @@ function tbm_posts_link_attributes()
 {
     return 'class="btn btn-dark"';
 }
+
+
+// Observer sub form
+add_filter('the_content', function ($content) {
+    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+        return $content;
+    }
+    if ('single-template-featured.php' == get_page_template_slug(get_the_ID())) {
+        return $content;
+    }
+    if (shortcode_exists('observer_subscribe_category')) :
+        ob_start();
+        echo do_shortcode('[observer_subscribe_category id="' . get_the_ID() . '"]');
+        $content_shortcode = ob_get_contents();
+        ob_end_clean();
+        $content = ssm_insert_after_paragraph($content_shortcode, 7, $content);
+    endif;
+    return $content;
+});

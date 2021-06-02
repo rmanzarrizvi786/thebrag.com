@@ -286,12 +286,13 @@ class API
 
         $list = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}observer_lists l WHERE id = '{$formData['list']}' LIMIT 1");
         $share_url = $list->slug ? home_url('/observer/' . $list->slug . '/') : home_url('/observer/');
-        $share_message = '<div class="d-flex align-items-center mt-2">
+        $share_message = '';
+        /*  '<div class="d-flex align-items-center mt-2">
           <div>Share the joy</div>
           <div><a class="btn btn-default btn-outline-primary btn-share mx-1" href="http://www.facebook.com/share.php?u=' . $share_url . '" target="_blank"><i class="fab fa-facebook-f"></i></a></div>
           <div><a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=' . $share_url . '&amp;text=' . urlencode($list->title) . ' target="_blank"><i class="fab fa-twitter"></i></a></div>
           </div>
-        ';
+        '; */
 
         $check_sub = $wpdb->get_row("SELECT id, status FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND list_id = '{$formData['list']}' LIMIT 1");
         if ($check_sub) { // Already subscribed / unsubscribed, just update

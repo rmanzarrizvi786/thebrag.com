@@ -108,3 +108,67 @@
 .ad-billboard-infinite {
     background-color: $colorYellow;
 }
+
+.observer-sub-form {
+    // background: #f3f3f3;
+    position: relative;
+    z-index: 2;
+    border-radius: 1rem;
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    @media (min-width: $tablet) {
+        width: 35.625rem;
+        max-width: none;
+        margin: auto;
+        margin-left: -3.3125rem;
+    }
+    form {
+        background-color: #fff;
+        border-radius: .25rem;
+    }
+    a {
+        text-decoration: underline;
+        font-weight: bold;
+        color: $primaryColor !important;
+    }
+    .email {
+        background: #fff;
+        border-radius: 0.25rem;
+        padding: 25px 15px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    input[type="email"] {
+        width: 100%;
+        font-size: 16px;
+        line-height: 1;
+        color: #000;
+        border: none;
+    }
+    .img-wrap {
+        flex: 0 0 40%;
+        background-position: center center;
+        background-size: cover;
+        border-radius: 1rem 0 0 1rem;
+        img {
+            max-width: 100% !important;
+        }
+    }
+
+    .submit-wrap {
+        border: 1px solid #fff;
+    }
+
+    .spinner {
+        width: 25px !important;
+        height: 25px !important;
+        margin: 10px auto !important;
+    }
+
+    .spinner .double-bounce1,
+    .spinner .double-bounce2 {
+        background-color: #fff;
+    }
+}

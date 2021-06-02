@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  $('.btn-toggle-network-mobile').on('click', function() {
+  $('.btn-toggle-network-mobile').on('click', function () {
     $(this).toggleClass('active');
     $('#network-mobile').slideToggle();
     $('#search-nav-wrap').slideToggle();
@@ -369,4 +369,66 @@ jQuery(document).ready(function ($) {
       } // If button exists
     } // If $('.single').length
   });
+
+  if ($('.btn-join').length) {
+    $(document).on('click', '.btn-join', function () {
+      if ($(window).width() < 768) {
+        $(this)
+          .closest(".observer-sub-form")
+          .find(".img-wrap")
+          .first()
+          .hide();
+      }
+      var theForm = $(this).next('form.observer-subscribe-form');
+      theForm.removeClass('d-none');
+      theForm.find('input[name="email"]').focus();
+      $(this).remove();
+    })
+  }
+  if ($('.observer-subscribe-form').length) {
+    $(document).on('submit', '.observer-subscribe-form', function (e) {
+      e.preventDefault();
+      var theForm = $(this);
+
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (theForm.find('input[name="email"]').length &&
+        (
+          theForm.find('input[name="email"]').val() == '' ||
+          !re.test(String(theForm.find('input[name="email"]').val().toLowerCase()))
+        )) {
+        theForm.parent().find('.js-errors-subscribe').html('Please enter a valid email address.').removeClass('d-none');
+        return false;
+      }
+
+      var formData = $(this).serialize();
+      var loadingElem = $(this).find('.loading');
+      var button = $(this).find('.button');
+
+      var the_url = theForm.closest('.single_story').find('h1:first').data('href');
+      formData += '&source=' + the_url;
+
+      $('.js-errors-subscribe,.js-msg-subscribe').html('').addClass('d-none');
+      loadingElem.show();
+      button.hide();
+      var data = {
+        action: 'subscribe_observer_category',
+        formData: formData
+      };
+      $.post(tbm_load_next_post.url, data, function (res) {
+        if (res.success) {
+          theForm.parent().find('.js-msg-subscribe').html(res.data.message).removeClass('d-none');
+          theForm.hide();
+        } else {
+          theForm.parent().find('.js-errors-subscribe').html(res.data.error.message).removeClass('d-none');
+          button.show();
+        }
+        loadingElem.hide();
+      }).error(function () {
+        theForm.parent().find('.js-errors-subscribe').html('Something went wrong, please try again later').removeClass('d-none');
+        loadingElem.hide();
+        button.show();
+      });
+    });
+  }
 });
