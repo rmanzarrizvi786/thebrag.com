@@ -74,7 +74,7 @@ if (!post_password_required($post)) :
                         continue;
                     endif; // If category name is Evergreen
             ?>
-                    <a class="text-uppercase cat mx-1" href="<?php echo get_category_link($category->term_id); ?>" style="color: #79746b;"><?php echo $category->cat_name; ?></a>
+                    <a class="text-uppercase cat mx-1" href="<?php echo get_category_link($category->term_id); ?>" style="color: #79746b; font-size: 90%;"><?php echo $category->cat_name; ?></a>
             <?php
                 endforeach; // For Each Category
             endif; // If there are categories for the post 
