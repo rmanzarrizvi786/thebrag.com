@@ -1,6 +1,8 @@
 <?php
 
-define('ICONS_URL', get_template_directory_uri() . '/images/');
+// define('ICONS_URL', get_template_directory_uri() . '/images/');
+define('ICONS_URL', 'https://cdn.thebrag.com/icons/');
+define('CDN_URL', 'https://cdn.thebrag.com/tb/');
 
 // Add default posts and comments RSS feed links to head.
 add_theme_support('automatic-feed-links');
@@ -193,7 +195,7 @@ register_taxonomy('job-category', array(''), array('hierarchical' => true, 'labe
 
 function load_js_css()
 {
-    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.min.js', array('jquery'), '20210602.1', true);
+    wp_enqueue_script('scripts', CDN_URL . 'scripts.min.js', array('jquery'), '20210602.1', true);
     // wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), time(), true);
 
 
@@ -1439,11 +1441,7 @@ function ssm_amp_additional_css_styles($amp_template)
     border-bottom: 1px solid #ccc;
     }
     .amp-wp-header a {
-    <?php if ('dad' != get_post_type()) : ?>
-        background-image: url( '<?php echo get_template_directory_uri(); ?>/images/The-Brag_combo-300px.png' );
-    <?php else : ?>
-        background-image: url( '<?php echo get_template_directory_uri(); ?>/images/the-brag-dad-400px.jpg' );
-    <?php endif; ?>
+    background-image: url( '<?php echo CDN_URL; ?>The-Brag_combo-300px.png' );
     background-repeat: no-repeat;
     background-size: contain;
     display: block;

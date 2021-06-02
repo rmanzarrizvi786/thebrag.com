@@ -32,7 +32,7 @@ $amp_post_id = $this->get('post_id'); ?>
     ?>
     <?php $this->load_parts(array('header-bar')); ?>
 
-    <article class="amp-wp-article">
+    <article class="amp-wp-article" style="padding-top: 55px;">
 
         <div class="amp-ad" style="text-align: center; margin: auto;">
             <?php echo render_ad_tag('header'); ?>

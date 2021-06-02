@@ -6,7 +6,7 @@ $page_template = get_page_template_slug();
 
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
-  <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png?20210525" />
+  <link rel="shortcut icon" href="<?php echo CDN_URL; ?>favicon.png" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="profile" href="http://gmpg.org/xfn/11">
@@ -163,14 +163,14 @@ $page_template = get_page_template_slug();
 
   <style>
     <?php
-    echo file_get_contents(get_template_directory() . '/css/reset.css');
-    echo file_get_contents(get_template_directory() . '/css/layout.css');
-    echo file_get_contents(get_template_directory() . '/css/header.css');
-    echo file_get_contents(get_template_directory() . '/css/nav.css');
-    echo file_get_contents(get_template_directory() . '/css/observer-list.css');
+    echo file_get_contents(CDN_URL . 'css/reset.css');
+    echo file_get_contents(CDN_URL . 'css/layout.css');
+    echo file_get_contents(CDN_URL . 'css/header.css');
+    echo file_get_contents(CDN_URL . 'css/nav.css');
+    echo file_get_contents(CDN_URL . 'css/observer-list.css');
 
     if (is_front_page() || is_home() || is_archive() || is_category()) {
-      echo file_get_contents(get_template_directory() . '/css/home-trending.css');
+      echo file_get_contents(CDN_URL . 'css/home-trending.css');
     }
     ?>
   </style>
@@ -341,7 +341,7 @@ $page_template = get_page_template_slug();
 
 
         <div class="logo-wrap">
-          <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag-light.svg" width="140" height="25" alt="The Brag" title="The Brag"></a>
+          <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag-light.svg" width="140" height="25" alt="The Brag" title="The Brag"></a>
         </div>
       </div>
 
@@ -412,7 +412,7 @@ $page_template = get_page_template_slug();
       </div>
 
       <div class="my-2 btn btn-media-top btn-toggle-network-mobile d-flex" style="width: 100%;">
-        <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;"></span>
+        <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;"></span>
         <span class="arrow-down ml-1"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="15" height="14" alt="▼"></span>
       </div>
       <div id="network-mobile" class="network" style="display: none;">
@@ -425,7 +425,7 @@ $page_template = get_page_template_slug();
         <div class="network-socials-wrap d-none d-md-block">
           <div class="network-socials">
             <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
-              <span class="brag-media-top"><img src="<?php echo ICONS_URL; ?>The-Brag-Media-150px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
+              <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media"></span>
               <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
             </div>
             <div class="socials-top d-flex justify-content-between">
@@ -440,7 +440,7 @@ $page_template = get_page_template_slug();
 
         <div class="d-flex">
           <div class="logo-wrap">
-            <a href="<?php echo site_url(); ?>"><img src="<?php echo ICONS_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
+            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag"></a>
           </div>
         </div>
         <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">

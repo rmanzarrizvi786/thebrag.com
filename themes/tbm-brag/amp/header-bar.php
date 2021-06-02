@@ -36,7 +36,27 @@
             <span class="icon-bar"></span>
         </button>
         <?php
-        wp_nav_menu(array(
+        $top_menu_items = [];
+        $exclude_cats = [288366, 303097, 288238, 284732]; // Competitions, Evergreen, News, Features
+        $menu_cats = get_categories(
+            array(
+                'parent' => null,
+                'orderby'    => 'count',
+                'order' => 'DESC',
+                'exclude' => $exclude_cats,
+            )
+        );
+        foreach ($menu_cats as $cat) :
+            array_push($top_menu_items, [
+                'link' => get_category_link($cat),
+                'text' => $cat->name,
+            ]);
+        endforeach;
+        array_push($top_menu_items, [
+            'link' => home_url('/observer/competitions/'),
+            'text' => 'Competitions',
+        ]);
+        /* wp_nav_menu(array(
             'theme_location' => 'top',
             'menu_id'        => 'menu_main',
             'menu_class' => 'menu',
@@ -44,8 +64,19 @@
             'add_li_class'  => 'nav-item',
             'link_class'   => 'nav-link',
             'container' => 'nav',
-        ));
+        )); */
         ?>
+        <nav>
+            <ul class="menu">
+                <?php
+                foreach ($top_menu_items as $i => $top_menu_item) :
+                ?>
+                    <li class="nav-item">
+                        <a href="<?php echo $top_menu_item['link']; ?>" class="nav-link"><?php echo $top_menu_item['text']; ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
     </amp-sidebar>
     <button class="btn hamburger left" on="tap:amp_side_menu.toggle">
         <span class="icon-bar"></span>
