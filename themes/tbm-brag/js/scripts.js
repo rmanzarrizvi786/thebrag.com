@@ -259,20 +259,20 @@ jQuery(document).ready(function ($) {
                 $("#articles-wrap").append(res.data.content);
                 $("#articles-wrap").append(button);
 
+                fusetag.setTargeting("fuse_category", [
+                  "'" + res.data.category + "'",
+                ]);
+
                 var v = fusetag.getAdSlotsById('22339066349')[0].getResponseInformation();
                 if (v.lineItemId == "5709731975") {
                   fusetag.setTargeting("pos", [
                     "1",
                   ]);
+                } else {
+                  fusetag.setTargeting("pagepath", [
+                    "'" + res.data.pagepath + "'",
+                  ]);
                 }
-
-                fusetag.setTargeting("fuse_category", [
-                  "'" + res.data.category + "'",
-                ]);
-
-                fusetag.setTargeting("pagepath", [
-                  "'" + res.data.pagepath + "'",
-                ]);
 
                 loading = false;
               } else {
