@@ -138,9 +138,9 @@ class TBMAds
         $section = 'category';
       } elseif (in_array($post_type, ['post', 'snaps', 'photo_gallery'])) {
         $section = 'article';
-        if ($slot_no == 2) {
+        /* if ($slot_no == 2) {
           $section = 'second_article';
-        }
+        } */
 
         $categories = get_the_category($post_id);
         if ($categories) {
