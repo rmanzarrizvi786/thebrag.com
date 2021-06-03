@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
                 ]);
 
                 var v = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation();
-                if (v.lineItemId == "5709731975") {
+                if (v.lineItemId.length && v.lineItemId == "5709731975") {
                   fusetag.setTargeting("pos", [
                     "1",
                   ]);
