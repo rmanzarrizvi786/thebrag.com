@@ -263,10 +263,13 @@ jQuery(document).ready(function ($) {
                   "'" + res.data.category + "'",
                 ]);
 
-                var v = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation(); // 22339226185 = Fuse ID for Billboard
-                if (typeof v != "undefined") {
-                  if (typeof v.lineItemId != "undefined") { // 5709731975 = Target Line Item ID in GAM (DFP)
-                    fusetag.setTargeting("pos", ["'" + v.lineItemId + "'"]);
+                var bbSlot = fusetag.getAdSlotsById('22339226185');
+                if (typeof bbSlot != "undefined") {
+                  var slotResponseInformation = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation(); // 22339226185 = Fuse ID for Billboard
+                  if (typeof slotResponseInformation != "undefined") {
+                    if (typeof slotResponseInformation.lineItemId != "undefined") { // 5709731975 = Target Line Item ID in GAM (DFP)
+                      fusetag.setTargeting("pos", ["'" + slotResponseInformation.lineItemId + "'"]);
+                    }
                   }
                 }
                 fusetag.setTargeting("pagepath", [
