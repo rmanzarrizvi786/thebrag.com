@@ -265,6 +265,14 @@ jQuery(document).ready(function ($) {
 
                 var v = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation(); // 22339226185 = Fuse ID for Billboard
                 if (typeof v != "undefined") {
+                  if (typeof v.lineItemId != "undefined") { // 5709731975 = Target Line Item ID in GAM (DFP)
+                    fusetag.setTargeting("pos", ["'" + v.lineItemId + "'"]);
+                  }
+                }
+                fusetag.setTargeting("pagepath", [
+                  "'" + res.data.pagepath + "'",
+                ]);
+                /* if (typeof v != "undefined") {
                   if (typeof v.lineItemId != "undefined" && v.lineItemId == 5709731975) { // 5709731975 = Target Line Item ID in GAM (DFP)
                     fusetag.setTargeting("pos", ["1"]);
                   }
@@ -272,7 +280,7 @@ jQuery(document).ready(function ($) {
                   fusetag.setTargeting("pagepath", [
                     "'" + res.data.pagepath + "'",
                   ]);
-                }
+                } */
 
                 loading = false;
               } else {
