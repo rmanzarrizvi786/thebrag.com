@@ -1,6 +1,6 @@
 <section class="container spotlight">
     <div class="m-md-2">
-        <h2 class="text-center text-uppercase p-1 pt-0 mb-0 mx-1 h-spotlight">Spotlight</h2>
+        <h2 class="text-center text-uppercase p-1 pt-0 mt-3 mb-0 mx-1 h-spotlight">Spotlight</h2>
         <div class="spotlight-stories d-flex flex-row align-items-start rounded bg-white mt-2">
             <?php
             global $wpdb;
