@@ -230,7 +230,7 @@ jQuery(document).ready(function ($) {
     }
 
     if ($(".single").length) {
-      if ($("#articles-wrap").length && count_articles < 4) {
+      if ($("#articles-wrap").length && count_articles < 5) {
         if (!loading && scrollHandling.allow) {
           scrollHandling.allow = false;
           setTimeout(scrollHandling.reallow, scrollHandling.delay);
