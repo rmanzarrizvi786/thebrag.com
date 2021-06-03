@@ -268,7 +268,7 @@ jQuery(document).ready(function ($) {
                   var slotResponseInformation = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation(); // 22339226185 = Fuse ID for Billboard
                   if (typeof slotResponseInformation != "undefined") {
                     if (typeof slotResponseInformation.lineItemId != "undefined") { // 5709731975 = Target Line Item ID in GAM (DFP)
-                      fusetag.setTargeting("pos", ["'" + slotResponseInformation.lineItemId + "'"]);
+                      fusetag.setTargeting("LineItemId", ["'" + slotResponseInformation.lineItemId + "'"]);
                     }
                   }
                 }
