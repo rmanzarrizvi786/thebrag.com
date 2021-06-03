@@ -263,7 +263,7 @@ jQuery(document).ready(function ($) {
                   "'" + res.data.category + "'",
                 ]);
 
-                var v = fusetag.getAdSlotsById('22339066349')[0].getResponseInformation();
+                var v = fusetag.getAdSlotsById('22339226185')[0].getResponseInformation();
                 if (v.lineItemId == "5709731975") {
                   fusetag.setTargeting("pos", [
                     "1",
