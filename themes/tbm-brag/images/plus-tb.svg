@@ -28,20 +28,21 @@
    guidetolerance="10"
    inkscape:pageopacity="0"
    inkscape:pageshadow="2"
-   inkscape:window-width="1849"
-   inkscape:window-height="1027"
+   inkscape:window-width="1390"
+   inkscape:window-height="847"
    id="namedview13"
    showgrid="false"
    inkscape:zoom="36.75"
-   inkscape:cx="0.76190476"
-   inkscape:cy="6"
-   inkscape:window-x="71"
+   inkscape:cx="2"
+   inkscape:cy="9.4557823"
+   inkscape:window-x="50"
    inkscape:window-y="25"
    inkscape:window-maximized="0"
-   inkscape:current-layer="Plus" />
+   inkscape:current-layer="Plus"
+   inkscape:document-rotation="0" />
 <path
    fill="#FFFFFF"
    d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601  C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399  C15.952,9,16,9.447,16,10z"
    id="path10"
-   style="fill:#fa785c;fill-opacity:1" />
+   style="fill:#b98d5b;fill-opacity:1" />
 </svg>
