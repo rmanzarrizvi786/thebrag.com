@@ -56,6 +56,7 @@ $page_template = get_page_template_slug();
   <link rel="preconnect" href="https://adservice.google.com.au">
   <link rel="preconnect" href="https://connect.facebook.net">
   <link rel="preconnect" href="https://bid.g.doubleclick.net">
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
 
   <link rel="manifest" href="/manifest.json">
 
