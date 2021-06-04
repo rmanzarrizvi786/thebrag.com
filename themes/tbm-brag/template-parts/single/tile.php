@@ -1,12 +1,12 @@
 <?php extract($args); ?>
 <article class="my-3">
     <div class="mb-4 mx-0 mx-md-3">
+        <?php if (isset($category)) : ?>
+            <div class="mb-2 text-uppercase cat">
+                <?php echo $category; ?>
+            </div>
+        <?php endif; ?>
         <a href="<?php the_permalink(); ?>" class="d-flex flex-row flex-md-column align-items-start">
-            <?php if (isset($category)) : ?>
-                <div class="mb-2 text-uppercase cat d-none d-md-block">
-                    <?php echo $category; ?>
-                </div>
-            <?php endif; ?>
             <div class="post-thumbnail p-r">
                 <?php
                 if ('' !== get_the_post_thumbnail()) :
@@ -15,7 +15,7 @@
                 ?>
             </div>
             <div class="pl-2 post-content align-self-start col-auto">
-                <?php if (isset($category)) : ?>
+                <?php if (0 && isset($category)) : ?>
                     <div class="mb-2 text-uppercase cat d-block d-md-none">
                         <?php echo $category; ?>
                     </div>
