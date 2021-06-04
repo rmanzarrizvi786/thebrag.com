@@ -40,7 +40,7 @@ $story_ID = $story->ID;
                             $author_byline = get_field('Author', $story_ID);
                         endif; // If custom author is set
 
-                        $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : CDN_URL . 'default-avatar.png';
+                        $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : CDN_URL . 'default-avatar.png?v=2';
                     else : // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $story->post_author);
                     endif; // If custom author is set
@@ -54,7 +54,7 @@ $story_ID = $story->ID;
                                         echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
                                     }
                                 } else {
-                                    echo get_avatar($story->post_author, 24, CDN_URL . 'default-avatar.png', '', array('class' => 'rounded'));
+                                    echo get_avatar($story->post_author, 24, CDN_URL . 'default-avatar.png?v=2', '', array('class' => 'rounded'));
                                 }
                                 ?>
                             </div>
