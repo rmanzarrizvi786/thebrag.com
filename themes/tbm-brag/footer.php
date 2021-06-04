@@ -90,7 +90,7 @@
         "name": "<?php echo get_bloginfo('name'); ?>",
         "logo": {
           "@type": "ImageObject",
-          "url": "<?php echo CDN_URL; ?>The-Brag_combo-300px.png"
+          "url": "<?php echo CDN_URL; ?>The-Brag-300px.png"
         }
       },
       "description": "<?php echo get_bloginfo('description'); ?>"

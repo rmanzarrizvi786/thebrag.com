@@ -283,7 +283,7 @@ $page_template = get_page_template_slug();
         else :
           if ($i == $number_of_menu_items) : ?>
             <li class="menu-more d-flex">
-              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="9" alt="▼"></span>
+              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>icon_arrow-down-tb.svg" width="10" height="9" alt="▼"></span>
               <ul>
               <?php endif; // $number_of_menu_items th menu item 
               ?>
@@ -355,8 +355,8 @@ $page_template = get_page_template_slug();
             ?>
               <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top" style="padding: .15rem .45rem !important">
                 <span class="">
-                  <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
-                  <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
+                  <img src="<?php echo ICONS_URL; ?>icon_mail.svg" class="btn-img" width="24" height="24" alt="Mail">
+                  <img src="<?php echo ICONS_URL; ?>icon_mail-tb.svg" class="btn-img hover" width="24" height="24" alt="Mail">
                 </span>
               </button>
               <a href="<?php echo home_url('/profile/'); ?>" class="ml-1 user-name d-flex flex-row btn user text-white" style="padding: 0;">
@@ -406,14 +406,14 @@ $page_template = get_page_template_slug();
           <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
           <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
           <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>icon_mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
         </div>
 
       </div>
 
       <div class="my-2 btn btn-media-top btn-toggle-network-mobile d-flex" style="width: 100%;">
         <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="300" height="28" alt="The Brag Media" title="The Brag Media" style="width: 280px;" loading="lazy"></span>
-        <span class="arrow-down ml-1"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="15" height="14" alt="▼"></span>
+        <span class="arrow-down ml-1"><img src="<?php echo ICONS_URL; ?>icon_arrow-down-tb.svg" width="15" height="14" alt="▼"></span>
       </div>
       <div id="network-mobile" class="network" style="display: none;">
         <?php get_template_part('template-parts/network'); ?>
@@ -426,21 +426,21 @@ $page_template = get_page_template_slug();
           <div class="network-socials">
             <div class="btn btn-media-top btn-toggle-slidedown" data-target="network">
               <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" width="130" height="13" alt="The Brag Media" title="The Brag Media" loading="lazy"></span>
-              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>triangle-down-color.svg" width="10" height="20" alt="▼"></span>
+              <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>icon_arrow-down-tb.svg" width="10" height="20" alt="▼"></span>
             </div>
             <div class="socials-top d-flex justify-content-between">
               <a href="https://www.facebook.com/thebragmag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>facebook.svg" width="32" height="32" alt="Facebook" title="Facebook"></a>
               <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
               <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
               <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-              <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+              <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>icon_mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
             </div>
           </div><!-- .network-socials.hide-m -->
         </div><!-- .network-socials-wrap -->
 
         <div class="d-flex">
           <div class="logo-wrap">
-            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag" loading="lazy"></a>
+            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-light.svg" width="200" height="36" alt="The Brag" title="The Brag" loading="lazy"></a>
           </div>
         </div>
         <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
@@ -460,8 +460,8 @@ $page_template = get_page_template_slug();
           <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top">
             <span>Pick Your Niche</span>
             <span class="ml-1 d-xs-none" style="margin-top: -1px;">
-              <img src="<?php echo ICONS_URL; ?>mail.svg" class="btn-img" width="24" height="24" alt="Mail">
-              <img src="<?php echo ICONS_URL; ?>mail-color.svg" class="btn-img hover" width="24" height="24" alt="Mail">
+              <img src="<?php echo ICONS_URL; ?>icon_mail.svg" class="btn-img" width="24" height="24" alt="Mail">
+              <img src="<?php echo ICONS_URL; ?>icon_mail-tb.svg" class="btn-img hover" width="24" height="24" alt="Mail">
             </span>
           </button>
         </div>
@@ -497,7 +497,7 @@ $page_template = get_page_template_slug();
           <a href="https://twitter.com/TheBrag" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>twitter.svg" width="32" height="32" alt="Twitter" title="Twitter"></a>
           <a href="https://www.instagram.com/thebragmag/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>instagram.svg" width="32" height="32" alt="Instagram" title="Instagram"></a>
           <a href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>youtube.svg" width="32" height="32" alt="YouTube" title="YouTube"></a>
-          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
+          <a href="https://thebrag.com/observer/" target="_blank" rel="noreferrer"><img src="<?php echo ICONS_URL; ?>icon_mail.svg" width="32" height="32" alt="Observer" title="Observer"></a>
         </div>
       </div>
     </div>

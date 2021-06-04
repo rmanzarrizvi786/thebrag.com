@@ -1,6 +1,7 @@
 <?php
 
 // define('ICONS_URL', get_template_directory_uri() . '/images/');
+// define('CDN_URL', ICONS_URL);
 define('ICONS_URL', 'https://cdn.thebrag.com/icons/');
 define('CDN_URL', 'https://cdn.thebrag.com/tb/');
 
@@ -1441,7 +1442,7 @@ function ssm_amp_additional_css_styles($amp_template)
     border-bottom: 1px solid #ccc;
     }
     .amp-wp-header a {
-    background-image: url( '<?php echo CDN_URL; ?>The-Brag_combo-300px.png' );
+    background-image: url( '<?php echo CDN_URL; ?>The-Brag-300px.png' );
     background-repeat: no-repeat;
     background-size: contain;
     display: block;
@@ -3423,7 +3424,7 @@ function brands()
         'the-brag' => [
             'title' => 'The Brag',
             'link' => 'https://thebrag.com/',
-            'logo_name' => 'The-Brag',
+            'logo_name' => 'The-Brag_combo',
             'ext' => 'svg',
         ],
         'brag-jobs' => [

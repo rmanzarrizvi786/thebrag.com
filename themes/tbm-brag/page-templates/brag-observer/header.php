@@ -915,7 +915,7 @@ $page_template = get_page_template_slug();
   <div id="page" class="bg-white" style="display: none;">
     <?php
     $logo_link = home_url('/');
-    $logo_url = CDN_URL . 'The-Brag_combo-white.svg';
+    $logo_url = CDN_URL . 'The-Brag_combo-light.svg';
     $logo_alt = 'The Brag';
     include(get_template_directory() . '/page-templates/brag-observer/menu.php'); ?>
     <div id="header" class=" bg-white p-0" style="position: fixed; top: 0;">

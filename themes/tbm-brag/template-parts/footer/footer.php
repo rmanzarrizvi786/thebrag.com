@@ -1,7 +1,7 @@
 <footer class="container footer mb-1 p-2 p-md-5">
     <div class="d-flex justify-content-between flex-column flex-md-row px-0 px-md-2 py-3 mt-3">
         <div class="left px-3">
-            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-white.svg" width="200" height="36" alt="The Brag" title="The Brag" loading="lazy"></a>
+            <a href="<?php echo site_url(); ?>"><img src="<?php echo CDN_URL; ?>The-Brag_combo-light.svg" width="200" height="36" alt="The Brag" title="The Brag" loading="lazy"></a>
         </div>
         <div class="right px-3 text-right d-flex mt-3 mt-md-0 justify-content-end">
             <span class="mr-1 text-color-primary font-primary" style="font-size: .9rem; font-weight: 500">CULTURE BY</span>

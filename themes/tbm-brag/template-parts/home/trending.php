@@ -59,7 +59,7 @@ $exclude_posts = [];
     </div>
     <div class="right trending-stories m-2 ml-0 col-12 col-md-auto pr-0 pr-md-2">
         <div class="text-center p-1 pt-0 mb-0 mx-1 subheading h-trending d-flex">
-            <span><img src="<?php echo ICONS_URL; ?>line-graph.svg" width="24" height="24" alt="^"></span>
+            <span><img src="<?php echo ICONS_URL; ?>icon_trending.svg" width="24" height="24" alt="^" style="width: 32px; border: none;"></span>
             <span>Trending</span>
         </div>
         <div class="pl-2">
