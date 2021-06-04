@@ -29,9 +29,9 @@
 <div class="container footer-menu-2 pb-2" style="padding-bottom: 50px !important;">
     <nav>
         <ul class="d-flex flex-column flex-md-row justify-content-end">
-            <li><a href="https://thebrag.media/terms-and-conditions/" target="_blank" rel="noreferrer">Competition Ts &amp; Cs</a></li>
-            <li><a href="https://thebrag.com/media/terms-of-use/" target="_blank" rel="noreferrer">Terms of use</a></li>
-            <li><a href="https://thebrag.media/privacy-policy/" target="_blank" rel="noreferrer">Privacy</a></li>
+            <li><a href="https://thebrag.media/terms-and-conditions/" target="_blank" rel="noreferrer" class="py-1">Competition Ts &amp; Cs</a></li>
+            <li><a href="https://thebrag.com/media/terms-of-use/" target="_blank" rel="noreferrer" class="py-1">Terms of use</a></li>
+            <li><a href="https://thebrag.media/privacy-policy/" target="_blank" rel="noreferrer" class="py-1">Privacy</a></li>
         </ul>
     </nav>
 </div>
