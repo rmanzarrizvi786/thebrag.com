@@ -7,14 +7,14 @@
                     <?php echo $category; ?>
                 </div>
             <?php endif; ?>
-            <div class="post-thumbnail col-5 p-r">
+            <div class="post-thumbnail p-r">
                 <?php
                 if ('' !== get_the_post_thumbnail()) :
                     the_post_thumbnail('thumbnail');
                 endif;
                 ?>
             </div>
-            <div class="pl-2 post-content align-self-start col-7">
+            <div class="pl-2 post-content align-self-start col-auto">
                 <?php if (isset($category)) : ?>
                     <div class="mb-2 text-uppercase cat d-block d-md-none">
                         <?php echo $category; ?>

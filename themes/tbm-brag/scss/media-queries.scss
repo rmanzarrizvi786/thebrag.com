@@ -235,10 +235,12 @@
 
 @media (max-width: $mobile) {
     .latest .post-thumbnail {
-        align-self: stretch;
+        // align-self: stretch;
         overflow: hidden;
         position: relative;
         border-radius: 0.5rem;
+        flex: 0 0 150px;
+        height: 150px;
         img {
             height: 100%;
             width: auto;
