@@ -7,7 +7,7 @@
         <div class="d-flex flex-column" id="brands_wrap">
             <div class="d-flex flex-row flex-wrap">
                 <?php foreach (brands() as $brand => $brand_details) : ?>
-                    <div class="brand-box-o col-4 col-md-2 d-flex">
+                    <div class="brand-box col-4 col-md-2 d-flex">
                         <a href="<?php echo $brand_details['link']; ?>" title="<?php echo $brand_details['title']; ?>" target="_blank" class="d-block p-2" rel="noreferrer">
                             <img src="https://images.thebrag.com/common/brands/<?php echo $brand_details['logo_name']; ?>-light.<?php echo isset($brand_details['ext']) ? $brand_details['ext'] : 'jpg'; ?>" alt="<?php echo $brand_details['title']; ?>" style="<?php echo isset($brand_details['width']) ? 'width: ' . $brand_details['width'] . 'px;' : ''; ?>" loading="lazy">
                         </a>
@@ -21,7 +21,7 @@
                 <?php foreach (brands_network() as $brand => $brand_details) : ?>
                     <div class="brand-box col-4 col-md-2 d-flex flex-wrap">
                         <a href="<?php echo $brand_details['link']; ?>" title="<?php echo $brand_details['title']; ?>" target="_blank" class="d-block p-2" rel="noreferrer">
-                            <img src="https://images.thebrag.com/common/pubs/<?php echo $brand_details['logo_name']; ?>.jpg" alt="<?php echo $brand_details['title']; ?>" loading="lazy">
+                            <img src="https://images.thebrag.com/common/pubs-white/<?php echo str_replace(' ', '-', strtolower($brand_details['title'])); ?>.png" alt="<?php echo $brand_details['title']; ?>" loading="lazy">
                         </a>
                     </div>
                 <?php endforeach; ?>

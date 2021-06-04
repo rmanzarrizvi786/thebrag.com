@@ -19,8 +19,26 @@
     background-color: $primaryBlack;
 }
 .brand-box {
-    background-color: #fff;
-    border-right: 1px solid $primaryBlack;
-    border-bottom: 1px solid $primaryBlack;
+    // background-color: #fff;
+    border-right: 1px solid $secondaryBlack;
+    border-bottom: 1px solid $secondaryBlack;
     height: 75px;
+}
+
+@media (max-width: $mobile) {
+    .brand-box:nth-of-type(3n + 1) {
+        border-left: 1px solid $secondaryBlack;
+    }
+    .brand-box:nth-of-type(-n+3) {
+        border-top: 1px solid $secondaryBlack;
+    }
+}
+
+@media (min-width: $tablet) {
+    .brand-box:nth-of-type(6n + 1) {
+        border-left: 1px solid $secondaryBlack;
+    }
+    .brand-box:nth-of-type(-n+6) {
+        border-top: 1px solid $secondaryBlack;
+    }
 }
