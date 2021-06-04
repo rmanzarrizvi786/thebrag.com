@@ -2990,6 +2990,10 @@ function ssm_inject_ads($content)
         return $content;
     endif;
 
+    if (is_singular('page')) {
+        return $content;
+    }
+
     $count_articles = isset($_POST['count_articles']) ? (int) $_POST['count_articles'] : 1;
 
     $closing_p = '</p>';
