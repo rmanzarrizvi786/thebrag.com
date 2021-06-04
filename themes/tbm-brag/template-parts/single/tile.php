@@ -1,5 +1,5 @@
 <?php extract($args); ?>
-<article class="my-3">
+<article class="my-1 my-md-3">
     <div class="mb-4 mx-0 mx-md-3">
         <a href="<?php the_permalink(); ?>" class="d-flex flex-row flex-md-column align-items-start">
             <?php if (isset($category)) : ?>
