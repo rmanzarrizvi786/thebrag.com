@@ -28,7 +28,7 @@ $story_ID = $story->ID;
             <div class="read-article-wrap pt-2 w-100">
                 <div class="d-flex justify-content-between">
                     <div class="read-article d-flex">
-                        <span><img src="<?php echo ICONS_URL . 'icon_arrow-right.svg'; ?>"></span>
+                        <span><img src="<?php echo ICONS_URL . 'arrow-with-circle-right.svg'; ?>"></span>
                         <span>Read Article</span>
                     </div>
                     <?php
@@ -40,7 +40,7 @@ $story_ID = $story->ID;
                             $author_byline = get_field('Author', $story_ID);
                         endif; // If custom author is set
 
-                        $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : CDN_URL . 'default-avatar.png?v=2';
+                        $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : CDN_URL . 'default-avatar-4.png';
                     else : // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $story->post_author);
                     endif; // If custom author is set
@@ -54,7 +54,7 @@ $story_ID = $story->ID;
                                         echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
                                     }
                                 } else {
-                                    echo get_avatar($story->post_author, 24, CDN_URL . 'default-avatar.png?v=2', '', array('class' => 'rounded'));
+                                    echo get_avatar($story->post_author, 24, CDN_URL . 'default-avatar-4.png', '', array('class' => 'rounded'));
                                 }
                                 ?>
                             </div>
