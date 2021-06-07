@@ -181,8 +181,8 @@ class API
       $id = absint($_GET['id']);
       $lists_query .= " AND id = '{$id}'";
     }
-    if (isset($_GET['related_site']) && '' != trim($_GET['related_site'])) {
-      $related_site = absint($_GET['related_site']);
+    if (isset($_GET['site']) && '' != trim($_GET['site'])) {
+      $related_site = trim($_GET['related_site']);
       $lists_query .= " AND related_site = '{$related_site}'";
     }
     $lists_query .= " ORDER BY sub_count DESC";
