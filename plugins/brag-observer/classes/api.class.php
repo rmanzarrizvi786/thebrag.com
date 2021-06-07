@@ -75,6 +75,12 @@ class API
       'callback' => [$this, 'rest_get_competition_articles'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/get_my_subs', array(
+      'methods' => 'GET',
+      'callback' => [$this, 'rest_get_my_subs'],
+      'permission_callback' => '__return_true',
+    ));
   }
 
   /*
@@ -423,6 +429,61 @@ class API
     }
     return $return;
   }
+
+  /*
+  * REST: Get Topics
+  */
+  public function rest_get_my_subs($obj = null)
+  {
+
+    if (is_null($obj) && (!isset($_GET['key']) || !$this->isRequestValid($_GET['key'])) || ! isset($_GET['email'])) {
+      wp_send_json_error(['Invalid Request']);
+      wp_die();
+    }
+
+    global $wpdb;
+
+    $status = isset($_GET['status']) && in_array($_GET['status'], ['active', 'soon']) ? trim($_GET['status']) : 'active';
+
+    if (isset($_GET['email'])) {
+      $user = get_user_by('email', sanitize_text_field($_GET['email']));
+      if(!$user) {
+        wp_send_json_error(['Not found']);
+        wp_die();
+      }
+    }
+
+    $lists_query = "SELECT
+      l.id,
+      l.title,
+      l.slug,
+      l.image_url,
+      l.frequency,
+      l.description 
+    FROM {$wpdb->prefix}observer_lists l 
+      JOIN {$wpdb->prefix}observer_subs s ON s.list_id = l.id
+    WHERE
+      l.status = '{$status}' AND
+      s.status = 'subscribed' AND
+      s.user_id = '{$user->ID}'
+    ";
+    $lists = $wpdb->get_results($lists_query);
+
+    $return = [];
+
+    foreach ($lists as $list) {
+      $return[] = [
+        'id' => $list->id,
+        'title' => $list->title,
+        'link' => home_url('/observer/' . $list->slug . '/'),
+        'image_url' => $list->image_url,
+        'description' => $list->description,
+        'frequency' => $list->frequency,
+      ];
+    }
+
+    wp_send_json_success($return);
+  } // rest_get_my_subs() }}
 }
 
 new API();
