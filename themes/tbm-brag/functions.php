@@ -337,7 +337,7 @@ function td_theme_add_init()
 {
     $file_dir = get_template_directory_uri(); //get_bloginfo('template_directory');
 
-    wp_enqueue_style('admin', $file_dir . '/css/admin.css', false, '2', 'all');
+    wp_enqueue_style('admin', $file_dir . '/css/admin.css', false, '2.1', 'all');
 
     wp_enqueue_script('td-jquery-autocomplete', $file_dir . '/js/jquery.auto-complete.js', array('jquery'), '1.0', true);
     wp_enqueue_script('td-options-ajax-search', $file_dir . '/js/scripts-admin.js', array('jquery'), '1.1', true);
