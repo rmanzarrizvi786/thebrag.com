@@ -2899,7 +2899,7 @@ function ssm_inject_ads($content)
         return $content;
     endif;
 
-    if (is_singular('page') || 'snaps' == get_post_type()) {
+    if (is_singular('page')) {
         return $content;
     }
 
