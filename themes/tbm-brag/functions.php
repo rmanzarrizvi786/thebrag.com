@@ -2889,98 +2889,6 @@ add_action('admin_init', 'modify_country_capability');
 //    remove_role( 'country' );
 //}
 
-// Inject Ads (DFP)
-function tbm_inject_ads($content)
-{
-    $count_articles = isset($_POST['count_articles']) ? (int) $_POST['count_articles'] : 1;
-
-    $closing_p = '</p>';
-    $paragraphs = explode($closing_p, $content);
-    $after_para = 2;
-
-    if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
-        return $content;
-    endif;
-
-    for ($slot_no = 1; $slot_no <= 5; $slot_no++) :
-        $ad_unit_data[$slot_no] = array(
-            'ad-unit-id' => 'content_' . $slot_no,
-            'position'   => 500 * ($slot_no * 2 - 1),
-            'inserted'   => false,
-        );
-    endfor;
-
-    // Tracking last inserted ad character limit.
-    $last_ad_inserted_at = 0;
-    // Tracking total ads inserted.
-    $total_ads_inserted = 0;
-
-    // Process content.
-    $post_content = wpautop($content);
-
-    // Clean content.
-    $post_content = strip_shortcodes($post_content); // strip short codes.
-    // $post_content = strip_tags( $post_content, '<p>' ); // strip all tags except P tags.
-
-    // Convert content into array.
-    $content_array = explode('</p>', $post_content);
-
-    $char_count = 0;
-
-    $content_count = count($content_array);
-    $ad_unit_count = count($ad_unit_data);
-
-    // Loop through all paragraph.
-    for ($index = 0; $index < $content_count; $index++) {
-
-        if (empty($content_array[$index])) {
-            continue;
-        }
-
-        // $paragraphs[ $index ] = $content_array[ $index ] . '</p>';
-
-        $char_count += strlen(strip_tags($content_array[$index]));
-
-        if (strlen(strip_tags($content_array[$index])) <= 150) {
-            // continue;
-        }
-
-        // Loop through all ad units.
-        for ($ad_index = 1; $ad_index <= $ad_unit_count; $ad_index++) {
-
-            $ad_data = $ad_unit_data[$ad_index];
-
-            // If ad is already inserted then ignore.
-            if (true === $ad_data['inserted']) {
-                continue;
-            }
-
-            if ($char_count >= $ad_data['position']) {
-
-                $ad_unit_data[$ad_index]['inserted'] = true;
-
-                // $paragraphs[ $index ] = $content_array[ $index ] . '</p><h2>Ad: ' . $ad_index . ' | Char Count: ' . $char_count . '| Index: ' . $index . '</h2>';
-
-                ob_start();
-                render_ad_tag($ad_data['ad-unit-id'], $count_articles > 1 ? 'single-infinite' : 'single', $count_articles);
-                $content_ad_tag = ob_get_contents();
-                ob_end_clean();
-                $paragraphs[$index] = $content_array[$index] . '</p>' . $content_ad_tag;
-
-                $last_ad_inserted_at = $char_count;
-
-                $total_ads_inserted++;
-
-                // Do not add two ads after one paragraph back to back.
-                // they should have at least distance of one paragraph.
-                continue 2;
-            }
-        }
-    }
-    $content = implode('', $paragraphs);
-
-    return $content;
-}
 function ssm_inject_ads($content)
 {
     if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
@@ -2991,7 +2899,7 @@ function ssm_inject_ads($content)
         return $content;
     endif;
 
-    if (is_singular('page')) {
+    if (is_singular('page') || is_post_type('snaps')) {
         return $content;
     }
 
