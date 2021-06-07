@@ -1139,7 +1139,7 @@ function register_cpt_snaps()
         'hierarchical' => false,
         'description' => 'Snaps from gigs around Australia',
         'supports' => array('title', 'editor', 'thumbnail', 'author'),
-        'taxonomies' => array('artist', 'venue', 'feature',),
+        'taxonomies' => array('category',),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
