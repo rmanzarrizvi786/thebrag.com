@@ -10,6 +10,14 @@ wp_enqueue_script('gallery', get_template_directory_uri() . '/js/gallery.js', ar
 $the_post_id = get_the_ID();
 ?>
 
+<style>
+    .gallery figure {
+        width: 150px;
+        height: 100px;
+        overflow: hidden;
+    }
+</style>
+
 <div class="ad-billboard ad-billboard-top container py-1 py-md-2">
     <div class="mx-auto text-center">
         <?php render_ad_tag('leaderboard'); ?>
