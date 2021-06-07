@@ -133,5 +133,5 @@
     margin-top: 0 !important;
 }
 .attachments-attachment:first-of-type .attachments-handle, .attachments-handle {
-    top: 0;
+    top: 5px !important;
 }
