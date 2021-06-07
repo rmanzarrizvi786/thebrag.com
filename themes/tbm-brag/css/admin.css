@@ -126,3 +126,6 @@
 .attachments-note:not(:empty) + .attachments-container > .attachments-attachment:first-of-type {
     margin-top: 0 !important;
 }
+.attachments-attachment .attachment-meta, .attachments-attachment:first-of-type .attachment-meta {
+    margin-top: 0 !important;
+}
