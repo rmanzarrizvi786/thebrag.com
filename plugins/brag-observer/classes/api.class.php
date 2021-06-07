@@ -181,6 +181,10 @@ class API
       $id = absint($_GET['id']);
       $lists_query .= " AND id = '{$id}'";
     }
+    if (isset($_GET['site']) && '' != trim($_GET['site'])) {
+      $related_site = absint($_GET['site']);
+      $lists_query .= " AND related_site = '{$related_site}'";
+    }
     $lists_query .= " ORDER BY sub_count DESC";
     $lists = $wpdb->get_results($lists_query);
 
