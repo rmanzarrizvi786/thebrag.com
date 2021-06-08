@@ -28,8 +28,9 @@
         <li class="nav-item"><a target="_blank" href="https://www.instagram.com/thebragmag/" class="nav-link px-2 text-light"><i class="fab fa-instagram fa-lg" aria-hidden=true></i></a></li>
         <li class="nav-item"><a target="_blank" href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" class="nav-link px-2 text-light"><i class="fab fa-youtube fa-lg" aria-hidden=true></i></a></li>
       </ul>
-
-      <ul class="nav flex-column flex-md-row justify-content-center justify-content-md-end">
+    </div>
+  </div>
+      <ul class="nav flex-column flex-md-row justify-content-center">
         <li class="nav-item">
           <a target="_blank" title="Privacy policy" href="https://thebrag.com/media/privacy-policy/" class="nav-link text-light">Privacy policy</a>
         </li>
@@ -43,16 +44,12 @@
           <a target="_blank" title="Advertise with us" href="https://thebrag.com/media/" target="_blank" class="nav-link text-light pr-md-2">Advertise with us</a>
         </li>
       </ul>
-    </div>
-
-
-  </div>
 </div>
 
 </div><!-- #page -->
 
 <noscript id="deferred-styles">
-  <link href="https://fonts.googleapis.com/css?family=Poppins|Roboto:400,700" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@200;300;500&display=swap" rel="stylesheet"> -->
   <?php if (!is_page_template('page-quiz.php')) : ?>
     <!-- <link rel="stylesheet" id="bs-css" href="<?php echo get_template_directory_uri(); ?>/bs/css/bootstrap.min.css" 
     type="text/css" media="all" /> -->
