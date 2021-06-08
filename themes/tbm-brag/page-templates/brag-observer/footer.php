@@ -18,7 +18,7 @@
     <div id="footer-copyright" class="col-md-6 mt-3 text-md-right text-center text-white">
       <p>
         <a href="https://thebrag.com/media/" target="_blank">
-          <img src="https://thebrag.com/media/wp-content/themes/bragm/images/TheBragMedia_LOGO_v7_white@100x.png" alt="The Brag" class="img-fluid" style="max-width: 300px;">
+          <img src="https://cdn.thebrag.com/tbm/The-Brag-Media-light.png" alt="The Brag" class="img-fluid" style="max-width: 300px;">
         </a>
       </p>
       <p>&copy; Copyright <?php echo date("Y"); ?><br />All Rights Reserved.</p>
