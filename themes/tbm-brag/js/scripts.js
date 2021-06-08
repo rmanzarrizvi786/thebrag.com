@@ -443,7 +443,8 @@ jQuery(document).ready(function ($) {
       $(this).remove();
     })
   }
-  if ($('.observer-subscribe-form').length) {
+  // if ($('.observer-subscribe-form').length)
+  {
     $(document).on('submit', '.observer-subscribe-form', function (e) {
       e.preventDefault();
       var theForm = $(this);
