@@ -463,7 +463,7 @@ jQuery(document).ready(function ($) {
       var loadingElem = $(this).find('.loading');
       var button = $(this).find('.button');
 
-      var the_url = theForm.closest('.single_story').find('h1:first').data('href');
+      var the_url = theForm.closest('.single-article').find('h1:first').data('href');
       formData += '&source=' + the_url;
 
       $('.js-errors-subscribe,.js-msg-subscribe').html('').addClass('d-none');
