@@ -472,6 +472,10 @@ class API
       s.status = 'subscribed' AND
       s.user_id = '{$user->ID}'
     ";
+    if (isset($_GET['site']) && '' != trim($_GET['site'])) {
+      $related_site = trim($_GET['site']);
+      $lists_query .= " AND l.related_site = '{$related_site}'";
+    }
     $lists = $wpdb->get_results($lists_query);
 
     $return = [];
