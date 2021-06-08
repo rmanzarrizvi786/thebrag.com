@@ -176,7 +176,7 @@ class API
 
     $status = isset($_GET['status']) && in_array($_GET['status'], ['active', 'soon']) ? trim($_GET['status']) : 'active';
 
-    $lists_query = "SELECT id, title, slug, image_url, frequency, description FROM {$wpdb->prefix}observer_lists WHERE status = '{$status}'";
+    $lists_query = "SELECT id, title, keywords, slug, image_url, frequency, description FROM {$wpdb->prefix}observer_lists WHERE status = '{$status}'";
     if (isset($_GET['id']) && '' != trim($_GET['id'])) {
       $id = absint($_GET['id']);
       $lists_query .= " AND id = '{$id}'";
@@ -203,6 +203,7 @@ class API
       $return[] = [
         'id' => $list->id,
         'title' => $list->title,
+        'keywords' => $list->keywords,
         'link' => home_url('/observer/' . $list->slug . '/'),
         'image_url' => $list->image_url,
         'description' => $list->description,
