@@ -22,14 +22,14 @@
         </a>
       </p>
       <p>&copy; Copyright <?php echo date("Y"); ?><br />All Rights Reserved.</p>
-      <ul id="footer-socials" class="nav flex-row justify-content-center">
+      <ul id="footer-socials" class="nav flex-row justify-content-center justify-content-md-end">
         <li class="nav-item"><a target="_blank" href="https://www.facebook.com/thebragmag" class="nav-link px-2 text-light"><i class="fab fa-facebook-f fa-lg" aria-hidden=true></i></a></li>
         <li class="nav-item"><a target="_blank" href="https://twitter.com/TheBrag" class="nav-link px-2 text-light"><i class="fab fa-twitter fa-lg" aria-hidden=true></i></a></li>
         <li class="nav-item"><a target="_blank" href="https://www.instagram.com/thebragmag/" class="nav-link px-2 text-light"><i class="fab fa-instagram fa-lg" aria-hidden=true></i></a></li>
         <li class="nav-item"><a target="_blank" href="https://www.youtube.com/channel/UCcZMmtU74qKN_w4Dd8ZkV6g" class="nav-link px-2 text-light"><i class="fab fa-youtube fa-lg" aria-hidden=true></i></a></li>
       </ul>
 
-      <ul class="nav flex-column flex-md-row justify-content-center">
+      <ul class="nav flex-column flex-md-row justify-content-center justify-content-md-end">
         <li class="nav-item">
           <a target="_blank" title="Privacy policy" href="https://thebrag.com/media/privacy-policy/" class="nav-link text-light">Privacy policy</a>
         </li>
