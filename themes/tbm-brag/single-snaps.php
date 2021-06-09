@@ -50,7 +50,6 @@ $the_post_id = get_the_ID();
                             echo ' on ' . date('M j, Y', strtotime(get_field('gallery_date', '')));
                         }
                         ?>
-                        <div class="my-3"><?php do_action('ssm_social_sharing_buttons', 'row'); ?></div>
 
                         <?php the_content(); ?>
 
