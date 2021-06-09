@@ -40,9 +40,26 @@
     }
 }
 
+#mobile-nav-wrap {
+    background-color: $primaryBlack;
+    height: calc(100vh - 50px);
+    overflow-y: scroll;
+    #top-search-wrap-mobile {
+        position: relative !important;
+        background: $primaryBlack !important;
+        top: 0 !important;
+    }
+    #nav-primary ul li ul {
+        width: 100%;
+        a {
+            text-align: center;
+        }
+    }
+}
+
 @media (min-width: $tablet) {
     #mobile-nav-wrap {
-        display: none !important
+        display: none !important;
     }
     h1 {
         font-size: $h1Size;
@@ -356,7 +373,6 @@
     }
 }
 
-
-.btn-media-top.active .arrow-down{
+.btn-media-top.active .arrow-down {
     transform: rotate(180deg);
 }
