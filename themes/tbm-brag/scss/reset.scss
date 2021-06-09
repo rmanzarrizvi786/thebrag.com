@@ -117,7 +117,6 @@ body, textarea {
     font-weight: 400;
 }
 
-ol,
 ul {
     list-style: none;
 }
@@ -487,4 +486,9 @@ h3 {
 }
 p {
     margin-bottom: 1rem;
+}
+
+ol {
+    padding-left: 2rem;
+    margin-bottom: 2rem;
 }
