@@ -1265,7 +1265,7 @@ function get_pub_logo($url = '')
 				[
 					'url' => $pubs_base_url .= 'The-Brag.jpg',
 					'title' => 'The Brag',
-					'width' => 102,
+					'width' => 139,
 					'height' => 25,
 				];
 			break;
@@ -1274,7 +1274,7 @@ function get_pub_logo($url = '')
 				[
 					'url' => $pubs_base_url .= 'Tone-Deaf.jpg',
 					'title' => 'Tone Deaf',
-					'width' => 118,
+					'width' => 45,
 					'height' => 25,
 				];
 			break;
