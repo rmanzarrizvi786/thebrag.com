@@ -15,6 +15,7 @@ class API
       'au.rollingstone.com' => '1fc08f46-3537-43f6-b5c1-c68704acf3fa',
       'tonedeaf.thebrag.com' => '3ce4efdd-a39c-4141-80f7-08a828500831',
       'dontboreus.thebrag.com' => '23455eda-057a-44b5-aa85-09b1222d4bd8',
+      'theindustryobserver.thebrag.com' => 'e0738d93-cadb-4ca7-9b75-d0da76dcd8b4',
     ];
 
     // REST API
