@@ -363,6 +363,23 @@
             display: none !important;
         }
     }
+
+    #nav-primary ul {
+        flex-wrap: wrap;
+        flex-direction: row;
+        li.menu-more {
+            flex: 0 0 100% !important;
+        }
+        li {
+            flex: 0 0 50%;
+            ul {
+                flex-direction: row;
+            }
+            a {
+                padding: 1rem .5rem;
+            }
+        }
+    }
 }
 
 @media (max-width: $extraSmall) {
@@ -372,6 +389,13 @@
     .latest .post-thumbnail {
         flex: 0 0 110px;
         height: 110px;
+    }
+    #nav-primary ul {
+        li {
+            a {
+                padding: .5rem .25rem;
+            }
+        }
     }
 }
 
