@@ -372,8 +372,8 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
       </div>
     </div>
 
-    <div id="mobile-nav-wrap" class="nav-wrap container flex-column p-r justify-content-between" style="display: none;">
-      <div id="search-nav-wrap" class="w-100 d-flex flex-column flex-fill">
+    <div id="mobile-nav-wrap" class="nav-wrap container flex-column p-r" style="display: none;">
+      <div id="search-nav-wrap" class="w-100 d-flex flex-column">
         <div id="top-search-wrap-mobile" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: transparent; border-radius: .5rem; width: 320px; transition: .25s left linear; border: 1px solid rgba(255,255,255,.15);">
           <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
             <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
