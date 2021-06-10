@@ -6,7 +6,6 @@ $page_template = get_page_template_slug();
 
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
-  <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="profile" href="http://gmpg.org/xfn/11">
@@ -16,6 +15,14 @@ $page_template = get_page_template_slug();
   <meta property="fb:app_id" content="1950298011866227" />
   <meta property="fb:pages" content="145692175443937" />
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#b98d5b">
+  <link rel="shortcut icon" href="/icons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/icons/browserconfig.xml">
   <meta name="theme-color" content="#130f40">
 
   <?php if (is_single()) { ?>
