@@ -107,9 +107,11 @@
     img {
         margin-right: 0.25rem;
         width: 24px;
-        border: 2px solid $primaryColor;
         padding: 0.15rem;
         border-radius: 0.25rem;
+        &.ico-star {
+            border: 2px solid $primaryColor;
+        }
     }
 }
 
