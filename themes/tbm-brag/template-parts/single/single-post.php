@@ -225,9 +225,9 @@ if (!post_password_required($post)) :
                     <?php if (in_category('Op-Ed/Comment')) : ?>
                         <div class="mt-5 py-3" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
                             <div class="d-flex flex-column">
-                                <div class="post-meta row">
-                                    <div class="col-2 text-right"><?php echo $author_image; ?></div>
-                                    <div class="author col-10 align-self-center">
+                                <div class="post-meta d-flex">
+                                    <div class="text-right mr-2"><?php echo $author_image; ?></div>
+                                    <div class="author align-self-center">
                                         <div class="d-flex flex-row justify-content-between">
                                             <div data-author="<?php echo $author_name; ?>" class="align-self-center"><?php echo $author_byline; ?></div>
                                             <?php if (get_field('author') || get_field('Author')) :
