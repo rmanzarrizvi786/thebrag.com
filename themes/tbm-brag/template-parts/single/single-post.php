@@ -1,5 +1,29 @@
-<?php extract($args); ?>
-<?php if ($count_articles === 1) : ?>
+<?php extract($args);
+
+/*
+* Get Spotlight articles
+*/
+global $wpdb;
+$spotlight_article_ids = $wpdb->get_results(
+    "SELECT post_id FROM ( 
+        SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+        WHERE post_id != " . get_the_ID()  . "
+        ORDER BY `created_at` DESC LIMIT 10
+        ) AS temptable
+        ORDER BY RAND()
+        LIMIT 3"
+);
+if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
+    $spotlight_articles_args = array(
+        'post_status' => 'publish',
+        'post_type' => array('post', 'country'),
+        'ignore_sticky_posts' => 1,
+        'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
+    );
+    $spotlight_articles = new WP_Query($spotlight_articles_args);
+endif;
+
+if ($count_articles === 1) : ?>
     <div class="ad-billboard ad-billboard-top container py-1 py-md-2">
         <div class="mx-auto text-center">
             <?php render_ad_tag('leaderboard', $count_articles); ?>
@@ -270,7 +294,11 @@ if (!post_password_required($post)) :
                         <?php render_ad_tag('rail1', $count_articles); ?>
                     </div>
                     <div>
-                        <?php get_template_part('template-parts/single/spotlight', null, ['pos' => 'sidebar']); ?>
+                        <?php
+                        if ($spotlight_articles->have_posts()) :
+                            get_template_part('template-parts/single/spotlight', null, ['pos' => 'sidebar', 'spotlight_articles' => $spotlight_articles]);
+                        endif; // If there are spotlight articles
+                        ?>
                     </div>
                     <div class="sticky-ad-right">
                         <div class="" style="min-width: 300px;">
@@ -284,7 +312,11 @@ if (!post_password_required($post)) :
         </div><!-- Row 2 -->
 
         <div>
-            <?php get_template_part('template-parts/single/spotlight'); ?>
+            <?php
+            if ($spotlight_articles->have_posts()) :
+                get_template_part('template-parts/single/spotlight', null, ['pos' => 'below_article', 'spotlight_articles' => $spotlight_articles]);
+            endif; // If there are spotlight articles
+            ?>
         </div>
     </article><!-- .container .single_story -->
 <?php elseif ($count_articles == 1) :
