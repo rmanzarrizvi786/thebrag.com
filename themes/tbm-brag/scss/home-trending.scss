@@ -106,11 +106,14 @@
 .subheading.h-trending {
     img {
         margin-right: 0.25rem;
-        width: 24px;
         padding: 0.15rem;
         border-radius: 0.25rem;
         &.ico-star {
+            width: 24px;
             border: 2px solid $primaryColor;
+        }
+        &.ico-trending {
+            width: 32px;
         }
     }
 }
