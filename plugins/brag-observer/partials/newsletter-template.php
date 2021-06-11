@@ -25,7 +25,7 @@ $logo = [];
 $logo['url'] = $list && $list->email_header_image_url && '' != $list->email_header_image_url ? $list->email_header_image_url : 'https://thebrag.com/wp-content/themes/tbm-brag/images/TheBragLOGOblackNOSHIELD.png';
 $logo['width'] = $list && $list->email_header_image_url && '' != $list->email_header_image_url ? 660 : 300;
 
-$media_logo = 'https://thebrag.com/wp-content/themes/tbm-brag/images/observer/email-footer-media-logo.jpg';
+$media_logo = 'https://cdn.thebrag.com/observer/images/email-footer-media-logo.jpg';
 
 $container_width = 700;
 ?>
