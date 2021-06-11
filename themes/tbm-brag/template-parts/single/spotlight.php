@@ -7,6 +7,7 @@
             $spotlight_article_ids = $wpdb->get_results(
                 "SELECT post_id FROM ( 
                     SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+                    WHERE post_id != " . get_the_ID()  . "
                     ORDER BY `created_at` DESC LIMIT 10
                     ) AS temptable
                     ORDER BY RAND()
