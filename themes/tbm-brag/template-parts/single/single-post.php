@@ -44,7 +44,7 @@ if (!post_password_required($post)) :
         </div>
     <?php endif; ?>
     <article class="single-article p-2 p-md-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
-    <div class="overlay"></div>
+        <div class="overlay"></div>
         <?php
         $title = get_post_meta($the_post_id, '_yoast_wpseo_title', true) ? get_post_meta($the_post_id, '_yoast_wpseo_title', true) : get_the_title();
         if (strpos($title, '%%title%%') !== FALSE) {
@@ -266,8 +266,11 @@ if (!post_password_required($post)) :
 
             <div class="col-md-4 right-col-has-ad d-none d-md-block ml-2 align-self-stretch">
                 <div class="d-flex flex-column h-100 justify-content-start">
-                    <div class="align-self-center mb-3" style="min-width: 300px;">
+                    <div class="align-self-center" style="min-width: 300px;">
                         <?php render_ad_tag('rail1', $count_articles); ?>
+                    </div>
+                    <div>
+                        <?php get_template_part('template-parts/single/spotlight', null, ['pos' => 'sidebar']); ?>
                     </div>
                     <div class="sticky-ad-right">
                         <div class="" style="min-width: 300px;">

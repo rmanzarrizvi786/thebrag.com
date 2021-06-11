@@ -1,12 +1,13 @@
 <section class="container spotlight">
     <div class="m-md-2">
         <h2 class="text-center text-uppercase p-1 pt-0 mt-3 mb-0 mx-1 h-spotlight">Spotlight</h2>
-        <div class="spotlight-stories d-flex flex-row align-items-start rounded bg-white mt-2">
+        <div class="spotlight-stories d-flex <?php echo isset($args['pos']) && 'sidebar' == $args['pos'] ? 'flex-column' : 'flex-row'; ?> align-items-start rounded bg-white mt-2">
             <?php
             global $wpdb;
             $spotlight_article_ids = $wpdb->get_results(
                 "SELECT post_id FROM ( 
                     SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+                    WHERE post_id != " . get_the_ID()  . "
                     ORDER BY `created_at` DESC LIMIT 10
                     ) AS temptable
                     ORDER BY RAND()
