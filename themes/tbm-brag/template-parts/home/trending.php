@@ -24,7 +24,7 @@ $exclude_posts = [];
     ?>
     <div class="left trending-main m-2 mr-md-0 align-self-stretch col-12 col-md-8 pl-0 pl-md-2">
         <div class="text-center p-1 pt-0 mb-0 mx-1 subheading h-trending d-flex">
-            <span><img src="<?php echo ICONS_URL; ?>star-tb.svg" width="24" height="24" alt="★" class="ico-star" style="padding-top: .12rem; padding-bottom: .18rem; margin-right: .5rem;"></span>
+            <span><img src="<?php echo ICONS_URL; ?>star-tb.svg" width="24" height="24" alt="★" class="ico-star"></span>
             <span>Most Read</span>
         </div>
         <?php
@@ -59,7 +59,7 @@ $exclude_posts = [];
     </div>
     <div class="right trending-stories m-2 ml-0 col-12 col-md-auto pr-0 pr-md-2">
         <div class="text-center p-1 pt-0 mb-0 mx-1 subheading h-trending d-flex">
-            <span><img src="<?php echo ICONS_URL; ?>icon_trending.svg" width="24" height="24" class="ico-trending" alt="^" style="width: 32px; border: none;"></span>
+            <span><img src="<?php echo ICONS_URL; ?>icon_trending.svg" width="24" height="24" alt="^" class="ico-trending"></span>
             <span>Trending</span>
         </div>
         <div class="pl-2">
