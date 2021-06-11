@@ -1463,5 +1463,5 @@ function get_pub_logo($url = '')
 			break;
 	endswitch;
 
-	return $pub_logo;
+	return $pub_logo . '?v=' . time();
 }
