@@ -1254,7 +1254,7 @@ function get_pub_logo($url = '')
 		case 'theindustryobserver.thebrag.com':
 			$pub_logo =
 				[
-					'url' => $pubs_base_url .= 'The-Industry-Observer.jpg',
+					'url' => $pubs_base_url .= 'The-Industry-Observer-n.jpg',
 					'title' => 'The Industry Observer',
 					'width' => 75,
 					'height' => 25,
@@ -1263,7 +1263,7 @@ function get_pub_logo($url = '')
 		case 'thebrag.com':
 			$pub_logo =
 				[
-					'url' => $pubs_base_url .= 'The-Brag.jpg',
+					'url' => $pubs_base_url .= 'The-Brag-n.jpg',
 					'title' => 'The Brag',
 					'width' => 139,
 					'height' => 25,
@@ -1272,7 +1272,7 @@ function get_pub_logo($url = '')
 		case 'tonedeaf.thebrag.com':
 			$pub_logo =
 				[
-					'url' => $pubs_base_url .= 'Tone-Deaf.jpg',
+					'url' => $pubs_base_url .= 'Tone-Deaf-n.jpg',
 					'title' => 'Tone Deaf',
 					'width' => 45,
 					'height' => 25,
