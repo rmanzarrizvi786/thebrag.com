@@ -147,7 +147,7 @@ function print_article($newsletter, $article_number, $container_width = 700)
                       <tbody>
                         <tr>
                           <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                            <img src="<?php echo $pub_logo['url'] . '?v=' . time(); ?>?<?php echo time(); ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                            <img src="<?php echo $pub_logo['url']; ?>?<?php echo time(); ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
                           </td>
                         </tr>
                       </tbody>
