@@ -12,7 +12,7 @@ if ($category->parent > 0) {
 
 $hero_stories_args = [
     'post_status' => 'publish',
-    'posts_per_page' => 3,
+    'posts_per_page' => 4,
     'cat' => $cat_id,
 ];
 $hero_stories_query = new WP_Query($hero_stories_args);
