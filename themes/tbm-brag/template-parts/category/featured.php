@@ -25,7 +25,7 @@ $story_ID = $story->ID;
             <div class="read-article-wrap pt-2">
                 <div class="d-flex justify-content-between">
                     <div class="read-article d-flex">
-                        <span><img src="<?php echo ICONS_URL; ?>icon_arrow-right.svg'; ?>" width="20" height="20" alt=">"></span>
+                        <span><img src="<?php echo ICONS_URL; ?>icon_arrow-right.svg" width="20" height="20" alt=">"></span>
                         <span>Read Article</span>
                     </div>
                     <?php
