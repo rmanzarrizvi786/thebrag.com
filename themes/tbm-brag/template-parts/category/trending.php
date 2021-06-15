@@ -21,11 +21,12 @@ extract($args);
                 // 'exclude_posts' => $exclude_posts,
             ];
 
-            if (get_field('image_has_text', $story_image_id)) {
+            get_template_part('template-parts/category/featured', null, $featured_args);
+            /* if (get_field('image_has_text', $story_image_id)) {
                 get_template_part('template-parts/category/featured', null, $featured_args);
             } else {
                 get_template_part('template-parts/category/featured', 'overlay', $featured_args);
-            }
+            } */
         endif;
         ?>
     </div>
