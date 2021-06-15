@@ -74,7 +74,7 @@ $exclude_posts = [];
                     ) AS temptable
                 WHERE post_id NOT IN ( {$exclude_posts_str} )
                 ORDER BY RAND()
-                LIMIT 2"
+                LIMIT 3"
             );
             $trending_articles_args = [
                 'post_status' => 'publish',

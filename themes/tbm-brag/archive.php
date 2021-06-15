@@ -8,7 +8,7 @@ $post_type = $queried_obj->name;
 
 $hero_stories_args = [
     'post_status' => 'publish',
-    'posts_per_page' => 3,
+    'posts_per_page' => 4,
     'post_type' => $post_type,
 ];
 $hero_stories_query = new WP_Query($hero_stories_args);
