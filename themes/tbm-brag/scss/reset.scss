@@ -111,7 +111,8 @@ section {
     display: block;
 }
 
-body, textarea {
+body,
+textarea {
     line-height: 1.5;
     font-family: $bodyFonts;
     font-weight: 400;
@@ -463,11 +464,13 @@ a {
     padding: 0.2em 0;
 }
 
-strong, b {
+strong,
+b {
     font-weight: 600;
 }
 
-i, em {
+i,
+em {
     font-style: italic;
 }
 
@@ -477,17 +480,26 @@ i, em {
 
 h1 {
     font-size: $h1Size * 0.75;
+    margin-bottom: $h1Size * 0.75;
 }
 h2 {
     font-size: $h2Size * 0.75;
+    margin-bottom: $h2Size * 0.75;
 }
 h3 {
     font-size: $h3Size * 0.75;
+}
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: $h3Size * 0.75;
 }
 p {
     margin-bottom: 1rem;
 }
 
+ul,
 ol {
     padding-left: 2rem;
     margin-bottom: 2rem;
