@@ -13,13 +13,15 @@ get_header();
     </div>
 </div>
 
-<h1 class="story-title mb-3" style="text-align: center;">
-    <?php the_title(); ?>
-</h1>
+<section class="bg-yellow">
+    <h1 class="story-title mb-3" style="text-align: center;">
+        <?php the_title(); ?>
+    </h1>
 
-<div class="post-content">
-    <?php the_content(); ?>
-</div>
+    <div class="post-content">
+        <?php the_content(); ?>
+    </div>
+</section>
 
 <?php
 get_footer();
