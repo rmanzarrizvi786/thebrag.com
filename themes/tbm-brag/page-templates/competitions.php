@@ -120,6 +120,12 @@ if (is_user_logged_in()) {
   }
 </style>
 
+<div class="ad-billboard ad-billboard-top container py-1 py-md-2">
+    <div class="mx-auto text-center">
+        <?php render_ad_tag('leaderboard'); ?>
+    </div>
+</div>
+
 <div class="container bg-yellow rounded-top p-2">
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
