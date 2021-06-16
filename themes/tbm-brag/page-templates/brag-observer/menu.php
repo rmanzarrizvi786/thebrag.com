@@ -136,11 +136,9 @@ $logo_alt = isset($logo_alt) ? $logo_alt : 'The Brag';
             <li class="nav-item"><a href="<?php echo home_url('/observer/'); ?>" class="nav-link px-2 text-white"><i class="fa fa-envelope fa-lg" aria-hidden=true></i></a></li>
         </ul>
     </nav>
-    <form role="search" method="get" id="searchform-mobile" class="searchform form-inline justify-content-center my-1" action="<?php echo esc_url(home_url('/')); ?>" style="">
-        <div><input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search"></div>
+    <form role="search" method="get" id="searchform-mobile" class="searchform form-inline justify-content-center my-1 px-2" action="<?php echo esc_url(home_url('/')); ?>" style="">
+        <div class="flex-fill"><input type="text" name="s" class="search-field form-control w-100" placeholder="Search..." autocomplete="off" aria-label="Search"></div>
         <button type="submit" class="btn" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
-    <?php
-    echo $top_menu_html;
-    ?>
+    <?php echo $top_menu_html; ?>
 </div>
