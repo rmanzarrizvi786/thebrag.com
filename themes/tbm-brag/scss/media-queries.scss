@@ -183,14 +183,14 @@
         figure {
             margin-bottom: 1rem !important;
         }
-        /* img,
+        img,
         figure {
             width: 35.625rem;
             margin: auto;
             margin-left: -3.3125rem;
             max-width: 35.625rem !important;
             overflow: hidden;
-        } */
+        }
         figure img {
             width: 100%;
             margin: auto;
@@ -198,13 +198,8 @@
         .post-meta img {
             width: auto;
             height: auto;
+            max-width: 64px;
         }
-    }
-
-    .yt-lazy-load {
-        width: 35.625rem;
-        margin-left: -3.3125rem !important;
-        max-width: 35.625rem !important;
     }
 
     .pswp {
@@ -298,6 +293,11 @@
             max-width: 35.625rem !important;
             overflow: hidden;
         }
+    }
+    .yt-lazy-load {
+        width: 35.625rem;
+        margin-left: -3.3125rem !important;
+        max-width: 35.625rem !important;
     }
 }
 
@@ -427,7 +427,7 @@
                 flex-direction: row;
             }
             a {
-                padding: 1rem 0.5rem;
+                padding: 1rem .5rem;
             }
         }
     }
@@ -444,7 +444,7 @@
     #nav-primary ul {
         li {
             a {
-                padding: 0.5rem 0.25rem;
+                padding: .5rem .25rem;
             }
         }
     }
