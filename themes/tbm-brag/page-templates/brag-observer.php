@@ -173,13 +173,13 @@ if ($observer_slug) {
 
           <li class="nav-item"><a href="https://variety.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/variety.png" alt="Variety" class="lazyload"></a></li><!-- Variety -->
 
-          <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/td/Tone-Deaf-light.png" alt="Tone Deaf" class="lazyload" style="width: 80px"></a></li><!-- Tone Deaf -->
+          <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/td/Tone-Deaf-light.png" alt="Tone Deaf" class="lazyload" style="width: 60px"></a></li><!-- Tone Deaf -->
 
           <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/dbu.png" alt="Don't Bore Us" class="lazyload" style="width: 100px;"></a></li><!-- Don't Bore Us -->
 
-          <li class="nav-item"><a href="https://thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tb/The-Brag-light.png" alt="The Brag"></a></li>
+          <li class="nav-item"><a href="https://thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tb/The-Brag-light.png" alt="The Brag" style="width: 120px;"></a></li>
 
-          <li class="nav-item"><a href="https://theindustryobserver.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tio/The-Industry-Observer-light.png" alt="The Industry Observer" class="lazyload"></a></li><!-- The Industry Observer -->
+          <li class="nav-item"><a href="https://theindustryobserver.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tio/The-Industry-Observer-light.png" alt="The Industry Observer" class="lazyload" style="width: 100px;"></a></li><!-- The Industry Observer -->
         </ul>
       </div>
     </div>
