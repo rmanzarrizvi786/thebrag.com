@@ -13,7 +13,7 @@ get_header();
     </div>
 </div>
 
-<section class="bg-yellow">
+<section class="bg-yellow p-3">
     <h1 class="story-title mb-3" style="text-align: center;">
         <?php the_title(); ?>
     </h1>
