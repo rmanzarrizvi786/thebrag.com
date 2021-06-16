@@ -350,6 +350,10 @@ $page_template = get_page_template_slug();
       border: 1px solid transparent;
     }
 
+    .topic a:hover {
+      text-decoration: none;
+    }
+
     @media (min-width:768px) {
       .wrap.quiz-wrap {
         max-width: 730px;
