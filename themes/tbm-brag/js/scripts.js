@@ -93,6 +93,13 @@ jQuery(document).ready(function ($) {
     $('#top-search-wrap').removeClass('active');
   });
 
+  if ($(window).width() < 768) {
+    $(document).on('click', '.nav-v .toggle-nav, .nav-v.collapsed .active', function (e) {
+      e.preventDefault();
+      $(this).closest('.nav-v').toggleClass('collapsed').find('li').toggleClass('open');
+    });
+  }
+
 
 
   $('.observer-list .topics-active a').on('click', function (e) {

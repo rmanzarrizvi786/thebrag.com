@@ -155,10 +155,16 @@
         border-radius: $roundedRadius * 2 $roundedRadius * 2 0 0;
     }
 
-    .nav-v ul {
+    .nav-v {
+        background-color: transparent !important;
+        border: none;
         flex-direction: column;
         li {
-            width: 100%;
+            display: block !important;
+            width: 100% !important;
+            a {
+                text-align: left !important;
+            }
             &.active a {
                 border-right: 4px solid $primaryColor;
                 margin-right: -1px;
@@ -419,7 +425,7 @@
                 flex-direction: row;
             }
             a {
-                padding: 1rem .5rem;
+                padding: 1rem 0.5rem;
             }
         }
     }
@@ -436,7 +442,7 @@
     #nav-primary ul {
         li {
             a {
-                padding: .5rem .25rem;
+                padding: 0.5rem 0.25rem;
             }
         }
     }
