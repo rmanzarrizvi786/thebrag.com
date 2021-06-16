@@ -124,11 +124,11 @@ if (is_user_logged_in()) {
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
     <?php get_template_part('template-parts/account/menu', 'left'); ?>
-    <div class="col-12 col-md-9 p-3">
+    <div class="col-12 col-md-9">
 
       <?php if ($new_competitions) : ?>
 
-        <h2 class="mb-4">New Competitions</h2>
+        <h2 class="my-2 px-1 px-md-3">New Competitions</h2>
 
         <div class="d-flex flex-wrap align-items-start">
           <?php
@@ -141,9 +141,9 @@ if (is_user_logged_in()) {
 
             array_push($exclude_competitions, $competition->lead_generator);
           ?>
-            <article class="col-6 d-flex flex-column align-items-center mb-4 p-2">
-              <a href="<?php echo $competition->link; ?>" target="_blank" class="d-block w-100 mb-3 text-dark">
-                <div class="post-thumbnail">
+            <article class="col-6 d-flex flex-column align-items-center mb-2 mb-md-4 p-1 p-md-2">
+              <a href="<?php echo $competition->link; ?>" target="_blank" class="d-block w-100 text-dark">
+                <div class="post-thumbnail rounded">
                   <?php if ($competition->image && '' != trim($competition->image)) : ?>
                     <img src="<?php echo $competition->image; ?>" class="rounded">
                   <?php endif; ?>

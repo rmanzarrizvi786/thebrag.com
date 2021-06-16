@@ -422,7 +422,7 @@ class API
         $url = get_the_permalink();
         $author = get_field('Author') ? get_field('Author') : get_the_author();
 
-        $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium_large');
+        $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'thumbnail');
 
         $return[] = array(
           'title' => get_the_title(),
