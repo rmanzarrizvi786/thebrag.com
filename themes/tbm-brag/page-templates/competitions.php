@@ -5,9 +5,9 @@ get_header();
 // get_template_part( 'page-templates/brag-observer/header' );
 
 $urls = [
-  'https://thebrag.com/wp-json/brag_observer/v1/competitions/',
-  'https://tonedeaf.thebrag.com/wp-json/api/v1/observer/competitions/',
-  'https://dontboreus.thebrag.com/wp-json/api/v1/observer/competitions/',
+  'https://thebrag.com/wp-json/brag_observer/v1/competitions/?v=' . time(),
+  'https://tonedeaf.thebrag.com/wp-json/api/v1/observer/competitions/?v=' . time(),
+  'https://dontboreus.thebrag.com/wp-json/api/v1/observer/competitions/?v=' . time(),
 ];
 
 $all_competitions = [];
