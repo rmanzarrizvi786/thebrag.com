@@ -243,8 +243,6 @@
             flex: 0 0 $i * 8.333333%;
         }
     }
-<<<<<<< Updated upstream
-=======
     @for $i from 0 through 5 {
         .m-lg-#{$i} {
             margin: #{$i/2}rem;
@@ -301,7 +299,6 @@
         margin-left: -3.3125rem !important;
         max-width: 35.625rem !important;
     }
->>>>>>> Stashed changes
 }
 
 @media (max-width: $mobile) {
