@@ -183,14 +183,14 @@
         figure {
             margin-bottom: 1rem !important;
         }
-        img,
+        /* img,
         figure {
             width: 35.625rem;
             margin: auto;
             margin-left: -3.3125rem;
             max-width: 35.625rem !important;
             overflow: hidden;
-        }
+        } */
         figure img {
             width: 100%;
             margin: auto;
@@ -246,6 +246,16 @@
     @for $i from 1 through 12 {
         .col-lg-#{$i} {
             flex: 0 0 $i * 8.333333%;
+        }
+    }
+    .post-content {
+        img,
+        figure {
+            width: 35.625rem;
+            margin: auto;
+            margin-left: -3.3125rem;
+            max-width: 35.625rem !important;
+            overflow: hidden;
         }
     }
 }
@@ -376,7 +386,7 @@
                 flex-direction: row;
             }
             a {
-                padding: 1rem .5rem;
+                padding: 1rem 0.5rem;
             }
         }
     }
@@ -393,7 +403,7 @@
     #nav-primary ul {
         li {
             a {
-                padding: .5rem .25rem;
+                padding: 0.5rem 0.25rem;
             }
         }
     }
