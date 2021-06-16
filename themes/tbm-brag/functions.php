@@ -460,23 +460,6 @@ function fbInstantArticle()
 {
     get_template_part('rss', 'instant_articles');
 }
-function iframe_wrapper_for_fb_instant($content)
-{
-    // match any iframes
-    $pattern = '~<iframe.*</iframe>|<embed.*</embed>~';
-    preg_match_all($pattern, $content, $matches);
-
-    foreach ($matches[0] as $match) {
-        // wrap matched iframe with figure
-        $wrappedframe = '<figure class="op-interactive">' . $match . '</figure>';
-
-        //replace original iframe with new in content
-        $content = str_replace($match, $wrappedframe, $content);
-    }
-
-    return $content;
-}
-//add_filter('the_content', 'iframe_wrapper_for_fb_instant');
 
 function td_remove_p_tags_around_iframes($content)
 {
