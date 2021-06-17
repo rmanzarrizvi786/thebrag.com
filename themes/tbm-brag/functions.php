@@ -3490,6 +3490,9 @@ function inject_roymorgan()
 <?php
 }
 
+/*
+* Add Comps link in article
+*/
 add_filter('the_content', function ($content) {
     if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
         return $content;
