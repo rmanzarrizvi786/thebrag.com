@@ -3483,8 +3483,26 @@ function inject_roymorgan()
             var cachebuster = Date.now();
             var script = document.createElement('script');
             script.src = 'https://pixel.roymorgan.com/stats_v2/Tress.php?u=k7b7oit54p&ca=20005195&a=6id59hbq' + '&cb=' + cachebuster;
-        script.async = true; document.body.appendChild(script);
+            script.async = true;
+            document.body.appendChild(script);
         });
     </script>
 <?php
 }
+
+add_filter('the_content', function ($content) {
+    if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
+        return $content;
+    endif;
+
+    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+        return $content;
+    }
+
+    if (is_singular('page'))
+        return $content;
+
+    $content .= '<div class="comp-footer"><a href="https://thebrag.com/observer/competitions/" target="_blank" rel="noopener">Did you know we\'re constantly giving away <strong>FREE</strong> stuff? Check out our giveaways here.</a></div>';
+
+    return $content;
+});

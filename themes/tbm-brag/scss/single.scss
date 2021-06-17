@@ -179,3 +179,16 @@
         background-color: #fff;
     }
 }
+
+.comp-footer a {
+    display: block;
+    background-color: #fff;
+    border-radius: $roundedRadius;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: $primaryColor;
+    border: 1px solid $primaryColor;
+    box-shadow: 0 0 5px;
+    margin-top: 2rem;
+}
