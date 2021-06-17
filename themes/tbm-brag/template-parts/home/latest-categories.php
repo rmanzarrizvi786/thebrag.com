@@ -85,7 +85,7 @@ foreach ($cats_home as $i => $category) :
                 </div>
             </div>
             <div class="d-flex">
-                <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More <?php echo category->name; ?></a>
+                <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More <?php echo $category->name; ?></a>
             </div>
         </section>
         <div class="container mb-4">
