@@ -107,7 +107,7 @@
   });
 </script>
 
-<div class="sticky-ad-bottom" style="
+<!-- <div class="sticky-ad-bottom" style="
 display: none;
 position: fixed;
     bottom: 0;
@@ -117,8 +117,8 @@ position: fixed;
     text-align: center;
     z-index: 4;
     width: 100%;">
-  <?php render_ad_tag('mob_sticky'); ?>
-</div>
+  <?php // render_ad_tag('mob_sticky'); ?>
+</div> -->
 
 </body>
 

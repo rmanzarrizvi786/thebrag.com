@@ -165,7 +165,7 @@ class TBMAds
         $fuse_id = $fuse_tags[$ad_location];
       }
       $html .= '<!--' . $post_id . ' | '  . $section . ' | ' . $ad_location . ' | ' . $slot_no . '-->';
-      $html .= '<div data-fuse="' . $fuse_id . '"></div>';
+      $html .= '<div data-fuse="' . $fuse_id . '" class="fuse-ad"></div>';
 
       if ($slot_no > 1) {
         $html .= '<script>

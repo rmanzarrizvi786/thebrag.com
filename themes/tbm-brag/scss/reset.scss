@@ -496,11 +496,15 @@ h6 {
     margin-bottom: $h3Size * 0.75;
 }
 p {
-    margin-bottom: 1rem;
+    margin: 0.5rem auto 1rem auto;
 }
 
 ul,
 ol {
     padding-left: 2rem;
     margin-bottom: 2rem;
+}
+
+.fuse-ad iframe {
+    margin: 0 !important;
 }

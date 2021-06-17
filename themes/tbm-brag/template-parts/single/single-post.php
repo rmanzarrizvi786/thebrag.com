@@ -300,7 +300,7 @@ if (!post_password_required($post)) :
                         endif; // If there are spotlight articles
                         ?>
                     </div>
-                    <div class="sticky-ad-right">
+                    <div class="sticky-ad-right pt-2">
                         <div class="" style="min-width: 300px;">
                             <?php
                             render_ad_tag('rail2', $the_post_id . $count_articles);

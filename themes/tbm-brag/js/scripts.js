@@ -228,13 +228,13 @@ jQuery(document).ready(function ($) {
       $('#skin').removeClass('fixed');
     } */
 
-    var mainTop = $('main').length ? $('main').offset().top : 0;
+    /* var mainTop = $('main').length ? $('main').offset().top : 0;
     var billboardHeight = $('.ad-billboard').length ? $('.ad-billboard').height() : 0;
     if (winTop >= mainTop + billboardHeight) {
       $('.sticky-ad-bottom').show();
     } else {
       $('.sticky-ad-bottom').hide();
-    }
+    } */
 
     if ($(".single").length) {
       if ($("#articles-wrap").length && count_articles < 4) {
