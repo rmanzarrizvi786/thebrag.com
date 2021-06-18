@@ -506,7 +506,7 @@ $container_width = 600;
 
     <div style="padding-bottom: 30px;">
       <a title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="text-decoration: none;">
-        <img alt="The Brag Media" src="https://thebrag.com/media/wp-content/themes/bragm/images/TheBragMedia_LOGO_v6@100x.png" width="152" style="max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;">
+        <img alt="The Brag Media" src="https://cdn.thebrag.com/tbm/The-Brag-Media-stacked-200px.jpg" width="152" style="max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;">
       </a>
     </div>
 
