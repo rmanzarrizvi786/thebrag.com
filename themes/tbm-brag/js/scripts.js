@@ -232,7 +232,7 @@ jQuery(document).ready(function ($) {
       var mainTop = $('main').length ? $('main').offset().top : 0;
       var billboardHeight = $('.ad-billboard-top').length ? $('.ad-billboard-top').height() : 0;
       if (winTop >= $(window).height() / 2) {
-        $('.ad-billboard-top').addClass('sticky');
+        $('.ad-billboard-top').addClass('sticky').slideDown();
       }
     }
     /*  else {
