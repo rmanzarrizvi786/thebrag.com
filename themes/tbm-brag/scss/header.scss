@@ -111,7 +111,7 @@ header {
 .header-mobile {
     height: $headerHeightMobile;
 }
-.ad-billboard-top {
+.ad-billboard-top.sticky {
     // min-height: calc(50px + 1rem);
     position: fixed;
     bottom: 0;

@@ -228,11 +228,14 @@ jQuery(document).ready(function ($) {
       $('#skin').removeClass('fixed');
     } */
 
-    /* var mainTop = $('main').length ? $('main').offset().top : 0;
-    var billboardHeight = $('.ad-billboard').length ? $('.ad-billboard').height() : 0;
-    if (winTop >= mainTop + billboardHeight) {
-      $('.sticky-ad-bottom').show();
-    } else {
+    if ($(window).width() < 768) {
+      var mainTop = $('main').length ? $('main').offset().top : 0;
+      var billboardHeight = $('.ad-billboard').length ? $('.ad-billboard').height() : 0;
+      if (winTop >= mainTop + billboardHeight) {
+        $('.ad-billboard-top').addClass('sticky');
+      }
+    }
+    /*  else {
       $('.sticky-ad-bottom').hide();
     } */
 
