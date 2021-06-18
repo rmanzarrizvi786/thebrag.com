@@ -301,7 +301,16 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                         <tbody>
                           <tr>
                             <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                              <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                              <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td>
+                                    <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                                  </td>
+                                  <td style="padding-left: 8px; color: #0a0a0a; font-size: 14px;">
+                                    <strong><?php echo $pub_logo['title']; ?></strong>
+                                  </td>
+                                </tr>
+                              </table>
                             </td>
                           </tr>
                         </tbody>
@@ -357,7 +366,16 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                         <tbody>
                           <tr>
                             <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                              <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                              <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td>
+                                    <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                                  </td>
+                                  <td style="padding-left: 8px; color: #0a0a0a; font-size: 14px;">
+                                    <strong><?php echo $pub_logo['title']; ?></strong>
+                                  </td>
+                                </tr>
+                              </table>
                             </td>
                           </tr>
                         </tbody>

@@ -2,6 +2,8 @@ manifest.json
 icons
 .DS_Store
 
+uploads
+
 plugins/*
 !plugins/tbm-shout-writer-beer
 !plugins/tbm-adm

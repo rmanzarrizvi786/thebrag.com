@@ -1237,6 +1237,7 @@ function print_jobs_tio()
 
 function get_pub_logo($url = '')
 {
+	return get_pub_logo_new($url);
 	if ('' == $url)
 		return null;
 
@@ -1462,6 +1463,193 @@ function get_pub_logo($url = '')
 			$pub_logo = NULL;
 			break;
 	endswitch;
+
+	return $pub_logo;
+}
+
+function get_pub_logo_new($url = '')
+{
+	if ('' == $url)
+		return null;
+
+	$pub_logo = null;
+
+	$pubs_base_url = 'https://images.thebrag.com/common/pubs/';
+
+	$parse = parse_url($url);
+
+	$parsed_host = $parse['host'];
+	if (substr($parsed_host, 0, 4) == 'www.') {
+		$parsed_host = substr($parsed_host, 4); // str_replace('www.', '', $parse['host']);
+	}
+	switch (strtolower($parsed_host)):
+		case 'theindustryobserver.thebrag.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_The-Industry-Observer-32x32.png',
+					'title' => 'The Industry Observer',
+				];
+			break;
+		case 'thebrag.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_The-Brag-32x32.png',
+					'title' => 'The Brag',
+				];
+			break;
+		case 'tonedeaf.thebrag.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Tone-Deaf-32x32.png',
+					'title' => 'Tone Deaf',
+				];
+			break;
+		case 'au.rollingstone.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Rolling-Stone-32x32.png',
+					'title' => 'Rolling Stone Australia',
+				];
+			break;
+		case 'rollingstone.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Rolling-Stone-32x32.png',
+					'title' => 'Rolling Stone',
+				];
+			break;
+		case 'dontboreus.thebrag.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Dont-Bore-Us-32x32.png',
+					'title' => 'Don\'t Bore Us',
+				];
+			break;
+		case 'variety.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Variety-32x32.png',
+					'title' => 'Variety',
+				];
+			break;
+		case 'artnews.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_ARTnews-32x32.png',
+					'title' => 'ARTnews',
+				];
+			break;
+		case 'bgr.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_bgr-32x32.png',
+					'title' => 'BGR',
+				];
+			break;
+		case 'billboard.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_billboard-32x32.png',
+					'title' => 'billboard',
+				];
+			break;
+		case 'deadline.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_DEADLINE-32x32.png',
+					'title' => 'DEADLINE',
+				];
+			break;
+		case 'dirt.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Dirt-32x32.png',
+					'title' => 'dirt',
+				];
+			break;
+		case 'footwearnews.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_FootwearNews-32x32.png',
+					'title' => 'Footwear News',
+				];
+			break;
+		case 'goldderby.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_GoldDerby-32x32.png',
+					'title' => 'Gold Derby',
+				];
+			break;
+		case 'indiewire.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_IndieWire-32x32.png',
+					'title' => 'IndieWire',
+				];
+			break;
+		case 'sheknows.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_SheKnows-32x32.png',
+					'title' => 'SheKnows',
+				];
+			break;
+		case 'sourcingjournal.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_SourcingJournal-32x32.png',
+					'title' => 'Sourcing Journal',
+				];
+			break;
+		case 'sportico.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Sportico-32x32.png',
+					'title' => 'Sportico',
+				];
+			break;
+		case 'spy.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Spy-32x32.png',
+					'title' => 'Spy',
+				];
+			break;
+		case 'stylecaster.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Stylecaster-32x32.png',
+					'title' => 'Stylecaster',
+				];
+			break;
+		case 'hollywoodreporter.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_The-Hollywood-Reporter-32x32.png',
+					'title' => 'The Hollywood Reporter',
+				];
+			break;
+		case 'tvline.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_TVLine-32x32.png',
+					'title' => 'TVLine',
+				];
+			break;
+		case 'vibe.com':
+			$pub_logo =
+				[
+					'url' => $pubs_base_url .= 'ico_Vibe-32x32.png',
+					'title' => 'Vibe',
+				];
+			break;
+		default:
+			$pub_logo = NULL;
+			break;
+	endswitch;
+
+	$pub_logo['width'] = $pub_logo['height'] = 32;
 
 	return $pub_logo;
 }
