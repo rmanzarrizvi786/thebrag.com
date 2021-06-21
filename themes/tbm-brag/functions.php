@@ -1506,7 +1506,7 @@ function ssm_amp_additional_css_styles($amp_template)
     text-decoration: none;
     line-height: 1;
     }
-    comp-footer a {
+    .comp-footer a {
     display: block;
     background-color: #fff;
     border-radius: 1rem;
