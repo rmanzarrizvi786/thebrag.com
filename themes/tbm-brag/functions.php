@@ -1506,6 +1506,18 @@ function ssm_amp_additional_css_styles($amp_template)
     text-decoration: none;
     line-height: 1;
     }
+    comp-footer a {
+    display: block;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: #B98D5B;
+    border: 1px solid #B98D5B;
+    box-shadow: 0 0 5px;
+    margin: 2rem auto;
+    }
 <?php
 }
 add_filter('amp_content_max_width', 'ssm_amp_change_content_width');
@@ -3498,9 +3510,9 @@ add_filter('the_content', function ($content) {
         return $content;
     endif;
 
-    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+    /* if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
         return $content;
-    }
+    } */
 
     if (is_singular('page'))
         return $content;
