@@ -22,7 +22,7 @@ $post_ids = array_keys($posts);
 $list = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_lists WHERE id = {$newsletter->list_id}");
 
 $logo = [];
-$logo['url'] = $list && $list->email_header_image_url && '' != $list->email_header_image_url ? $list->email_header_image_url : 'https://thebrag.com/wp-content/themes/tbm-brag/images/TheBragLOGOblackNOSHIELD.png';
+$logo['url'] = $list && $list->email_header_image_url && '' != $list->email_header_image_url ? $list->email_header_image_url : 'https://cdn.thebrag.com/tb/The-Brag_combo-300px.png';
 $logo['width'] = $list && $list->email_header_image_url && '' != $list->email_header_image_url ? 660 : 300;
 
 $media_logo = 'https://cdn.thebrag.com/observer/images/email-footer-media-logo.jpg';
