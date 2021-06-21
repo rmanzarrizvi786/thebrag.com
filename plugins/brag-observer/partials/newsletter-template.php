@@ -823,7 +823,7 @@ $container_width = 700;
 
 																										*|END:IF|*
 
-																										<p style="text-align: center;"><img src="https://thebrag.com/wp-content/themes/tbm-brag/images/observer/refer-a-friend/ReferAFriendv2.gif?v=<?php echo time(); ?>" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
+																										<p style="text-align: center;"><img src="https://cdn.thebrag.com/observer/images/ReferAfriend3.gif" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
 
 																										<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">Hit the button below to learn more and access your rewards hub.</p>
 																										<a href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/refer-a-friend/" style="width: 100%; max-width: 150px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; font-weight: 900; text-decoration: none; text-align: center; background-color: #000000; padding: 15px; border-radius: 4px; display: block; margin: inherit;" target="_blank">Click to Share</a>
