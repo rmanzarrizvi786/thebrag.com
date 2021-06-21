@@ -239,7 +239,7 @@ get_header();
                     <div class="d-flex">
                       <?php foreach ($rewards as $reward) : ?>
                         <div class="px-1">
-                          <img src="<?php echo get_template_directory_uri(); ?>/images/observer/refer-a-friend/rewards_0<?php echo $reward->id; ?>.jpg">
+                          <img src="<?php echo OBSERVER_CDN_URL; ?>/images/observer/refer-a-friend/rewards_0<?php echo $reward->id; ?>.jpg">
                         </div>
                       <?php endforeach; ?>
                     </div>
