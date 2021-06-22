@@ -682,10 +682,8 @@ $container_width = 700;
 																	<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
 																		<tbody>
 																			<tr style="padding:0;text-align:center;vertical-align:top">
-																				<td>
-																					<div style="padding: 20px; border-radius: 20px; background-color: #f3f3f3;">
-																						<?php echo wpautop($newsletter->details->intro_content); ?>
-																					</div>
+																				<td style="padding: 15px; border-radius: 20px; background-color: #f3f3f3;">
+																					<?php echo wpautop($newsletter->details->intro_content); ?>
 																				</td>
 																			</tr>
 																		</tbody>
