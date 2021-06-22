@@ -1223,7 +1223,7 @@ function print_jobs_tio()
 											</a>
 										<?php endif; ?>
 									</td>
-									<td class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
+									<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
 										<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
 											<?php if (isset($job->link) && $job->link != '') : ?>
 												<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
