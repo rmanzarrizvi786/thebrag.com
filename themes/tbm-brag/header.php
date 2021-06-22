@@ -15,7 +15,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
   <meta name="google-site-verification" content="Tf8gbZdF2WOW_R5JIuceGcMuqUNy7TAvdrYKaeoLP5I" />
   <meta name="msvalidate.01" content="E0857D4C8CDAF55341D0839493BA8129" />
   <meta property="fb:app_id" content="1950298011866227" />
-  <meta property="fb:pages" content="145692175443937" />
+  <!-- <meta property="fb:pages" content="145692175443937" /> -->
 
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
