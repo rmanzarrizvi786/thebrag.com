@@ -707,7 +707,7 @@ $container_width = 700;
 						?>
 
 						<?php
-						$random_lists = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
+						$random_lists = false; // $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
 						if ($random_lists) :
 						?>
 							<tr>
