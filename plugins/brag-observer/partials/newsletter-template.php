@@ -772,83 +772,89 @@ $container_width = 700;
 
 						<tr>
 							<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
-
-								<div style="border-bottom: 1px solid rgb(249, 249, 249); border-radius: 20px; margin-bottom: 7px;">
-									<div style="border-bottom: 1px solid rgb(245, 245, 245); border-radius: 19px;">
-										<div style="border-right: 1px solid rgb(245, 245, 245); border-bottom: 1px solid rgb(242, 242, 242); border-radius: 18px;">
-											<div style="border-right: 1px solid rgb(242, 242, 242); border-bottom: 1px solid rgb(240, 240, 240); border-radius: 17px;">
-												<div style="border-right: 1px solid rgb(238, 238, 238); border-bottom: 1px solid rgb(238, 238, 238); border-radius: 16px;">
-													<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-														<tbody>
-															<tr>
-																<th style="text-align: left; font-weight: 400; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: rgb(51, 51, 51); display: block; background-color: rgb(255, 255, 255); border-radius: 15px; border: 1px solid rgb(230, 230, 230); border-collapse: collapse;">
+								<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+									<tbody>
+										<tr style="padding:0;text-align:center;vertical-align:top">
+											<td>
+												<div style="border-bottom: 1px solid rgb(249, 249, 249); border-radius: 20px; margin-bottom: 7px;">
+													<div style="border-bottom: 1px solid rgb(245, 245, 245); border-radius: 19px;">
+														<div style="border-right: 1px solid rgb(245, 245, 245); border-bottom: 1px solid rgb(242, 242, 242); border-radius: 18px;">
+															<div style="border-right: 1px solid rgb(242, 242, 242); border-bottom: 1px solid rgb(240, 240, 240); border-radius: 17px;">
+																<div style="border-right: 1px solid rgb(238, 238, 238); border-bottom: 1px solid rgb(238, 238, 238); border-radius: 16px;">
 																	<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
 																		<tbody>
 																			<tr>
-																				<td style="padding: 15px;">
-																					<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #007bff; font-weight: 700; margin-top: 0px; margin-bottom: 0px;">Share The Observer for free stuff!</h3>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																	<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-																		<tbody>
-																			<tr>
-																				<td style="padding: 0px 15px 15px; font-size: 16px;">
+																				<th style="text-align: left; font-weight: 400; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: rgb(51, 51, 51); display: block; background-color: rgb(255, 255, 255); border-radius: 15px; border: 1px solid rgb(230, 230, 230); border-collapse: collapse;">
+																					<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+																						<tbody>
+																							<tr>
+																								<td style="padding: 15px;">
+																									<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #007bff; font-weight: 700; margin-top: 0px; margin-bottom: 0px;">Share The Observer for free stuff!</h3>
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+																					<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+																						<tbody>
+																							<tr>
+																								<td style="padding: 0px 15px 15px; font-size: 16px;">
 
-																					*|IF:REFERRALS|*
+																									*|IF:REFERRALS|*
 
-																					*|IF:REFERRALS < 3|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">
-																						When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.
-																						</p>
-
-																						*|ELSEIF:REFERRALS < 10|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 10 referrals to get the next issue of Rolling Stone Australia Magazine.
-																							<br><br>
-																							Are you one of those people who likes to stay in the know? Then you probably need Rolling Stone in your life, it's the premier music &amp; entertainment magazine in Australia.</p>
-
-																							*|ELSEIF:REFERRALS < 20|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 20 referrals to win a FREE annual subscription to Rolling Stone Australia Magazine.</p>
-
-																								*|ELSEIF:REFERRALS < 30|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Beach Towel.
-																									<br><br>
-																									It's Australia, so heading to the beach is always an option. Might as well be with this bad boy with the Rolling Stone logo plastered across it.</p>
-
-																									*|ELSEIF:REFERRALS < 50|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Bathrobe.
-																										<br><br>
-																										Are you one of those people who like to luxe it up when you stay in? Then you probably need a bathrobe. Might as well be this bad boy with the Rolling Stone logo plastered across it.</p>
-
-																										*|END:IF|*
-
-																										*|ELSE:|*
-																										<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.</p>
-
-																										*|END:IF|*
-
-																										<p style="text-align: center;"><img width="660" src="https://cdn.thebrag.com/observer/images/refer-a-friend/ReferAfriend3.gif" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
-
-																										<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">Hit the button below to learn more and access your rewards hub.</p>
-																										<a href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/refer-a-friend/" style="width: 100%; max-width: 150px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; font-weight: 900; text-decoration: none; text-align: center; background-color: #000000; padding: 15px; border-radius: 4px; display: block; margin: inherit;" target="_blank">Click to Share</a>
-
-																										*|IF:REFER_CODE|*
-																										<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px;font-size: 16px; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;">Or copy &amp; paste your referral link to others:
-																											<br>
-																											<?php $list_referrer_link = 'https://thebrag.com/refer/?rc=*|REFER_CODE|*&l=' . $list->id; ?>
-																											<a href="<?php echo $list_referrer_link; ?>" style="border-bottom: 2px solid #007bff; text-decoration: none; color: #262626;" target="_blank"><?php echo $list_referrer_link; ?></a>
+																									*|IF:REFERRALS < 3|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">
+																										When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.
 																										</p>
-																										*|END:IF|*
-																				</td>
+
+																										*|ELSEIF:REFERRALS < 10|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 10 referrals to get the next issue of Rolling Stone Australia Magazine.
+																											<br><br>
+																											Are you one of those people who likes to stay in the know? Then you probably need Rolling Stone in your life, it's the premier music &amp; entertainment magazine in Australia.</p>
+
+																											*|ELSEIF:REFERRALS < 20|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 20 referrals to win a FREE annual subscription to Rolling Stone Australia Magazine.</p>
+
+																												*|ELSEIF:REFERRALS < 30|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Beach Towel.
+																													<br><br>
+																													It's Australia, so heading to the beach is always an option. Might as well be with this bad boy with the Rolling Stone logo plastered across it.</p>
+
+																													*|ELSEIF:REFERRALS < 50|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Bathrobe.
+																														<br><br>
+																														Are you one of those people who like to luxe it up when you stay in? Then you probably need a bathrobe. Might as well be this bad boy with the Rolling Stone logo plastered across it.</p>
+
+																														*|END:IF|*
+
+																														*|ELSE:|*
+																														<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.</p>
+
+																														*|END:IF|*
+
+																														<p style="text-align: center;"><img width="660" src="https://cdn.thebrag.com/observer/images/refer-a-friend/ReferAfriend3.gif" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
+
+																														<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">Hit the button below to learn more and access your rewards hub.</p>
+																														<a href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/refer-a-friend/" style="width: 100%; max-width: 150px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; font-weight: 900; text-decoration: none; text-align: center; background-color: #000000; padding: 15px; border-radius: 4px; display: block; margin: inherit;" target="_blank">Click to Share</a>
+
+																														*|IF:REFER_CODE|*
+																														<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px;font-size: 16px; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;">Or copy &amp; paste your referral link to others:
+																															<br>
+																															<?php $list_referrer_link = 'https://thebrag.com/refer/?rc=*|REFER_CODE|*&l=' . $list->id; ?>
+																															<a href="<?php echo $list_referrer_link; ?>" style="border-bottom: 2px solid #007bff; text-decoration: none; color: #262626;" target="_blank"><?php echo $list_referrer_link; ?></a>
+																														</p>
+																														*|END:IF|*
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</th>
 																			</tr>
 																		</tbody>
 																	</table>
-																</th>
-															</tr>
-														</tbody>
-													</table>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</td>
 						</tr>
 
@@ -1082,22 +1088,30 @@ function print_tio_tweet($newsletter = null)
 			$top_i_tweet_link = 'https://theindustryobserver.thebrag.com/';
 		}
 	?>
-		<!--[if gte mso 9]>
+		<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+			<tbody>
+				<tr style="padding:0;text-align:center;vertical-align:top">
+					<td>
+						<!--[if gte mso 9]>
 <table align="center" border="0" cellspacing="0" cellpadding="0" width="580" style="width:580px;">
 <tr>
 <td align="center" valign="top" width="580" style="width:580px;">
 <![endif]-->
-		<div style="border: 3px solid #3298d3; width: 580px; margin: auto;">
-			<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-				<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
-			</a>
-			<br>
-			<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-				<img align="none" class="" width="580" alt="#" src="<?php echo $newsletter->details->top_i_tweet_image; ?>" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
-			</a>
-		</div>
-		<!--[if gte mso 9]>
+						<div style="border: 3px solid #3298d3; width: 580px; margin: auto;">
+							<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
+								<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
+							</a>
+							<br>
+							<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
+								<img align="none" class="" width="580" alt="#" src="<?php echo $newsletter->details->top_i_tweet_image; ?>" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
+							</a>
+						</div>
+						<!--[if gte mso 9]>
     </td></tr></table><![endif]-->
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	<?php }
 } // print_tio_tweet()
 
@@ -1113,27 +1127,35 @@ function print_tio_birthday_shoutout($newsletter = null)
 			$birthday_shoutout_link = 'https://theindustryobserver.thebrag.com/';
 		}
 	?>
-		<!--[if gte mso 9]>
+		<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+			<tbody>
+				<tr style="padding:0;text-align:center;vertical-align:top">
+					<td>
+						<!--[if gte mso 9]>
 <table align="center" border="0" cellspacing="0" cellpadding="0" width="580" style="width:580px;">
 <tr>
 <td align="center" valign="top" width="580" style="width:580px;">
 <![endif]-->
-		<div style="border: 3px solid #3298d3; width: 580px; margin: auto;">
-			<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-				<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
-			</a>
-			<br>
-			<div style="text-align: center;">
-				<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-					<img align="none" class="" width="580" alt="#" src="<?php echo $newsletter->details->birthday_shoutout_image; ?>" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
-				</a>
-				<?php if (isset($newsletter->details->birthday_shoutout_blurb) && '' != $newsletter->details->birthday_shoutout_blurb) { ?>
-					<p style="text-decoration: none; font-weight: bold; color: #231f20; font-size: 16px;"><?php echo $newsletter->details->birthday_shoutout_blurb; ?></p>
-				<?php } ?>
-			</div>
-		</div>
-		<!--[if gte mso 9]>
+						<div style="border: 3px solid #3298d3; width: 580px; margin: auto;">
+							<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
+								<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
+							</a>
+							<br>
+							<div style="text-align: center;">
+								<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
+									<img align="none" class="" width="580" alt="#" src="<?php echo $newsletter->details->birthday_shoutout_image; ?>" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
+								</a>
+								<?php if (isset($newsletter->details->birthday_shoutout_blurb) && '' != $newsletter->details->birthday_shoutout_blurb) { ?>
+									<p style="text-decoration: none; font-weight: bold; color: #231f20; font-size: 16px;"><?php echo $newsletter->details->birthday_shoutout_blurb; ?></p>
+								<?php } ?>
+							</div>
+						</div>
+						<!--[if gte mso 9]>
     </td></tr></table><![endif]-->
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	<?php }
 } // print_tio_birthday_shoutout()
 
@@ -1166,72 +1188,78 @@ function print_christian_hull_top_five($newsletter = null)
 function print_jobs_tio()
 {
 	?>
-	<center>
-		<?php
-		// Articles from TheBrag.com
-		$ch_brag_jobs = curl_init();
-		curl_setopt($ch_brag_jobs, CURLOPT_URL, "https://thebrag.com/jobs/wp-json/api/v1/jobs?keywords=music&industry=music&size=10");
-		curl_setopt($ch_brag_jobs, CURLOPT_RETURNTRANSFER, 1);
-		$output_brag_jobs = curl_exec($ch_brag_jobs);
-		curl_close($ch_brag_jobs);
-		$jobs = json_decode($output_brag_jobs);
-		if (count($jobs) > 0) :
-			$counter_jobs = 0;
-		?>
-			<h1 style="text-align: center;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif; margin: 10px auto; font-weight: bold; word-break: normal; font-size: 26px;">BEST JOBS IN MUSIC</h1>
-			<?php foreach ($jobs as $key => $job) :
-				if (is_null($job->image)) :
-					continue;
-				endif;
-				$counter_jobs++;
-				if ($counter_jobs > 4) :
-					break;
-				endif;
-			?>
-				<table style="width: 100%;  max-width: 100%; <?php echo $key < (count($jobs) - 1) ? ' border-bottom: 1px solid #dddddd;' : ''; ?>" align="center" width="600">
-
-					<tr>
-						<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
-							<?php if (!is_null($job->image)) : ?>
-								<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-									<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
-								</a>
-							<?php endif; ?>
-						</td>
-						<td class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
-							<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
-								<?php if (isset($job->link) && $job->link != '') : ?>
-									<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-										<?php echo $job->title; ?>
-									</a>
-								<?php else : ?>
-									<?php echo $job->title; ?>
-								<?php endif; ?>
-							</h5>
-							<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
-								<?php echo $job->description; ?>
-							</p>
-						</td>
-					</tr>
-
-				</table>
-			<?php endforeach; // For Each Job 
-			?>
-		<?php endif; // If there are jobs 
-		?>
-		<table style="width: 100%; max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
-			<tr>
+	<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+		<tbody>
+			<tr style="padding:0;text-align:center;vertical-align:top">
 				<td>
-					<p align="center" style="text-align: center;margin-top: 20px;margin-bottom: 10px;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif;font-weight: normal;padding: 0;line-height: 19px;font-size: 14px;">
-						<a href="https://thebrag.com/jobs/" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
-							MORE JOBS
-						</a><br>
-						<br>
-					</p>
+					<?php
+					// Articles from TheBrag.com
+					$ch_brag_jobs = curl_init();
+					curl_setopt($ch_brag_jobs, CURLOPT_URL, "https://thebrag.com/jobs/wp-json/api/v1/jobs?keywords=music&industry=music&size=10");
+					curl_setopt($ch_brag_jobs, CURLOPT_RETURNTRANSFER, 1);
+					$output_brag_jobs = curl_exec($ch_brag_jobs);
+					curl_close($ch_brag_jobs);
+					$jobs = json_decode($output_brag_jobs);
+					if (count($jobs) > 0) :
+						$counter_jobs = 0;
+					?>
+						<h1 style="text-align: center;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif; margin: 10px auto; font-weight: bold; word-break: normal; font-size: 26px;">BEST JOBS IN MUSIC</h1>
+						<?php foreach ($jobs as $key => $job) :
+							if (is_null($job->image)) :
+								continue;
+							endif;
+							$counter_jobs++;
+							if ($counter_jobs > 4) :
+								break;
+							endif;
+						?>
+							<table style="width: 100%;  max-width: 100%; <?php echo $key < (count($jobs) - 1) ? ' border-bottom: 1px solid #dddddd;' : ''; ?>" align="center" width="600">
+
+								<tr>
+									<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
+										<?php if (!is_null($job->image)) : ?>
+											<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+												<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
+											</a>
+										<?php endif; ?>
+									</td>
+									<td class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
+										<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
+											<?php if (isset($job->link) && $job->link != '') : ?>
+												<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+													<?php echo $job->title; ?>
+												</a>
+											<?php else : ?>
+												<?php echo $job->title; ?>
+											<?php endif; ?>
+										</h5>
+										<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
+											<?php echo $job->description; ?>
+										</p>
+									</td>
+								</tr>
+
+							</table>
+						<?php endforeach; // For Each Job 
+						?>
+					<?php endif; // If there are jobs 
+					?>
+					<table style="width: 100%; max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
+						<tr>
+							<td>
+								<p align="center" style="text-align: center;margin-top: 20px;margin-bottom: 10px;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif;font-weight: normal;padding: 0;line-height: 19px;font-size: 14px;">
+									<a href="https://thebrag.com/jobs/" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
+										MORE JOBS
+									</a><br>
+									<br>
+								</p>
+							</td>
+						</tr>
+					</table>
 				</td>
 			</tr>
-		</table>
-	</center>
+		</tbody>
+	</table>
 <?php
 }
 
