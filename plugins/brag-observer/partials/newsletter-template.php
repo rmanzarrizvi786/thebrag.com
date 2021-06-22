@@ -1105,7 +1105,7 @@ function print_tio_tweet($newsletter = null)
 <![endif]-->
 						<div style="border: 3px solid #3298d3; width: 580px; margin: auto;">
 							<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-								<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
+								<img align="none" class="" width="580" alt="Top Industry Post" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto;">
 							</a>
 							<br>
 							<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
