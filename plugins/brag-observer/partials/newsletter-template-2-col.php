@@ -51,7 +51,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       ?>
 
       <!-- 2, 3 {{ -->
-      <table style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%">
+      <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
             <?php
@@ -77,7 +77,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       ?>
 
       <!-- 4, 5 {{ -->
-      <table style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%">
+      <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
             <?php
@@ -110,7 +110,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       ?>
 
       <!-- 7, 8 {{ -->
-      <table style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%">
+      <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
             <?php
@@ -129,7 +129,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       <!-- }} 7, 8 -->
 
       <!-- 9, 10 {{ -->
-      <table style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%">
+      <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
             <?php
@@ -155,7 +155,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       ?>
 
       <?php for ($j = 10; $j < count($post_ids); $j += 2) : ?>
-        <table style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%">
+        <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
           <tbody>
             <tr style="padding:0;text-align:center;vertical-align:top">
               <?php
