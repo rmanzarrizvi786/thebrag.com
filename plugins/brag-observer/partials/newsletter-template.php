@@ -679,9 +679,17 @@ $container_width = 700;
 														<?php if (isset($newsletter->details->intro_content) && $newsletter->details->intro_content != '') { ?>
 															<tr>
 																<td colspan="2" valign="top" class="mcnTextContent" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;">
-																	<div style="padding: 20px; border-radius: 20px; background-color: #f3f3f3;">
-																		<?php echo wpautop($newsletter->details->intro_content); ?>
-																	</div>
+																	<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+																		<tbody>
+																			<tr style="padding:0;text-align:center;vertical-align:top">
+																				<td>
+																					<div style="padding: 20px; border-radius: 20px; background-color: #f3f3f3;">
+																						<?php echo wpautop($newsletter->details->intro_content); ?>
+																					</div>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
 																</td>
 															</tr>
 														<?php } // If intro_content 
@@ -772,7 +780,7 @@ $container_width = 700;
 
 						<tr>
 							<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
-								<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+								<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="660">
 									<tbody>
 										<tr style="padding:0;text-align:center;vertical-align:top">
 											<td>
