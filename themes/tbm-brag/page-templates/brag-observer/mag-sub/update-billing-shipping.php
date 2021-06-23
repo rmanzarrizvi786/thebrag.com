@@ -20,7 +20,7 @@ if (isset($_POST)) {
 ?>
 <form action="" method="post">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-12">
       <div id="billing_address_wrap">
         <div class="row">
           <div class="col-12 mb-3">
@@ -80,7 +80,7 @@ if (isset($_POST)) {
 
     </div>
 
-    <div class="col-md-6">
+    <div class="col-12">
       <div id="shipping_address_wrap">
         <div class="row">
           <div class="col-12 mb-3">
@@ -165,7 +165,7 @@ if (isset($_POST)) {
       } else {
         $('#shipping_address_wrap').removeClass('same-as-billing');
       }
-      
+
       $('#make-shipping-same').on('change', function() {
         if ($(this).is(':checked')) {
           $('#shipping_address_wrap').addClass('same-as-billing');
