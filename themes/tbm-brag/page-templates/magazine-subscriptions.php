@@ -84,7 +84,6 @@ get_header();
                   }
                 } // If $subscription
               } else { // $action is NULL i.e. show all active subscriptions
-                include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) {
                   include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 } // If $subscriptions
