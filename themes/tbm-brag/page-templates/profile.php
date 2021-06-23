@@ -36,8 +36,10 @@ try {
   $result = $auth0_api->client_credentials($config);
   $access_token = $result['access_token'];
 } catch (Exception $e) {
-  die($e->getMessage());
+  // die($e->getMessage());
 }
+
+$auth0_user = null;
 
 if (isset($access_token)) {
   // Instantiate the base Auth0 class.
@@ -55,7 +57,7 @@ if (isset($access_token)) {
       $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
     }
   } catch (Exception $e) {
-    // die($e->getMessage());
+    die($e->getMessage());
   }
 }
 
@@ -143,7 +145,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   $user_data['last_name'] = $post_vars['last_name'];
   $user_data['display_name'] = $post_vars['first_name'] . ' ' . $post_vars['last_name'];
 
-  if (isset($auth0_user)) {
+  if (!is_null($auth0_user)) {
     $auth0_usermeta['first_name'] = $user_data['first_name'];
     $auth0_usermeta['last_name'] = $user_data['last_name'];
     $auth0_usermeta['display_name'] = $user_data['display_name'];
@@ -246,7 +248,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
     // echo '<pre>'; print_r( $subs ); exit;
 
-    if (isset($auth0_user) && isset($auth0_usermeta) && !empty($auth0_usermeta)) {
+    if (!is_null($auth0_user) && isset($auth0_usermeta) && !empty($auth0_usermeta)) {
       $mgmt_api->users()->update($wp_auth0_id, [
         'user_metadata' => $auth0_usermeta
       ]);
@@ -332,15 +334,15 @@ get_header();
 ?>
 
 <div class="ad-billboard ad-billboard-top container py-1 py-md-2">
-    <div class="mx-auto text-center">
-        <?php render_ad_tag('leaderboard'); ?>
-    </div>
+  <div class="mx-auto text-center">
+    <?php render_ad_tag('leaderboard'); ?>
+  </div>
 </div>
 
 <div class="container bg-yellow rounded-top p-2">
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
-    <?php get_template_part('template-parts/account/menu', 'left'); ?>
+    <?php get_template_part('template-parts/account/menu', 'left', ['auth0_user' => $auth0_user]); ?>
     <div id="update-profile" class="col-12 col-md-9 p-3">
       <div class="site-main">
         <?php
@@ -438,7 +440,7 @@ get_header();
               <?php endif; ?>
 
               <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
-                <?php $first_name = isset($post_vars) && isset($post_vars['first_name']) ? $post_vars['first_name'] : (isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['first_name'])
+                <?php $first_name = isset($post_vars) && isset($post_vars['first_name']) ? $post_vars['first_name'] : (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['first_name'])
                   ?
                   $auth0_user['user_metadata']['first_name']
                   :
@@ -448,7 +450,7 @@ get_header();
               </div>
 
               <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
-                <?php $last_name = isset($post_vars) && isset($post_vars['last_name']) ? $post_vars['last_name'] : (isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['last_name'])
+                <?php $last_name = isset($post_vars) && isset($post_vars['last_name']) ? $post_vars['last_name'] : (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['last_name'])
                   ?
                   $auth0_user['user_metadata']['last_name']
                   :
@@ -459,7 +461,7 @@ get_header();
 
               <div class="col-12 mt-3 col-md-4 px-0 px-md-1">
                 <?php
-                $user_state = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
+                $user_state = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
                   ?
                   $auth0_user['user_metadata']['state']
                   : get_user_meta($current_user->ID, 'state', true);
@@ -476,7 +478,7 @@ get_header();
 
               <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
                 <?php
-                $birthday = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['birthday'])
+                $birthday = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['birthday'])
                   ?
                   $auth0_user['user_metadata']['birthday']
                   : get_user_meta($current_user->ID, 'birthday', true);
@@ -518,7 +520,7 @@ get_header();
 
               <div class="col-12 mt-3 col-md-3 px-0 px-md-1">
                 <?php
-                $user_gender = isset($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
+                $user_gender = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
                   ?
                   $auth0_user['user_metadata']['gender']
                   : get_user_meta($current_user->ID, 'gender', true);

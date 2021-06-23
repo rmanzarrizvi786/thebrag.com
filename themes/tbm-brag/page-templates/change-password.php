@@ -55,7 +55,7 @@ if (isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST['act
   }
 }
 
-if (0 && isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST['action']) {
+/* if (0 && isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST['action']) {
   $post_vars = stripslashes_deep($_POST);
 
   $user_data = [
@@ -99,7 +99,7 @@ if (0 && isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST
     exit;
   }
 }
-
+ */
 get_header();
 // get_template_part('page-templates/brag-observer/header');
 ?>

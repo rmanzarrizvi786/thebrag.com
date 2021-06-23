@@ -1,4 +1,5 @@
 <?php
+extract($args);
 $pages = [];
 if (is_user_logged_in()) {
     $pages['profile'] = [
@@ -21,10 +22,14 @@ $pages += [
     ]
 ];
 if (is_user_logged_in()) {
-    $pages['change-password'] = [
-        'link' => 'change-password',
-        'text' => 'Settings',
-    ];
+
+    if (!is_null($auth0_user) && isset($auth0_user['identities']) && isset($auth0_user['identities'][0]) && 'Username-Password-Authentication' == $auth0_user['identities'][0]['connection']) {
+
+        $pages['change-password'] = [
+            'link' => 'change-password',
+            'text' => 'Settings',
+        ];
+    }
 }
 $current_page = get_query_var('pagename'); // $wp_query->get_required_object();
 
