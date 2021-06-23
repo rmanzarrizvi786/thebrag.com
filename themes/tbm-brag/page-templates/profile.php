@@ -57,7 +57,7 @@ if (isset($access_token)) {
       $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
     }
   } catch (Exception $e) {
-    die($e->getMessage());
+    // die($e->getMessage());
   }
 }
 
