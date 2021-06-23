@@ -129,7 +129,7 @@ if (is_user_logged_in()) {
 <div class="container bg-yellow rounded-top p-2">
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
-    <?php get_template_part('template-parts/account/menu', 'left', ['auth0_user' => $auth0_user]); ?>
+    <?php get_template_part('template-parts/account/menu', 'left'); ?>
     <div class="col-12 col-md-9">
 
       <?php if ($new_competitions) : ?>
