@@ -18,6 +18,52 @@ use Auth0\SDK\API\Management;
 $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
 
+$auth0_api = new Authentication(
+  $_ENV['AUTH0_DOMAIN'],
+  $_ENV['AUTH0_CLIENT_ID']
+);
+
+$config = [
+  'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+  'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+  'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+];
+
+try {
+  $result = $auth0_api->client_credentials($config);
+  $access_token = $result['access_token'];
+} catch (Exception $e) {
+  // die($e->getMessage());
+}
+
+$auth0_user = null;
+
+if (isset($access_token)) {
+  // Instantiate the base Auth0 class.
+  $auth0 = new Auth0([
+    // The values below are found on the Application settings tab.
+    'domain' => $_ENV['AUTH0_DOMAIN'],
+    'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+    'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+    'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
+  ]);
+
+  $mgmt_api = new Management($access_token, $_ENV['AUTH0_DOMAIN']);
+  try {
+    if ($wp_auth0_id = get_user_meta($current_user->ID, 'wp_auth0_id', true)) {
+      $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
+    }
+  } catch (Exception $e) {
+    // die($e->getMessage());
+  }
+}
+
+if (!is_null($auth0_user) && isset($auth0_user['identities']) && isset($auth0_user['identities'][0]) && 'Username-Password-Authentication' == $auth0_user['identities'][0]['connection']) {
+} else {
+  wp_redirect(home_url('/profile/'));
+  exit;
+}
+
 $returnTo = isset($_REQUEST['returnTo']) ? $_REQUEST['returnTo'] : home_url('/change-password?success=1');
 
 $errors = [];
