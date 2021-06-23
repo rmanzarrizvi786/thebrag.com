@@ -625,11 +625,11 @@ $container_width = 700;
 					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
 						<tr>
 							<td valign="top" id="templateHeader">
-								<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
+								<table border="0" cellpadding="0" cellspacing="0" width="700" class="mcnImageBlock">
 									<tbody class="mcnImageBlockOuter">
 										<tr>
 											<td valign="top" style="background: #ffffff;" class="mcnImageBlockInner">
-												<table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width:100%;">
+												<table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer">
 													<tbody>
 														<tr>
 															<td colspan="2" class="mcnImageContent" valign="top" style="padding-right: 20px; padding-left: 20px; padding-top: 10px; padding-bottom: 0px; text-align:center; background: #ffffff;">
@@ -641,11 +641,11 @@ $container_width = 700;
 															</td>
 														</tr>
 														<tr>
-															<td valign="top" class="mcnTextContent" style="padding-top: 5px; padding-right: 9px; padding-bottom: 0px; padding-left: 20px; color: #777777; font-size: 13px;">
+															<td valign="top" align="left" class="mcnTextContent" style="padding-top: 5px; padding-right: 9px; padding-bottom: 0px; padding-left: 20px; color: #777777; font-size: 13px;">
 																<!--[if gte mso 9]>
-        											<table align="center" border="0" cellspacing="0" cellpadding="0" width="700" style="width:700px;">
+        											<table align="left" border="0" cellspacing="0" cellpadding="0" width="330" style="width:330px;">
         											<tr>
-        											<td align="center" valign="top" width="700" style="width:700px;">
+        											<td align="left" valign="top" width="330" style="width:330px;">
         											<![endif]-->
 																*|DATE:l, j F Y|*
 																<!--[if gte mso 9]>
@@ -655,11 +655,11 @@ $container_width = 700;
         											<![endif]-->
 															</td>
 
-															<td valign="middle" class="mcnTextContent" style="padding-top: 5px; padding-right: 20px; padding-bottom: 0px; padding-left: 9px; color: #777777; text-align: right; font-size: 13px;">
+															<td valign="middle" align="right" class="mcnTextContent" style="padding-top: 5px; padding-right: 20px; padding-bottom: 0px; padding-left: 9px; color: #777777; text-align: right; font-size: 13px;">
 																<!--[if gte mso 9]>
-        											<table align="center" border="0" cellspacing="0" cellpadding="0" width="700" style="width:700px;">
+        											<table align="right" border="0" cellspacing="0" cellpadding="0" width="330" style="width:330px;">
         											<tr>
-        											<td align="center" valign="top" width="700" style="width:700px;">
+        											<td align="right" valign="top" width="330" style="width:330px;">
         											<![endif]-->
 																*|IF:STRENGTH|*
 																*|IF:STRENGTH < 100|* Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-*|STRENGTH|*.jpg" alt="*|STRENGTH|*% complete" title="*|STRENGTH|*% complete" style="vertical-align: middle;">
