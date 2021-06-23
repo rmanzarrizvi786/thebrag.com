@@ -713,7 +713,7 @@ $container_width = 700;
 						?>
 
 						<?php
-						$random_lists = false; // $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
+						$random_lists = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
 						if ($random_lists) :
 						?>
 							<tr>
@@ -748,7 +748,7 @@ $container_width = 700;
 																									<?php foreach ($random_lists as $random_list_counter => $random_list) : ?>
 																										<td class="small-12.2" style="width: 33%; max-width: 100%; padding: 0 5px;">
 																											<a href="<?php echo home_url('verify'); ?>/?oc=*|OC_TOKEN|*&amp;fl=0&amp;returnTo=<?php echo urlencode(home_url('observer/' . $random_list->slug)); ?>" title="<?php echo $random_list->title; ?>" class="" target="_blank" style="color: #000; text-decoration: none; display: block; line-height: 150%;">
-																												<img src="<?php echo $random_list->image_url; ?>" style="max-width: 100%; border-radius: 9px;"><br>
+																												<img width="205" height="205" src="<?php echo $random_list->image_url; ?>" style="max-width: 100%; border-radius: 9px;"><br>
 																												<?php
 																												echo !in_array($random_list->id, [4, 48]) ? trim(str_ireplace('Observer', '', $random_list->title)) : trim($random_list->title);
 																												?>
