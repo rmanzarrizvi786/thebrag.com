@@ -48,11 +48,11 @@ class BragObserver
     require_once __DIR__ . '/classes/MailChimp.php';
     $this->MailChimp = new MailChimp($this->mailchimp_api_key);
 
-    $this->is_sandbox = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
+    $this->is_sandbox = isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']; // in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 
     $this->mag_sub['rest_api_key'] = '39d733e9-5277-4389-811a-a14c9f1e9294';
     if ($this->is_sandbox) {
-      $this->mag_sub['api_url'] = 'https://rs-au.localhost/wp-json/tbm_mag_sub/v1/';
+      $this->mag_sub['api_url'] = 'http://au.rolling-stone.com/wp-json/tbm_mag_sub/v1/';
     } else {
       $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
     }
@@ -1457,6 +1457,7 @@ class BragObserver
         if ($data)
           $url = sprintf("%s?%s", $url, http_build_query($data));
     }
+
     // OPTIONS:
     curl_setopt($curl, CURLOPT_URL, $url);
     if ($content_type !== false) {
@@ -1467,7 +1468,8 @@ class BragObserver
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
-    if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
+    // if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
+    if (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) {
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
     }
