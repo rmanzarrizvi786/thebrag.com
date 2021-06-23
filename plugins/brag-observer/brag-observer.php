@@ -2015,6 +2015,31 @@ class BragObserver
   }
 
   /*
+  * Mag Sub: Update Billing + Shipping Details
+  */
+  public function updateBillingShippingDetails($data)
+  {
+
+    $data['key'] = $this->mag_sub['rest_api_key'];
+
+    $update_billing = $this->callAPI(
+      'POST',
+      $this->mag_sub['api_url'] . 'update_billing',
+      $data,
+      false
+    );
+
+    $update_shipping = $this->callAPI(
+      'POST',
+      $this->mag_sub['api_url'] . 'update_shipping',
+      $data,
+      false
+    );
+
+    return json_encode(array_merge((array)json_decode($update_billing), (array)json_decode($update_shipping)));
+  }
+
+  /*
   * Mag Sub: Update Shipping Details
   */
   public function updateShippingDetails($data)
