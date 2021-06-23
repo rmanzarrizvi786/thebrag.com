@@ -45,7 +45,7 @@ get_header();
         </div>
       </div>
 
-      <div class="row">
+      <div class="row align-items-start">
         <div class="col-md-3 mb-3">
           <div style="position: sticky; top: 100px; text-align: center;">
             <?php $current_issue_img = file_get_contents('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
@@ -53,7 +53,7 @@ get_header();
             <img src="<?php echo stripslashes(str_replace('"', '', $current_issue_img)); ?>" class="img-fluid">
           </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 px-2">
           <div class="row">
             <div class="col-12">
               <?php
@@ -84,6 +84,7 @@ get_header();
                   }
                 } // If $subscription
               } else { // $action is NULL i.e. show all active subscriptions
+                include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) {
                   include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 } // If $subscriptions
