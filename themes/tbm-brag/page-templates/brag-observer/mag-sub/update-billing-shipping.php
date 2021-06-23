@@ -21,7 +21,7 @@ if (isset($_POST)) {
 <form action="" method="post">
   <div class="row">
     <div class="col-12">
-      <div id="billing_address_wrap">
+      <div id="billing_address_wrap" class="p-r">
         <div class="row">
           <div class="col-12 mb-3">
             <h3>Billing details <small class="text-muted">ID: <?php echo $sub_id; ?></small></h3>
@@ -81,7 +81,7 @@ if (isset($_POST)) {
     </div>
 
     <div class="col-12">
-      <div id="shipping_address_wrap">
+      <div id="shipping_address_wrap" class="p-r">
         <div class="row">
           <div class="col-12 mb-3">
             <h3>Shipping details <small class="text-muted">ID: <?php echo $sub_id; ?></small></h3>
