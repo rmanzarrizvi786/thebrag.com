@@ -3,7 +3,7 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
   foreach ($subscriptions as $key => $subscription) :
     $subscription->paymentMethods = $bo->getPaymentMethods($subscription->stripe_customer_id);
 ?>
-    <div class="row mb-2<?php echo $subscription->is_gift == 'yes' ? ' is-gift' : ''; ?>">
+    <div class="row align-items-start mb-2<?php echo $subscription->is_gift == 'yes' ? ' is-gift' : ''; ?>">
 
       <div class="col-md-6 mb-4">
         <?php if (0 && $subscription->is_gift == 'yes') : ?>
