@@ -302,6 +302,11 @@ if (!post_password_required($post)) :
                                 }
                             });
                         });
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'track_visitor',
+                            'trackVisitor': '<?php echo get_field('track_visitors'); ?>'
+                        });
                     </script>
                 <?php endif; // If set track visitors 
                 ?>
