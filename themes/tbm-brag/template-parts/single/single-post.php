@@ -285,6 +285,26 @@ if (!post_password_required($post)) :
                     echo str_replace('[timestamp]', time(), get_field('impression_tag'));
                 endif; // If custom field - impression tag - is set
                 ?>
+
+                <?php if (get_field('track_visitors')) : ?>
+                    <script>
+                        jQuery(document).ready(function($) {
+                            $.ajax({
+                                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                                type: 'post',
+                                dataType: 'json',
+                                cache: 'false',
+                                data: {
+                                    'action': 'tbm_set_cookie',
+                                    'key': 'tbm_v',
+                                    'value': '<?php echo get_field('track_visitors'); ?>',
+                                    'duration': '<?php echo 60 * 60 * 24 * 365; ?>'
+                                }
+                            });
+                        });
+                    </script>
+                <?php endif; // If set track visitors 
+                ?>
                 <!-- Story End -->
             </div><!-- Left panel - content, etc. -->
 

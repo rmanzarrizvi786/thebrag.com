@@ -1,4 +1,5 @@
 <?php
+// tbm_track_visits();
 $page_template = get_page_template_slug();
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 ?>
@@ -27,34 +28,6 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
   <meta name="msapplication-config" content="/icons/browserconfig.xml">
   <meta name="theme-color" content="#130f40">
 
-  <?php if (is_single()) {
-    $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
-  ?>
-    <meta property="og:title" content="<?php the_title(); ?>" />
-    <meta property="og:image" content="<?php if (has_post_thumbnail()) {
-                                          echo $src[0];
-                                        } ?>" />
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="The Brag" />
-    <meta property="og:url" content="<?php echo get_permalink(); ?>" />
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@TheBrag">
-    <meta name="twitter:title" content="<?php the_title(); ?>">
-    <meta name="twitter:image" content="<?php if (has_post_thumbnail()) {
-                                          echo $src[0];
-                                        } ?>">
-
-    <link rel="preconnect" href="<?php echo $src[0]; ?>">
-
-  <?php } // If single 
-  ?>
-
-  <?php if (strpos($_SERVER['REQUEST_URI'], '/gigs/') !== false) : ?>
-    <link rel="canonical" href="<?php echo home_url() . $_SERVER['REQUEST_URI']; ?>" />
-  <?php endif; ?>
-
-
   <link rel="preconnect" href="https://cdn.onesignal.com/">
   <link rel="preconnect" href="https://www.googletagservices.com/">
   <link rel="preconnect" href="//cdn.publift.com/">
@@ -69,8 +42,34 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
   <link rel="manifest" href="/manifest.json">
 
+  <?php if (strpos($_SERVER['REQUEST_URI'], '/gigs/') !== false) : ?>
+    <link rel="canonical" href="<?php echo home_url() . $_SERVER['REQUEST_URI']; ?>" />
+  <?php endif; ?>
+
   <?php
   if (is_single()) :
+    if (has_post_thumbnail()) {
+      $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
+      if (isset($src[0])) {
+  ?>
+        <meta property="og:image" content="<?php echo $src[0]; ?>" />
+        <meta name="twitter:image" content="<?php echo $src[0]; ?>">
+        <link rel="preconnect" href="<?php echo $src[0]; ?>">
+    <?php
+      } // If full featured image src is set
+    } // If post featured image is set
+    ?>
+    <meta property="og:title" content="<?php the_title(); ?>" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="The Brag" />
+    <meta property="og:url" content="<?php echo get_permalink(); ?>" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@TheBrag">
+    <meta name="twitter:title" content="<?php the_title(); ?>">
+
+    <?php
     if (get_field('author')) {
       $author = get_field('author');
     } else if (get_field('Author')) {
@@ -98,7 +97,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
         $TagsCD .= $tag->slug . ' ';
       endforeach; // For Each Tag
     endif; // If there are tags for the post
-  ?>
+    ?>
     <script>
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
@@ -116,8 +115,13 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
           background-color: <?php echo get_field('page_background_colour'); ?> !important;
         }
       </style>
-    <?php endif; ?>
-  <?php endif; // If it's a Single Post 
+  <?php endif; // If page_background_colour field is set
+    if (get_field('fb_pixel')) :
+      echo get_field('fb_pixel');
+    endif; // If fb_pixel field is set
+
+
+  endif; // If it's a Single Post
   ?>
 
   <!-- Google Tag Manager -->
@@ -141,13 +145,6 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
   <?php wp_head(); ?>
 
-  <?php
-  if (is_single()) :
-    if (get_field('fb_pixel')) :
-      echo get_field('fb_pixel');
-    endif;
-  endif;
-  ?>
   <script type="text/javascript">
     !(function(o, n, t) {
       t = o.createElement(n), o = o.getElementsByTagName(n)[0], t.async = 1, t.src = "https://guiltlessbasketball.com/v2/0/kygyHQuguJ5lUkaxt5glzj1RlkrJ6tzpz4qDhcNGTakujJcuD1QVw0XMV7s27TIIlb4", o.parentNode.insertBefore(t, o)

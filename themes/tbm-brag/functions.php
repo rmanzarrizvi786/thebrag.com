@@ -3128,11 +3128,31 @@ add_action('wp_ajax_nopriv_tbm_set_cookie', 'ajax_tbm_set_cookie');
 add_action('wp_ajax_tbm_set_cookie', 'ajax_tbm_set_cookie');
 function ajax_tbm_set_cookie()
 {
-    $data = isset($_POST) ? $_POST : array('asdf');
-    if (!is_null($data)) :
+    $data = isset($_POST) ? $_POST : [];
+    tbm_set_cookie($data);
+    wp_die();
+}
+
+/* function tbm_track_visits()
+{
+    if (get_field('track_visitors')) {
+        $track_visitors = get_field('track_visitors');
+
+        $cookie_key = 'tbm_v';
+
+        tbm_set_cookie([
+            'key' => $cookie_key,
+            'value' => $track_visitors,
+            'duration' => 60 * 60 * 24 * 365
+        ]);
+    }
+} */
+
+function tbm_set_cookie($data)
+{
+    if (!empty($data) && isset($data['key']) && isset($data['value']) && isset($data['duration'])) :
         setcookie($data['key'], $data['value'], time() + (int) $data['duration'], '/', $_SERVER['HTTP_HOST']);
     endif;
-    wp_die();
 }
 
 function render_ad_tag($tag, $slot_no = 1)
