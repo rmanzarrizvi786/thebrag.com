@@ -1084,7 +1084,12 @@ class BragObserver
   {
     if (defined('DOING_AJAX') && DOING_AJAX) :
 
-      parse_str($_POST['formData'], $formData);
+      // parse_str($_POST['formData'], $formData);
+      if (isset($_POST['formData'])) {
+        parse_str($_POST['formData'], $formData);
+      } else {
+        $formData = $_POST;
+      }
 
       global $wpdb;
 
@@ -2597,6 +2602,38 @@ class BragObserver
       "ZW" => "Zimbabwe",
       "AX" => "Åland Islands",
     );
+  }
+
+  /*
+  * Get Observer topics
+  */
+  public function get_observer_topics($topic_id = null)
+  {
+    global $wpdb;
+
+    if (!is_null($topic_id)) {
+      $id = absint($topic_id);
+      return $wpdb->get_row("SELECT id, title, slug, image_url, frequency, description FROM {$wpdb->prefix}observer_lists WHERE id = '{$topic_id}'");
+    }
+
+    $lists_query = "SELECT id, title, slug, image_url, frequency, description FROM {$wpdb->prefix}observer_lists WHERE status = 'active' ORDER BY sub_count DESC";
+
+    $lists = $wpdb->get_results($lists_query);
+
+    $return = [];
+
+    foreach ($lists as $list) {
+      $return[] = [
+        'id' => $list->id,
+        'title' => $list->title,
+        'link' => home_url('/observer/' . $list->slug . '/'),
+        'image_url' => $list->image_url,
+        'description' => $list->description,
+        'frequency' => $list->frequency,
+      ];
+    }
+
+    return $return;
   }
 }
 

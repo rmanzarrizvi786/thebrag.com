@@ -1,5 +1,5 @@
 <?php global $amp_post_id;
-$amp_post_id = $this->get('post_id'); ?>
+$amp_post_id = $post_id = $this->get('post_id'); ?>
 <!doctype html>
 <html amp <?php echo AMP_HTML_Utils::build_attributes_string($this->get('html_tag_attributes')); ?>>
 
@@ -74,13 +74,96 @@ $amp_post_id = $this->get('post_id'); ?>
             $content = explode("</p>", $content);
             for ($i = 0; $i < count($content); $i++) :
                 if (!in_array($this->post->post_type, array('gig', 'snaps'))) :
-                    if (count($content) > 4 && $i == 4) :
+                    if (count($content) > 2 && $i == 2) :
             ?>
                         <div class="amp-ad" style="text-align: center; margin: auto;">
                             <?php echo render_ad_tag('mrec_1'); ?>
                         </div>
-            <?php
+                    <?php
                     endif; // Para 2
+
+                    if (count($content) > 7 && $i == 7) :
+                    ?>
+
+
+                        <?php
+                        $topic_id = get_post_meta(absint($post_id), 'observer-topic', true);
+
+                        if (!$topic_id || '' == trim($topic_id)) {
+                            $posttags = get_the_tags($post_id);
+                            if ($posttags) {
+                                foreach ($posttags as $tag) {
+                                    if (stripos($tag->name, 'vegan') !== false) {
+                                        $topic_id = 6;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            $categories = get_the_terms($post_id, 'category');
+                            if (!$categories) {
+                                return;
+                            }
+
+                            $primary_category = null;
+
+                            foreach ($categories as $category) {
+                                if (get_post_meta($post_id, '_yoast_wpseo_primary_category', true) == $category->term_id) {
+                                    $primary_category = $category;
+                                    break;
+                                }
+                            }
+
+                            if (is_null($primary_category)) {
+                                $primary_category = $categories[0];
+                            }
+
+                            $topic_id = get_term_meta($category->term_id, 'observer-topic', true);
+                        }
+
+                        if (!is_null($topic_id)) {
+
+                            include_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+                            $bo = new BragObserver();
+
+                            $topic = $bo->get_observer_topics($topic_id);
+                            if ($topic) {
+
+                                $topic->title = trim(str_ireplace('Observer', '', $topic->title));
+
+                                if (in_array($topic_id, [27])) {
+                                    $$topic->title .= ' Music';
+                                }
+                        ?>
+
+                                <div style="text-align: center">
+                                    <form method="post" action-xhr="<?php echo admin_url('admin-ajax.php'); ?>" target="_top">
+                                        <input type="hidden" name="list" value="<?php echo $topic_id; ?>">
+                                        <input type="hidden" name="source" value="<?php echo get_permalink(); ?>">
+                                        <input type="hidden" name="action" value="subscribe_observer">
+                                        <div style="background-color: #B98D5B; border-radius: .5rem; padding: .5rem 1rem 1rem; margin: .25rem auto 1rem; color: #fff; text-align: left;">
+                                            <h3 class="text-white">
+                                                <a href="https://thebrag.com/observer/<?php echo $topic->slug; ?>" target="_blank" style="color: #fff; text-decoration: none;">Love <?php echo $topic->title; ?>?</a>
+                                            </h3>
+                                            <p class="text-white">Get the latest <?php echo $topic->title; ?> news, features, updates and giveaways straight to your inbox</p>
+                                            <div>
+                                                <input type="email" name="email" placeholder="Your email" required style="width: calc(100% - 30px); font-size: 16px; color: #000; border: none; border-radius: .25rem; padding: 15px;">
+                                                <div>
+                                                    <input type="submit" value="Join" style="padding: 10px; font-size: 16px; font-weight: 300; color: #fff; background: #000; border-radius: .25rem; cursor: pointer; border: none;">
+                                                </div>
+                                            </div>
+                                            <div submit-success style="padding-top: 1rem; text-align: center;">
+                                                <template type="amp-mustache">
+                                                    Thank you!
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+            <?php
+                            } // If $topic
+                        }
+                    endif;
                 endif;
                 echo $content[$i] . "</p>";
             endfor;
