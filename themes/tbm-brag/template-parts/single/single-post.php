@@ -284,9 +284,8 @@ if (!post_password_required($post)) :
                 if (get_field('impression_tag')) :
                     echo str_replace('[timestamp]', time(), get_field('impression_tag'));
                 endif; // If custom field - impression tag - is set
-                ?>
 
-                <?php if (get_field('track_visitors')) : ?>
+                if (get_field('track_visitors')) : ?>
                     <script>
                         jQuery(document).ready(function($) {
                             $.ajax({
