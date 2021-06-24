@@ -82,7 +82,7 @@ $amp_post_id = $post_id = $this->get('post_id'); ?>
                     <?php
                     endif; // Para 2
 
-                    if (count($content) > 7 && $i == 7) :
+                    if (!get_field('hide_observer_form') && count($content) > 7 && $i == 7) :
                     ?>
 
 
