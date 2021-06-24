@@ -3496,6 +3496,9 @@ add_filter('the_content', function ($content) {
     if ('single-template-featured.php' == get_page_template_slug(get_the_ID())) {
         return $content;
     }
+    if (get_field('hide_observer_form'))
+        return $content;
+
     if (shortcode_exists('observer_subscribe_category')) :
         ob_start();
         echo do_shortcode('[observer_subscribe_category id="' . get_the_ID() . '"]');
