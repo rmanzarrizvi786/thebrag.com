@@ -3543,6 +3543,7 @@ add_filter('the_content', function ($content) {
         if (get_field('override_footer_comps_colour')) {
             $content .= '<style>.comp-footer a {
             color: ' . get_field('override_footer_comps_colour') . ' !important;
+            border: 1px solid ' . get_field('override_footer_comps_colour') . ' !important;
             }</style>';
         }
         $content .= '<div class="comp-footer"><a href="' . get_field('override_footer_comps_link') . '" target="_blank" rel="noopener">' . get_field('override_footer_comps_text') . '</a></div>';
