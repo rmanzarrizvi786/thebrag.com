@@ -3534,14 +3534,19 @@ add_filter('the_content', function ($content) {
         return $content;
     endif;
 
-    /* if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
-        return $content;
-    } */
-
     if (is_singular('page'))
         return $content;
 
-    $content .= '<div class="comp-footer"><a href="https://thebrag.com/observer/competitions/" target="_blank" rel="noopener">Did you know we\'re constantly giving away <strong>FREE</strong> stuff? Check out our giveaways here.</a></div>';
+    $css = '';
+
+    if (get_field('override_footer_comps_box')) {
+        $content .= '<style>.comp-footer a {
+            color: ' . get_field('override_footer_comps_colour') . ' !important;
+            }</style>
+            <div class="comp-footer"><a href="' . get_field('override_footer_comps_link') . '" target="_blank" rel="noopener">' . get_field('override_footer_comps_text') . '</a></div>';
+    } else {
+        $content .= '<div class="comp-footer"><a href="https://thebrag.com/observer/competitions/" target="_blank" rel="noopener">Did you know we\'re constantly giving away <strong>FREE</strong> stuff? Check out our giveaways here.</a></div>';
+    }
 
     return $content;
 });
