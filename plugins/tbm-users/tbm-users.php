@@ -452,6 +452,61 @@ class TBMUsers
       ));
 
       if ($user_id) {
+
+        /*
+        * Create user in Auth0
+        */
+        require get_template_directory() . '/vendor/autoload.php';
+
+        $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
+        $dotenv->load();
+
+        $auth0_api = new Auth0\SDK\API\Authentication(
+          $_ENV['AUTH0_DOMAIN'],
+          $_ENV['AUTH0_CLIENT_ID']
+        );
+
+        $config = [
+          'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+          'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+          'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+        ];
+
+        try {
+          $result = $auth0_api->client_credentials($config);
+          $access_token = $result['access_token'];
+        } catch (Exception $e) {
+          // die($e->getMessage());
+        }
+
+        $auth0_user = null;
+
+        if (isset($access_token)) {
+          // Instantiate the base Auth0 class.
+          $auth0 = new Auth0\SDK\Auth0([
+            // The values below are found on the Application settings tab.
+            'domain' => $_ENV['AUTH0_DOMAIN'],
+            'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+            'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+            'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
+          ]);
+
+          $mgmt_api = new Auth0\SDK\API\Management($access_token, $_ENV['AUTH0_DOMAIN']);
+          try {
+            $auth0_user = $mgmt_api->users()->create(
+              [
+                'connection' => 'Username-Password-Authentication',
+                'email' => trim($data['email']),
+                'password' => $user_pass,
+              ]
+            );
+            if ($auth0_user && isset($auth0_user->user_id)) {
+              update_user_meta($user_id, 'wp_auth0_id', $auth0_user->user_id);
+            }
+          } catch (Exception $e) {
+          }
+        }
+
         if (!get_user_meta($user_id, 'oc_token', true)) :
           $oc_token = md5($user_id . time()); // creates md5 code to verify later
           update_user_meta($user_id, 'oc_token', $oc_token);
