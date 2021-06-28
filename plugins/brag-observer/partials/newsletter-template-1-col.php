@@ -222,7 +222,7 @@ function print_ad($value, $ads_after_articles, $newsletter, $container_width = 7
                         <a href="<?php echo isset($newsletter->details->ads[$array_key]->image) && $newsletter->details->ads[$array_key]->link != '' ? $newsletter->details->ads[$array_key]->link : '#'; ?>" target="_blank">
                           <?php // $ad_size = getimagesize( $newsletter->details->ads[$array_key]->image ); 
                           ?>
-                          <img align="center" alt="" src="<?php echo $newsletter->details->ads[$array_key]->image; ?>" width="300" height="250" style="max-width: 300px; max-height: 250px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                          <img align="center" alt="" src="<?php echo $newsletter->details->ads[$array_key]->image; ?>" width="300" height="250" style="width: 300px; height: 250px; max-width: 300px; max-height: 250px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
                         </a>
                       </td>
                     </tr>

@@ -4,6 +4,8 @@ icons
 
 uploads
 
+wflogs
+
 plugins/*
 !plugins/tbm-shout-writer-beer
 !plugins/tbm-adm
