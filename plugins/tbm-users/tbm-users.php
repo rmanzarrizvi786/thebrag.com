@@ -59,8 +59,11 @@ class TBMUsers
     // REST API
     add_action('rest_api_init', [$this, '_rest_api_init']);
 
+    // Auth0
+    add_action('wpa0_user_created', [$this, '_wpa0_user_created'], 10, 5);
+
     // CORS
-    add_filter('init', [$this, 'add_cors_http_header'], 11, 1);
+    // add_filter('init', [$this, 'add_cors_http_header'], 11, 1);
   }
 
   /*
@@ -346,6 +349,16 @@ class TBMUsers
       'callback' => [$this, 'rest_login_user'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/create_auth0', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_create_auth0'],
+    ));
+
+    register_rest_route($this->plugin_name . '/v1', '/login_auth0', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_login_auth0'],
+    ));
   }
 
   /*
@@ -584,6 +597,192 @@ class TBMUsers
   }
 
   /*
+  * REST - Create user
+  */
+  public function rest_create_auth0($request_data)
+  {
+
+    global $wpdb;
+
+    $data = $request_data->get_params();
+
+    // return print_r($data['context'], true);
+
+    if (!isset($data['key']) || !$this->isRequestValid($data['key'])) {
+      wp_send_json_error(['invalid_request']);
+      wp_die();
+    }
+
+    $data = stripslashes_deep($data);
+
+    $errors = [];
+
+    if (!isset($data['email']) || !is_email($data['email'])) {
+      $errors[] = 'invalid_email';
+    }
+
+    if (email_exists($data['email'])) {
+      $user = get_user_by('email', $data['email']);
+      $user_id = $user->ID;
+    } else {
+
+      $current_datetime = date('Y-m-d H:i:s');
+
+      $user_pass = wp_generate_password();
+      $user_id = wp_insert_user(array(
+        'user_login' => $data['email'],
+        'user_pass' => $user_pass,
+        'user_email' => trim($data['email']),
+        'user_registered' => $current_datetime,
+        'role' => 'subscriber'
+      ));
+    }
+
+    if ($user_id) {
+      if (!get_user_meta($user_id, 'oc_token', true)) :
+        $oc_token = md5($user_id . time()); // creates md5 code to verify later
+        update_user_meta($user_id, 'oc_token', $oc_token);
+      endif;
+
+      $auth0_user_id = 'auth0|' . $data['user_id'];
+
+      if (!get_user_meta($user_id, 'wp_auth0_id', true)) :
+        update_user_meta($user_id, 'wp_auth0_id', $auth0_user_id);
+      endif;
+
+      if (!get_user_meta($user_id, 'wp_auth0_obj', true)) :
+
+        $wp_auth0_obj = [
+          'created_at' => $current_datetime,
+          'email' => $data['email'],
+          'email_verified' => true,
+          'identities' => [
+            [
+              'user_id' => $auth0_user_id,
+              'provider' => 'auth0',
+              'connection' => $data['context_connection_name'],
+            ]
+          ],
+          'updated_at' => $current_datetime,
+          'user_id' => $auth0_user_id,
+          'sub' => $auth0_user_id,
+        ];
+
+        update_user_meta($user_id, 'wp_auth0_obj', json_encode($wp_auth0_obj));
+      endif;
+    }
+    wp_send_json_success();
+    wp_die();
+  }
+
+  /*
+  * REST - Login Auth0
+  */
+  public function rest_login_auth0($request_data)
+  {
+    $data = $request_data->get_params();
+    // error_log(print_r($data, true));
+
+    /* if (!isset($data['key']) || !$this->isRequestValid($data['key'])) {
+      wp_send_json_error(['invalid_request']);
+      wp_die();
+    } */
+
+    $data = stripslashes_deep($data);
+
+    if (!isset($data['email']) || !is_email($data['email'])) {
+      return;
+    }
+
+    if (email_exists($data['email'])) {
+      $user = get_user_by('email', $data['email']);
+      $user_id = $user->ID;
+    } else {
+
+      $current_datetime = date('Y-m-d H:i:s');
+
+      $user_pass = wp_generate_password();
+      $user_id = wp_insert_user(array(
+        'user_login' => $data['email'],
+        'user_pass' => $user_pass,
+        'user_email' => trim($data['email']),
+        'user_registered' => $current_datetime,
+        'role' => 'subscriber'
+      ));
+    }
+
+    if ($user_id) {
+      if (!get_user_meta($user_id, 'oc_token', true)) :
+        $oc_token = md5($user_id . time()); // creates md5 code to verify later
+        update_user_meta($user_id, 'oc_token', $oc_token);
+      endif;
+
+      $auth0_user_id = $data['user_id'];
+
+      if (!get_user_meta($user_id, 'wp_auth0_id', true)) :
+        update_user_meta($user_id, 'wp_auth0_id', $auth0_user_id);
+      endif;
+
+      if (!get_user_meta($user_id, 'wp_auth0_obj', true)) :
+
+        $wp_auth0_obj = [
+          'created_at' => $current_datetime,
+          'email' => $data['email'],
+          'email_verified' => true,
+          'identities' => [
+            [
+              'user_id' => $auth0_user_id,
+              'provider' => 'auth0',
+              'connection' => $data['context_connection_name'],
+            ]
+          ],
+          'updated_at' => $current_datetime,
+          'user_id' => $auth0_user_id,
+          'sub' => $auth0_user_id,
+        ];
+
+        update_user_meta($user_id, 'wp_auth0_obj', json_encode($wp_auth0_obj));
+      endif;
+    }
+
+    $return = ['wp_id' => $user_id];
+
+    if (get_user_meta($user_id, 'first_name', true)) {
+      $return['first_name'] = get_user_meta($user_id, 'first_name', true);
+    }
+    if (get_user_meta($user_id, 'last_name', true)) {
+      $return['last_name'] = get_user_meta($user_id, 'last_name', true);
+    }
+    if (get_user_meta($user_id, 'gender', true)) {
+      $return['gender'] = get_user_meta($user_id, 'gender', true);
+    }
+    if (get_user_meta($user_id, 'gender', true)) {
+      $return['gender'] = get_user_meta($user_id, 'gender', true);
+    }
+    if (get_user_meta($user_id, 'birthday', true)) {
+      $return['birthday'] = get_user_meta($user_id, 'birthday', true);
+    }
+    if (get_user_meta($user_id, 'state', true)) {
+      $return['state'] = get_user_meta($user_id, 'state', true);
+    }
+
+    // error_log( print_r( $return, true));
+
+    return $return;
+  }
+
+  public function _wpa0_user_created($user_id, $email, $password, $f_name, $l_name)
+  {
+    $user_data = [
+      'ID' => $user_id,
+      'first_name' => '',
+      'last_name' => '',
+    ];
+
+    wp_update_user($user_data);
+  }
+
+  /*
   * Validate Key for REST API
   */
   private function isRequestValid($key)
@@ -591,10 +790,10 @@ class TBMUsers
     return isset($key) && !is_null($key) && in_array($key, $this->rest_api_keys);
   }
 
-  public function add_cors_http_header()
+  /* public function add_cors_http_header()
   {
     header("Access-Control-Allow-Origin: *");
-  }
+  } */
 }
 
 new TBMUsers();
