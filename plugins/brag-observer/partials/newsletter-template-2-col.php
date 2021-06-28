@@ -251,11 +251,11 @@ function print_ad($value, $ads_after_articles, $newsletter, $container_width = 7
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $container_width; ?>" class="columnWrapper">
     <tr>
       <td style="background-color: #ffffff; border-bottom:2px solid #EAEAEA;" class="templateLowerColumns">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageCardBlock">
+        <table border="0" cellpadding="0" cellspacing="0" width="300" class="mcnImageCardBlock">
           <tbody class="mcnImageCardBlockOuter">
             <tr>
               <td class="mcnImageCardBlockInner" valign="top" style="padding-top:9px; padding-right:18px; padding-bottom:9px; padding-left:18px;">
-                <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="background-color: #ffffff;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="300" style="background-color: #ffffff;">
                   <tbody>
                     <tr>
                       <td class="mcnImageCardBottomImageContent" align="center" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:0; padding-left:0px; text-align: center;">
