@@ -5,7 +5,7 @@ wp_enqueue_script('pswipe', get_template_directory_uri() . '/ps/photoswipe.min.j
 wp_enqueue_script('pswipe-d', get_template_directory_uri() . '/ps/photoswipe-ui-default.min.js', array(), NULL, true);
 wp_enqueue_style('pswipe-css', get_template_directory_uri() . '/ps/photoswipe.css');
 wp_enqueue_style('pswipe-d-css', get_template_directory_uri() . '/ps/default-skin/default-skin.css');
-wp_enqueue_script('gallery', get_template_directory_uri() . '/js/gallery.js', array('jquery'), '1', true);
+wp_enqueue_script('gallery', get_template_directory_uri() . '/js/gallery.js', array('jquery'), '1.1', true);
 
 $the_post_id = get_the_ID();
 ?>
@@ -126,11 +126,10 @@ $the_post_id = get_the_ID();
                                 <?php
                                 while ($photo = $photos->get()) :
                                     $photo_meta = wp_get_attachment_metadata($photo->id);
-                                    //                    $link = str_replace( '/beta/', '/', get_permalink($photo->id) );
                                     $link = get_permalink($photo->id);
                                 ?>
                                     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="col-md-3 col-6">
-                                        <a href="<?php echo $link; ?>" itemprop="contentUrl" data-size="<?php echo $photo_meta['width']; ?>x<?php echo $photo_meta['height']; ?>" class="d-block m-1">
+                                        <a href="<?php echo $link; ?>" itemprop="contentUrl" data-size="<?php echo $photo_meta['width']; ?>x<?php echo $photo_meta['height']; ?>" class="d-block m-1 l-photo">
                                             <?php echo wp_get_attachment_image($photo->id, 'medium'); ?>
                                         </a>
                                     </figure>
