@@ -3348,7 +3348,7 @@ function brands()
         'the-brag' => [
             'title' => 'The Brag',
             'link' => 'https://thebrag.com/',
-            'logo_name' => 'The-Brag',
+            'logo_name' => 'The-Brag_combo',
             'ext' => 'svg',
         ],
         'brag-jobs' => [
