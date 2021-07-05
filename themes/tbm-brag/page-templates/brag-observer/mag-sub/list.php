@@ -46,7 +46,9 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
             <?php if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) : ?>
 
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a>
+              <a class="dropdown-item" href="mailto:subscribe@thebrag.media?subject=Cancel%20auto-renew&body=ID:<?php echo $subscription->uniqid; ?>">Cancel auto-renew</a>
+              <!-- <a class="dropdown-item" href="<?php // echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); 
+                                                  ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a> -->
             <?php else : ?>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'enable-auto-renew', 'id' => $subscription->uniqid]); ?>">Enable auto-renew</a>
