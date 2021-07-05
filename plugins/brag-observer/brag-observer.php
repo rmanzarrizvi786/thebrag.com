@@ -351,7 +351,7 @@ class BragObserver
   public function activate()
   {
     if (!wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL))) {
-      // wp_schedule_event( time(), 'hourly', 'cron_hook_brag_observer', array( NULL, NULL ) );
+      wp_schedule_event(time(), 'hourly', 'cron_hook_brag_observer', array(NULL, NULL));
     }
   }
 
