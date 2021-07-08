@@ -30,6 +30,7 @@
     <nav>
         <ul class="d-flex flex-column flex-md-row justify-content-end">
             <li><a href="https://thebrag.media/terms-and-conditions/" target="_blank" rel="noreferrer" class="py-1">Competition Ts &amp; Cs</a></li>
+            <li><a href="https://thebrag.com/media/editorial-code/" target="_blank" rel="noreferrer" class="py-1">Editorial code</a></li>
             <li><a href="https://thebrag.com/media/terms-of-use/" target="_blank" rel="noreferrer" class="py-1">Terms of use</a></li>
             <li><a href="https://thebrag.media/privacy-policy/" target="_blank" rel="noreferrer" class="py-1">Privacy</a></li>
         </ul>
