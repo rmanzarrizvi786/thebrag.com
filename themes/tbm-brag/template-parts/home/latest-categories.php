@@ -88,7 +88,7 @@ foreach ($cats_home as $i => $category) :
                 <a href="<?php echo get_category_link($category); ?>" class="btn btn-dark text-uppercase">More <?php echo $category->name; ?></a>
             </div>
         </section>
-        <div class="container mb-4">
+        <div class="container py-2">
             <div class="mx-auto text-center">
                 <?php
                 if ($count % 2 !== 0) {
