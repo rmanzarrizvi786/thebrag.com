@@ -27,7 +27,7 @@
     </div>
 </footer>
 <div class="container footer-menu-2 pb-2" style="padding-bottom: 50px !important;">
-    <nav class="bg-whtie rounded">
+    <nav class="bg-white rounded">
         <ul class="d-flex flex-column flex-md-row justify-content-center p-0">
             <li><a href="https://thebrag.media/terms-and-conditions/" target="_blank" rel="noreferrer" class="py-1">Competition Ts &amp; Cs</a></li>
             <li><a href="https://thebrag.com/media/editorial-code/" target="_blank" rel="noreferrer" class="py-1">Editorial code</a></li>
