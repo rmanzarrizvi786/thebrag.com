@@ -2895,7 +2895,7 @@ function ssm_inject_ads($content)
         return $content;
     endif;
 
-    if (is_singular('page')) {
+    if (is_page()) {
         return $content;
     }
 
