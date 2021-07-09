@@ -354,6 +354,46 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
         <?php
         wp_editor(isset($newsletter) && isset($newsletter->details->intro_content) ? $newsletter->details->intro_content : '', 'intro_content', $wpeditor_settings);
         ?>
+
+        <!-- Optional sections choices {{ -->
+        <div class="mt-3">
+          <div>
+            <label><input type="checkbox" name="hide_video_record" id="hide_video_record" value="1" <?php echo isset($newsletter->details->hide_video_record) && '1' == $newsletter->details->hide_video_record ? 'checked' : ''; ?>>
+              Hide Video/Record of the week
+            </label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="hide_observer_recommendations" id="hide_observer_recommendations" value="1" <?php echo isset($newsletter->details->hide_observer_recommendations) && '1' == $newsletter->details->hide_observer_recommendations ? 'checked' : ''; ?>>
+              Hide Observer recommendations
+            </label>
+          </div>
+          <div>
+            <label><input type="checkbox" name="hide_observer_rewards" id="hide_observer_rewards" value="1" <?php echo isset($newsletter->details->hide_observer_rewards) && '1' == $newsletter->details->hide_observer_rewards ? 'checked' : ''; ?>>
+              Hide Observer rewards (share)
+            </label>
+          </div>
+
+          <?php if (4 == $list->id) { // 4 = TIO list ID 
+          ?>
+            <div>
+              <label><input type="checkbox" name="hide_jobs" id="hide_jobs" value="1" <?php echo isset($newsletter->details->hide_jobs) && '1' == $newsletter->details->hide_jobs ? 'checked' : ''; ?>>
+                Hide Jobs
+              </label>
+            </div>
+            <div>
+              <label><input type="checkbox" name="hide_top_industry_tweet" id="hide_top_industry_tweet" value="1" <?php echo isset($newsletter->details->hide_top_industry_tweet) && '1' == $newsletter->details->hide_top_industry_tweet ? 'checked' : ''; ?>>
+                Hide Top Industry Tweet
+              </label>
+            </div>
+            <div>
+              <label><input type="checkbox" name="hide_birthday_shoutout" id="hide_birthday_shoutout" value="1" <?php echo isset($newsletter->details->hide_birthday_shoutout) && '1' == $newsletter->details->hide_birthday_shoutout ? 'checked' : ''; ?>>
+                Hide Birthday Shout Out
+              </label>
+            </div>
+          <?php } // If TIO list 
+          ?>
+        </div>
+        <!-- }} Optional sections choices -->
       </td>
 
       <td width="60%">
