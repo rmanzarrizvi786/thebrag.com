@@ -77,31 +77,14 @@ if (count($ads) > 3) {
   </td>
 </tr>
 
-<?php if (4 == $list->id) { ?>
-  <tr>
-    <td style="padding-top:20px;padding-bottom:0px;background-color:#ffffff;">
-      <?php print_jobs_tio(); ?>
-    </td>
-  </tr>
+<?php
+if (4 == $list->id) {
+  print_jobs_tio($newsletter);
 
-  <?php if (isset($newsletter->details->top_i_tweet_image) && $newsletter->details->top_i_tweet_image != '') { ?>
-    <tr>
-      <td style="padding-top:20px;border-bottom:2px solid #EAEAEA;padding-bottom:20px;background-color:#ffffff;">
-        <?php print_tio_tweet($newsletter); ?>
-      </td>
-    </tr>
-  <?php } // If top_i_tweet_image 
-  ?>
+  print_tio_tweet($newsletter);
 
-  <?php if (isset($newsletter->details->birthday_shoutout_image) && $newsletter->details->birthday_shoutout_image != '') { ?>
-    <tr>
-      <td style="padding-top:20px;border-bottom:2px solid #EAEAEA;padding-bottom:20px;background-color:#ffffff;">
-        <?php print_tio_birthday_shoutout($newsletter); ?>
-      </td>
-    </tr>
-  <?php } // If birthday_shoutout_image 
-  ?>
-<?php } // if list is TIO 
+  print_tio_birthday_shoutout($newsletter);
+} // if list is TIO 
 ?>
 
 <?php if (56 == $list->id) { // 56 = Christian Hull list ID  
@@ -115,15 +98,12 @@ if (count($ads) > 3) {
 } // If Christian Hull list 
 ?>
 
-<!-- Featured Video / Audio -->
-<tr>
-  <td style="background-color:#ffffff;">
-    <?php print_video_record_of_week($this, $container_width); ?>
-  </td>
-</tr>
-<!-- Featured Video / Audio -->
-
 <?php
+/**
+ * Featured Video / Audio
+ */
+print_video_record_of_week($this, $newsletter);
+
 function print_article($newsletter, $article_number, $container_width = 700)
 {
 
