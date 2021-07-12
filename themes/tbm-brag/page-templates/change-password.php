@@ -52,13 +52,20 @@ if (isset($access_token)) {
   try {
     if ($wp_auth0_id = get_user_meta($current_user->ID, 'wp_auth0_id', true)) {
       $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
+    } else if ($wp_auth0_id = get_user_meta($current_user->ID, $wpdb->prefix . 'auth0_id', true)) {
+      $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
     }
   } catch (Exception $e) {
     // die($e->getMessage());
   }
 }
 
-if (!is_null($auth0_user) && isset($auth0_user['identities']) && isset($auth0_user['identities'][0]) && 'Username-Password-Authentication' == $auth0_user['identities'][0]['connection']) {
+if (
+  !is_null($auth0_user) &&
+  isset($auth0_user['identities']) &&
+  isset($auth0_user['identities'][0]) &&
+  in_array($auth0_user['identities'][0]['connection'], ['Username-Password-Authentication', 'brag-observer'])
+) {
 } else {
   wp_redirect(home_url('/profile/'));
   exit;
