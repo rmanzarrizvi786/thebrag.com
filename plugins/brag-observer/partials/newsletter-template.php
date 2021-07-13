@@ -679,7 +679,7 @@ $container_width = 700;
 														<?php if (isset($newsletter->details->intro_content) && $newsletter->details->intro_content != '') { ?>
 															<tr>
 																<td colspan="2" valign="top" class="mcnTextContent" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;">
-																	<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
+																	<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="660">
 																		<tbody>
 																			<tr style="padding:0;text-align:center;vertical-align:top">
 																				<td style="padding: 15px; border-radius: 20px; background-color: #f3f3f3;">
