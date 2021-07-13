@@ -474,13 +474,14 @@ class BragObserver
         JOIN {$wpdb->prefix}usermeta um
           ON u.ID = um.user_id
     WHERE
-      ( s.status_mailchimp IS NULL OR ( s.mc_subscribed_at IS NULL AND s.mc_unsubscribed_at IS NULL ) )
+      ( s.status != s.status_mailchimp OR s.status_mailchimp IS NULL)
       AND um.meta_key = 'is_activated'
       AND um.meta_value = '1'
     ORDER BY
       s.subscribed_at DESC
-    LIMIT 500
+    LIMIT 100
     ";
+    //( s.status_mailchimp IS NULL OR ( s.mc_subscribed_at IS NULL AND s.mc_unsubscribed_at IS NULL ) )
     $subs = $wpdb->get_results($query_subs);
 
     $sub_users = [];
@@ -501,8 +502,6 @@ class BragObserver
         } // If user is activated
       } // For Each $sub
     } // If $subs
-
-    // echo '<pre>'; print_r( $sub_users ); echo '</pre>';  exit;
 
     if (count($sub_users) > 0) {
       foreach ($sub_users as $sub_email => $sub_user) {
@@ -534,7 +533,7 @@ class BragObserver
           'merge_fields' => $merge_fields
         ]);
 
-        // echo '<pre>'; print_r( $interest_subscribe ); echo '</pre>';
+        // echo '<pre>'; print_r($interest_subscribe); echo '</pre>';
 
         /*
         * Update MailChimp Status in DB
