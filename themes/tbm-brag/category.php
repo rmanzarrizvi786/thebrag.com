@@ -4,11 +4,12 @@
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $exclude_posts = [];
 $category = $wp_query->get_queried_object();
-if ($category->parent > 0) {
+$cat_id = $category->term_id;
+/* if ($category->parent > 0) {
     $cat_id = $category->parent;
 } else {
     $cat_id = $category->term_id;
-}
+} */
 
 $hero_stories_args = [
     'post_status' => 'publish',
