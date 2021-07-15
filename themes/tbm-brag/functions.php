@@ -3020,8 +3020,6 @@ function tbm_ajax_load_next_post()
     if ($tbm_featured_infinite_IDs) :
         $tbm_featured_infinite_IDs = array_map('trim', explode(',', $tbm_featured_infinite_IDs));
         $tbm_featured_infinite_ID = $tbm_featured_infinite_IDs[array_rand($tbm_featured_infinite_IDs)];
-
-        error_log(print_r($tbm_featured_infinite_ID, true));
     endif;
 
     if ($tbm_featured_infinite_ID && $_POST['id'] != $tbm_featured_infinite_ID && !in_array($tbm_featured_infinite_ID, $exclude_posts_array)) :
