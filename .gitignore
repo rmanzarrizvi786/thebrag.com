@@ -25,6 +25,8 @@ plugins/brag-observer/*
 plugins/ssm-ga/*
 !plugins/ssm-ga/ssm-ga.php
 
+!plugins/theme-options
+
 !tbm-users
 !tbm-shout-writer-beer
 
