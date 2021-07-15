@@ -8,10 +8,13 @@ $news_args = [
     'post__not_in' => $exclude_posts,
     'paged' => $paged,
 ];
-if ( isset($cat_id) ) {
+if (isset($cat_id)) {
     $news_args['cat'] = $cat_id;
 }
-if ( isset($post_type) ) {
+if (isset($tag_id)) {
+    $news_args['tag_id'] = $tag_id;
+}
+if (isset($post_type)) {
     $news_args['post_type'] = $post_type;
 } else {
     $news_args['post_type'] = ['post', 'snaps', 'dad',];
