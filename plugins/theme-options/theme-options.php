@@ -39,9 +39,10 @@ function tbm_theme_options()
      */
     if (isset($_POST) && count($_POST) > 0) :
         if (isset($_POST['tbm_featured_infinite_ID'])) :
-            $tbm_featured_infinite_ID = absint($_POST['tbm_featured_infinite_ID']);
-            if ($tbm_featured_infinite_ID > 0) :
-                update_option('tbm_featured_infinite_ID', absint($_POST['tbm_featured_infinite_ID']));
+            // $tbm_featured_infinite_ID = absint($_POST['tbm_featured_infinite_ID']);
+            $tbm_featured_infinite_IDs = trim($_POST['tbm_featured_infinite_ID']);
+            if ($tbm_featured_infinite_IDs != '') :
+                update_option('tbm_featured_infinite_ID', $tbm_featured_infinite_IDs);
             else :
                 update_option('tbm_featured_infinite_ID', '');
             endif;
@@ -187,7 +188,7 @@ function tbm_theme_options()
                         <div class="form-group">
                             <label>Post ID</label>
                             <label class="reset">x</label>
-                            <input name="tbm_featured_infinite_ID" id="tbm_featured_infinite_ID" type="number" value="<?php echo stripslashes(get_option('tbm_featured_infinite_ID')); ?>" placeholder="" class="form-control">
+                            <input name="tbm_featured_infinite_ID" id="tbm_featured_infinite_ID" type="text" value="<?php echo stripslashes(get_option('tbm_featured_infinite_ID')); ?>" placeholder="" class="form-control">
                         </div>
                     </div>
                 </div><!-- Featured Article for Infinite Scroll ID -->

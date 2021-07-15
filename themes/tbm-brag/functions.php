@@ -3016,8 +3016,16 @@ function tbm_ajax_load_next_post()
     $exclude_posts = (!is_null($_POST['exclude_posts']) && $_POST['exclude_posts'] != '') ? $_POST['exclude_posts'] : '';
     $exclude_posts_array = explode(',', $exclude_posts);
 
-    if (get_option('tbm_featured_infinite_ID') && $_POST['id'] != get_option('tbm_featured_infinite_ID') && !in_array(get_option('tbm_featured_infinite_ID'), $exclude_posts_array)) :
-        $prevPost = get_post(get_option('tbm_featured_infinite_ID'));
+    $tbm_featured_infinite_IDs = trim(get_option('tbm_featured_infinite_ID'));
+    if ($tbm_featured_infinite_IDs) :
+        $tbm_featured_infinite_IDs = array_map('trim', explode(',', $tbm_featured_infinite_IDs));
+        $tbm_featured_infinite_ID = $tbm_featured_infinite_IDs[array_rand($tbm_featured_infinite_IDs)];
+
+        error_log(print_r($tbm_featured_infinite_ID, true));
+    endif;
+
+    if ($tbm_featured_infinite_ID && $_POST['id'] != $tbm_featured_infinite_ID && !in_array($tbm_featured_infinite_ID, $exclude_posts_array)) :
+        $prevPost = get_post($tbm_featured_infinite_ID);
     else :
         $post = get_post($_POST['id']);
         $prevPost = get_previous_post();
