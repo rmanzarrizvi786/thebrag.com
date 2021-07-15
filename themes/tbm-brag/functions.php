@@ -3019,6 +3019,7 @@ function tbm_ajax_load_next_post()
     $tbm_featured_infinite_IDs = trim(get_option('tbm_featured_infinite_ID'));
     if ($tbm_featured_infinite_IDs) :
         $tbm_featured_infinite_IDs = array_map('trim', explode(',', $tbm_featured_infinite_IDs));
+        $tbm_featured_infinite_IDs = array_map('absint', $tbm_featured_infinite_IDs);
         $tbm_featured_infinite_ID = $tbm_featured_infinite_IDs[array_rand($tbm_featured_infinite_IDs)];
     endif;
 
