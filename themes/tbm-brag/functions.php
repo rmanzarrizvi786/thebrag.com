@@ -3544,8 +3544,6 @@ add_filter('the_content', function ($content) {
     if (is_singular('page'))
         return $content;
 
-    $css = '';
-
     if (get_field('override_footer_comps_box')) {
         if (get_field('override_footer_comps_colour')) {
             $content .= '<style>.comp-footer a {
