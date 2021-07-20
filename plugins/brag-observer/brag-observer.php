@@ -455,7 +455,7 @@ class BragObserver
     * Process MailChimp subs and unsubs
     * + Send welcome emails
     */
-    $query_subs = "
+    /* $query_subs = "
     SELECT
       s.id,
       s.list_id,
@@ -480,8 +480,31 @@ class BragObserver
     ORDER BY
       s.subscribed_at DESC
     LIMIT 100
-    ";
+    "; */
     //( s.status_mailchimp IS NULL OR ( s.mc_subscribed_at IS NULL AND s.mc_unsubscribed_at IS NULL ) )
+
+    $query_subs = "
+    SELECT
+      s.id,
+      s.list_id,
+      s.status,
+      u.ID user_id,
+      u.user_email,
+      l.interest_id,
+      l.title list_title,
+      l.status list_status
+    FROM
+      {$wpdb->prefix}observer_subs s
+        JOIN {$wpdb->prefix}observer_lists l
+          ON s.list_id = l.id
+        JOIN {$wpdb->prefix}users u
+          ON s.user_id = u.ID
+    WHERE
+      ( s.status != s.status_mailchimp OR s.status_mailchimp IS NULL)
+    ORDER BY
+      s.unsubscribed_at DESC
+    LIMIT 100
+    ";
     $subs = $wpdb->get_results($query_subs);
 
     $sub_users = [];
@@ -631,24 +654,49 @@ class BragObserver
     */
     $comps_query = "
       SELECT
-        l.title,
-        u.ID user_id,
-        u.user_email
-      FROM {$wpdb->prefix}observer_lead_generators l
-        JOIN {$wpdb->prefix}observer_lead_generator_responses lr
-          ON l.id = lr.lead_generator_id
-        JOIN {$wpdb->prefix}users u
-          ON lr.user_id = u.ID
+        l.`title`,
+        l.`list_id`,
+        u.`ID` user_id,
+        u.`user_email`
+      FROM `{$wpdb->prefix}observer_lead_generators` l
+        JOIN `{$wpdb->prefix}observer_lead_generator_responses` lr
+          ON l.`id` = lr.`lead_generator_id`
+        JOIN `{$wpdb->prefix}users` u
+          ON lr.`user_id` = u.`ID`
         WHERE
-          lr.status = 'verified'
+          lr.`status` = 'verified'
           AND
-          lr.status_mailchimp IS NULL
+          lr.`status_mailchimp` IS NULL
+          AND
+          ( `lr`.`last_attempt` IS NULL
+          OR
+          ( DATE(`lr`.`last_attempt`) <= '" . date('Y-m-d', strtotime('-1 day')) . "'
+          AND
+          DATE(`lr`.`last_attempt`) > '" . date('Y-m-d', strtotime('-3 day')) . "'
+          )
+          )
+          ORDER BY lr.created_at DESC
         LIMIT 100
     ";
+    // exit($comps_query);
+
+    $lead_generator = new LeadGenerator();
+
     $comp_entries = $wpdb->get_results($comps_query);
     if ($comp_entries) {
       $comp_subs = [];
       foreach ($comp_entries as $entry) {
+
+        $lists = explode(',', $entry->list_id);
+        foreach ($lists as $list_id) {
+
+          $check_sub = $wpdb->get_row("SELECT id, status FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$entry->user_id}' AND list_id = '{$list_id}' LIMIT 1");
+
+          if (!$check_sub) {
+            $lead_generator->subscribe($entry->user_id, $list_id);
+          }
+        }
+
         $tags = [];
         $entrys_title = $entry->title;
         $tag = [
@@ -677,6 +725,7 @@ class BragObserver
               $wpdb->prefix . 'observer_lead_generator_responses',
               [
                 'status_mailchimp' => 'Error',
+                'last_attempt' => current_time('mysql'),
               ],
               [
                 'user_id' => $user_id,
@@ -689,6 +738,7 @@ class BragObserver
             $wpdb->prefix . 'observer_lead_generator_responses',
             [
               'status_mailchimp' => 'processed',
+              'last_attempt' => current_time('mysql'),
             ],
             [
               'user_id' => $user_id,

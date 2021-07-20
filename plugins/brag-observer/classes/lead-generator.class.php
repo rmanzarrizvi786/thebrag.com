@@ -173,14 +173,15 @@ class LeadGenerator extends BragObserver
         } else {
           $user = $this->create_user($formData['email']);
 
+          $verified = true;
+
           /* TMP {{ */
-          // $verified = true;
           // update_user_meta( $user->ID, 'is_activated', 1 );
           /* }} TMP */
 
-          if (!get_user_meta($user->ID, 'is_activated', true)) {
+          /* if (!get_user_meta($user->ID, 'is_activated', true)) {
             update_user_meta($user->ID, 'is_activated', 0);
-          }
+          } */
 
           $message = !is_null($lead_generator->msg_thanks_verify) ? $lead_generator->msg_thanks_verify : 'Please verify your feedback by clicking the link we sent you via email.';
           // $message = 'Please verify your feedback by clicking the link we sent you via email.';
@@ -220,7 +221,10 @@ class LeadGenerator extends BragObserver
       $response_id = $wpdb->insert_id;
 
       if ($verified) {
-        $this->subscribe($user->ID, $lead_generator->list_id);
+        $lists = explode(',', $lead_generator->list_id);
+        foreach ($lists as $list_id) {
+          $this->subscribe($user->ID, $list_id);
+        }
 
         // If referrer is set for competition
         if (isset($formData['lc'])) {
