@@ -159,6 +159,8 @@ class LeadGenerator extends BragObserver
       $user = wp_get_current_user();
       $verified = true;
       $message = !is_null($lead_generator->msg_thanks) ? $lead_generator->msg_thanks : 'Thank you! Your feedback has been submitted.';
+
+      update_user_meta($user->ID, 'is_activated', 1);
     else :
       $formData['email'] = trim($formData['email']);
       if (!isset($formData['email']) || !is_email($formData['email'])) {
