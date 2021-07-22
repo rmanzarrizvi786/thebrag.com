@@ -120,7 +120,7 @@ if (!post_password_required($post)) :
 
         <hr class="h-divider mb-3">
         <div class="d-flex align-items-start">
-            <div class="col-md-8 pl-md-5 pl-lg-0">
+            <div class="col-md-8 pl-md-5 pl-lg-0" style="max-width: 100%;">
                 <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
