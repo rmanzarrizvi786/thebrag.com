@@ -203,6 +203,9 @@ if ($profile_strength < 20) {
   </div>
 </div>
 
+<!-- <div class="text-center pb-2" style="color: #ccc;">
+  <a href="#" class="unsubscribe-all" style="color: #ccc;" onClick="return confirm('Are you sure you want to unsubscribe from ALL newsletters?');">Click here</a> to unsubscribe from all newsletters
+</div> -->
 
 <?php
 $colors_pool = [

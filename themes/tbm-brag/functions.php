@@ -1377,7 +1377,7 @@ add_action('wp_head', 'custom_add_meta_description_tag', 1);
 // Defer JS files
 function defer_parsing_of_js($url)
 {
-    if (!is_admin() && function_exists('is_amp_endpoint') && !is_amp_endpoint()) {
+    if (!is_admin()) { // } && function_exists('is_amp_endpoint') && !is_amp_endpoint()) {
         if (FALSE === strpos($url, '.js')) return $url;
         if (strpos($url, 'jquery.js') || strpos($url, 'jquery.min.js') || strpos($url, 'fuseplatform') || strpos($url, 'amp')) return $url;
         if (strpos($url, 'amp')) return $url;
