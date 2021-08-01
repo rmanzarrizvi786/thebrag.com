@@ -83,7 +83,7 @@
       "dateModified": "<?php echo the_modified_date('Y-m-d\TH:i:s+10:00'); ?>",
       "author": {
         "@type": "Person",
-        "name": "<?php echo urlencode($author); ?>"
+        "name": "<?php echo $author; ?>"
       },
       "publisher": {
         "@type": "Organization",
