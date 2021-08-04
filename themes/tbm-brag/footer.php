@@ -83,7 +83,7 @@
       "dateModified": "<?php echo the_modified_date('Y-m-d\TH:i:s+10:00'); ?>",
       "author": {
         "@type": "Person",
-        "name": "<?php echo addslashes($author); ?>"
+        "name": "<?php echo str_replace(['"', '\\'], ['\"', '\\\\',], $author); ?>"
       },
       "publisher": {
         "@type": "Organization",
