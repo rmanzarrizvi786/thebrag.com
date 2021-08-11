@@ -940,7 +940,7 @@ $page_template = get_page_template_slug();
             </button>
 
             <a id="header-logo" class="header-logo" href="<?php echo home_url('/observer/'); ?>">
-              <img src="<?php echo get_template_directory_uri(); ?>/images/observer/TBOLogo.svg" alt="The Brag Observer" class="img-fluid" width="150" height="37">
+              <img src="https://cdn.thebrag.com/observer/The-Brag-Observer-300px.jpg" alt="The Brag Observer" class="img-fluid" width="150" height="37">
             </a>
           </div>
           <div id="header-submenu-wrap" class="col-4 col-md-8 text-right align-items-end d-flex flex-column">

@@ -175,7 +175,7 @@ if ($observer_slug) {
 
           <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/td/Tone-Deaf-light.png" alt="Tone Deaf" class="lazyload" style="width: 60px"></a></li><!-- Tone Deaf -->
 
-          <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/dbu.png" alt="Don't Bore Us" class="lazyload" style="width: 100px;"></a></li><!-- Don't Bore Us -->
+          <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/dbu.png" alt="Don't Bore Us" class="lazyload" style="width: 150px;"></a></li><!-- Don't Bore Us -->
 
           <li class="nav-item"><a href="https://thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tb/The-Brag-light.png" alt="The Brag" style="width: 120px;"></a></li>
 
