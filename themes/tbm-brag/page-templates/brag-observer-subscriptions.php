@@ -266,7 +266,7 @@ if ($lists) :
     <?php
     // My list {{
     if (isset($my_sub_lists) && !empty($my_sub_lists)) :
-      $my_lists = $wpdb->get_results("SELECT l.id, l.title, l.slug, l.description, l.image_url, l.frequency, sub_count FROM {$wpdb->prefix}observer_lists l WHERE l.id IN (" . implode(',', $my_sub_lists) . ") ORDER BY sub_count ASC ");
+      $my_lists = $wpdb->get_results("SELECT l.id, l.title, l.slug, l.description, l.image_url, l.frequency, sub_count FROM {$wpdb->prefix}observer_lists l WHERE l.id IN (" . implode(',', $my_sub_lists) . ") and l.status = 'active' ORDER BY sub_count ASC ");
       if ($my_lists) :
         foreach ($my_lists as $list) :
           if (48 == $list->id) // Exclude Tone Deaf Tastemakers
@@ -392,9 +392,9 @@ if ($lists) :
           <?php if (in_array($list->id, $my_vote_lists)) :
             $share_url = $list->slug ? home_url('/observer/' . $list->slug . '/') : home_url('/observer/');
           ?>
-            <a class="btn btn-default btn-outline-primary btn-share mx-1" href="http://www.facebook.com/share.php?u=<?php echo $share_url; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a class="btn btn-default btn-outline-primary btn-share mx-1" href="http://www.facebook.com/share.php?u=<?php echo $share_url; ?>" target="_blank"><i class="fab fa-facebook fa-lg" aria-hidden=true></i></a>
 
-            <a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fab fa-twitter fa-lg" aria-hidden=true></i></a>
           <?php else : ?>
             <button type="button" class="btn btn-dark rounded btn-block btn-vote-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#voteobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-votes="<?php echo $list->votes_count; ?>">
               <div><i class="fa fa-thumbs-up mr-2"></i> <span class="btn-text">Vote</span></div>
