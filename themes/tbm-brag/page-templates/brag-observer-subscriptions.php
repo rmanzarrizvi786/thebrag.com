@@ -8,6 +8,25 @@ endif;
 $current_user = wp_get_current_user();
 $user_id = $current_user->ID;
 
+if (isset($_GET['a'])) {
+  if ('unsub-all' == trim($_GET['a'])) {
+    $update_data = [
+      'status' => 'unsubscribed',
+      'status_mailchimp' => NULL,
+      'unsubscribed_at' => current_time('mysql'),
+    ];
+    $wpdb->update(
+      $wpdb->prefix . 'observer_subs',
+      $update_data,
+      [
+        'user_id' => $user_id,
+      ]
+    );
+    wp_redirect(home_url('/observer-subscriptions/'));
+    exit;
+  }
+}
+
 $my_sub_lists = [];
 $my_vote_lists = [];
 $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
@@ -202,10 +221,6 @@ if ($profile_strength < 20) {
     <?php the_content(); ?>
   </div>
 </div>
-
-<!-- <div class="text-center pb-2" style="color: #ccc;">
-  <a href="#" class="unsubscribe-all" style="color: #ccc;" onClick="return confirm('Are you sure you want to unsubscribe from ALL newsletters?');">Click here</a> to unsubscribe from all newsletters
-</div> -->
 
 <?php
 $colors_pool = [
@@ -420,6 +435,9 @@ if ($lists) :
   </div>
 </div>
 
+<div class="text-center py-2" style="color: #ccc;">
+  <a href="<?php echo home_url('/observer-subscriptions/'); ?>?a=unsub-all" class="unsubscribe-all" style="color: #ccc;" onClick="return confirm('Are you sure you want to unsubscribe from ALL newsletters?');">Click here</a> to unsubscribe from all newsletters
+</div>
 
 <?php
 get_template_part('page-templates/brag-observer/footer');
