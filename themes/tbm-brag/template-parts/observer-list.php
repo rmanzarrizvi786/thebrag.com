@@ -35,7 +35,7 @@
   ?>
     <div class="d-flex flex-row flex-wrap justify-content-start topics <?php echo is_user_logged_in() ? 'topics-active' : ''; ?>">
       <?php foreach ($lists as $index => $list) : ?>
-        <a href="<?php echo home_url("/observer/{$list->slug}"); ?>" class="d-flex <?php echo in_array($list->id, $my_sub_lists) ? 'subscribed' : ''; ?>" target="_blank" data-list="<?php echo $list->id; ?>">
+        <a href="<?php echo home_url("/observer/{$list->slug}/"); ?>" class="d-flex <?php echo in_array($list->id, $my_sub_lists) ? 'subscribed' : ''; ?>" target="_blank" data-list="<?php echo $list->id; ?>">
           <span class="text-primary tick mr-1"><img src="<?php echo ICONS_URL; ?>check.svg" width="16" height="16" alt="-"></span>
           <span class="text-primary plus mr-1"><img src="<?php echo ICONS_URL; ?>plus-tb.svg" width="16" height="16" alt="+"></span>
           <span class="text-primary plus-hover mr-1"><img src="<?php echo ICONS_URL; ?>plus.svg" width="16" height="16" alt="+"></span>
