@@ -21,6 +21,10 @@ $pages += [
         'text' => 'Magazine subscriptions'
     ]
 ];
+$pages['observer-subscriptions'] = [
+    'link' => 'observer-subscriptions',
+    'text' => 'My preferences',
+];
 
 $current_user = wp_get_current_user();
 
@@ -76,7 +80,6 @@ if (isset($access_token)) {
 }
 
 if (is_user_logged_in()) {
-
     if (
         !is_null($auth0_user) &&
         isset($auth0_user['identities']) &&
