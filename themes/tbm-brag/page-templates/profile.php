@@ -125,9 +125,9 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     // 'gender',
   ];
 
-  if (get_user_meta($current_user->ID, 'is_imported', true) === '1') {
-    // array_push( $required_fields, 'password', 'confirm_password' );
-  }
+  // if (get_user_meta($current_user->ID, 'is_imported', true) === '1') {
+  // array_push( $required_fields, 'password', 'confirm_password' );
+  // }
 
   foreach ($required_fields as $required_field) {
     if (!isset($post_vars[$required_field]) || '' == trim($post_vars[$required_field])) {
@@ -143,14 +143,16 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   }
   */
 
-  $user_data['first_name'] = $post_vars['first_name'];
-  $user_data['last_name'] = $post_vars['last_name'];
-  $user_data['display_name'] = $post_vars['first_name'] . ' ' . $post_vars['last_name'];
+  $user_data['first_name'] = sanitize_text_field($post_vars['first_name']);
+  $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
+  $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
+  $user_data['description'] = sanitize_textarea_field($post_vars['description']);
 
   if (!is_null($auth0_user)) {
     $auth0_usermeta['first_name'] = $user_data['first_name'];
     $auth0_usermeta['last_name'] = $user_data['last_name'];
     $auth0_usermeta['display_name'] = $user_data['display_name'];
+    $auth0_usermeta['bio'] = $user_data['description'];
   }
 
   if (
@@ -173,13 +175,13 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $errors[] = 'Please select your state.';
   }
 
-  if (isset($post_vars['password']) && '' != $post_vars['password']) {
+  /* if (isset($post_vars['password']) && '' != $post_vars['password']) {
     if (!isset($post_vars['confirm_password']) || $post_vars['password'] != $post_vars['confirm_password']) {
       $errors[] = 'Please make sure the password and confirm password are same if you want to change password.';
     } else {
       $user_data['user_pass'] = $post_vars['password'];
     }
-  }
+  } */
 
   $update_user = wp_update_user($user_data);
 
@@ -389,7 +391,7 @@ get_header();
           </div>
 
           <?php if (!empty($errors)) : ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger my-3">
               <?php foreach ($errors as $error) : ?>
                 <div><?php echo $error; ?></div>
               <?php endforeach; ?>
@@ -397,7 +399,7 @@ get_header();
           <?php endif; ?>
 
           <?php if (!empty($messages)) : ?>
-            <div class="alert alert-success">
+            <div class="alert alert-success my-3">
               <?php foreach ($messages as $message) : ?>
                 <div><?php echo $message; ?></div>
               <?php endforeach; ?>
@@ -518,8 +520,6 @@ get_header();
                 </div>
               </div>
 
-
-
               <div class="col-12 mt-3 col-md-3 px-0 px-md-1">
                 <?php
                 $user_gender = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
@@ -537,17 +537,10 @@ get_header();
                 </select>
               </div>
 
-              <?php if (0 && get_user_meta($current_user->ID, 'is_imported', true) === '1') { ?>
-                <div class="col-12 mt-3 col-md-6">
-                  <h4>Password <small class="text-danger">*</small></h4>
-                  <input type="password" name="password" id="password" class="form-control" value="" autocomplete="new-password">
-                </div>
-
-                <div class="col-12 mt-3 col-md-6">
-                  <h4>Confirm Password <small class="text-danger">*</small></h4>
-                  <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" autocomplete="new-password">
-                </div>
-              <?php } ?>
+              <div class="col-12 mt-3 px-0 px-md-1">
+                <h4>Bio</h4>
+                <textarea name="description" id="description" class="form-control" rows="5" placeholder="Describe yourself..."><?php echo isset($auth0_user['user_metadata']['bio']) ? $auth0_user['user_metadata']['bio'] : get_user_meta($current_user->ID, 'description', true); ?></textarea>
+              </div>
 
               <div class="col-12 mt-3">
                 <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Save">
