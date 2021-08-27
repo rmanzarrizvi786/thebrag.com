@@ -55,6 +55,8 @@ if (isset($access_token)) {
   try {
     if ($wp_auth0_id = get_user_meta($current_user->ID, 'wp_auth0_id', true)) {
       $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
+    } elseif ($wp_auth0_id = get_user_meta($current_user->ID, $wpdb->prefix . 'auth0_id', true)) {
+      $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
     }
   } catch (Exception $e) {
     // die($e->getMessage());
