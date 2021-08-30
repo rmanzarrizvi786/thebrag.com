@@ -541,7 +541,7 @@ get_header();
 
               <div class="col-12 mt-3 px-0 px-md-1">
                 <h4>Bio</h4>
-                <textarea name="description" id="description" class="form-control" rows="5" placeholder="Describe yourself..."><?php echo isset($auth0_user['user_metadata']['bio']) ? $auth0_user['user_metadata']['bio'] : get_user_meta($current_user->ID, 'description', true); ?></textarea>
+                <textarea name="description" id="description" class="form-control" rows="3" placeholder="Describe yourself..."><?php echo isset($auth0_user['user_metadata']['bio']) ? $auth0_user['user_metadata']['bio'] : get_user_meta($current_user->ID, 'description', true); ?></textarea>
                 <div class="text-dull" style="font-size: .75rem; color: #bbb;">Max 150 characters</div>
               </div>
 
