@@ -146,6 +146,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   $user_data['first_name'] = sanitize_text_field($post_vars['first_name']);
   $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
   $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
+
+  $post_vars['description'] = substr($post_vars['description'], 0, 150);
   $user_data['description'] = sanitize_textarea_field($post_vars['description']);
 
   if (!is_null($auth0_user)) {
@@ -540,6 +542,7 @@ get_header();
               <div class="col-12 mt-3 px-0 px-md-1">
                 <h4>Bio</h4>
                 <textarea name="description" id="description" class="form-control" rows="5" placeholder="Describe yourself..."><?php echo isset($auth0_user['user_metadata']['bio']) ? $auth0_user['user_metadata']['bio'] : get_user_meta($current_user->ID, 'description', true); ?></textarea>
+                <div class="text-dull" style="font-size: .75rem; color: #bbb;">Max 150 characters</div>
               </div>
 
               <div class="col-12 mt-3">
