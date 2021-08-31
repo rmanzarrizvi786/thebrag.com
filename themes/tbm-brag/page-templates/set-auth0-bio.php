@@ -56,6 +56,8 @@ if (isset($access_token)) {
                     $mgmt_api->users()->update($wp_auth0_id, [
                         'user_metadata' => $auth0_usermeta
                     ]);
+                    echo $user->user_id . ' => ' . $wp_auth0_id . '<br>' . $user->description;
+                    echo '<br><br>';
                 }
             }
         }
