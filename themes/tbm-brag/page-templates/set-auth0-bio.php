@@ -1,9 +1,5 @@
 <?php
-/*
- * Template Name: Set Auth0 Bio (temp)
- */
-
-require get_template_directory() . '/vendor/autoload.php';
+/* require get_template_directory() . '/vendor/autoload.php';
 
 use Auth0\SDK\Auth0;
 use Auth0\SDK\API\Authentication;
@@ -45,23 +41,28 @@ if (isset($access_token)) {
         $users = $wpdb->get_results("SELECT `user_id`, `meta_value` AS `description` FROM {$wpdb->prefix}usermeta WHERE `meta_key` = 'description' AND `meta_value` != '' ");
         if ($users) {
             foreach ($users as $user) {
+                $auth0_user = null;
+
                 if ($wp_auth0_id = get_user_meta($user->user_id, 'wp_auth0_id', true)) {
                     $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
                 } elseif ($wp_auth0_id = get_user_meta($user->user_id, $wpdb->prefix . 'auth0_id', true)) {
                     $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
                 }
 
+                echo $user->user_id . ' => ' . $wp_auth0_id . '<br>';
+
                 $auth0_usermeta['bio'] = $user->description;
                 if (!is_null($auth0_user) && isset($auth0_usermeta) && !empty($auth0_usermeta)) {
                     $mgmt_api->users()->update($wp_auth0_id, [
                         'user_metadata' => $auth0_usermeta
                     ]);
-                    echo $user->user_id . ' => ' . $wp_auth0_id . '<br>' . $user->description;
+                    echo $user->description;
                     echo '<br><br>';
                 }
             }
         }
     } catch (Exception $e) {
-        // die($e->getMessage());
+        die($e->getMessage());
     }
 }
+ */
