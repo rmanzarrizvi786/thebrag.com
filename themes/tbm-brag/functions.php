@@ -3558,3 +3558,14 @@ add_filter('the_content', function ($content) {
 
     return $content;
 });
+
+function get_social_platforms()
+{
+    // platform => Title
+    return [
+        'twitter' => 'Twitter',
+        'instagram' => 'Instagram',
+        'youtube' => 'YouTube',
+        'tiktok' => 'TikTok'
+    ];
+}

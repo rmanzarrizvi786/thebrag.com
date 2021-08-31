@@ -147,6 +147,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
   $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
 
+  foreach (get_social_platforms() as $social_platform => $social_title) {
+    if (isset($post_vars[$social_platform])) {
+      $user_data[$social_platform] = esc_url_raw($post_vars[$social_platform]);
+    }
+  }
+
   $post_vars['description'] = substr($post_vars['description'], 0, 150);
   $user_data['description'] = sanitize_textarea_field($post_vars['description']);
 
@@ -155,6 +161,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $auth0_usermeta['last_name'] = $user_data['last_name'];
     $auth0_usermeta['display_name'] = $user_data['display_name'];
     $auth0_usermeta['bio'] = $user_data['description'];
+
+    foreach (get_social_platforms() as $social_platform => $social_title) {
+      if (isset($user_data[$social_platform])) {
+        $auth0_usermeta[$social_platform] = $user_data[$social_platform];
+      }
+    }
   }
 
   if (
@@ -177,17 +189,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $errors[] = 'Please select your state.';
   }
 
-  /* if (isset($post_vars['password']) && '' != $post_vars['password']) {
-    if (!isset($post_vars['confirm_password']) || $post_vars['password'] != $post_vars['confirm_password']) {
-      $errors[] = 'Please make sure the password and confirm password are same if you want to change password.';
-    } else {
-      $user_data['user_pass'] = $post_vars['password'];
-    }
-  } */
-
   $update_user = wp_update_user($user_data);
-
-  // var_dump( $update_user ); exit;
 
   if (is_wp_error($update_user)) {
     $errors[] = $update_user->get_error_messages()[0];
@@ -236,23 +238,6 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     }
 
     delete_user_meta($current_user->ID, 'is_imported');
-
-    /* $query_subs = "
-      SELECT
-        s.id,
-        s.list_id,
-        s.status,
-        l.interest_id
-      FROM
-        {$wpdb->prefix}observer_subs s
-          JOIN {$wpdb->prefix}observer_lists l
-            ON s.list_id = l.id
-      WHERE
-        s.user_id = '{$current_user->ID}'
-      ";
-    $subs = $wpdb->get_results($query_subs); */
-
-    // echo '<pre>'; print_r( $subs ); exit;
 
     if (!is_null($auth0_user) && isset($auth0_usermeta) && !empty($auth0_usermeta)) {
       $mgmt_api->users()->update($wp_auth0_id, [
@@ -432,7 +417,7 @@ get_header();
             <div class="row">
               <!--
             <div class="col-12">
-              <h4>Email <small class="text-danger">*</small></h4>
+              <h4 class="mb-0">Email <small class="text-danger">*</small></h4>
               <input type="text" name="email" id="email" class="form-control" value="<?php // echo isset( $post_vars ) && isset( $post_vars['email'] ) ? $post_vars['email'] : ( strpos( $current_user->user_email, '@privaterelay.appleid.com' ) === FALSE ? $current_user->user_email : '' ); 
                                                                                       ?>" required>
             </div>
@@ -440,7 +425,7 @@ get_header();
 
               <?php if (strpos($current_user->user_email, '@privaterelay.appleid.com') === FALSE) : ?>
                 <div class="col-12 px-0 px-md-1">
-                  <h4>Email Address</h4>
+                  <h4 class="mb-0">Email Address</h4>
                   <?php echo preg_replace('/(?:^|.@).\K|.\.[^@]*$(*SKIP)(*F)|.(?=.*?\.)/', '*', $current_user->user_email); ?>
                 </div>
               <?php endif; ?>
@@ -451,7 +436,7 @@ get_header();
                   $auth0_user['user_metadata']['first_name']
                   :
                   get_user_meta($current_user->ID, 'first_name', true)); ?>
-                <h4>First name</h4>
+                <h4 class="mb-0">First name</h4>
                 <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $first_name; ?>">
               </div>
 
@@ -461,7 +446,7 @@ get_header();
                   $auth0_user['user_metadata']['last_name']
                   :
                   get_user_meta($current_user->ID, 'last_name', true)); ?>
-                <h4>Last name</h4>
+                <h4 class="mb-0">Last name</h4>
                 <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo  $last_name; ?>">
               </div>
 
@@ -472,7 +457,7 @@ get_header();
                   $auth0_user['user_metadata']['state']
                   : get_user_meta($current_user->ID, 'state', true);
                 ?>
-                <h4>State</h4>
+                <h4 class="mb-0">State</h4>
                 <select aria-label="State" name="state" id="state" title="State" class="form-control">
                   <option value=""></option>
                   <?php foreach (getStates() as $state_abbr => $state) : ?>
@@ -490,7 +475,7 @@ get_header();
                   : get_user_meta($current_user->ID, 'birthday', true);
                 $birthday = $birthday ? explode('-', $birthday) : [];
                 ?>
-                <h4>Birthday</h4>
+                <h4 class="mb-0">Birthday</h4>
                 <div class="input-group d-flex">
                   <select aria-label="Day" name="birthday_day" id="day" title="Day" class="form-control">
                     <option value="0">Day</option>
@@ -529,7 +514,7 @@ get_header();
                   $auth0_user['user_metadata']['gender']
                   : get_user_meta($current_user->ID, 'gender', true);
                 ?>
-                <h4>Gender</h4>
+                <h4 class="mb-0">Gender</h4>
                 <select aria-label="Gender" name="gender" id="gender" title="Gender" class="form-control">
                   <option value=""></option>
                   <?php foreach (getGenders() as $gender) : ?>
@@ -540,10 +525,22 @@ get_header();
               </div>
 
               <div class="col-12 mt-3 px-0 px-md-1">
-                <h4>Bio</h4>
+                <h4 class="mb-0">Bio</h4>
                 <textarea name="description" id="description" class="form-control" rows="3" placeholder="Describe yourself..."><?php echo isset($auth0_user['user_metadata']['bio']) ? $auth0_user['user_metadata']['bio'] : get_user_meta($current_user->ID, 'description', true); ?></textarea>
                 <div class="text-dull" style="font-size: .75rem; color: #bbb;">Max 150 characters</div>
               </div>
+
+              <?php foreach (get_social_platforms() as $social_platform => $social_title) : ?>
+                <div class="col-12 mt-3 px-0 px-md-1">
+                  <?php $value = isset($post_vars) && isset($post_vars[$social_platform]) ? $post_vars[$social_platform] : (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata'][$social_platform])
+                    ?
+                    $auth0_user['user_metadata'][$social_platform]
+                    :
+                    get_user_meta($current_user->ID, $social_platform, true)); ?>
+                  <h4 class="mb-0"><?php echo $social_title; ?></h4>
+                  <input type="text" name="<?php echo $social_platform; ?>" id="<?php echo $social_platform; ?>" class="form-control" value="<?php echo $value; ?>" placeholder="https://">
+                </div>
+              <?php endforeach; ?>
 
               <div class="col-12 mt-3">
                 <input type="submit" name="submit" id="btn-submit" class="btn btn-dark rounded" value="Save">
