@@ -501,14 +501,16 @@ get_header();
                       });
 
                       $('#form-profile').on('submit', function() {
-                        $image_crop.croppie('result', {
-                          type: 'canvas',
-                          size: 'viewport'
-                        }).then(function(response) {
-                          $('#chosen_profile_picture_data').val(response);
-                          $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
-                          $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
-                        })
+                        if ($('#chosen_profile_picture_data').val() == '') {
+                          $image_crop.croppie('result', {
+                            type: 'canvas',
+                            size: 'viewport'
+                          }).then(function(response) {
+                            $('#chosen_profile_picture_data').val(response);
+                            $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
+                            $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
+                          });
+                        }
                       });
                     });
                   </script>
