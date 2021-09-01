@@ -976,7 +976,7 @@ $page_template = get_page_template_slug();
                       <i class="fa fa-user"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownUserButton" style="left: auto; right: 0;">
-                      <a class="dropdown-item" href="<?php echo home_url('/observer-subscriptions/'); ?>">My preferences</a>
+                      <a class="dropdown-item" href="<?php echo home_url('/observer-subscriptions/'); ?>">Email preferences</a>
                       <a class="dropdown-item" href="<?php echo home_url('/observer/magazine-subscriptions/'); ?>">Magazine subscriptions</a>
                       <a class="dropdown-item" href="<?php echo home_url('/observer/competitions/'); ?>">Competitions</a>
                       <a class="dropdown-item" href="<?php echo home_url('/profile/'); ?>">Profile <span class="badge <?php echo $profile_complete_class; ?>"><?php echo $profile_complete_percentage; ?>% complete</span></a>

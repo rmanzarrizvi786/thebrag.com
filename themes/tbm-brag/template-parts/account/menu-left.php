@@ -23,7 +23,7 @@ $pages += [
 ];
 $pages['observer-subscriptions'] = [
     'link' => 'observer-subscriptions',
-    'text' => 'My preferences',
+    'text' => 'Email preferences',
 ];
 
 $current_user = wp_get_current_user();
