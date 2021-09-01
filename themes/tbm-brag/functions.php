@@ -1987,6 +1987,9 @@ add_filter('map_meta_cap', 'km_add_unfiltered_html_capability_to_editors', 1, 3)
 add_filter('wp_handle_upload_prefilter', 'ssm_limit_image_size');
 function ssm_limit_image_size($file)
 {
+    if (!isset($file['type'])) {
+        return $file;
+    }
     $errors = array();
     if (strpos($file['type'], 'image') !== false) {
         $filename = $file['name'];

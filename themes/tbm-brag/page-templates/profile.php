@@ -111,6 +111,28 @@ if ($profile_strength < 20) {
 if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action']) {
   $post_vars = stripslashes_deep($_POST);
 
+  if (isset($_POST["chosen_profile_picture_data"]) && '' != trim($_POST["chosen_profile_picture_data"])) {
+
+    require_once(ABSPATH . 'wp-admin/includes/media.php');
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+    $data = $_POST["chosen_profile_picture_data"];
+    $image_array_1 = explode(";", $data);
+    $image_array_2 = explode(",", $image_array_1[1]);
+    $data = base64_decode($image_array_2[1]);
+
+    $imageName = 'wp-content/uploads/users/u-' . md5($current_user->ID . time()) . '.jpg';
+    file_put_contents($imageName, $data);
+
+    $imageId = media_sideload_image(home_url('/' . $imageName), 0, '', 'id');
+    if ($imageId) {
+      $profile_picture = wp_get_attachment_image_src($imageId, 'full');
+      $auth0_usermeta['picture'] = $profile_picture[0];
+
+      @unlink($imageName);
+    }
+  }
   $user_data = [
     'ID' => $current_user->ID
   ];
@@ -408,27 +430,99 @@ get_header();
             </div>
           <?php endif; ?>
 
-          <form action="<?php echo home_url('profile'); ?>" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
+          <form action="<?php echo home_url('profile'); ?>" enctype="multipart/form-data" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
 
             <input type="hidden" name="returnTo" value="<?php echo $returnTo; ?>">
-
             <input type="hidden" name="action" value="save-profile">
 
             <div class="row">
-              <!--
-            <div class="col-12">
-              <h4 class="mb-0">Email <small class="text-danger">*</small></h4>
-              <input type="text" name="email" id="email" class="form-control" value="<?php // echo isset( $post_vars ) && isset( $post_vars['email'] ) ? $post_vars['email'] : ( strpos( $current_user->user_email, '@privaterelay.appleid.com' ) === FALSE ? $current_user->user_email : '' ); 
-                                                                                      ?>" required>
-            </div>
-            -->
+              <div class="col-12 px-0 px-md-1">
+                <h4 class="mb-0 text-center">Profile picture</h4>
+                <div>
+                  <?php // if (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) : 
+                  ?>
+                  <!-- <div class="d-none2" id="profile-picture-crop-wrap2">
+                      <img src="<?php echo $auth0_user['user_metadata']['picture']; ?>" id="profile_picture2" class="bg-dark" style="width: 150px; height: 150px;" />
+                    </div> -->
+                  <?php // else : 
+                  ?>
+                  <div class="d-none" id="profile-picture-crop-wrap">
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/default-avatar-4.png" id="profile_picture" class="bg-dark" />
+                  </div>
+                  <?php // endif; 
+                  ?>
+                  <div class="text-center d-none" id="btn-ok-wrap">
+                    <button class="btn btn-outline-dark btn-ok">OK</button>
+                  </div>
 
-              <?php if (strpos($current_user->user_email, '@privaterelay.appleid.com') === FALSE) : ?>
-                <div class="col-12 px-0 px-md-1">
-                  <h4 class="mb-0">Email Address</h4>
-                  <?php echo preg_replace('/(?:^|.@).\K|.\.[^@]*$(*SKIP)(*F)|.(?=.*?\.)/', '*', $current_user->user_email); ?>
+                  <div class="text-center">
+                    <img src="<?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? $auth0_user['user_metadata']['picture'] : 'd-none'; ?>" id="chosen-profile-picture" class="rounded-circle <?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? '' : 'd-none'; ?>" style="width: 200px; height: 200px;">
+                    <textarea name="chosen_profile_picture_data" id="chosen_profile_picture_data" readonly class="d-none"></textarea>
+                  </div>
+
+                  <div class="mt-2 text-center">
+                    <input type="file" name="upload_profile_picture" id="upload_profile_picture" class="form-control" accept="image/*" />
+                  </div>
+
+                  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/croppie/croppie.css" />
+                  <script src="<?php echo get_template_directory_uri(); ?>/croppie/croppie.js"></script>
+                  <script>
+                    jQuery(document).ready(function($) {
+                      $image_crop = $('#profile_picture').croppie({
+                        enableExif: true,
+                        viewport: {
+                          width: 300,
+                          height: 300,
+                          type: 'square'
+                        },
+                        boundary: {
+                          width: 350,
+                          height: 350
+                        }
+                      });
+
+                      $('#upload_profile_picture').on('change', function() {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                          $image_crop.croppie('bind', {
+                            url: event.target.result
+                          }).then(function() {
+
+                          });
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                        $('#chosen-profile-picture').addClass('d-none');
+                        $('#profile-picture-crop-wrap, #btn-ok-wrap').removeClass('d-none');
+                        $(this).addClass('d-none');
+                      });
+
+                      $('.btn-ok').on('click', function(e) {
+                        e.preventDefault();
+                        $image_crop.croppie('result', {
+                          type: 'canvas',
+                          size: 'viewport'
+                        }).then(function(response) {
+                          $('#chosen_profile_picture_data').val(response);
+                          $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
+                          $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
+                        })
+                      });
+                    });
+                  </script>
                 </div>
-              <?php endif; ?>
+              </div>
+
+              <div class="col-12 mt-3 px-0 px-md-1">
+                <div>
+                  <?php if (strpos($current_user->user_email, '@privaterelay.appleid.com') === FALSE) : ?>
+                    <div>
+                      <h4 class="mb-0">Email Address</h4>
+                      <?php echo preg_replace('/(?:^|.@).\K|.\.[^@]*$(*SKIP)(*F)|.(?=.*?\.)/', '*', $current_user->user_email); ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+
 
               <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
                 <?php $first_name = isset($post_vars) && isset($post_vars['first_name']) ? $post_vars['first_name'] : (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['first_name'])
