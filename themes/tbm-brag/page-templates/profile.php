@@ -430,29 +430,21 @@ get_header();
             </div>
           <?php endif; ?>
 
-          <form action="<?php echo home_url('profile'); ?>" enctype="multipart/form-data" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
+          <form action="<?php echo home_url('profile'); ?>" enctype="multipart/form-data" id="form-profile" method="post" onSubmit="document.getElementById('btn-submit').disabled=true;">
 
             <input type="hidden" name="returnTo" value="<?php echo $returnTo; ?>">
             <input type="hidden" name="action" value="save-profile">
 
             <div class="row">
               <div class="col-12 px-0 px-md-1">
-                <h4 class="mb-0 text-center">Profile picture</h4>
+                <h4 class="mb-0">Profile picture</h4>
                 <div>
-                  <?php // if (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) : 
-                  ?>
-                  <!-- <div class="d-none2" id="profile-picture-crop-wrap2">
-                      <img src="<?php echo $auth0_user['user_metadata']['picture']; ?>" id="profile_picture2" class="bg-dark" style="width: 150px; height: 150px;" />
-                    </div> -->
-                  <?php // else : 
-                  ?>
                   <div class="d-none" id="profile-picture-crop-wrap">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/default-avatar-4.png" id="profile_picture" class="bg-dark" />
                   </div>
-                  <?php // endif; 
-                  ?>
+
                   <div class="text-center d-none" id="btn-ok-wrap">
-                    <button class="btn btn-outline-dark btn-ok">OK</button>
+                    <button class="btn btn-dark btn-ok">OK</button>
                   </div>
 
                   <div class="text-center">
@@ -498,6 +490,17 @@ get_header();
 
                       $('.btn-ok').on('click', function(e) {
                         e.preventDefault();
+                        $image_crop.croppie('result', {
+                          type: 'canvas',
+                          size: 'viewport'
+                        }).then(function(response) {
+                          $('#chosen_profile_picture_data').val(response);
+                          $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
+                          $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
+                        })
+                      });
+
+                      $('#form-profile').on('submit', function() {
                         $image_crop.croppie('result', {
                           type: 'canvas',
                           size: 'viewport'
