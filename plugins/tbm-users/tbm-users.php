@@ -62,8 +62,112 @@ class TBMUsers
     // Auth0
     add_action('wpa0_user_created', [$this, '_wpa0_user_created'], 10, 5);
 
+    add_filter('get_avatar', [$this, '_get_avatar'], 9, 5);
+
     // CORS
     // add_filter('init', [$this, 'add_cors_http_header'], 11, 1);
+  }
+
+  public function _get_avatar($avatar, $id_or_email, $size, $default, $alt)
+  {
+    global $wpdb;
+
+    $user = false;
+
+    if (is_numeric($id_or_email)) {
+      $id = (int) $id_or_email;
+      $user = get_user_by('id', $id);
+    } elseif (is_object($id_or_email)) {
+
+      if (!empty($id_or_email->user_id)) {
+        $id = (int) $id_or_email->user_id;
+        $user = get_user_by('id', $id);
+      }
+    } else {
+      $user = get_user_by('email', $id_or_email);
+    }
+
+    if ($user && is_object($user)) {
+      require get_template_directory() . '/vendor/autoload.php';
+
+      $dotenv = \Dotenv\Dotenv::createImmutable(ABSPATH);
+      $dotenv->load();
+
+      $auth0_api = new \Auth0\SDK\API\Authentication(
+        $_ENV['AUTH0_DOMAIN'],
+        $_ENV['AUTH0_CLIENT_ID']
+      );
+
+      $config = [
+        'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+        'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+        'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+      ];
+
+      $user_id = $user->ID;
+
+      $wp_auth0_id = get_user_meta($user_id, 'wp_auth0_id', true);
+      if (!$wp_auth0_id) {
+        $wp_auth0_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
+      }
+
+      if ($wp_auth0_id) {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://thebragmedia.au.auth0.com/oauth/token",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "{\"client_id\":\"{$config['client_id']}\",\"client_secret\":\"{$config['client_secret']}\",\"audience\":\"https://thebragmedia.au.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}",
+          CURLOPT_HTTPHEADER => array(
+            "content-type: application/json"
+          ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        $response = json_decode($response);
+        if (isset($response->access_token)) {
+          $access_token = $response->access_token;
+        }
+
+        $auth0_user = null;
+
+        if (isset($access_token)) {
+          $curl = curl_init();
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://thebragmedia.au.auth0.com/api/v2/users/{$wp_auth0_id}",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+              "authorization: Bearer {$access_token}"
+            ),
+          ));
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
+          curl_close($curl);
+
+          if ('' == $err) {
+            $auth0_user = json_decode($response);
+          }
+        }
+
+        if (!is_null($auth0_user) && isset($auth0_user->user_metadata->picture) && '' != $auth0_user->user_metadata->picture) {
+          $avatar = $auth0_user->user_metadata->picture;
+          $avatar = "<img alt='{$alt}' src='{$avatar}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+        }
+      }
+    }
+
+    return $avatar;
   }
 
   /*

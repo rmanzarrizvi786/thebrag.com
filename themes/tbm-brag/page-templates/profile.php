@@ -122,7 +122,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $image_array_2 = explode(",", $image_array_1[1]);
     $data = base64_decode($image_array_2[1]);
 
-    $imageName = 'wp-content/uploads/users/u-' . md5($current_user->ID . time()) . '.jpg';
+    $imageName = 'tmp/u-' . md5($current_user->ID . time()) . '.jpg';
     file_put_contents($imageName, $data);
 
     $imageId = media_sideload_image(home_url('/' . $imageName), 0, '', 'id');
