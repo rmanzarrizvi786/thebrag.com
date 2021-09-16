@@ -491,3 +491,21 @@ function tbm_theme_options_get_cat_count() {
 }
  *
  */
+
+
+// JS to make BB sticky
+add_action('wp_footer', function () {
+?>
+    <script>
+        const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
+
+        ad_billboard.style.position = 'fixed'
+        ad_billboard.style.zIndex = 999
+        ad_billboard.style.bottom = '15px'
+
+        setTimeout(function() {
+            ad_billboard.style.position = 'relative'
+        }, 3000)
+    </script>
+<?php
+});
