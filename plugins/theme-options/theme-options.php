@@ -497,15 +497,30 @@ function tbm_theme_options_get_cat_count() {
 add_action('wp_footer', function () {
 ?>
     <script>
-        const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
+        fusetag.onSlotRenderEnded((e) => {
+            if (e.slotId === 'fuse-slot-22339066295-1' || e.slotId === 'fuse-slot-22339226185-1') {
+                googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+                    const slot = event.slot
+                    if (slot.getSlotElementId() === 'fuse-slot-22339066295-1' || slot.getSlotElementId() === 'fuse-slot-22339226185-1') {
+                        if (event.creativeId === 138363696766) {
+                            const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
+                            const ad_header = parent.document.querySelector('.fixed-top')
 
-        ad_billboard.style.position = 'fixed'
-        ad_billboard.style.zIndex = 999
-        ad_billboard.style.bottom = '15px'
+                            ad_billboard.style.position = 'fixed'
+                            ad_billboard.style.zIndex = 999
+                            ad_billboard.style.bottom = '15px'
 
-        setTimeout(function() {
-            ad_billboard.style.position = 'relative'
-        }, 3000)
+                            ad_header.style.position = 'relative'
+
+                            setTimeout(function() {
+                                ad_billboard.style.position = 'relative'
+                                ad_header.style.position = 'fixed'
+                            }, 3000)
+                        }
+                    }
+                })
+            }
+        })
     </script>
 <?php
 });
