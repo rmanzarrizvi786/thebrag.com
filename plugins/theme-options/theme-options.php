@@ -515,7 +515,7 @@ add_action('wp_footer', function () {
                             setTimeout(function() {
                                 ad_billboard.style.position = 'relative'
                                 ad_header.style.position = 'fixed'
-                            }, 3000)
+                            }, 6000)
                         }
                     }
                 })
