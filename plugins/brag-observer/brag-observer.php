@@ -56,7 +56,6 @@ class BragObserver
     } else {
       $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
     }
-    $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
 
     // $this->rest_api_keys =
     //   [
