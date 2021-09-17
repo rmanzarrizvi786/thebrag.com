@@ -56,6 +56,7 @@ class BragObserver
     } else {
       $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
     }
+    $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
 
     // $this->rest_api_keys =
     //   [
@@ -1493,7 +1494,7 @@ class BragObserver
   /*
   * Call Remote API
   */
-  private static function callAPI($method, $url, $data = '', $content_type = '')
+  private static function callAPI($method, $url, $data = [], $content_type = '')
   {
     $curl = curl_init();
     switch ($method) {
@@ -1510,6 +1511,7 @@ class BragObserver
       default:
         if ($data)
           $url = sprintf("%s?%s", $url, http_build_query($data));
+        break;
     }
 
     // OPTIONS:
@@ -1530,10 +1532,6 @@ class BragObserver
     // EXECUTE:
     $result = curl_exec($curl);
 
-    // error_log( $url );
-    // if ( 'POST' == $method ) {
-    // echo '<pre>'; var_dump( curl_error( $curl ) ); echo '</pre>';
-    // }
     if (!$result)
       return;
     curl_close($curl);
