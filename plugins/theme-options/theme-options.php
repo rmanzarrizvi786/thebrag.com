@@ -504,17 +504,16 @@ add_action('wp_footer', function () {
                     if (slot.getSlotElementId() === 'fuse-slot-22339066295-1' || slot.getSlotElementId() === 'fuse-slot-22339226185-1') {
                         if (event.creativeId === 138363696766) {
                             const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
-                            const ad_header = parent.document.querySelector('.fixed-top')
 
                             ad_billboard.style.position = 'fixed'
                             ad_billboard.style.zIndex = 999
                             ad_billboard.style.bottom = '15px'
-
-                            ad_header.style.position = 'relative'
+                            ad_billboard.style.transform = 'translateX(-50%)';
+                            ad_billboard.style.left = '50%';
 
                             setTimeout(function() {
+                                ad_billboard.style.bottom = '0'
                                 ad_billboard.style.position = 'relative'
-                                ad_header.style.position = 'fixed'
                             }, 6000)
                         }
                     }
