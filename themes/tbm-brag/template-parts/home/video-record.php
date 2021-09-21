@@ -56,18 +56,44 @@
     ?>
     </div>
 
-    <div class="record px-2 mt-3 mt-md-0">
+    <?php
+    $rotw_response = wp_remote_get('https://dontboreus.thebrag.com/wp-json/tbm_dbu/v1/rotw?v=' . time());
+    if (is_array($rotw_response) && !is_wp_error($rotw_response)) {
+        $rotw = json_decode($rotw_response['body']);
+    ?>
+        <div class="record px-2 mt-3 mt-md-0">
+            <h3 class="heading mb-2">Record <span>of the week</span></h3>
+            <a href="<?php echo $rotw->link; ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo $rotw->image; ?>);" rel="noreferrer">
+                <?php echo esc_html(stripslashes($rotw->artist)); ?>
+                -
+                <?php echo esc_html(stripslashes($rotw->name)); ?>
+            </a>
+            <h4 class="mt-0 mt-md-3 text-center">
+                <?php echo esc_html(stripslashes($rotw->artist)); ?>
+                -
+                <em><?php echo esc_html(stripslashes($rotw->name)); ?></em>
+            </h4>
+        </div>
+    <?php } ?>
+
+    <!-- <div class="record px-2 mt-3 mt-md-0">
         <h3 class="heading mb-2">Record <span>of the week</span></h3>
-        <a href="<?php echo get_option('tbm_featured_album_link'); ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); ?>);" rel="noreferrer">
-            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
+        <a href="<?php // echo get_option('tbm_featured_album_link'); 
+                    ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php // echo get_option('tbm_featured_album_image_url'); 
+                                                                                                                                ?>);" rel="noreferrer">
+            <?php // echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); 
+            ?>
             -
-            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?>
+            <?php // echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); 
+            ?>
         </a>
         <h4 class="mt-0 mt-md-3 text-center">
-            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
+            <?php // echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); 
+            ?>
             -
-            <em><?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?></em>
+            <em><?php // echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); 
+                ?></em>
         </h4>
-    </div>
+    </div> -->
     </div>
 </section>
