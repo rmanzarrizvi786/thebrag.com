@@ -94,7 +94,7 @@ function tbm_theme_options()
     <h1 class="mt-3">Theme Options</h1>
     <?php // if (1 === $current_blog_id) : 
     ?>
-    <h4 class="p-4 h5" style="background: gold;">Updating these settings will also update settings for sites in network. You can overwrite these settings for each site individually too from their respective Wordpress theme options page.</h4>
+    <h4 class="p-4 h5" style="background: gold;">Updating VOTW will also update VOTW for sites in network. You can overwrite these settings for each site individually too from their respective Wordpress theme options page.</h4>
     <?php // endif; 
     ?>
     <form method="post" class="form">
@@ -131,8 +131,7 @@ function tbm_theme_options()
                 </div><!-- Video of the week -->
             </div>
 
-            <div class="col-md-6">
-
+            <!-- <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
                         <h3>Record of the week</h3>
@@ -141,45 +140,52 @@ function tbm_theme_options()
                         <div class="form-group">
                             <label>Artist</label>
                             <label class="reset">x</label>
-                            <input name="tbm_featured_album_artist" id="tbm_featured_album_title" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_artist')); ?>" placeholder="" class="form-control">
+                            <input name="tbm_featured_album_artist" id="tbm_featured_album_title" type="text" value="<?php // echo stripslashes(get_option('tbm_featured_album_artist')); 
+                                                                                                                        ?>" placeholder="" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Title</label>
                             <label class="reset">x</label>
-                            <input name="tbm_featured_album_title" id="tbm_featured_album_title" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_title')); ?>" placeholder="" class="form-control">
+                            <input name="tbm_featured_album_title" id="tbm_featured_album_title" type="text" value="<?php // echo stripslashes(get_option('tbm_featured_album_title')); 
+                                                                                                                    ?>" placeholder="" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Image URL</label>
                             <label class="reset">x</label>
-                            <input type="text" name="tbm_featured_album_image_url" id="tbm_featured_album_image_url" class="form-control" value="<?php echo get_option('tbm_featured_album_image_url') != '' ? get_option('tbm_featured_album_image_url')  : ''; ?>">
+                            <input type="text" name="tbm_featured_album_image_url" id="tbm_featured_album_image_url" class="form-control" value="<?php // echo get_option('tbm_featured_album_image_url') != '' ? get_option('tbm_featured_album_image_url')  : ''; 
+                                                                                                                                                    ?>">
                             <?php
-                            if (function_exists('wp_enqueue_media')) {
-                                wp_enqueue_media();
-                            } else {
-                                wp_enqueue_style('thickbox');
-                                wp_enqueue_script('media-upload');
-                                wp_enqueue_script('thickbox');
-                            }
+                            // if (function_exists('wp_enqueue_media')) {
+                            //     wp_enqueue_media();
+                            // } else {
+                            //     wp_enqueue_style('thickbox');
+                            //     wp_enqueue_script('media-upload');
+                            //     wp_enqueue_script('thickbox');
+                            // }
                             ?>
-                            <?php if (get_option('tbm_featured_album_image_url') != '') : ?>
-                                <img src="<?php echo get_option('tbm_featured_album_image_url'); ?>" width="100" id="tbm_featured_album_image" class="img-fluid d-block">
-                            <?php endif; ?>
+                            <?php // if (get_option('tbm_featured_album_image_url') != '') : 
+                            ?>
+                                <img src="<?php // echo get_option('tbm_featured_album_image_url'); 
+                                            ?>" width="100" id="tbm_featured_album_image" class="img-fluid d-block">
+                            <?php // endif; 
+                            ?>
                             <button id="btn-featured-album-image" type="button" class="button">Upload / Select from Library</button>
                         </div>
 
                         <div class="form-group">
                             <label>Link</label>
                             <label class="reset">x</label>
-                            <input name="tbm_featured_album_link" id="tbm_featured_album_link" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_link')); ?>" placeholder="" class="form-control">
+                            <input name="tbm_featured_album_link" id="tbm_featured_album_link" type="text" value="<?php // echo stripslashes(get_option('tbm_featured_album_link')); 
+                                                                                                                    ?>" placeholder="" class="form-control">
                         </div>
                     </div>
-                </div><!-- Record of the week -->
-            </div>
+                </div>
+            </div> -->
+            <!-- Record of the week -->
 
-            <div class="col-md-12">
-                <hr>
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
                         <h3>Featured Article for Infinite Scroll</h3>
