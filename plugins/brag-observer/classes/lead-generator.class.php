@@ -175,14 +175,6 @@ class LeadGenerator extends BragObserver
 
           $verified = true;
 
-          /* TMP {{ */
-          // update_user_meta( $user->ID, 'is_activated', 1 );
-          /* }} TMP */
-
-          /* if (!get_user_meta($user->ID, 'is_activated', true)) {
-            update_user_meta($user->ID, 'is_activated', 0);
-          } */
-
           $message = !is_null($lead_generator->msg_thanks_verify) ? $lead_generator->msg_thanks_verify : 'Please verify your feedback by clicking the link we sent you via email.';
           // $message = 'Please verify your feedback by clicking the link we sent you via email.';
         }
