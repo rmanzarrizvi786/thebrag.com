@@ -1036,10 +1036,17 @@ function print_video_record_of_week($obj, $newsletter)
 			<?php
 		endif; // If Featured Video is available
 
+		$rotw_response = wp_remote_get('https://dontboreus.thebrag.com/wp-json/tbm_dbu/v1/rotw?v=' . date('Ymd'));
 		$featured_record_alt = '';
-		$featured_record_alt .= esc_html(stripslashes(get_option('tbm_featured_album_artist')));
+		if (is_array($rotw_response) && !is_wp_error($rotw_response)) {
+			$rotw = json_decode($rotw_response['body']);
+			$featured_record_alt .= esc_html(stripslashes($rotw->artist));
+			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->name));
+			$featured_record_img =  $obj->resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
+		}
+		/* $featured_record_alt .= esc_html(stripslashes(get_option('tbm_featured_album_artist')));
 		$featured_record_alt .= ' - ' . esc_html(stripslashes(get_option('tbm_featured_album_title')));
-		$featured_record_img =  $obj->resize_image(get_option('tbm_featured_album_image_url'), 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
+		$featured_record_img =  $obj->resize_image(get_option('tbm_featured_album_image_url'), 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg'); */
 			?>
 			<table align="left" class="small-12" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%;max-width:340px;margin-top:10px;margin-bottom:10px;margin-left: 5px; margin-right: 5px;">
 				<tbody>
@@ -1063,12 +1070,14 @@ function print_video_record_of_week($obj, $newsletter)
 								<tr>
 									<td class="mcnTextContent" valign="top" style="padding: 9px 9px 9px 9px;color: #ffffff;font-family: Helvetica;font-size: 12px;font-style: normal;font-weight: normal;line-height: 150%;text-align: center;height:110px;" width="546">
 										<h1 class="null" style="text-align: center; padding: 0; margin: 0;">
-											<font color="#ffffff" size="4"><?php if (get_option('tbm_featured_album_artist')) {
-																				echo '' . esc_html(stripslashes(get_option('tbm_featured_album_artist')));
+											<font color="#ffffff" size="4"><?php
+																			if ($rotw->artist) {
+																				echo '' . esc_html(stripslashes($rotw->artist));
 																			}
-																			if (get_option('tbm_featured_album_title')) {
-																				echo '<br><em>\'' . esc_html(stripslashes(get_option('tbm_featured_album_title'))) . '\'</em>';
-																			} ?></font>
+																			if ($rotw->name) {
+																				echo '<br><em>\'' . esc_html(stripslashes($rotw->name)) . '\'</em>';
+																			}
+																			?></font>
 										</h1>
 									</td>
 								</tr>
