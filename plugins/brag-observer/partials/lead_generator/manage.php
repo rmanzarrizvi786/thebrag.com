@@ -62,7 +62,7 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
       <label>List</label>
       <?php
       $lists = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE status = 'active' ORDER BY title ASC");
-      $lead_generator_list_ids = explode(',', $lead_generator->list_id);
+      $lead_generator_list_ids = isset($lead_generator) ? explode(',', $lead_generator->list_id) : [];
       if ($lists) :
       ?>
         <div class="row" style="height: 100px; overflow-y: scroll;">
