@@ -508,7 +508,7 @@ add_action('wp_footer', function () {
                 googletag.pubads().addEventListener('slotRenderEnded', function(event) {
                     const slot = event.slot
                     if (slot.getSlotElementId() === 'fuse-slot-22339066295-1' || slot.getSlotElementId() === 'fuse-slot-22339226185-1') {
-                        if (event.creativeId === 138363696766) {
+                        if (event.creativeId === 138363693172) {
                             const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
 
                             ad_billboard.style.position = 'fixed'

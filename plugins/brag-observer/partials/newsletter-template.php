@@ -1062,7 +1062,7 @@ function print_video_record_of_week($obj, $newsletter)
 								</tr>
 								<tr>
 									<td colspan="2" style="display:table-cell!important; line-height:0!important; height:auto!important;">
-										<a target="_blank" style="display: block;" href="<?php echo get_option('tbm_featured_album_link'); ?>" rel="nofollow">
+										<a target="_blank" style="display: block;" href="<?php echo $rotw->link; ?>" rel="nofollow">
 											<img src="<?php echo $featured_record_img; ?>?v=<?php echo time(); ?>" alt="<?php echo $featured_record_alt; ?>" title="<?php echo $featured_record_alt; ?>" border="0" style="width:100%">
 										</a>
 									</td>
