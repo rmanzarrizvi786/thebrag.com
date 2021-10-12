@@ -1519,6 +1519,10 @@ function ssm_amp_additional_css_styles($amp_template)
     box-shadow: 0 0 5px;
     margin: 2rem auto;
     }
+    amp-social-share.rounded {
+    border-radius: 50%;
+    background-size: 80%;
+    }
 <?php
 }
 add_filter('amp_content_max_width', 'ssm_amp_change_content_width');
