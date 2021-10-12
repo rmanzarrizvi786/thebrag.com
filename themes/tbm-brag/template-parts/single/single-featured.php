@@ -30,7 +30,7 @@ if ($count_articles === 1) : ?>
             <?php render_ad_tag('leaderboard', $count_articles); ?>
         </div>
     </div>
-<?php
+    <?php
 endif;
 
 $the_post_id = get_the_ID();
@@ -49,26 +49,26 @@ if (!post_password_required($post)) :
 
         $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture'), 'thumbnail');
         if ($author_img_src) :
-            $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded-circle">';
+            $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded-circle" style="margin: 0;">';
         else :
-            $author_image = '<img src="' . CDN_URL . 'default-avatar-4.png" width="64" height="64" class="rounded-circle" alt="' . $author_name . '">';
+            $author_image = '<img src="' . CDN_URL . 'default-avatar.png" width="64" height="64" class="rounded-circle" alt="' . $author_name . '" style="margin: 0;">';
         endif; // If custom author image is set
     else : // If custom author has not been set
         $author_name = get_the_author_meta('display_name', $post->post_author);
         $author_byline = '<a href="' . get_author_posts_url($post->post_author) . '" class="text-dark">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
-        $author_image = get_avatar($post->post_author, 64, CDN_URL . 'default-avatar-4.png', $author_name, array('class' => 'rounded-circle'));
+        $author_image = get_avatar($post->post_author, 64, CDN_URL . 'default-avatar.png', $author_name, array('class' => 'rounded-circle'));
 
     endif; // If custom author is set
-?>
 
-    <?php if ($count_articles > 1) : ?>
+    if ($count_articles > 1) :
+    ?>
         <div class="ad-billboard ad-billboard-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?> container py-2 py-md-4">
             <div class="mx-auto text-center">
                 <?php render_ad_tag('leaderboard', $count_articles); ?>
             </div>
         </div>
     <?php endif; ?>
-    <article class="single-article p-2 p-md-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
+    <article class="single-article featured p-2 p-md-3 pb-1 single-article-<?php echo $count_articles === 1 ? '1' : 'infinite'; ?>" id="<?php the_ID(); ?>">
         <div class="overlay"></div>
         <?php
         $title = get_post_meta($the_post_id, '_yoast_wpseo_title', true) ? get_post_meta($the_post_id, '_yoast_wpseo_title', true) : get_the_title();
@@ -121,8 +121,8 @@ if (!post_password_required($post)) :
 
         <hr class="h-divider mb-3">
         <div class="d-flex align-items-start">
-            <div class="col-md-8 pl-md-5 pl-lg-0" style="max-width: 100%;">
-                <?php if ('' !== get_the_post_thumbnail() && 'issue' != get_post_type()) : ?>
+            <div class="col-12 pl-md-5 pl-lg-0" style="max-width: 100%;">
+                <?php if ('' !== get_the_post_thumbnail()) : ?>
                     <div class="post-thumbnail mb-3">
                         <?php
                         the_post_thumbnail('medium_large', array(
@@ -271,7 +271,6 @@ if (!post_password_required($post)) :
                             </div>
                         </div><!-- Author details, author socials -->
                     <?php endif; ?>
-
                 </div><!-- /.post-content -->
 
                 <div class="mt-2" style="width: 300px; margin: auto;">
@@ -314,28 +313,6 @@ if (!post_password_required($post)) :
                 ?>
                 <!-- Story End -->
             </div><!-- Left panel - content, etc. -->
-
-            <div class="col-md-4 right-col-has-ad d-none d-md-block ml-2 align-self-stretch">
-                <div class="d-flex flex-column h-100 justify-content-start">
-                    <div class="align-self-center" style="min-width: 300px;">
-                        <?php render_ad_tag('rail1', $count_articles); ?>
-                    </div>
-                    <div>
-                        <?php
-                        if ($spotlight_articles->have_posts()) :
-                            get_template_part('template-parts/single/spotlight', null, ['pos' => 'sidebar', 'spotlight_articles' => $spotlight_articles]);
-                        endif; // If there are spotlight articles
-                        ?>
-                    </div>
-                    <div class="sticky-ad-right pt-2">
-                        <div class="" style="min-width: 300px;">
-                            <?php
-                            render_ad_tag('rail2', $count_articles);
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- Right Pane - for desktop/tablet devices -->
         </div><!-- Row 2 -->
 
         <div>
