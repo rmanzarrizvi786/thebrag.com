@@ -13,6 +13,7 @@ plugins/*
 
 !plugins/brag-observer
 plugins/brag-observer/*
+!plugins/brag-observer/js
 !plugins/brag-observer/brag-observer.php
 
 !plugins/brag-observer/partials
