@@ -55,16 +55,25 @@ function observer_lead_generator_form($atts)
             <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1)) : ?>
               <div class="col-12">
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
-                <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control" placeholder="Write your response here"></textarea>
+                <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
               </div>
             <?php endif; ?>
 
             <?php if (!is_user_logged_in()) : ?>
-              <div class="col-12">
+              <div class="col-12 mt-1">
                 <input type="email" name="email" id="lead_generator<?php echo $lead_generator->id; ?>-email" class="form-control" placeholder="Your email address">
               </div>
             <?php endif; // If user is NOT logged in 
             ?>
+
+            <?php if ($lead_generator->consent_promotional_marketing_text && '' != trim($lead_generator->consent_promotional_marketing_text)) : ?>
+              <div class="col-12 mt-1">
+                <label class="d-flex align-items-stretch">
+                  <span class="mr-1"><input type="checkbox" name="consent_promotional_marketing" id="lead_generator<?php echo $lead_generator->id; ?>-consent_promotional_marketing" value="1" checked></span>
+                  <span><?php echo $lead_generator->consent_promotional_marketing_text; ?></span>
+                </label>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
 

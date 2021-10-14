@@ -3,24 +3,6 @@ global $wpdb;
 
 wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
 
-/* $lead_generators_query = "
-  SELECT
-    t.id,
-    t.title,
-    t.question1,
-    t.created_at,
-    t.msg_thanks,
-    t.msg_thanks_verify,
-    l.title list_title,
-    (SELECT COUNT(r.id) FROM {$wpdb->base_prefix}observer_lead_generator_responses r WHERE r.status = 'verified' AND r.lead_generator_id = t.id) total_responses
-  FROM {$wpdb->base_prefix}observer_lead_generators t
-    JOIN {$wpdb->base_prefix}observer_lists l
-      ON l.id = t.list_id
-  GROUP BY
-    t.id
-  ORDER BY
-    t.id DESC
-"; */
 $lead_generators_query = "
   SELECT
     t.id,

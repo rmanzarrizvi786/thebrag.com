@@ -100,6 +100,7 @@ class LeadGenerator extends BragObserver
         'msg_thanks' => $data['msg_thanks'],
         'msg_thanks_verify' => $data['msg_thanks_verify'],
         'question1' => $data['question1'],
+        'consent_promotional_marketing_text' => $data['consent_promotional_marketing_text'],
       ];
 
       if (isset($data['id'])) :
@@ -196,9 +197,10 @@ class LeadGenerator extends BragObserver
         'lead_generator_id' => $lead_generator->id,
         'user_id' => $user->ID,
         'response1' => isset($formData['response1']) ? sanitize_textarea_field($formData['response1']) : NULL,
+        'consent_promotional_marketing' => isset($formData['consent_promotional_marketing']) && 1 == $formData['consent_promotional_marketing'] ? 1 : NULL,
         'source' => $source,
       ];
-      $insert_format = ['%d', '%d', '%s', '%s',];
+      $insert_format = ['%d', '%d', '%s', '%s', '%s',];
 
       if ($verified) {
         $insert_values['status'] = 'verified';
