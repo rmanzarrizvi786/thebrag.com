@@ -532,6 +532,7 @@ add_action('wp_footer', function () {
 
 // Brand lift study
 add_action('wp_footer', function () {
+    return;
 ?>
     <script>
         {
