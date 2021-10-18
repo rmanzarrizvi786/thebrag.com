@@ -107,6 +107,11 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
       <label>Consent to additional promotional marketing text<br><small>If not empty, it will add a Checkbox field to the form</small></label>
       <input type="text" name="consent_promotional_marketing_text" class="form-control" value="<?php echo isset($lead_generator) && isset($lead_generator->consent_promotional_marketing_text) ? htmlentities($lead_generator->consent_promotional_marketing_text) : ''; ?>">
     </div>
+
+    <div class="col-12 mt-3">
+      <label>Footer text to appear at the bottom of form. <small>(Optional)</small></label>
+      <input type="text" name="footer_text" class="form-control" value="<?php echo isset($lead_generator) && isset($lead_generator->footer_text) ? htmlentities($lead_generator->footer_text) : ''; ?>">
+    </div>
   </div>
 
   <div>
