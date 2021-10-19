@@ -623,3 +623,44 @@ add_action('wp_footer', function () {
     </style>
 <?php
 });
+
+/**
+ * Init OneSignal Push
+ */
+add_action('wp_footer', function () {
+?>
+    <script>
+        // Delay Only Example
+        setTimeout(function() {
+            window.addEventListener('load', function() {
+                window._oneSignalInitOptions.promptOptions = {
+                    slidedown: {
+                        prompts: [{
+                            type: "push",
+                            autoPrompt: true,
+                            text: {
+                                /* actionMessage limited to 90 characters */
+                                actionMessage: "We'd like to show you notifications for the latest news and updates.",
+                                /* acceptButton limited to 15 characters */
+                                acceptButton: "Allow",
+                                /* cancelButton limited to 15 characters */
+                                cancelButton: "Cancel",
+                            },
+                            delay: {
+                                /* seconds to wait for display */
+                                timeDelay: 1,
+                                /* # pageviews for prompt to display */
+                                pageViews: 2,
+                            }
+                        }]
+                    }
+                }
+                window.OneSignal = window.OneSignal || [];
+                window.OneSignal.push(function() {
+                    window.OneSignal.init(window._oneSignalInitOptions);
+                });
+            });
+        }, 3000);
+    </script>
+<?php
+});
