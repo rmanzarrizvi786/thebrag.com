@@ -77,7 +77,7 @@ function observer_lead_generator_form($atts)
 
             <?php if ($lead_generator->footer_text && '' != trim($lead_generator->footer_text)) : ?>
               <div class="col-12 mt-1">
-                <p><?php echo $lead_generator->footer_text; ?></p>
+                <p style="font-size: .8rem;"><?php echo $lead_generator->footer_text; ?></p>
               </div>
             <?php endif; ?>
           </div>

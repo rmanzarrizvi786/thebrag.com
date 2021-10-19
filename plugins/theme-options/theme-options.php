@@ -532,30 +532,94 @@ add_action('wp_footer', function () {
 
 // Brand lift study
 add_action('wp_footer', function () {
-    return;
+    if (is_page_template("page-templates/rs-awards-nominate-2021.php")) {
+        return;
+    }
 ?>
     <script>
-        {
-            const e = (e, t, n, s) => {
-                    var c, o, r;
-                    e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWttcrfN2mODXNCsr6H61j_2BkMD.js", o.parentNode.insertBefore(r, o))
-                },
-                t = (e, t, n, s) => {
-                    var c, o, r;
-                    e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWtteffxwhXTTNQIUFZGZf1MZH.js", o.parentNode.insertBefore(r, o))
-                };
-            null !== (() => {
-                var e = document.cookie,
-                    t = e.indexOf("; tbm_v=");
-                if (-1 == t) {
-                    if (0 != (t = e.indexOf("tbm_v="))) return null
-                } else {
-                    t += 2;
-                    var n = document.cookie.indexOf(";", t); - 1 == n && (n = e.length)
+        jQuery(document).ready(function($) {
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'post',
+                dataType: 'json',
+                cache: 'false',
+                data: {
+                    'action': 'tbm_set_cookie',
+                    'key': 'tbm_sm_seen',
+                    'value': 'true',
+                    'duration': '<?php echo 60 * 60 * 24 * 30; ?>'
                 }
-                return decodeURI(e.substring(t + "tbm_v=".length, n))
-            })() ? (console.log("cookie"), e(window, document, "script", "smcx-sdk")) : (console.log("no cookie"), t(window, document, "script", "smcx-sdk"))
+            });
+        }); {
+            var tbm_e = document.cookie,
+                tbm_t = tbm_e.indexOf("; tbm_sm_seen=");
+            if (-1 == tbm_t) {
+                const e = (e, t, n, s) => {
+                        var c, o, r;
+                        e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWttcrfN2mODXNCsr6H61j_2BkMD.js", o.parentNode.insertBefore(r, o))
+                    },
+                    t = (e, t, n, s) => {
+                        var c, o, r;
+                        e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWtteffxwhXTTNQIUFZGZf1MZH.js", o.parentNode.insertBefore(r, o))
+                    };
+                null !== (() => {
+                    var e = document.cookie,
+                        t = e.indexOf("; tbm_v=");
+                    if (-1 == t) {
+                        if (0 != (t = e.indexOf("tbm_v="))) return null
+                    } else {
+                        t += 2;
+                        var n = document.cookie.indexOf(";", t); - 1 == n && (n = e.length)
+                    }
+                    return decodeURI(e.substring(t + "tbm_v=".length, n))
+                })() ? (console.log("cookie"), e(window, document, "script", "smcx-sdk")) : (console.log("no cookie"), t(window, document, "script", "smcx-sdk"))
+            }
         }
     </script>
+    <style>
+        .smcx-modal:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-top: -100%;
+            margin-bottom: -100%;
+            background: rgba(0, 0, 0, .75);
+            margin-left: -100%;
+            margin-right: -100%;
+        }
+
+        .smcx-modal-header,
+        .smcx-modal>.smcx-modal-content,
+        .smcx-widget-footer {
+            background-color: #2E073E;
+        }
+
+        .smcx-modal-header {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .smcx-modal>.smcx-modal-content {
+            border-radius: 0;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 10px !important;
+        }
+
+        @media (max-width: 600px) {
+            .smcx-widget.smcx-modal>.smcx-modal-content {
+                width: 100% !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                padding: 0 2% !important;
+            }
+        }
+
+        .smcx-widget-footer {
+            border-radius: 0 0 5px 5px;
+        }
+    </style>
 <?php
 });
