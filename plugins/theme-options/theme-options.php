@@ -554,25 +554,27 @@ add_action('wp_footer', function () {
             var tbm_e = document.cookie,
                 tbm_t = tbm_e.indexOf("; tbm_sm_seen=");
             if (-1 == tbm_t) {
-                const e = (e, t, n, s) => {
-                        var c, o, r;
-                        e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWttcrfN2mODXNCsr6H61j_2BkMD.js", o.parentNode.insertBefore(r, o))
-                    },
-                    t = (e, t, n, s) => {
-                        var c, o, r;
-                        e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWtteffxwhXTTNQIUFZGZf1MZH.js", o.parentNode.insertBefore(r, o))
-                    };
-                null !== (() => {
-                    var e = document.cookie,
-                        t = e.indexOf("; tbm_v=");
-                    if (-1 == t) {
-                        if (0 != (t = e.indexOf("tbm_v="))) return null
-                    } else {
-                        t += 2;
-                        var n = document.cookie.indexOf(";", t); - 1 == n && (n = e.length)
-                    }
-                    return decodeURI(e.substring(t + "tbm_v=".length, n))
-                })() ? (console.log("cookie"), e(window, document, "script", "smcx-sdk")) : (console.log("no cookie"), t(window, document, "script", "smcx-sdk"))
+                {
+                    const e = (e, t, n, s) => {
+                            var c, o, r;
+                            e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWttcrfN2mODXNCsr6H61j_2BkMD.js", o.parentNode.insertBefore(r, o))
+                        },
+                        t = (e, t, n, s) => {
+                            var c, o, r;
+                            e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWtteffxwhXTTNQIUFZGZf1MZH.js", o.parentNode.insertBefore(r, o))
+                        };
+                    null !== (() => {
+                        var e = document.cookie,
+                            t = e.indexOf("; tbm_v=");
+                        if (-1 == t) {
+                            if (0 != (t = e.indexOf("tbm_v="))) return null
+                        } else {
+                            t += 2;
+                            var n = document.cookie.indexOf(";", t); - 1 == n && (n = e.length)
+                        }
+                        return decodeURI(e.substring(t + "tbm_v=".length, n))
+                    })() ? (console.log("cookie"), e(window, document, "script", "smcx-sdk")) : (console.log("no cookie"))
+                }
             }
         }
     </script>
@@ -621,46 +623,5 @@ add_action('wp_footer', function () {
             border-radius: 0 0 5px 5px;
         }
     </style>
-<?php
-});
-
-/**
- * Init OneSignal Push
- */
-add_action('wp_footer', function () {
-?>
-    <script>
-        // Delay Only Example
-        setTimeout(function() {
-            window.addEventListener('load', function() {
-                window._oneSignalInitOptions.promptOptions = {
-                    slidedown: {
-                        prompts: [{
-                            type: "push",
-                            autoPrompt: true,
-                            text: {
-                                /* actionMessage limited to 90 characters */
-                                actionMessage: "We'd like to show you notifications for the latest news and updates.",
-                                /* acceptButton limited to 15 characters */
-                                acceptButton: "Allow",
-                                /* cancelButton limited to 15 characters */
-                                cancelButton: "Cancel",
-                            },
-                            delay: {
-                                /* seconds to wait for display */
-                                timeDelay: 1,
-                                /* # pageviews for prompt to display */
-                                pageViews: 2,
-                            }
-                        }]
-                    }
-                }
-                window.OneSignal = window.OneSignal || [];
-                window.OneSignal.push(function() {
-                    window.OneSignal.init(window._oneSignalInitOptions);
-                });
-            });
-        }, 3000);
-    </script>
 <?php
 });
