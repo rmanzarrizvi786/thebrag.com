@@ -32,7 +32,7 @@
 #skin {
   position: fixed;
   // top: 0;
-  top: 115px; // Since we are scalling
+  top: $headerHeight; // Since we are scalling
   left: 50%;
   transform: translateX(-50%); // scale(1.0309278351);
   width: 1600px;
