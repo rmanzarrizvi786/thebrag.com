@@ -509,6 +509,9 @@ add_action('wp_footer', function () {
                     const slot = event.slot
                     if (slot.getSlotElementId() === 'fuse-slot-22339066295-1' || slot.getSlotElementId() === 'fuse-slot-22339226185-1') {
                         if (event.creativeId === 138363693172) {
+                            const skin = document.getElementById('skin')
+                            skin.style.setProperty('display', 'none', 'important')
+
                             const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
 
                             ad_billboard.style.position = 'fixed'
