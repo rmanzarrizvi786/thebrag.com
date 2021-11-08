@@ -612,7 +612,7 @@ class TBMUsers
           try {
             $auth0_user = $mgmt_api->users()->create(
               [
-                'connection' => 'Username-Password-Authentication',
+                'connection' => 'brag-observer',
                 'email' => trim($data['email']),
                 'password' => $user_pass,
               ]
