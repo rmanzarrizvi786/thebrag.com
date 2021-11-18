@@ -90,7 +90,7 @@ if (isset($_POST) && isset($_POST['action']) && 'change-password' == $_POST['act
     CURLOPT_TIMEOUT => 30,
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "POST",
-    CURLOPT_POSTFIELDS => "{\"client_id\": \"{$_ENV['AUTH0_CLIENT_ID']}\",\"email\": \"{$current_user->user_email}\",\"connection\": \"Username-Password-Authentication\"}",
+    CURLOPT_POSTFIELDS => "{\"client_id\": \"{$_ENV['AUTH0_CLIENT_ID']}\",\"email\": \"{$current_user->user_email}\",\"connection\": \"{$auth0_user['identities'][0]['connection']}\"}",
     CURLOPT_HTTPHEADER => [
       "content-type: application/json"
     ],
