@@ -28,7 +28,6 @@ class LeadGenerator extends BragObserver
 
   public function _admin_menu()
   {
-
     add_submenu_page(
       'brag-observer',
       'Create/Edit/Preview Lead Generator',
