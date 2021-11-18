@@ -41,10 +41,10 @@ class Imports extends BragObserver
 
     add_submenu_page(
       $this->plugin_slug,
-      'Push to Braze',
-      'Push to Braze',
+      'Export to Braze',
+      'Export to Braze',
       'administrator',
-      $this->plugin_slug . '-push-to-braze',
+      $this->plugin_slug . '-export-to-braze',
       array($this, 'show_export_to_braze')
     );
   }
@@ -404,7 +404,7 @@ class Imports extends BragObserver
       } // For Each $user
 
       /**
-       * Push to Braze
+       * Export to Braze
        */
       require __DIR__ . '/braze.class.php';
       $braze = new Braze();
