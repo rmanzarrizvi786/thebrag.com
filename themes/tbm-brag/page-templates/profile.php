@@ -119,18 +119,20 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
     $data = $_POST["chosen_profile_picture_data"];
     $image_array_1 = explode(";", $data);
-    $image_array_2 = explode(",", $image_array_1[1]);
-    $data = base64_decode($image_array_2[1]);
+    if (isset($image_array_1[1])) {
+      $image_array_2 = explode(",", $image_array_1[1]);
+      $data = base64_decode($image_array_2[1]);
 
-    $imageName = 'tmp/u-' . md5($current_user->ID . time()) . '.jpg';
-    file_put_contents($imageName, $data);
+      $imageName = 'tmp/u-' . md5($current_user->ID . time()) . '.jpg';
+      file_put_contents($imageName, $data);
 
-    $imageId = media_sideload_image(home_url('/' . $imageName), 0, '', 'id');
-    if ($imageId) {
-      $profile_picture = wp_get_attachment_image_src($imageId, 'full');
-      $auth0_usermeta['picture'] = $profile_picture[0];
+      $imageId = media_sideload_image(home_url('/' . $imageName), 0, '', 'id');
+      if ($imageId) {
+        $profile_picture = wp_get_attachment_image_src($imageId, 'full');
+        $auth0_usermeta['picture'] = $profile_picture[0];
 
-      @unlink($imageName);
+        @unlink($imageName);
+      }
     }
   }
   $user_data = [
