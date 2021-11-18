@@ -120,7 +120,7 @@ class BragObserver
     register_deactivation_hook(__FILE__, [$this, 'deactivate']);
 
     // Cron
-    add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
+    // add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
 
     // Payment Details for Mag Sub
     add_action('wp_ajax_update_payment_details', [$this, 'update_payment_details']);
@@ -134,6 +134,9 @@ class BragObserver
 
     // Lead Generator class
     require_once  __DIR__ . '/classes/lead-generator.class.php';
+
+    // CRON
+    require_once  __DIR__ . '/classes/cron.class.php';
 
     // API
     require_once  __DIR__ . '/classes/api.class.php';
@@ -351,7 +354,11 @@ class BragObserver
   public function activate()
   {
     if (!wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL))) {
-      wp_schedule_event(time(), 'hourly', 'cron_hook_brag_observer', array(NULL, NULL));
+      wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_brag_observer', array(NULL, NULL));
+    }
+
+    if (!wp_next_scheduled('cron_hook_observer_braze_push', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:00:00'), 'every5minutes', 'cron_hook_observer_braze_push', array(NULL, NULL));
     }
   }
 
@@ -361,10 +368,12 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hook = 'cron_hook_brag_observer';
+    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_push'];
     foreach ($crons as $timestamp => $cron) {
-      if (!empty($cron[$hook])) {
-        unset($crons[$timestamp][$hook]);
+      foreach ($hooks as $hook) {
+        if (!empty($cron[$hook])) {
+          unset($crons[$timestamp][$hook]);
+        }
       }
       if (empty($crons[$timestamp])) {
         unset($crons[$timestamp]);
@@ -925,14 +934,14 @@ class BragObserver
     );
 
     /* {{ Admins only */
-    add_submenu_page(
+    /* add_submenu_page(
       $this->plugin_slug,
       'Process cron',
       'Process cron',
       'administrator',
       $this->plugin_slug . '-process-cron',
       array($this, 'process_cron')
-    );
+    ); */
     /* }} Admins only */
 
     // TMP
@@ -1006,7 +1015,7 @@ class BragObserver
   /*
   * Process CRON
   */
-  public function process_cron()
+  /* public function process_cron()
   {
     date_default_timezone_set('Australia/NSW');
     $next_run_timestamp = wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL));
@@ -1014,7 +1023,7 @@ class BragObserver
     echo '<br>Current Date/Time: ' . date('d-M-Y h:i:sa');
 
     $this->exec_cron_brag_observer();
-  }
+  } */
 
   /*
   * Home - List Index
