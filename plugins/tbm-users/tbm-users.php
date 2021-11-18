@@ -62,10 +62,19 @@ class TBMUsers
     // Auth0
     add_action('wpa0_user_created', [$this, '_wpa0_user_created'], 10, 5);
 
+    // Custom Avatar if uploaded by user
     add_filter('get_avatar', [$this, '_get_avatar'], 9, 5);
 
-    // CORS
-    // add_filter('init', [$this, 'add_cors_http_header'], 11, 1);
+    // add_action('init', [$this, 'custom_login']);
+  }
+
+  public function custom_login()
+  {
+    global $pagenow;
+    if ('wp-login.php' == $pagenow) {
+      wp_redirect(home_url('/login-tbm/'));
+      exit();
+    }
   }
 
   public function _get_avatar($avatar, $id_or_email, $size, $default, $alt)
@@ -523,8 +532,59 @@ class TBMUsers
       $errors[] = 'invalid_email';
     }
 
+    require get_template_directory() . '/vendor/autoload.php';
+
+    $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
+    $dotenv->load();
+
+    $auth0_api = new Auth0\SDK\API\Authentication(
+      $_ENV['AUTH0_DOMAIN'],
+      $_ENV['AUTH0_CLIENT_ID']
+    );
+
+    $config = [
+      'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+      'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+      'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+    ];
+
+    try {
+      $result = $auth0_api->client_credentials($config);
+      $access_token = $result['access_token'];
+    } catch (Exception $e) {
+    }
+
+    $auth0_user = null;
+
+    if (isset($access_token)) {
+      // Instantiate the base Auth0 class.
+      $auth0 = new Auth0\SDK\Auth0([
+        // The values below are found on the Application settings tab.
+        'domain' => $_ENV['AUTH0_DOMAIN'],
+        'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+        'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+        'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
+      ]);
+
+      $mgmt_api = new Auth0\SDK\API\Management($access_token, $_ENV['AUTH0_DOMAIN']);
+    }
+
     if (email_exists($data['email'])) {
-      $errors[] = 'eu'; // = existing_user
+      // $errors[] = 'eu'; // = existing_user
+
+      // Get Auth0 user
+      try {
+        // $auth0_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', $auth0_user['user_id']);
+        $auth0_users_by_email = $mgmt_api->usersByEmail()->get(
+          [
+            'email' => trim($data['email']),
+          ]
+        );
+        if ($auth0_users_by_email && isset($auth0_users_by_email[0])) {
+          $auth0_user = $auth0_users_by_email[0];
+        }
+      } catch (Exception $e) {
+      }
 
       $user = get_user_by('email', $data['email']);
       $user_id = $user->ID;
@@ -550,7 +610,8 @@ class TBMUsers
       }
     }
 
-    if (count($errors) == 0) {
+    // if (count($errors) == 0) {
+    else {
 
       $user_pass = wp_generate_password();
 
@@ -569,46 +630,10 @@ class TBMUsers
       ));
 
       if ($user_id) {
-
         /*
         * Create user in Auth0
         */
-        require get_template_directory() . '/vendor/autoload.php';
-
-        $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
-        $dotenv->load();
-
-        $auth0_api = new Auth0\SDK\API\Authentication(
-          $_ENV['AUTH0_DOMAIN'],
-          $_ENV['AUTH0_CLIENT_ID']
-        );
-
-        $config = [
-          'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-          'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-          'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
-        ];
-
-        try {
-          $result = $auth0_api->client_credentials($config);
-          $access_token = $result['access_token'];
-        } catch (Exception $e) {
-          // die($e->getMessage());
-        }
-
-        $auth0_user = null;
-
         if (isset($access_token)) {
-          // Instantiate the base Auth0 class.
-          $auth0 = new Auth0\SDK\Auth0([
-            // The values below are found on the Application settings tab.
-            'domain' => $_ENV['AUTH0_DOMAIN'],
-            'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-            'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-            'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
-          ]);
-
-          $mgmt_api = new Auth0\SDK\API\Management($access_token, $_ENV['AUTH0_DOMAIN']);
           try {
             $auth0_user = $mgmt_api->users()->create(
               [
@@ -617,8 +642,10 @@ class TBMUsers
                 'password' => $user_pass,
               ]
             );
-            if ($auth0_user && isset($auth0_user->user_id)) {
-              update_user_meta($user_id, 'wp_auth0_id', $auth0_user->user_id);
+
+            if ($auth0_user && isset($auth0_user['user_id'])) {
+              update_user_meta($user_id, $wpdb->prefix . 'auth0_id', $auth0_user['user_id']);
+              update_user_meta($user_id, $wpdb->prefix . 'auth0_obj', json_encode(array_merge($auth0_user, ['sub' => $auth0_user['user_id']])));
             }
           } catch (Exception $e) {
           }
@@ -645,7 +672,7 @@ class TBMUsers
           'oc_token' => get_user_meta($user_id, 'oc_token', true),
         ];
         $user = get_user_by('email', $data['email']);
-        $errors[] = 'nu|' . base64_encode(serialize($unserialized_oc_token));
+        // $errors[] = 'nu|' . base64_encode(serialize($unserialized_oc_token));
 
         if (isset($data['source']) && 'tio'  == $data['source']) {
           $check_sub = $wpdb->get_row("SELECT id, status FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND list_id = '4' LIMIT 1");
@@ -663,15 +690,14 @@ class TBMUsers
           }
         }
 
-        // error_log( '..API..' . print_r( $errors, true ) );
-
-        wp_send_json_error($errors);
-        wp_die();
+        // wp_send_json_error($errors);
+        // wp_die();
       }
-    } else { // There are errors
-
-      // error_log( '..API..' . print_r( $errors, true ) );
-
+    }
+    // } else { // There are errors
+    if (count($errors) == 0 && !is_null($auth0_user)) {
+      wp_send_json_success(['user_id' => $auth0_user['user_id']]);
+    } else {
       wp_send_json_error($errors);
       wp_die();
     }
@@ -750,11 +776,11 @@ class TBMUsers
 
       $auth0_user_id = 'auth0|' . $data['user_id'];
 
-      if (!get_user_meta($user_id, 'wp_auth0_id', true)) :
-        update_user_meta($user_id, 'wp_auth0_id', $auth0_user_id);
+      if (!get_user_meta($user_id,  $wpdb->prefix . 'auth0_id', true)) :
+        update_user_meta($user_id,  $wpdb->prefix . 'auth0_id', $auth0_user_id);
       endif;
 
-      if (!get_user_meta($user_id, 'wp_auth0_obj', true)) :
+      if (!get_user_meta($user_id,  $wpdb->prefix . 'auth0_obj', true)) :
 
         $wp_auth0_obj = [
           'created_at' => $current_datetime,
@@ -772,7 +798,7 @@ class TBMUsers
           'sub' => $auth0_user_id,
         ];
 
-        update_user_meta($user_id, 'wp_auth0_obj', json_encode($wp_auth0_obj));
+        update_user_meta($user_id,  $wpdb->prefix . 'auth0_obj', json_encode($wp_auth0_obj));
       endif;
     }
     wp_send_json_success();
@@ -785,8 +811,6 @@ class TBMUsers
   public function rest_login_auth0($request_data)
   {
     $data = $request_data->get_params();
-    // error_log(print_r($data, true));
-
     /* if (!isset($data['key']) || !$this->isRequestValid($data['key'])) {
       wp_send_json_error(['invalid_request']);
       wp_die();
@@ -823,11 +847,11 @@ class TBMUsers
 
       $auth0_user_id = $data['user_id'];
 
-      if (!get_user_meta($user_id, 'wp_auth0_id', true)) :
-        update_user_meta($user_id, 'wp_auth0_id', $auth0_user_id);
+      if (!get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true)) :
+        update_user_meta($user_id, $wpdb->prefix . 'auth0_id', $auth0_user_id);
       endif;
 
-      if (!get_user_meta($user_id, 'wp_auth0_obj', true)) :
+      if (!get_user_meta($user_id, $wpdb->prefix . 'auth0_obj', true)) :
 
         $wp_auth0_obj = [
           'created_at' => $current_datetime,
@@ -845,7 +869,7 @@ class TBMUsers
           'sub' => $auth0_user_id,
         ];
 
-        update_user_meta($user_id, 'wp_auth0_obj', json_encode($wp_auth0_obj));
+        update_user_meta($user_id, $wpdb->prefix . 'auth0_obj', json_encode($wp_auth0_obj));
       endif;
     }
 
@@ -870,8 +894,6 @@ class TBMUsers
       $return['state'] = get_user_meta($user_id, 'state', true);
     }
 
-    // error_log( print_r( $return, true));
-
     return $return;
   }
 
@@ -893,11 +915,6 @@ class TBMUsers
   {
     return isset($key) && !is_null($key) && in_array($key, $this->rest_api_keys);
   }
-
-  /* public function add_cors_http_header()
-  {
-    header("Access-Control-Allow-Origin: *");
-  } */
 }
 
 new TBMUsers();
