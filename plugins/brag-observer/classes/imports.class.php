@@ -390,8 +390,14 @@ class Imports extends BragObserver
             $user_attributes['mc_tags'] = $tags;
           }
 
-          $user_attributes['legacy_lastclickdate'] = $this->getMailchimpLastActivity('click', $user->user_email);
-          $user_attributes['legacy_lastopendate'] = $this->getMailchimpLastActivity('open', $user->user_email);
+          $mc_last_click = $this->getMailchimpLastActivity('click', $user->user_email);
+          if ($mc_last_click !== false) {
+            $user_attributes['legacy_lastclickdate'] = $mc_last_click;
+          }
+          $mc_last_open = $this->getMailchimpLastActivity('open', $user->user_email);
+          if ($mc_last_open !== false) {
+            $user_attributes['legacy_lastopendate'] = $mc_last_open;
+          }
 
           /* if (is_array($mc_activities) && isset($mc_activities['activity']) && is_array($mc_activities['activity']) && !empty($mc_activities['activity'])) {
             foreach ($mc_activities['activity'] as $mc_activity) {
