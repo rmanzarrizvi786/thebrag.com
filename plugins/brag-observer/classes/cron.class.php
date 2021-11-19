@@ -86,6 +86,10 @@ class Cron // extends BragObserver
             'interval' => 5 * 60,
             'display'  => esc_html__('Every 5 Minutes'),
         );
+        $schedules['every2minutes'] = array(
+            'interval' => 2 * 60,
+            'display'  => esc_html__('Every 2 Minutes'),
+        );
         $schedules['everyminute'] = array(
             'interval' => 1 * 60,
             'display'  => esc_html__('Every Minute'),

@@ -307,6 +307,11 @@ class Imports extends BragObserver
 
   public function show_export_to_braze()
   {
+    date_default_timezone_set('Australia/NSW');
+    echo '<br><p>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</p>';
+    $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL));
+    echo '<p>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp) . '</p>';
+
     include PLUGINPATH . '/partials/imports/export-to-braze.php';
   } // show_export_to_braze()
 
