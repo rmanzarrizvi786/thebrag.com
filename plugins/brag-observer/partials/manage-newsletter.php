@@ -6,10 +6,17 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 if (!is_null($action) && 'edit' != $action) {
   switch ($action) {
     case 'preview':
+      if (isset($_GET['template']) && 'braze' == $_GET['template']) {
+        include __DIR__ . '/../partials/newsletter-template-braze.php';
+        break;
+      }
       include __DIR__ . '/../partials/newsletter-template.php';
       break;
     case 'create-on-mc':
       include __DIR__ . '/../partials/create-newsletter-mc.php';
+      break;
+    case 'show-html':
+      include __DIR__ . '/../partials/show-newsletter-html.php';
       break;
     case 'copy':
       include __DIR__ . '/../partials/copy-newsletter.php';

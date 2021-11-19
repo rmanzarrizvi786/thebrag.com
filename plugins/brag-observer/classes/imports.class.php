@@ -313,7 +313,8 @@ class Imports extends BragObserver
     global $wpdb;
     $errors = [];
     $attributes = [];
-    $limit_users = 1;
+    $limit_users = 10;
+    $return = [];
 
     /**
      * Get users
@@ -323,44 +324,47 @@ class Imports extends BragObserver
         'number' => $limit_users,
         'meta_key' => 'created_braze_user',
         'meta_compare' => 'NOT EXISTS',
+        'orderby' => 'ID'
       ]
     );
-    if ($users) {
-      foreach ($users as $user) {
-        /**
-         * Get user's meta
-         */
-        $user_attributes = [];
-        $user_attributes['email'] = $user->user_email;
-        if (get_user_meta($user->ID, 'first_name') && '' != trim(get_user_meta($user->ID, 'first_name', true))) {
-          $user_attributes['first_name'] = get_user_meta($user->ID, 'first_name', true);
-        }
-        if (get_user_meta($user->ID, 'last_name') && '' != trim(get_user_meta($user->ID, 'last_name', true))) {
-          $user_attributes['last_name'] = get_user_meta($user->ID, 'last_name', true);
-        }
+    try {
+      if ($users) {
+        foreach ($users as $user) {
 
-        /**
-         * Set user's Auth0 ID as external ID (if set)
-         * OR
-         * Set user_alias
-         */
-        if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
-          $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
-        } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
-          // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
-          $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
-        } else {
-          // User's Auth0 ID not set, set alias for user
-          $user_attributes['user_alias'] = [
-            'alias_name' => $user->user_email,
-            'alias_label' => 'email',
-          ];
-          $user_attributes['_update_existing_only'] = false;
-        }
-        /**
-         * Get user's subscription topics
-         */
-        $query_subs = " SELECT
+          /**
+           * Get user's meta
+           */
+          $user_attributes = [];
+          $user_attributes['email'] = $user->user_email;
+          if (get_user_meta($user->ID, 'first_name') && '' != trim(get_user_meta($user->ID, 'first_name', true))) {
+            $user_attributes['first_name'] = get_user_meta($user->ID, 'first_name', true);
+          }
+          if (get_user_meta($user->ID, 'last_name') && '' != trim(get_user_meta($user->ID, 'last_name', true))) {
+            $user_attributes['last_name'] = get_user_meta($user->ID, 'last_name', true);
+          }
+
+          /**
+           * Set user's Auth0 ID as external ID (if set)
+           * OR
+           * Set user_alias
+           */
+          if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+            $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+          } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+            // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+            $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
+          } else {
+            // User's Auth0 ID not set, set alias for user
+            $user_attributes['user_alias'] = [
+              'alias_name' => $user->user_email,
+              'alias_label' => 'email',
+            ];
+            $user_attributes['_update_existing_only'] = false;
+          }
+          /**
+           * Get user's subscription topics
+           */
+          $query_subs = " SELECT
                 l.slug
             FROM {$wpdb->prefix}observer_subs s
                 JOIN {$wpdb->prefix}observer_lists l
@@ -370,63 +374,87 @@ class Imports extends BragObserver
                 AND
                 s.user_id = '{$user->ID}'
             ";
-        $subs = $wpdb->get_results($query_subs);
-        if ($subs) {
-          $user_attributes['newsletter_interests'] = wp_list_pluck($subs, 'slug');
-        }
+          $subs = $wpdb->get_results($query_subs);
+          if ($subs) {
+            $user_attributes['newsletter_interests'] = wp_list_pluck($subs, 'slug');
+          }
+
+          /**
+           * Get user's tags from MailChimp
+           */
+          $subscriber_hash = $this->MailChimp->subscriberHash($user->user_email);
+
+          $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags");
+          $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
+          if (!empty($tags)) {
+            $user_attributes['mc_tags'] = $tags;
+          }
+
+          $mc_activities = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/activity");
+          if (is_array($mc_activities) && isset($mc_activities['activity']) && is_array($mc_activities['activity']) && !empty($mc_activities['activity'])) {
+            foreach ($mc_activities['activity'] as $mc_activity) {
+              if (!isset($user_attributes['legacy_lastopendate'])) {
+                if ('open' == $mc_activity['action']) {
+                  $user_attributes['legacy_lastopendate'] = $mc_activity['timestamp'];
+                }
+              }
+              if (!isset($user_attributes['legacy_lastclickdate'])) {
+                if ('click' == $mc_activity['action']) {
+                  $user_attributes['legacy_lastclickdate'] = $mc_activity['timestamp'];
+                }
+              }
+            }
+          }
+
+          if (get_user_meta($user->ID, 'gender')) {
+            $user_attributes['gender'] = get_user_meta($user->ID, 'gender', true);
+          }
+          if (get_user_meta($user->ID, 'birthday')) {
+            $user_attributes['dob'] = get_user_meta($user->ID, 'birthday', true);
+          }
+          if (get_user_meta($user->ID, 'state')) {
+            $user_attributes['state'] = get_user_meta($user->ID, 'state', true);
+          }
+          if (get_user_meta($user->ID, 'profile_strength')) {
+            $user_attributes['profile_completion_%'] = get_user_meta($user->ID, 'profile_strength', true);
+          }
+
+          if (!empty($user_attributes)) {
+            $attributes[] = $user_attributes;
+          }
+        } // For Each $user
 
         /**
-         * Get user's tags from MailChimp
+         * Export to Braze
          */
-        $subscriber_hash = $this->MailChimp->subscriberHash($user->user_email);
-        $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags");
-        $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
-        if (!empty($tags)) {
-          $user_attributes['mc_tags'] = $tags;
+        require __DIR__ . '/braze.class.php';
+        $braze = new Braze();
+        $braze->setMethod('POST');
+        $braze->setPayload(
+          [
+            'attributes' => $attributes
+          ]
+        );
+        $res_track = $braze->request('/users/track', true);
+        if (201 === $res_track['code']) {
+          foreach ($users as $user) {
+            update_user_meta($user->ID, 'created_braze_user', 1);
+          }
         }
 
-        if (get_user_meta($user->ID, 'gender')) {
-          $user_attributes['gender'] = get_user_meta($user->ID, 'gender', true);
-        }
-        if (get_user_meta($user->ID, 'birthday')) {
-          $user_attributes['dob'] = get_user_meta($user->ID, 'birthday', true);
-        }
-        if (get_user_meta($user->ID, 'state')) {
-          $user_attributes['state'] = get_user_meta($user->ID, 'state', true);
-        }
-        if (get_user_meta($user->ID, 'profile_strength')) {
-          $user_attributes['profile_completion_%'] = get_user_meta($user->ID, 'profile_strength', true);
-        }
+        $return[] = $user->user_email;
 
-        if (!empty($user_attributes)) {
-          $attributes[] = $user_attributes;
-        }
-      } // For Each $user
-
-      /**
-       * Export to Braze
-       */
-      require __DIR__ . '/braze.class.php';
-      $braze = new Braze();
-      $braze->setMethod('POST');
-      $braze->setPayload(
-        [
-          'attributes' => $attributes
-        ]
-      );
-      $res_track = $braze->request('/users/track', true);
-      if (201 === $res_track['code']) {
-        foreach ($users as $user) {
-          update_user_meta($user->ID, 'created_braze_user', 1);
-        }
-      }
-      $return = [
+        /* $return = [
         '<pre>' . print_r($attributes, true) . '</pre>',
         '<pre>' . print_r($res_track, true) . '</pre>',
-      ];
-    } // If $users
-    else {
-      wp_send_json_error('Done');
+      ]; */
+      } // If $users
+      else {
+        wp_send_json_error('Done');
+        die();
+      }
+    } catch (\Exception $e) {
+      wp_send_json_error($e->getMessage());
       die();
     }
 

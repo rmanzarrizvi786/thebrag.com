@@ -46,9 +46,6 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
             // processSubs();
           } else {
             alert(res.data);
-            if (res.data == 'Done') {
-              // window.location = 'admin.php?page=brag-observer-export-for-mailchimp';
-            }
             $('#start-export-to-braze').prop('disabled', false);
           }
         },

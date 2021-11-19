@@ -357,8 +357,12 @@ class BragObserver
       wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_brag_observer', array(NULL, NULL));
     }
 
-    if (!wp_next_scheduled('cron_hook_observer_braze_push', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'every5minutes', 'cron_hook_observer_braze_push', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:00:00'), 'every20minutes', 'cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
+    }
+
+    if (!wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile', array(NULL, NULL));
     }
   }
 
@@ -368,7 +372,7 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_push'];
+    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {
@@ -1202,6 +1206,15 @@ class BragObserver
         );
       }
 
+      /**
+       * Add to queue for Braze
+       */
+      $task = 'update_newsletter_interests';
+      $cron = new Cron();
+      if (!$cron->getActiveBrazeQueueTask($user_id, $task)) {
+        $cron->addToBrazeQueue($user_id, $task);
+      }
+
       // require_once __DIR__ . '/classes/email.class.php';
       // $email = new Email();
       // $email->sendSubscribeConfirmationEmail( $formData['list'] );
@@ -1603,7 +1616,7 @@ class BragObserver
         array_push($errors, 'Date must be today or in future.');
       endif;
 
-      if (!isset($data['posts']) || (count($data['posts']) > 6 && count($data['posts']) % 2 != 0)) :
+      if (isset($data['posts']) && (count($data['posts']) > 6 && count($data['posts']) % 2 != 0)) :
         array_push($errors, 'Number of articles must be even if there are more than 6 articles, either remove one or add one.');
       endif;
 

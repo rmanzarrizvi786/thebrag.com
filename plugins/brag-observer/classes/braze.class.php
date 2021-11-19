@@ -13,7 +13,6 @@ class Braze
 
     public function __construct()
     {
-
         self::$config = include __DIR__ . '/config.php';
         $this->sdk_api_key = self::$config['braze']['sdk_api_key'];
         $this->sdk_endpoint = self::$config['braze']['sdk_endpoint'];

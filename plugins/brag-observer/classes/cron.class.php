@@ -1,26 +1,39 @@
 <?php
-class Cron extends BragObserver
+class Cron // extends BragObserver
 {
-    // protected $plugin_name;
-    // protected $plugin_slug;
+    protected $plugin_name;
+    protected $plugin_slug;
 
     protected static $config;
 
+    protected $mailchimp_list_id;
+    protected $mailchimp_interest_category_id;
+    protected $mailchimp_api_key;
+    protected $MailChimp;
+
     public function __construct()
     {
-        // $this->plugin_name = 'brag_observer';
-        // $this->plugin_slug = 'brag-observer';
+        $this->plugin_name = 'brag_observer';
+        $this->plugin_slug = 'brag-observer';
 
         // Admin menu
         add_action('admin_menu', [$this, '_admin_menu']);
 
         add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
-        add_action('cron_hook_observer_braze_push', [$this, 'exec_cron_observer_braze_push']);
+        add_action('cron_hook_observer_braze_update_newsletter_interests', [$this, 'exec_cron_observer_braze_update_newsletter_interests']);
+        add_action('cron_hook_observer_braze_update_profile', [$this, 'exec_cron_observer_braze_update_profile']);
 
         add_filter('cron_schedules', [$this, '_cron_schedules']);
 
         // Config
         self::$config = include __DIR__ . '/config.php';
+
+        $this->mailchimp_list_id = '5f6dd9c238';
+        $this->mailchimp_interest_category_id = 'b87c163ce8';
+        $this->mailchimp_api_key = 'e5ad9623c8961a991f8737c3cc950c55-us1';
+
+        require_once __DIR__ . '/MailChimp.php';
+        $this->MailChimp = new MailChimp($this->mailchimp_api_key);
     }
 
     public function _admin_menu()
@@ -384,23 +397,256 @@ class Cron extends BragObserver
 
 
     /**
-     * Process CRON
+     * Process Braze CRON
      */
+    public function addToBrazeQueue($user_id, $task, $task_values = null)
+    {
+        global $wpdb;
+        if (!$user_id || !$task) {
+            return false;
+        }
+        $data = [
+            'user_id' => absint($user_id),
+            'task' => trim($task),
+            'queued_at' => current_time('mysql')
+        ];
+        $format = ['%d', '%s', '%s'];
+        if (!is_null($task_values)) {
+            $data['task_values'] = json_encode($task_values);
+            $format[] = '%s';
+        }
+        $wpdb->insert(
+            $wpdb->prefix . 'observer_braze_cron',
+            $data,
+            $format
+        );
+    }
+
+    public function getActiveBrazeQueueTask($user_id, $task = null)
+    {
+        global $wpdb;
+        $query = " SELECT * FROM {$wpdb->prefix}observer_braze_cron WHERE `user_id` = '{$user_id}' AND `completed_at` IS NULL ";
+        if (!is_null($task)) {
+            return $wpdb->get_row($query . " AND `task` = '{$task}' LIMIT 1 ");
+        }
+        return $wpdb->get_results($query);
+    }
+
     public function process_braze()
     {
         date_default_timezone_set('Australia/NSW');
-        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_push', array(NULL, NULL));
-        echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
         echo '<br>Current Date/Time: ' . date('d-M-Y h:i:sa');
 
-        $this->exec_cron_observer_braze_push();
+        echo '<hr>';
+
+        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
+        echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+        $this->exec_cron_observer_braze_update_newsletter_interests();
+
+        echo '<hr>';
+
+        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL));
+        echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+        $this->exec_cron_observer_braze_update_profile();
     }
 
-    public function exec_cron_observer_braze_push()
+    public function exec_cron_observer_braze_update_profile()
     {
-        return;
+        global $wpdb;
 
-        /* global $wpdb;
+        $attributes = [];
+        $task_ids = [];
+
+        $query_tasks = " SELECT c.`id`, c.`user_id`, c.`task_values`
+            FROM {$wpdb->prefix}observer_braze_cron c
+            WHERE c.`task` = 'update_profile' AND c.`completed_at` IS NULL
+            ";
+        $tasks = $wpdb->get_results($query_tasks);
+
+        if ($tasks) {
+            $task_ids = wp_list_pluck($tasks, 'id');
+            foreach ($tasks as $task) {
+                $user_attributes = [];
+
+                $user = get_user_by('ID', $task->user_id);
+
+                if (!$user) {
+                    $wpdb->update(
+                        $wpdb->prefix . 'observer_braze_cron',
+                        [
+                            'completed_at' => current_time('mysql'),
+                            'comments' => 'User not found',
+                        ],
+                        [
+                            'id' => $task->id,
+                        ]
+                    );
+                    continue;
+                }
+
+                /**
+                 * Set user's Auth0 ID as external ID (if set)
+                 * OR
+                 * Set user_alias
+                 */
+                if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+                    $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+                } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+                    // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+                    $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
+                } else {
+                    // User's Auth0 ID not set, set alias for user
+                    $user_attributes['user_alias'] = [
+                        'alias_name' => $user->user_email,
+                        'alias_label' => 'email',
+                    ];
+                    $user_attributes['_update_existing_only'] = false;
+                }
+
+                if (!get_user_meta($user->ID, 'created_braze_user')) {
+                    $user_attributes['email'] = $user->user_email;
+                }
+
+                $user_attributes = array_merge($user_attributes, (array)json_decode($task->task_values));
+
+                if (!empty($user_attributes)) {
+                    $attributes[] = $user_attributes;
+                }
+            }
+        }
+
+        if (!empty($attributes)) {
+            /**
+             * to Braze
+             */
+            require __DIR__ . '/braze.class.php';
+            $braze = new Braze();
+            $braze->setMethod('POST');
+            $braze->setPayload(
+                [
+                    'attributes' => $attributes
+                ]
+            );
+            $res_track = $braze->request('/users/track', true);
+            if (201 === $res_track['code']) {
+                // echo '<pre>' . print_r($attributes, true) . '</pre>';
+                // echo '<pre>' . print_r($res_track, true) . '</pre>';
+                $wpdb->query("UPDATE {$wpdb->prefix}observer_braze_cron SET `completed_at` = '" . current_time('mysql') . "' WHERE `id` IN (" . implode(',', $task_ids) . ")");
+            } else {
+                wp_mail('sachin.patel@thebrag.media', 'Braze error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r " . print_r($res_track, true));
+            }
+        }
+    }
+
+    /**
+     * Update Newsletter interests in Braze
+     */
+    public function exec_cron_observer_braze_update_newsletter_interests()
+    {
+        global $wpdb;
+
+        $attributes = [];
+        $task_ids = [];
+
+        $query_tasks = " SELECT c.`id`, c.`user_id`
+            FROM {$wpdb->prefix}observer_braze_cron c
+            WHERE c.`task` = 'update_newsletter_interests' AND c.`completed_at` IS NULL
+            ";
+        $tasks = $wpdb->get_results($query_tasks);
+
+        if ($tasks) {
+            $task_ids = wp_list_pluck($tasks, 'id');
+            foreach ($tasks as $task) {
+                $user_attributes = [];
+
+                $user = get_user_by('ID', $task->user_id);
+
+                if (!$user) {
+                    $wpdb->update(
+                        $wpdb->prefix . 'observer_braze_cron',
+                        [
+                            'completed_at' => current_time('mysql'),
+                            'comments' => 'User not found',
+                        ],
+                        [
+                            'id' => $task->id,
+                        ]
+                    );
+                    continue;
+                }
+
+                /**
+                 * Set user's Auth0 ID as external ID (if set)
+                 * OR
+                 * Set user_alias
+                 */
+                if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+                    $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+                } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+                    // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+                    $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
+                } else {
+                    // User's Auth0 ID not set, set alias for user
+                    $user_attributes['user_alias'] = [
+                        'alias_name' => $user->user_email,
+                        'alias_label' => 'email',
+                    ];
+                    $user_attributes['_update_existing_only'] = false;
+                }
+
+                if (!get_user_meta($user->ID, 'created_braze_user')) {
+                    $user_attributes['email'] = $user->user_email;
+                }
+
+                $query_subs = " SELECT
+                        l.slug
+                    FROM {$wpdb->prefix}observer_subs s
+                        JOIN {$wpdb->prefix}observer_lists l
+                            ON s.list_id = l.id
+                    WHERE
+                        s.`status` = 'subscribed'
+                        AND
+                        s.`user_id` = '{$user->ID}'
+                    ";
+                $subs = $wpdb->get_results($query_subs);
+
+                // echo '<pre>' . print_r($subs, true) . '</pre>';
+
+                if ($subs) {
+                    $user_attributes['newsletter_interests'] = wp_list_pluck($subs, 'slug');
+                } else {
+                    $user_attributes['newsletter_interests'] = [];
+                }
+
+                if (!empty($user_attributes)) {
+                    $attributes[] = $user_attributes;
+                }
+            }
+        }
+
+        if (!empty($attributes)) {
+            /**
+             * to Braze
+             */
+            require __DIR__ . '/braze.class.php';
+            $braze = new Braze();
+            $braze->setMethod('POST');
+            $braze->setPayload(
+                [
+                    'attributes' => $attributes
+                ]
+            );
+            $res_track = $braze->request('/users/track', true);
+            if (201 === $res_track['code']) {
+                // echo '<pre>' . print_r($attributes, true) . '</pre>';
+                // echo '<pre>' . print_r($res_track, true) . '</pre>';
+                $wpdb->query("UPDATE {$wpdb->prefix}observer_braze_cron SET `completed_at` = '" . current_time('mysql') . "' WHERE `id` IN (" . implode(',', $task_ids) . ")");
+            } else {
+                wp_mail('sachin.patel@thebrag.media', 'Braze error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r " . print_r($res_track, true));
+            }
+        }
+        return;
+        /*
 
         $query_users = " SELECT
                 u.ID

@@ -149,6 +149,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     // 'gender',
   ];
 
+  $braze_udpates = [];
+
   // if (get_user_meta($current_user->ID, 'is_imported', true) === '1') {
   // array_push( $required_fields, 'password', 'confirm_password' );
   // }
@@ -168,7 +170,15 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
   */
 
   $user_data['first_name'] = sanitize_text_field($post_vars['first_name']);
+  if (get_user_meta($current_user->ID, 'first_name', true) != $user_data['first_name']) {
+    $braze_udpates['first_name'] = $user_data['first_name'];
+  }
+
   $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
+  if (get_user_meta($current_user->ID, 'last_name', true) != $user_data['last_name']) {
+    $braze_udpates['last_name'] = $user_data['last_name'];
+  }
+
   $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
 
   foreach (get_social_platforms() as $social_platform => $social_title) {
@@ -228,16 +238,27 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       '0' != trim($post_vars['birthday_day']) &&
       '0' != trim($post_vars['birthday_year'])
     ) {
-      update_user_meta($current_user->ID, 'birthday', $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day']);
+      $birthday = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
+
+      if (get_user_meta($current_user->ID, 'birthday', true) != $birthday) {
+        $braze_udpates['birthday'] = $birthday;
+      }
+
+      update_user_meta($current_user->ID, 'birthday', $birthday);
       delete_user_meta($current_user->ID, 'predicted_birthday');
 
-      $auth0_usermeta['birthday'] = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
+      $auth0_usermeta['birthday'] = $birthday;
     } else {
       delete_user_meta($current_user->ID, 'birthday');
     }
 
     if (isset($post_vars['state'])) {
       if ('' != trim($post_vars['state'])) {
+
+        if (get_user_meta($current_user->ID, 'state', true) != trim($post_vars['state'])) {
+          $braze_udpates['state'] = trim($post_vars['state']);
+        }
+
         update_user_meta($current_user->ID, 'state', $post_vars['state']);
         delete_user_meta($current_user->ID, 'predicted_state');
 
@@ -252,6 +273,11 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
     if (isset($post_vars['gender'])) {
       if ('' != trim($post_vars['gender'])) {
+
+        if (get_user_meta($current_user->ID, 'gender', true) != trim($post_vars['gender'])) {
+          $braze_udpates['gender'] = trim($post_vars['gender']);
+        }
+
         update_user_meta($current_user->ID, 'gender', $post_vars['gender']);
         delete_user_meta($current_user->ID, 'predicted_gender');
 
@@ -269,6 +295,9 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       ]);
     }
 
+    /**
+     * Update MailChimp
+     */
     require_once(get_template_directory() . '/MailChimp.php');
     $api_key = '727643e6b14470301125c15a490425a8-us1';
     $MailChimp = new MailChimp($api_key);
@@ -302,7 +331,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $merge_fields = [
       'FNAME' => $user_data['first_name'],
       'LNAME' => $user_data['last_name'],
-      // 'BIRTHDATE' => $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'],
+      // 'BIRTHDATE' => $birthday,
       'STATE' => $post_vars['state'],
       // 'GENDER' => $post_vars['gender'],
       'STRENGTH' => $profile_strength,
@@ -316,7 +345,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       '0' != trim($post_vars['birthday_day']) &&
       '0' != trim($post_vars['birthday_year'])
     ) {
-      $merge_fields['BIRTHDATE'] = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
+      $merge_fields['BIRTHDATE'] = $birthday;
     }
 
     if (isset($post_vars['gender']) && '' != trim($post_vars['gender'])) {
@@ -339,6 +368,23 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     $update_subscriber = $MailChimp->patch("lists/5f6dd9c238/members/$subscriber_hash", [
       'merge_fields' => $merge_fields
     ]);
+
+    /**
+     * Queue to update in Braze
+     */
+    if (!empty($braze_udpates)) {
+      echo '<pre>' . print_r($braze_udpates, true) . '</pre>';
+
+      $task = 'update_profile';
+      include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
+      $cron = new Cron();
+      if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
+        $cron->addToBrazeQueue($current_user->ID, $task, $braze_udpates);
+      }
+
+      exit;
+    }
+
     wp_redirect($returnTo);
     exit;
   } // If $errors is empty
