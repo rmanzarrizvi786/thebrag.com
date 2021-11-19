@@ -11,6 +11,8 @@ class Imports extends BragObserver
     add_action('wp_ajax_mc_delete_from_wp', [$this, 'mc_delete_from_wp']);
     add_action('wp_ajax_export_to_braze', [$this, 'export_to_braze']);
 
+    add_action('cron_hook_observer_braze_export', [$this, 'export_to_braze']);
+
     // Admin menu
     add_action('admin_menu', array($this, '_admin_menu'));
 
@@ -324,13 +326,14 @@ class Imports extends BragObserver
         'number' => $limit_users,
         'meta_key' => 'created_braze_user',
         'meta_compare' => 'NOT EXISTS',
-        'orderby' => 'ID'
+        'orderby' => 'ID',
+        'order' => isset($_POST['order']) ? strtoupper(trim($_POST['order'])) : 'ASC'
       ]
     );
+
     try {
       if ($users) {
         foreach ($users as $user) {
-
           /**
            * Get user's meta
            */
