@@ -382,7 +382,7 @@ class Imports extends BragObserver
           /**
            * Get user's tags from MailChimp
            */
-          $subscriber_hash = $this->MailChimp->subscriberHash("luke.girgis@thebrag.media"); // $user->user_email);
+          $subscriber_hash = $this->MailChimp->subscriberHash($user->user_email);
 
           $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags");
           $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
