@@ -422,6 +422,8 @@ class Imports extends BragObserver
           if (!empty($user_attributes)) {
             $attributes[] = $user_attributes;
           }
+
+          $return[] = $user->user_email;
         } // For Each $user
 
         /**
@@ -441,8 +443,6 @@ class Imports extends BragObserver
             update_user_meta($user->ID, 'created_braze_user', 1);
           }
         }
-
-        $return[] = $user->user_email;
 
         /* $return = [
         '<pre>' . print_r($attributes, true) . '</pre>',

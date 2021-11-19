@@ -26,7 +26,7 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
     });
 
     function processSubs() {
-      // $('#start-export-to-braze').prop('disabled', true);
+      $('#start-export-to-braze').prop('disabled', true);
       // $('#results').html('');
 
       var fd = new FormData();
@@ -43,7 +43,7 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
             $.each(res.data, function(i, e) {
               $('#results').prepend('<tr><td>' + e + '</td></tr>');
             });
-            // processSubs();
+            processSubs();
           } else {
             alert(res.data);
             $('#start-export-to-braze').prop('disabled', false);
