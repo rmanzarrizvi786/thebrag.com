@@ -313,7 +313,7 @@ class Imports extends BragObserver
     global $wpdb;
     $errors = [];
     $attributes = [];
-    $limit_users = 75;
+    $limit_users = 1;
     $return = [];
 
     /**
@@ -382,7 +382,7 @@ class Imports extends BragObserver
           /**
            * Get user's tags from MailChimp
            */
-          $subscriber_hash = $this->MailChimp->subscriberHash($user->user_email);
+          $subscriber_hash = $this->MailChimp->subscriberHash("luke.girgis@thebrag.media"); // $user->user_email);
 
           $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags");
           $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
@@ -390,8 +390,10 @@ class Imports extends BragObserver
             $user_attributes['mc_tags'] = $tags;
           }
 
-          $mc_activities = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/activity");
-          if (is_array($mc_activities) && isset($mc_activities['activity']) && is_array($mc_activities['activity']) && !empty($mc_activities['activity'])) {
+          $user_attributes['legacy_lastclickdate'] = $this->getMailchimpLastActivity('click', $user->user_email);
+          $user_attributes['legacy_lastopendate'] = $this->getMailchimpLastActivity('open', $user->user_email);
+
+          /* if (is_array($mc_activities) && isset($mc_activities['activity']) && is_array($mc_activities['activity']) && !empty($mc_activities['activity'])) {
             foreach ($mc_activities['activity'] as $mc_activity) {
               if (!isset($user_attributes['legacy_lastopendate'])) {
                 if ('open' == $mc_activity['action']) {
@@ -404,7 +406,20 @@ class Imports extends BragObserver
                 }
               }
             }
-          }
+          } */
+
+          // Token
+          if (!get_user_meta($user->ID, 'oc_token', true)) :
+            $oc_token = md5($user->ID . time()); // creates md5 code to verify later
+            update_user_meta($user->ID, 'oc_token', $oc_token);
+          endif;
+
+          $unserialized_oc_token = [
+            'id' => $user->ID,
+            'oc_token' => get_user_meta($user->ID, 'oc_token', true),
+          ]; // makes it into a code to send it to user via email
+
+          $user_attributes['observer_token'] = base64_encode(serialize($unserialized_oc_token));
 
           if (get_user_meta($user->ID, 'gender')) {
             $user_attributes['gender'] = get_user_meta($user->ID, 'gender', true);
@@ -466,6 +481,33 @@ class Imports extends BragObserver
     wp_send_json_success($return);
     die();
   } // export_to_braze()
+
+  private function getMailchimpLastActivity($activity_type, $email, $offset = 0)
+  {
+    $count = 100;
+
+    $subscriber_hash = $this->MailChimp->subscriberHash($email);
+
+    $request = "lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/activity-feed?count={$count}&fields=activity.activity_type,activity.created_at_timestamp";
+
+    if ($offset > 0) {
+      $request .= "&offset={$offset}";
+    }
+
+    if ($offset > 200)
+      return false;
+
+    $mc_activities = $this->MailChimp->get($request);
+    if (is_array($mc_activities) && isset($mc_activities['activity']) && is_array($mc_activities['activity']) && !empty($mc_activities['activity'])) {
+      foreach ($mc_activities['activity'] as $mc_activity) {
+        if ($activity_type == $mc_activity['activity_type']) {
+          return $mc_activity['created_at_timestamp'];
+        }
+      }
+      return $this->getMailchimpLastActivity($activity_type, $email, $offset + $count);
+    }
+    return false;
+  }
 }
 
 new Imports();

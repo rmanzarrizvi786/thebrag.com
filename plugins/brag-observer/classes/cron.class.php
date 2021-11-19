@@ -505,6 +505,17 @@ class Cron // extends BragObserver
 
                 if (!get_user_meta($user->ID, 'created_braze_user')) {
                     $user_attributes['email'] = $user->user_email;
+                    if (!get_user_meta($user->ID, 'oc_token', true)) :
+                        $oc_token = md5($user->ID . time()); // creates md5 code to verify later
+                        update_user_meta($user->ID, 'oc_token', $oc_token);
+                    endif;
+
+                    $unserialized_oc_token = [
+                        'id' => $user->ID,
+                        'oc_token' => get_user_meta($user->ID, 'oc_token', true),
+                    ]; // makes it into a code to send it to user via email
+
+                    $user_attributes['observer_token'] = base64_encode(serialize($unserialized_oc_token));
                 }
 
                 $user_attributes = array_merge($user_attributes, (array)json_decode($task->task_values));
@@ -596,6 +607,17 @@ class Cron // extends BragObserver
 
                 if (!get_user_meta($user->ID, 'created_braze_user')) {
                     $user_attributes['email'] = $user->user_email;
+                    if (!get_user_meta($user->ID, 'oc_token', true)) :
+                        $oc_token = md5($user->ID . time()); // creates md5 code to verify later
+                        update_user_meta($user->ID, 'oc_token', $oc_token);
+                    endif;
+
+                    $unserialized_oc_token = [
+                        'id' => $user->ID,
+                        'oc_token' => get_user_meta($user->ID, 'oc_token', true),
+                    ]; // makes it into a code to send it to user via email
+
+                    $user_attributes['observer_token'] = base64_encode(serialize($unserialized_oc_token));
                 }
 
                 $query_subs = " SELECT
