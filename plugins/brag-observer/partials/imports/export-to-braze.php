@@ -32,6 +32,8 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
       var fd = new FormData();
       fd.append('action', 'export_to_braze');
       fd.append('order', 'DESC');
+      fd.append('limit_users', 30);
+
 
       $.ajax({
         url: ajaxurl,
@@ -44,9 +46,8 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
             $.each(res.data, function(i, e) {
               $('#results').prepend('<tr><td>' + e + '</td></tr>');
             });
-            setTimeout(function() {
-              processSubs();
-            }, 1000);
+            processSubs();
+            // setTimeout(function() {}, 1000);
           } else {
             alert(res.data);
             $('#start-export-to-braze').prop('disabled', false);

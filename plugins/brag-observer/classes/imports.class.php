@@ -320,7 +320,7 @@ class Imports extends BragObserver
     global $wpdb;
     $errors = [];
     $attributes = [];
-    $limit_users = 75;
+    $limit_users = isset($_POST['limit_users']) ? absint($_POST['limit_users']) : 75;
     $return = [];
 
     /**
