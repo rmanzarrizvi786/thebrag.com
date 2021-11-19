@@ -53,7 +53,14 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
           }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-          alert(xhr.responseText);
+          if (524 == xhr.status) {
+            console.error("524 Error at: ", new Date());
+            setTimeout(function() {
+              processSubs();
+            }, 1000);
+          } else {
+            alert(xhr.responseText);
+          }
           $('#start-export-to-braze').prop('disabled', false);
         }
       });
