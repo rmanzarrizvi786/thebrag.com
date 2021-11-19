@@ -313,7 +313,7 @@ class Imports extends BragObserver
     global $wpdb;
     $errors = [];
     $attributes = [];
-    $limit_users = 10;
+    $limit_users = 75;
     $return = [];
 
     /**
