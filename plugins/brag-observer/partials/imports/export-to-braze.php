@@ -32,8 +32,7 @@ wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.
       var fd = new FormData();
       fd.append('action', 'export_to_braze');
       fd.append('order', 'DESC');
-      fd.append('limit_users', 30);
-
+      fd.append('limit_users', 40);
 
       $.ajax({
         url: ajaxurl,

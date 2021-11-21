@@ -538,7 +538,7 @@ class Cron // extends BragObserver
             /**
              * to Braze
              */
-            require __DIR__ . '/braze.class.php';
+            require_once __DIR__ . '/braze.class.php';
             $braze = new Braze();
             $braze->setMethod('POST');
             $braze->setPayload(
@@ -658,7 +658,7 @@ class Cron // extends BragObserver
             /**
              * to Braze
              */
-            require __DIR__ . '/braze.class.php';
+            require_once __DIR__ . '/braze.class.php';
             $braze = new Braze();
             $braze->setMethod('POST');
             $braze->setPayload(
@@ -701,7 +701,7 @@ class Cron // extends BragObserver
         $sub_users = [];
         $user_ids = [];
 
-        require __DIR__ . '/braze.class.php';
+        require_once __DIR__ . '/braze.class.php';
         $braze = new Braze();
         $braze->setMethod('POST');
 

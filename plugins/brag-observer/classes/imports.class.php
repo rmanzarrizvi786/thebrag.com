@@ -339,6 +339,24 @@ class Imports extends BragObserver
     try {
       if ($users) {
         foreach ($users as $user) {
+
+          /**
+           * Get user's subscription topics
+           */
+          $query_subs = " SELECT
+                l.slug
+            FROM {$wpdb->prefix}observer_subs s
+                JOIN {$wpdb->prefix}observer_lists l
+                    ON s.list_id = l.id
+            WHERE
+                s.`status` = 'subscribed'
+                AND
+                s.user_id = '{$user->ID}'
+            ";
+          $subs = $wpdb->get_results($query_subs);
+          if (!$subs)
+            continue;
+
           /**
            * Get user's meta
            */
@@ -369,20 +387,10 @@ class Imports extends BragObserver
             ];
             $user_attributes['_update_existing_only'] = false;
           }
+
           /**
-           * Get user's subscription topics
+           * Add subscriptions to custom user attributes
            */
-          $query_subs = " SELECT
-                l.slug
-            FROM {$wpdb->prefix}observer_subs s
-                JOIN {$wpdb->prefix}observer_lists l
-                    ON s.list_id = l.id
-            WHERE
-                s.`status` = 'subscribed'
-                AND
-                s.user_id = '{$user->ID}'
-            ";
-          $subs = $wpdb->get_results($query_subs);
           if ($subs) {
             $user_attributes['newsletter_interests'] = wp_list_pluck($subs, 'slug');
           }
@@ -458,7 +466,7 @@ class Imports extends BragObserver
         /**
          * Export to Braze
          */
-        require __DIR__ . '/braze.class.php';
+        require_once __DIR__ . '/braze.class.php';
         $braze = new Braze();
         $braze->setMethod('POST');
         $braze->setPayload(
