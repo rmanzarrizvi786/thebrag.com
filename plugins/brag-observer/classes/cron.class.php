@@ -511,7 +511,7 @@ class Cron // extends BragObserver
                     $user_attributes['_update_existing_only'] = false;
                 }
 
-                if (!get_user_meta($user->ID, 'created_braze_user')) {
+                if (1 != get_user_meta($user->ID, 'created_braze_user')) {
                     $user_attributes['email'] = $user->user_email;
                     if (!get_user_meta($user->ID, 'oc_token', true)) :
                         $oc_token = md5($user->ID . time()); // creates md5 code to verify later
@@ -613,7 +613,7 @@ class Cron // extends BragObserver
                     $user_attributes['_update_existing_only'] = false;
                 }
 
-                if (!get_user_meta($user->ID, 'created_braze_user')) {
+                if (1 != get_user_meta($user->ID, 'created_braze_user')) {
                     $user_attributes['email'] = $user->user_email;
                     if (!get_user_meta($user->ID, 'oc_token', true)) :
                         $oc_token = md5($user->ID . time()); // creates md5 code to verify later

@@ -354,8 +354,10 @@ class Imports extends BragObserver
                 s.user_id = '{$user->ID}'
             ";
           $subs = $wpdb->get_results($query_subs);
-          if (!$subs)
+          if (!$subs) {
+            update_user_meta($user->ID, 'created_braze_user', 0);
             continue;
+          }
 
           /**
            * Get user's meta
