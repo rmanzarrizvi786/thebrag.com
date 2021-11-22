@@ -338,7 +338,7 @@ class Imports extends BragObserver
 
     try {
       if ($users) {
-        foreach ($users as $user) {
+        foreach ($users as $i => $user) {
 
           /**
            * Get user's subscription topics
@@ -355,7 +355,8 @@ class Imports extends BragObserver
             ";
           $subs = $wpdb->get_results($query_subs);
           if (!$subs) {
-            update_user_meta($user->ID, 'created_braze_user', 0);
+            update_user_meta($user->ID, 'created_braze_user', '0');
+            unset($users[$i]);
             continue;
           }
 

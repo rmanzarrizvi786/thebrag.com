@@ -366,7 +366,7 @@ class BragObserver
     }
 
     if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
+      wp_schedule_event(strtotime('00:00:00'), 'every30seconds', 'cron_hook_observer_braze_export', array(NULL, NULL));
     }
   }
 
@@ -376,7 +376,7 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export'];
+    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {

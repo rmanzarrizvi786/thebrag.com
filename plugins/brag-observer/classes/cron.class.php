@@ -94,6 +94,10 @@ class Cron // extends BragObserver
             'interval' => 1 * 60,
             'display'  => esc_html__('Every Minute'),
         );
+        $schedules['every30seconds'] = array(
+            'interval' => 1 * 30,
+            'display'  => esc_html__('Every 30 Seconds'),
+        );
         return $schedules;
     }
 
