@@ -43,7 +43,8 @@ class BragObserver
 
     $this->mailchimp_list_id = '5f6dd9c238';
     $this->mailchimp_interest_category_id = 'b87c163ce8';
-    $this->mailchimp_api_key = 'e5ad9623c8961a991f8737c3cc950c55-us1';
+    // $this->mailchimp_api_key = 'e5ad9623c8961a991f8737c3cc950c55-us1';
+    $this->mailchimp_api_key = '9dc8845179ec747ce4e4d9292f68a03a-us1';
 
     require_once __DIR__ . '/classes/MailChimp.php';
     $this->MailChimp = new MailChimp($this->mailchimp_api_key);
@@ -366,7 +367,7 @@ class BragObserver
     }
 
     if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'every30seconds', 'cron_hook_observer_braze_export', array(NULL, NULL));
+      wp_schedule_event(strtotime('00:00:00'), 'every2minutes', 'cron_hook_observer_braze_export', array(NULL, NULL));
     }
   }
 

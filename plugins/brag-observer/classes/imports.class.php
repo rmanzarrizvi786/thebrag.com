@@ -49,6 +49,17 @@ class Imports extends BragObserver
       $this->plugin_slug . '-export-to-braze',
       array($this, 'show_export_to_braze')
     );
+
+    for ($i = 2; $i <= 2; $i++) {
+      add_submenu_page(
+        $this->plugin_slug,
+        'Export to Braze ' . $i,
+        'Export to Braze ' . $i,
+        'administrator',
+        $this->plugin_slug . '-export-to-braze' . $i,
+        array($this, 'show_export_to_braze' . $i)
+      );
+    }
   }
 
   public function show_mailchimp_imps_to_wp()
@@ -315,6 +326,17 @@ class Imports extends BragObserver
     include PLUGINPATH . '/partials/imports/export-to-braze.php';
   } // show_export_to_braze()
 
+  public function show_export_to_braze2()
+  {
+    date_default_timezone_set('Australia/NSW');
+    echo '<br><p>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</p>';
+    $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL));
+    echo '<p>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp) . '</p>';
+
+    $order = 'ASC';
+    include PLUGINPATH . '/partials/imports/export-to-braze.php';
+  } // show_export_to_braze2()
+
   public function export_to_braze()
   {
     global $wpdb;
@@ -332,7 +354,8 @@ class Imports extends BragObserver
         'meta_key' => 'created_braze_user',
         'meta_compare' => 'NOT EXISTS',
         'orderby' => 'ID',
-        'order' => isset($_POST['order']) ? strtoupper(trim($_POST['order'])) : 'ASC'
+        'order' => isset($_POST['order']) ? strtoupper(trim($_POST['order'])) : 'ASC',
+        'offset' => isset($_POST['offset']) ? absint($_POST['offset']) : 0,
       ]
     );
 

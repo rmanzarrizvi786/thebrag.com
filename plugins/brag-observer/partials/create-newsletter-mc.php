@@ -1,29 +1,29 @@
 <?php
-$id = isset( $_GET['id'] ) ? $_GET['id'] : null;
-if ( is_null( $id ) ):
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+if (is_null($id)) :
   return;
 endif;
 
 
 
-$newsletter = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}observer_newsletters WHERE id = {$id}" );
-if( is_null( $newsletter ) ):
+$newsletter = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_newsletters WHERE id = {$id}");
+if (is_null($newsletter)) :
   return;
 endif;
-$newsletter->details = json_decode( $newsletter->details );
-foreach ( $newsletter->details as $k => $v ) {
-  if ( is_object( $v ) ) {
+$newsletter->details = json_decode($newsletter->details);
+foreach ($newsletter->details as $k => $v) {
+  if (is_object($v)) {
     $v = (array) $v;
     // $v = array_values( $v );
     $newsletter->details->{$k} = $v;
   }
 }
 
-$list = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}observer_lists WHERE id = {$newsletter->list_id}" );
+$list = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_lists WHERE id = {$newsletter->list_id}");
 
 // var_dump( $list ); exit;
 
-if ( $newsletter->details->subject == '' ) {
+if ($newsletter->details->subject == '') {
   $newsletter->details->subject = 'Newsletter';
 }
 
@@ -39,7 +39,7 @@ $data = array(
           'field' => 'interests-' . $list->interest_id,
           'condition_type' => 'Interests',
           'op' => 'interestcontainsall',
-          'value' => [ $list->interest_id ]
+          'value' => [$list->interest_id]
         )
       )
     )
@@ -53,14 +53,14 @@ $data = array(
   ),
 );
 
-$campaign = $this->MailChimp->post( 'campaigns', $data );
+$campaign = $this->MailChimp->post('campaigns', $data);
 
 // echo '<pre>'; var_dump( $campaign ); exit;
 $campaign_id = $campaign['id'];
 
 ob_start();
 
-include(plugin_dir_path( __FILE__ ) . '/newsletter-template.php');
+include(plugin_dir_path(__FILE__) . '/newsletter-template.php');
 
 $html = ob_get_contents();
 ob_end_clean();
@@ -68,12 +68,12 @@ ob_end_clean();
 $content = array(
   'html' => $html,
 );
-$this->MailChimp->put( 'campaigns/' . $campaign_id . '/content', $content );
+$this->MailChimp->put('campaigns/' . $campaign_id . '/content', $content);
 
 $wpdb->update(
   $wpdb->base_prefix . 'observer_newsletters',
-  array( 'status' => '1' ),
-  array ( 'id' => $newsletter->id )
+  array('status' => '1'),
+  array('id' => $newsletter->id)
 );
 ?>
 <script>

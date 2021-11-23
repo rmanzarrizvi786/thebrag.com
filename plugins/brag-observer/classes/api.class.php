@@ -82,6 +82,38 @@ class API
       'callback' => [$this, 'rest_get_my_subs'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/get_external_id', array(
+      'methods' => 'GET',
+      'callback' => [$this, 'rest_get_external_id'],
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  public function rest_get_external_id()
+  {
+    global $wpdb;
+    if (!isset($_GET['email'])) {
+      wp_send_json_error(['Invalid Request']);
+      wp_die();
+    }
+
+    $email = trim($_GET['email']);
+    $user = get_user_by('email', $email);
+    if (!$email) {
+      die();
+    }
+
+    $auth0_id = null;
+    if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+      $auth0_id = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+    } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+      $auth0_id = get_user_meta($user->ID, 'wp_auth0_id', true);
+    }
+    if (!is_null($auth0_id)) {
+      echo json_encode($auth0_id);
+    } else {
+    }
   }
 
   /*
@@ -442,7 +474,7 @@ class API
   public function rest_get_my_subs($obj = null)
   {
 
-    if (is_null($obj) && (!isset($_GET['key']) || !$this->isRequestValid($_GET['key'])) || ! isset($_GET['email'])) {
+    if (is_null($obj) && (!isset($_GET['key']) || !$this->isRequestValid($_GET['key'])) || !isset($_GET['email'])) {
       wp_send_json_error(['Invalid Request']);
       wp_die();
     }
@@ -453,7 +485,7 @@ class API
 
     if (isset($_GET['email'])) {
       $user = get_user_by('email', sanitize_text_field($_GET['email']));
-      if(!$user) {
+      if (!$user) {
         wp_send_json_error(['Not found']);
         wp_die();
       }

@@ -27,7 +27,7 @@ if ($newsletter->details->subject == '') {
 
 ob_start();
 
-include(plugin_dir_path(__FILE__) . '/newsletter-template.php');
+include(plugin_dir_path(__FILE__) . '/newsletter-template-braze.php');
 
 $html = ob_get_contents();
 ob_end_clean();

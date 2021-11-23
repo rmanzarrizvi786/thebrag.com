@@ -45,7 +45,7 @@ $container_width = 700;
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>*|MC:SUBJECT|*</title>
+	<title><?php echo $newsletter->details->subject; ?></title>
 
 	<style type="text/css">
 		p {
@@ -393,7 +393,7 @@ $container_width = 700;
 
 		.templateFooter .mcnTextContent,
 		.templateFooter .mcnTextContent p {
-			color: #ffffff;
+			color: #333333;
 			font-family: Helvetica;
 			font-size: 14px;
 			line-height: 150%;
@@ -608,10 +608,10 @@ $container_width = 700;
 </head>
 
 <body>
-	<!--*|IF:MC_PREVIEW_TEXT|*-->
-	<!--[if !gte mso 9]><!----><span class="mcnPreview Text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"><?php echo $newsletter->details->preview_text; ?></span>
-	<!--<![endif]-->
-	<!--*|END:IF|*-->
+	<?php if ($newsletter->details->preview_text && '' != $newsletter->details->preview_text) : ?>
+		<!--[if !gte mso 9]><!----><span class="mcnPreview Text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"><?php echo $newsletter->details->preview_text; ?></span>
+		<!--<![endif]-->
+	<?php endif; ?>
 	<center>
 		<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
 			<tr>
@@ -647,7 +647,7 @@ $container_width = 700;
         											<tr>
         											<td align="left" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																*|DATE:l, j F Y|*
+																{{ "today" | date: "%a, %e %b %Y" }}
 																<!--[if gte mso 9]>
         											</td>
         											</tr>
@@ -661,14 +661,15 @@ $container_width = 700;
         											<tr>
         											<td align="right" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																*|IF:STRENGTH|*
-																*|IF:STRENGTH < 100|* Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-*|STRENGTH|*.jpg" alt="*|STRENGTH|*% complete" title="*|STRENGTH|*% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	*|END:IF|*
-																	*|ELSE:|*
+																{% if {{custom_attribute.${profile_completion_%}}} %}
+																{% assign ${profile_completion_} = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
+																{% if {{profile_completion_%}} < 100 %} Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{custom_attribute.${profile_completion_%}}}.jpg" alt="{{custom_attribute.${profile_completion_%}}}% complete" title="{{custom_attribute.${profile_completion_%}}}% complete" style="vertical-align: middle;">
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	{% endif %}
+																	{% else %}
 																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	*|END:IF|*
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	{% endif %}
 																	<!--[if gte mso 9]>
         											</td>
         											</tr>
@@ -747,7 +748,7 @@ $container_width = 700;
 																								<tr style="padding:0;text-align:center;vertical-align:top">
 																									<?php foreach ($random_lists as $random_list_counter => $random_list) : ?>
 																										<td class="small-12.2" style="width: 33%; max-width: 100%; padding: 0 5px;">
-																											<a href="<?php echo home_url('verify'); ?>/?oc=*|OC_TOKEN|*&amp;fl=0&amp;returnTo=<?php echo urlencode(home_url('observer/' . $random_list->slug)); ?>" title="<?php echo $random_list->title; ?>" class="" target="_blank" style="color: #000; text-decoration: none; display: block; line-height: 150%;">
+																											<a href="<?php echo home_url('verify'); ?>/?oc={{custom_attribute.${observer_token}}}&amp;fl=0&amp;returnTo=<?php echo urlencode(home_url('observer/' . $random_list->slug)); ?>" title="<?php echo $random_list->title; ?>" class="" target="_blank" style="color: #000; text-decoration: none; display: block; line-height: 150%;">
 																												<img width="205" height="205" src="<?php echo $random_list->image_url; ?>" style="max-width: 100%; border-radius: 9px;"><br>
 																												<?php
 																												echo !in_array($random_list->id, [4, 48]) ? trim(str_ireplace('Observer', '', $random_list->title)) : trim($random_list->title);
@@ -774,97 +775,6 @@ $container_width = 700;
 								</td>
 							</tr>
 						<?php endif; // If $random_lists
-
-						if (!isset($newsletter->details->hide_observer_rewards)) :
-						?>
-							<tr>
-								<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
-									<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="660">
-										<tbody>
-											<tr style="padding:0;text-align:center;vertical-align:top">
-												<td>
-													<div style="border-bottom: 1px solid rgb(249, 249, 249); border-radius: 20px; margin-bottom: 7px;">
-														<div style="border-bottom: 1px solid rgb(245, 245, 245); border-radius: 19px;">
-															<div style="border-right: 1px solid rgb(245, 245, 245); border-bottom: 1px solid rgb(242, 242, 242); border-radius: 18px;">
-																<div style="border-right: 1px solid rgb(242, 242, 242); border-bottom: 1px solid rgb(240, 240, 240); border-radius: 17px;">
-																	<div style="border-right: 1px solid rgb(238, 238, 238); border-bottom: 1px solid rgb(238, 238, 238); border-radius: 16px;">
-																		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-																			<tbody>
-																				<tr>
-																					<th style="text-align: left; font-weight: 400; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: rgb(51, 51, 51); display: block; background-color: rgb(255, 255, 255); border-radius: 15px; border: 1px solid rgb(230, 230, 230); border-collapse: collapse;">
-																						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-																							<tbody>
-																								<tr>
-																									<td style="padding: 15px;">
-																										<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #007bff; font-weight: 700; margin-top: 0px; margin-bottom: 0px;">Share The Observer for free stuff!</h3>
-																									</td>
-																								</tr>
-																							</tbody>
-																						</table>
-																						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-																							<tbody>
-																								<tr>
-																									<td style="padding: 0px 15px 15px; font-size: 16px;">
-
-																										*|IF:REFERRALS|*
-
-																										*|IF:REFERRALS < 3|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">
-																											When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.
-																											</p>
-
-																											*|ELSEIF:REFERRALS < 10|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 10 referrals to get the next issue of Rolling Stone Australia Magazine.
-																												<br><br>
-																												Are you one of those people who likes to stay in the know? Then you probably need Rolling Stone in your life, it's the premier music &amp; entertainment magazine in Australia.</p>
-
-																												*|ELSEIF:REFERRALS < 20|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 20 referrals to win a FREE annual subscription to Rolling Stone Australia Magazine.</p>
-
-																													*|ELSEIF:REFERRALS < 30|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Beach Towel.
-																														<br><br>
-																														It's Australia, so heading to the beach is always an option. Might as well be with this bad boy with the Rolling Stone logo plastered across it.</p>
-
-																														*|ELSEIF:REFERRALS < 50|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Bathrobe.
-																															<br><br>
-																															Are you one of those people who like to luxe it up when you stay in? Then you probably need a bathrobe. Might as well be this bad boy with the Rolling Stone logo plastered across it.</p>
-
-																															*|END:IF|*
-
-																															*|ELSE:|*
-																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.</p>
-
-																															*|END:IF|*
-
-																															<p style="text-align: center;"><img width="660" src="https://cdn.thebrag.com/observer/images/refer-a-friend/ReferAfriend_600px.gif" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
-
-																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">Hit the button below to learn more and access your rewards hub.</p>
-																															<a href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/refer-a-friend/" style="width: 100%; max-width: 150px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; font-weight: 900; text-decoration: none; text-align: center; background-color: #000000; padding: 15px; border-radius: 4px; display: block; margin: inherit;" target="_blank">Click to Share</a>
-
-																															*|IF:REFER_CODE|*
-																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px;font-size: 16px; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;">Or copy &amp; paste your referral link to others:
-																																<br>
-																																<?php $list_referrer_link = 'https://thebrag.com/refer/?rc=*|REFER_CODE|*&l=' . $list->id; ?>
-																																<a href="<?php echo $list_referrer_link; ?>" style="border-bottom: 2px solid #007bff; text-decoration: none; color: #262626;" target="_blank"><?php echo $list_referrer_link; ?></a>
-																															</p>
-																															*|END:IF|*
-																									</td>
-																								</tr>
-																							</tbody>
-																						</table>
-																					</th>
-																				</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						<?php endif; // If not hiding Observer rewards (share)
 						?>
 
 						<tr>
@@ -901,38 +811,28 @@ $container_width = 700;
 					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
 
 						<tr>
-							<td valign="top" class="templateFooter" align="center" style="text-align: center; padding: 5px; background: #333333; font-size: 10px; color: #ffffff;">
+							<td valign="top" class="templateFooter" align="center" style="text-align: center; padding: 5px; background: #ffffff; font-size: 10px; color: #333333;">
 								<div class="mcnTextContent">
-									<br>
-									Copyright &copy; <?php echo date('Y'); ?><br>
-									*|HTML:LIST_ADDRESS_HTML|*
-									<br>
+									Copyright &copy; <?php echo date('Y'); ?>
 								</div>
 							</td>
 						</tr>
 
 						<tr>
-							<td valign="top" class="templateFooter" style="padding-top:0; padding: 10px 0; color: #dedede; text-align: center; font-size: 10px; background: #333333; ">
+							<td valign="top" class="templateFooter" style="padding-top:0; padding: 10px 0; color: #dedede; text-align: center; font-size: 10px; background: #ffffff; ">
 								<div class="mcnTextContent">
-									<a target="_blank" href="https://thebrag.com/verify/?a=unsub&oc=*|OC_TOKEN|*" style="color: #aaaaaa !important;text-decoration: none;font-size: 10px !important;">Unsubscribe</a>
+									<a target="_blank" href="https://thebrag.com/verify/?a=unsub&oc={{custom_attribute.${observer_token}}}" style="color: #333333 !important;text-decoration: none;font-size: 10px !important;">Unsubscribe</a>
 									&nbsp;
 									<span style="font-size: 10px !important; color: #666666;">|</span>
 									&nbsp;
-									<a target="_blank" title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="color: #aaaaaa; text-decoration: none;font-size: 10px !important;">Advertise with us</a>
+									<a target="_blank" title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="color: #333333; text-decoration: none;font-size: 10px !important;">Advertise with us</a>
 									&nbsp;
 									<span style="font-size: 10px !important; color: #666666;">|</span>
 									&nbsp;
-									<a target="_blank" title="Contact us" href="mailto:observer@thebrag.media" target="_blank" style="color: #aaaaaa; text-decoration: none;font-size: 10px !important;">Contact us</a>
+									<a target="_blank" title="Contact us" href="mailto:observer@thebrag.media" target="_blank" style="color: #333333; text-decoration: none;font-size: 10px !important;">Contact us</a>
 								</div>
 							</td>
 						</tr>
-
-						<tr>
-							<td valign="top" class="templateFooter" align="center" style="text-align: right; padding: 0; background: #333333; font-size: 10px; color: #ffffff;">
-								<a href="*|UNSUB|*" style="color: #666666 !important;text-decoration: none;">.</a>
-							</td>
-						</tr>
-
 					</table>
 					<!--[if gte mso 9]>
 </td>

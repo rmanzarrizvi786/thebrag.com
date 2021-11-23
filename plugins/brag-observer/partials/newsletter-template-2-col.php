@@ -50,7 +50,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       endif;
       ?>
 
-      <!-- 2, 3 {{ -->
+      <!-- 2, 3 -->
       <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
@@ -67,7 +67,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
           </tr>
         </tbody>
       </table>
-      <!-- }} 2, 3 -->
+      <!-- 2, 3 -->
 
       <?php
       // Ad after article 3
@@ -76,7 +76,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       endif;
       ?>
 
-      <!-- 4, 5 {{ -->
+      <!-- 4, 5 -->
       <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
@@ -93,7 +93,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
           </tr>
         </tbody>
       </table>
-      <!-- }} 4, 5 -->
+      <!-- 4, 5 -->
 
       <?php
       // Article #6, index 5
@@ -109,7 +109,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       endif;
       ?>
 
-      <!-- 7, 8 {{ -->
+      <!-- 7, 8 -->
       <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
@@ -126,9 +126,9 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
           </tr>
         </tbody>
       </table>
-      <!-- }} 7, 8 -->
+      <!-- 7, 8 -->
 
-      <!-- 9, 10 {{ -->
+      <!-- 9, 10 -->
       <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
           <tr style="padding:0;text-align:center;vertical-align:top">
@@ -145,7 +145,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
           </tr>
         </tbody>
       </table>
-      <!-- }} 9, 10 -->
+      <!-- 9, 10 -->
 
       <?php
       // Ad after article 10
