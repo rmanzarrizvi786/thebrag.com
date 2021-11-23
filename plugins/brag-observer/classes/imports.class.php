@@ -49,17 +49,6 @@ class Imports extends BragObserver
       $this->plugin_slug . '-export-to-braze',
       array($this, 'show_export_to_braze')
     );
-
-    for ($i = 2; $i <= 2; $i++) {
-      add_submenu_page(
-        $this->plugin_slug,
-        'Export to Braze ' . $i,
-        'Export to Braze ' . $i,
-        'administrator',
-        $this->plugin_slug . '-export-to-braze' . $i,
-        array($this, 'show_export_to_braze' . $i)
-      );
-    }
   }
 
   public function show_mailchimp_imps_to_wp()
@@ -323,19 +312,9 @@ class Imports extends BragObserver
     $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL));
     echo '<p>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp) . '</p>';
 
-    include PLUGINPATH . '/partials/imports/export-to-braze.php';
-  } // show_export_to_braze()
-
-  public function show_export_to_braze2()
-  {
-    date_default_timezone_set('Australia/NSW');
-    echo '<br><p>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</p>';
-    $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL));
-    echo '<p>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp) . '</p>';
-
     $order = 'ASC';
     include PLUGINPATH . '/partials/imports/export-to-braze.php';
-  } // show_export_to_braze2()
+  } // show_export_to_braze()
 
   public function export_to_braze()
   {
