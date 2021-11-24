@@ -662,15 +662,16 @@ $container_width = 700;
         											<td align="right" valign="top" width="330" style="width:330px;">
         											<![endif]-->
 																{% if {{custom_attribute.${profile_completion_%}}} %}
-																{% assign ${profile_completion_} = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
-																{% if {{profile_completion_%}} < 100 %} Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{custom_attribute.${profile_completion_%}}}.jpg" alt="{{custom_attribute.${profile_completion_%}}}% complete" title="{{custom_attribute.${profile_completion_%}}}% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	{% endif %}
-																	{% else %}
-																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	{% endif %}
-																	<!--[if gte mso 9]>
+																{% assign profile_completion = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
+																{% if {profile_completion < 100 %}
+																Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{ profile_completion }}.jpg" alt="{{ profile_completion }}% complete" title="{{ profile_completion }}% complete" style="vertical-align: middle;">
+																<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																{% endif %}
+																{% else %}
+																Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
+																<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																{% endif %}
+																<!--[if gte mso 9]>
         											</td>
         											</tr>
         											</table>

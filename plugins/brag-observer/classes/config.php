@@ -1,5 +1,5 @@
 <?php
-$is_sandbox = isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT'];
+$is_sandbox = false; //isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT'];
 
 if ($is_sandbox) {
     $braze = [

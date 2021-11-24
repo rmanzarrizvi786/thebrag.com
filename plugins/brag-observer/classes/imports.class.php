@@ -10,6 +10,7 @@ class Imports extends BragObserver
     add_action('wp_ajax_mc_imps_to_wp', [$this, 'mc_imps_to_wp']);
     add_action('wp_ajax_mc_delete_from_wp', [$this, 'mc_delete_from_wp']);
     add_action('wp_ajax_export_to_braze', [$this, 'export_to_braze']);
+    add_action('wp_ajax_ip_warmup_export_to_braze', [$this, 'ip_warmup_export_to_braze']);
 
     add_action('cron_hook_observer_braze_export', [$this, 'export_to_braze']);
 
@@ -48,6 +49,24 @@ class Imports extends BragObserver
       'administrator',
       $this->plugin_slug . '-export-to-braze',
       array($this, 'show_export_to_braze')
+    );
+
+    add_submenu_page(
+      $this->plugin_slug,
+      'Export to Braze 2',
+      'Export to Braze 2',
+      'administrator',
+      $this->plugin_slug . '-export-to-braze2',
+      array($this, 'show_export_to_braze2')
+    );
+
+    add_submenu_page(
+      $this->plugin_slug,
+      'IP Warmup Export to Braze',
+      'IP Warmup Export to Braze',
+      'administrator',
+      $this->plugin_slug . '-ip-warmup-export-to-braze',
+      array($this, 'show_ip_warmup_export_to_braze')
     );
   }
 
@@ -316,6 +335,22 @@ class Imports extends BragObserver
     include PLUGINPATH . '/partials/imports/export-to-braze.php';
   } // show_export_to_braze()
 
+  public function show_export_to_braze2()
+  {
+    date_default_timezone_set('Australia/NSW');
+    echo '<br><p>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</p>';
+    $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL));
+    echo '<p>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp) . '</p>';
+
+    $order = 'DESC';
+    include PLUGINPATH . '/partials/imports/export-to-braze.php';
+  } // show_export_to_braze()
+
+  public function show_ip_warmup_export_to_braze()
+  {
+    include PLUGINPATH . '/partials/imports/ip-warmup-export-to-braze.php';
+  } // show_ip_warmup_export_to_braze()
+
   public function export_to_braze()
   {
     global $wpdb;
@@ -341,6 +376,8 @@ class Imports extends BragObserver
     try {
       if ($users) {
         foreach ($users as $i => $user) {
+
+          $user->user_email = strtolower($user->user_email);
 
           /**
            * Get user's subscription topics
@@ -405,7 +442,7 @@ class Imports extends BragObserver
            */
           $subscriber_hash = $this->MailChimp->subscriberHash($user->user_email);
 
-          $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags");
+          $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags?count=100");
           $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
           if (!empty($tags)) {
             $user_attributes['mc_tags'] = $tags;
@@ -508,6 +545,118 @@ class Imports extends BragObserver
     wp_send_json_success($return);
     die();
   } // export_to_braze()
+
+  public function ip_warmup_export_to_braze()
+  {
+    global $wpdb;
+
+    $limit = 1;
+
+    require_once __DIR__ . '/braze.class.php';
+    $braze = new Braze();
+    $braze->setMethod('POST');
+
+    $table_name = 'tmp_braze_ip_warmup';
+
+    $res_emails = $wpdb->get_results("SELECT `id`, `email`, `day` FROM {$table_name} WHERE `processed` IS NULL LIMIT {$limit}");
+
+    if (!$res_emails) {
+      wp_send_json_error(['Done']);
+      die();
+    }
+    // $emails = wp_list_pluck($res_emails, 'email', 'id');
+
+    // wp_send_json_success(['<pre>' . print_r($emails, true) . '</pre>']);
+    // die();
+
+    $errors = [];
+    $msgs = [];
+    foreach ($res_emails as $record) {
+      $id = $record->id;
+      $email = strtolower($record->email);
+      $day = $record->day;
+      // $email = 'lynnetteb28@gmail.com';
+
+      $braze->setPayload([
+        'email_address' => $email
+      ]);
+      $res_user = $braze->request('/users/export/ids');
+
+      if (201 == $res_user['code']) {
+        $users = json_decode($res_user['response']);
+
+        if (isset($users->users[0])) {
+          $user = $users->users[0];
+
+          $has_mc_ip_tags = false;
+          if (isset($user->custom_attributes)) {
+            if (isset($user->custom_attributes->mc_tags)) {
+              foreach ($user->custom_attributes->mc_tags as $mc_tag) {
+                if (stripos($mc_tag, "IP Warm Up - Day {$day}") !== FALSE) {
+                  $has_mc_ip_tags = true;
+                  break;
+                }
+              }
+            }
+          }
+
+          if (!$has_mc_ip_tags) {
+
+            $subscriber_hash = $this->MailChimp->subscriberHash($email);
+
+            $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags?count=100");
+            $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
+            if (!empty($tags)) {
+              $user_attributes['mc_tags'] = $tags;
+            }
+
+            // wp_send_json_success(['<pre>' . print_r($tags, true) . '</pre>']);
+            // die();
+
+            if (isset($user->external_id)) {
+              $user_attributes['external_id'] = $user->external_id;
+            } else {
+              $user_attributes['user_alias'] = [
+                'alias_name' => $record->email,
+                'alias_label' => 'email',
+              ];
+              $user_attributes['_update_existing_only'] = false;
+            }
+
+            if (!empty($user_attributes)) {
+              $attributes[] = $user_attributes;
+            }
+
+            $braze->setMethod('POST');
+            $braze->setPayload(
+              [
+                'attributes' => $attributes
+              ]
+            );
+            $res_track = $braze->request('/users/track', true);
+            if (201 === $res_track['code']) {
+              $msgs[] = "<span style='color: green';>{$email}</span>";
+              $wpdb->update($table_name, ['processed' => 2], ['id' => $id]);
+            }
+          } else {
+            $wpdb->update($table_name, ['processed' => 1], ['id' => $id]);
+            $msgs[] = "<span style='color: orange';>{$email}</span>";
+          }
+        } else {
+          $wpdb->update($table_name, ['processed' => 0], ['id' => $id]);
+          $msgs[] = "<span style='color: red';>{$email}</span>";
+        }
+      }
+    }
+
+    if (!empty($errors)) {
+      wp_send_json_error($errors);
+      die();
+    }
+
+    wp_send_json_success($msgs);
+    die();
+  } // ip_warmup_export_to_braze()
 
   private function getMailchimpLastActivity($activity_type, $email, $offset = 0)
   {

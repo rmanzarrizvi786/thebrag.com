@@ -367,7 +367,7 @@ class BragObserver
     }
 
     if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'every5minutes', 'cron_hook_observer_braze_export', array(NULL, NULL));
+      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
     }
   }
 
