@@ -472,20 +472,18 @@ function updateDB($reports, $slug_filter = NULL, $post_type = 'post', $blog_id =
 
         $top_article = get_page_by_path($top_article_slug, OBJECT, $post_type);
 
-        if (!is_single($top_article->ID)) {
+        if (!$top_article || 'publish' != $top_article->post_status) {
             $top_article_slug = isset($array_keys_pagePaths_pageViews[1]) ? $array_keys_pagePaths_pageViews[1] : NULL;
             $top_article = get_page_by_path($top_article_slug, OBJECT, $post_type);
         }
 
-        if (!is_single($top_article->ID)) {
+        if (!$top_article || 'publish' != $top_article->post_status) {
             $top_article_slug = isset($array_keys_pagePaths_pageViews[2]) ? $array_keys_pagePaths_pageViews[2] : NULL;
             $top_article = get_page_by_path($top_article_slug, OBJECT, $post_type);
         }
 
 
-        if (!is_null($top_article_slug)) :
-
-
+        if ($top_article && 'publish' == $top_article->post_status) :
             echo '<pre>';
             print_r($pagePaths_pageViews);
             echo '</pre>';
