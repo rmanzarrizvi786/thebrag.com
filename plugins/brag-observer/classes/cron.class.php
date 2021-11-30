@@ -468,6 +468,8 @@ class Cron // extends BragObserver
         $query_tasks = " SELECT c.`id`, c.`user_id`, c.`task_values`
             FROM {$wpdb->prefix}observer_braze_cron c
             WHERE c.`task` = 'update_profile' AND c.`completed_at` IS NULL
+            ORDER BY c.`queued_at`
+            LIMIT 30
             ";
         $tasks = $wpdb->get_results($query_tasks);
 
@@ -570,6 +572,8 @@ class Cron // extends BragObserver
         $query_tasks = " SELECT c.`id`, c.`user_id`
             FROM {$wpdb->prefix}observer_braze_cron c
             WHERE c.`task` = 'update_newsletter_interests' AND c.`completed_at` IS NULL
+            ORDER BY c.`queued_at`
+            LIMIT 30
             ";
         $tasks = $wpdb->get_results($query_tasks);
 

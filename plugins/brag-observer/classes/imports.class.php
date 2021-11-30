@@ -13,6 +13,7 @@ class Imports extends BragObserver
     add_action('wp_ajax_ip_warmup_export_to_braze', [$this, 'ip_warmup_export_to_braze']);
 
     add_action('cron_hook_observer_braze_export', [$this, 'export_to_braze']);
+    add_action('cron_hook_observer_ip_warmup_export_to_braze', [$this, 'ip_warmup_export_to_braze']);
 
     // Admin menu
     add_action('admin_menu', array($this, '_admin_menu'));
@@ -42,7 +43,7 @@ class Imports extends BragObserver
       array($this, 'show_delete_from_wp')
     );
 
-    add_submenu_page(
+    /* add_submenu_page(
       $this->plugin_slug,
       'Export to Braze',
       'Export to Braze',
@@ -58,7 +59,7 @@ class Imports extends BragObserver
       'administrator',
       $this->plugin_slug . '-export-to-braze2',
       array($this, 'show_export_to_braze2')
-    );
+    ); */
 
     add_submenu_page(
       $this->plugin_slug,
@@ -359,19 +360,33 @@ class Imports extends BragObserver
     $limit_users = isset($_POST['limit_users']) ? absint($_POST['limit_users']) : 75;
     $return = [];
 
+    /* $emails = [
+      'aidan.lock@adam.com.au',
+      'bevan161@gmail.com',
+      'dungey.elisabeth@hotmail.com',
+    ];
+    $user_ids = [];
+    foreach ($emails as $email) {
+      $user_ids[] = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_email = '{$email}' LIMIT 1 ");
+    } */
+    // wp_send_json_success(['<pre>' . print_r($user_ids, true) . '</pre>']);
+    // die();
+
     /**
      * Get users
      */
-    $users = get_users(
-      [
-        'number' => $limit_users,
-        'meta_key' => 'created_braze_user',
-        'meta_compare' => 'NOT EXISTS',
-        'orderby' => 'ID',
-        'order' => isset($_POST['order']) ? strtoupper(trim($_POST['order'])) : 'ASC',
-        'offset' => isset($_POST['offset']) ? absint($_POST['offset']) : 0,
-      ]
-    );
+    $args = [
+      'number' => $limit_users,
+      'meta_key' => 'created_braze_user',
+      'meta_compare' => 'NOT EXISTS',
+      'orderby' => 'ID',
+      'order' => isset($_POST['order']) ? strtoupper(trim($_POST['order'])) : 'ASC',
+      'offset' => isset($_POST['offset']) ? absint($_POST['offset']) : 0,
+    ];
+    if (isset($user_ids)) {
+      $args['include'] = $user_ids;
+    }
+    $users = get_users($args);
 
     try {
       if ($users) {
@@ -550,7 +565,7 @@ class Imports extends BragObserver
   {
     global $wpdb;
 
-    $limit = 1;
+    $limit = 30;
 
     require_once __DIR__ . '/braze.class.php';
     $braze = new Braze();
@@ -558,7 +573,7 @@ class Imports extends BragObserver
 
     $table_name = 'tmp_braze_ip_warmup';
 
-    $res_emails = $wpdb->get_results("SELECT `id`, `email`, `day` FROM {$table_name} WHERE `processed` IS NULL LIMIT {$limit}");
+    $res_emails = $wpdb->get_results("SELECT `id`, `email`, `day` FROM {$table_name} WHERE `processed` IS NULL ORDER BY `day` LIMIT {$limit}");
 
     if (!$res_emails) {
       wp_send_json_error(['Done']);
@@ -571,6 +586,8 @@ class Imports extends BragObserver
 
     $errors = [];
     $msgs = [];
+    $attributes = [];
+
     foreach ($res_emails as $record) {
       $id = $record->id;
       $email = strtolower($record->email);
@@ -588,11 +605,18 @@ class Imports extends BragObserver
         if (isset($users->users[0])) {
           $user = $users->users[0];
 
+          // wp_send_json_success(['<pre>' . print_r($user, true) . '</pre>']);
+          // die();
+
           $has_mc_ip_tags = false;
           if (isset($user->custom_attributes)) {
             if (isset($user->custom_attributes->mc_tags)) {
               foreach ($user->custom_attributes->mc_tags as $mc_tag) {
-                if (stripos($mc_tag, "IP Warm Up - Day {$day}") !== FALSE) {
+                if (
+                  stripos($mc_tag, "IP Warm Up - Day {$day}") !== FALSE
+                  ||
+                  stripos($mc_tag, "IP WarmUp - Day {$day}") !== FALSE
+                ) {
                   $has_mc_ip_tags = true;
                   break;
                 }
@@ -602,12 +626,15 @@ class Imports extends BragObserver
 
           if (!$has_mc_ip_tags) {
 
+            $user_attributes = [];
+
             $subscriber_hash = $this->MailChimp->subscriberHash($email);
 
             $mc_tags = $this->MailChimp->get("lists/{$this->mailchimp_list_id}/members/{$subscriber_hash}/tags?count=100");
             $tags = is_array($mc_tags) && isset($mc_tags['tags']) && is_array($mc_tags['tags']) && !empty($mc_tags['tags']) ? wp_list_pluck($mc_tags['tags'], 'name') : [];
             if (!empty($tags)) {
               $user_attributes['mc_tags'] = $tags;
+              $user_attributes['email'] = $email;
             }
 
             // wp_send_json_success(['<pre>' . print_r($tags, true) . '</pre>']);
@@ -616,10 +643,11 @@ class Imports extends BragObserver
             if (isset($user->external_id)) {
               $user_attributes['external_id'] = $user->external_id;
             } else {
-              $user_attributes['user_alias'] = [
-                'alias_name' => $record->email,
+              $user_attributes['user_alias'] = $user->user_aliases[0];
+              /* $user_attributes['user_alias'] = [
+                'alias_name' => $email,
                 'alias_label' => 'email',
-              ];
+              ]; */
               $user_attributes['_update_existing_only'] = false;
             }
 
@@ -627,27 +655,47 @@ class Imports extends BragObserver
               $attributes[] = $user_attributes;
             }
 
-            $braze->setMethod('POST');
-            $braze->setPayload(
-              [
-                'attributes' => $attributes
-              ]
-            );
-            $res_track = $braze->request('/users/track', true);
-            if (201 === $res_track['code']) {
-              $msgs[] = "<span style='color: green';>{$email}</span>";
-              $wpdb->update($table_name, ['processed' => 2], ['id' => $id]);
-            }
+            $update_status2[] = $id;
+            $msgs[] = "<span style='color: green';>{$email}</span>";
           } else {
-            $wpdb->update($table_name, ['processed' => 1], ['id' => $id]);
-            $msgs[] = "<span style='color: orange';>{$email}</span>";
+            $update_status1[] = $id;
+            // $wpdb->update($table_name, ['processed' => 1], ['id' => $id]);
+            // $msgs[] = "<span style='color: orange';>{$email}</span>";
           }
         } else {
-          $wpdb->update($table_name, ['processed' => 0], ['id' => $id]);
+          $update_status0[] = $id;
+          // $wpdb->update($table_name, ['processed' => 0], ['id' => $id]);
           $msgs[] = "<span style='color: red';>{$email}</span>";
         }
       }
     }
+
+    if (!empty($attributes)) {
+
+      // wp_send_json_success(['<pre>' . print_r($attributes, true) . '</pre>']);
+      // die();
+
+      $braze->setMethod('POST');
+      $braze->setPayload(
+        [
+          'attributes' => $attributes
+        ]
+      );
+      $res_track = $braze->request('/users/track', true);
+      if (201 === $res_track['code']) {
+        if (isset($update_status2)) {
+          $wpdb->query("UPDATE {$table_name} SET `processed` = '2' WHERE `id` IN (" . implode(',', $update_status2) . ")");
+        }
+      }
+    }
+
+    if (isset($update_status0)) {
+      $wpdb->query("UPDATE {$table_name} SET `processed` = '0' WHERE `id` IN (" . implode(',', $update_status0) . ")");
+    }
+    if (isset($update_status1)) {
+      $wpdb->query("UPDATE {$table_name} SET `processed` = '1' WHERE `id` IN (" . implode(',', $update_status1) . ")");
+    }
+
 
     if (!empty($errors)) {
       wp_send_json_error($errors);

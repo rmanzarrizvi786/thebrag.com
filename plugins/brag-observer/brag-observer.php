@@ -43,8 +43,8 @@ class BragObserver
 
     $this->mailchimp_list_id = '5f6dd9c238';
     $this->mailchimp_interest_category_id = 'b87c163ce8';
-    // $this->mailchimp_api_key = 'e5ad9623c8961a991f8737c3cc950c55-us1';
-    $this->mailchimp_api_key = '9dc8845179ec747ce4e4d9292f68a03a-us1';
+    $this->mailchimp_api_key = 'e5ad9623c8961a991f8737c3cc950c55-us1';
+    // $this->mailchimp_api_key = '9dc8845179ec747ce4e4d9292f68a03a-us1';
 
     require_once __DIR__ . '/classes/MailChimp.php';
     $this->MailChimp = new MailChimp($this->mailchimp_api_key);
@@ -366,8 +366,12 @@ class BragObserver
       wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile', array(NULL, NULL));
     }
 
-    if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
+    /* if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
       wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
+    } */
+
+    if (!wp_next_scheduled('cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL));
     }
   }
 
@@ -377,7 +381,7 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2'];
+    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2', 'cron_hook_observer_ip_warmup_export_to_braze'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {
