@@ -373,16 +373,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
      * Queue to update in Braze
      */
     if (!empty($braze_udpates)) {
-      echo '<pre>' . print_r($braze_udpates, true) . '</pre>';
-
       $task = 'update_profile';
       include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
       $cron = new Cron();
       if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
         $cron->addToBrazeQueue($current_user->ID, $task, $braze_udpates);
       }
-
-      exit;
     }
 
     wp_redirect($returnTo);
