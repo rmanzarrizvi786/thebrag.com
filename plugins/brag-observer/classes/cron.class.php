@@ -462,6 +462,10 @@ class Cron // extends BragObserver
     {
         global $wpdb;
 
+        require_once __DIR__ . '/braze.class.php';
+        $braze = new Braze();
+        $braze->setMethod('POST');
+
         $attributes = [];
         $task_ids = [];
 
@@ -499,18 +503,43 @@ class Cron // extends BragObserver
                  * OR
                  * Set user_alias
                  */
-                if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
-                    $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
-                } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
-                    // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
-                    $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
-                } else {
-                    // User's Auth0 ID not set, set alias for user
-                    $user_attributes['user_alias'] = [
-                        'alias_name' => $user->user_email,
-                        'alias_label' => 'email',
-                    ];
-                    $user_attributes['_update_existing_only'] = false;
+                $braze_user_found = false;
+                $braze->setPayload([
+                    'email_address' => $user->user_email
+                ]);
+                $res_user = $braze->request('/users/export/ids');
+
+                if (201 == $res_user['code']) {
+                    $braze_users = json_decode($res_user['response']);
+
+                    if (isset($braze_users->users[0])) {
+                        $braze_user = $braze_users->users[0];
+
+                        if (isset($braze_user->external_id)) {
+                            $user_attributes['external_id'] = $braze_user->external_id;
+                        } else {
+                            $user_attributes['user_alias'] = $braze_user->user_aliases[0];
+                            $user_attributes['_update_existing_only'] = false;
+                        }
+
+                        $braze_user_found = true;
+                    }
+                }
+
+                if (!$braze_user_found) {
+                    if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+                        $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+                    } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+                        // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+                        $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
+                    } else {
+                        // User's Auth0 ID not set, set alias for user
+                        $user_attributes['user_alias'] = [
+                            'alias_name' => $user->user_email,
+                            'alias_label' => 'email',
+                        ];
+                        $user_attributes['_update_existing_only'] = false;
+                    }
                 }
 
                 if (1 != get_user_meta($user->ID, 'created_braze_user')) {
@@ -566,6 +595,10 @@ class Cron // extends BragObserver
     {
         global $wpdb;
 
+        require_once __DIR__ . '/braze.class.php';
+        $braze = new Braze();
+        $braze->setMethod('POST');
+
         $attributes = [];
         $task_ids = [];
 
@@ -603,18 +636,43 @@ class Cron // extends BragObserver
                  * OR
                  * Set user_alias
                  */
-                if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
-                    $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
-                } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
-                    // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
-                    $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
-                } else {
-                    // User's Auth0 ID not set, set alias for user
-                    $user_attributes['user_alias'] = [
-                        'alias_name' => $user->user_email,
-                        'alias_label' => 'email',
-                    ];
-                    $user_attributes['_update_existing_only'] = false;
+                $braze_user_found = false;
+                $braze->setPayload([
+                    'email_address' => $user->user_email
+                ]);
+                $res_user = $braze->request('/users/export/ids');
+
+                if (201 == $res_user['code']) {
+                    $braze_users = json_decode($res_user['response']);
+
+                    if (isset($braze_users->users[0])) {
+                        $braze_user = $braze_users->users[0];
+
+                        if (isset($braze_user->external_id)) {
+                            $user_attributes['external_id'] = $braze_user->external_id;
+                        } else {
+                            $user_attributes['user_alias'] = $braze_user->user_aliases[0];
+                            $user_attributes['_update_existing_only'] = false;
+                        }
+
+                        $braze_user_found = true;
+                    }
+                }
+
+                if (!$braze_user_found) {
+                    if (get_user_meta($user->ID, $wpdb->prefix . 'auth0_id')) {
+                        $user_attributes['external_id'] = get_user_meta($user->ID, $wpdb->prefix . 'auth0_id', true);
+                    } else if (get_user_meta($user->ID, 'wp_auth0_id')) {
+                        // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+                        $user_attributes['external_id'] = get_user_meta($user->ID, 'wp_auth0_id', true);
+                    } else {
+                        // User's Auth0 ID not set, set alias for user
+                        $user_attributes['user_alias'] = [
+                            'alias_name' => $user->user_email,
+                            'alias_label' => 'email',
+                        ];
+                        $user_attributes['_update_existing_only'] = false;
+                    }
                 }
 
                 if (1 != get_user_meta($user->ID, 'created_braze_user')) {
@@ -662,9 +720,6 @@ class Cron // extends BragObserver
             /**
              * to Braze
              */
-            require_once __DIR__ . '/braze.class.php';
-            $braze = new Braze();
-            $braze->setMethod('POST');
             $braze->setPayload(
                 [
                     'attributes' => $attributes

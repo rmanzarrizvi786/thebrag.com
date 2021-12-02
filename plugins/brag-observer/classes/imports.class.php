@@ -592,7 +592,6 @@ class Imports extends BragObserver
       $id = $record->id;
       $email = strtolower($record->email);
       $day = $record->day;
-      // $email = 'lynnetteb28@gmail.com';
 
       $braze->setPayload([
         'email_address' => $email

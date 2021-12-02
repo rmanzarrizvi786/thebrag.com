@@ -88,6 +88,46 @@ class API
       'callback' => [$this, 'rest_get_external_id'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/latest_articles', array(
+      'methods' => 'GET',
+      'callback' => [$this, 'rest_latest_articles'],
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  public function rest_latest_articles()
+  {
+    $news_args = array(
+      'post_status' => 'publish',
+      'post_type' => array('post', 'snaps', 'dad'),
+      'ignore_sticky_posts' => 1,
+      'posts_per_page' => 20,
+    );
+    $news_query = new WP_Query($news_args);
+    $results = [];
+    if ($news_query->have_posts()) :
+      while ($news_query->have_posts()) :
+        $news_query->the_post();
+
+        $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+        $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+
+        $image_id = get_post_thumbnail_id(get_the_ID());
+        $image_src = wp_get_attachment_image_src($image_id, 'medium');
+
+        $results[] = [
+          'title' => get_the_title(),
+          'excerpt' => $excerpt,
+          'url' => get_the_permalink(),
+          'image_url' => $image_src[0],
+        ];
+
+      endwhile;
+    endif;
+
+    echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    die();
   }
 
   public function rest_get_external_id()
