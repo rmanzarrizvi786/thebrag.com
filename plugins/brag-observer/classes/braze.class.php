@@ -119,4 +119,64 @@ class Braze
             'code' => $status_code,
         );
     }
+
+    public function getUser($user_id)
+    {
+        global $wpdb;
+        $user = get_user_by('id', $user_id);
+        if (!$user)
+            return false;
+
+        $user_info = get_userdata($user_id);
+
+        $user_attributes = [];
+        $user_attributes['email'] = $user->user_email;
+
+        $this->setMethod('POST');
+        $this->setPayload([
+            'email_address' => $user_info->user_email
+        ]);
+        $res_braze_users = $this->request('/users/export/ids');
+
+        $has_braze_user = false;
+
+        if (201 == $res_braze_users['code']) {
+            $braze_users = json_decode($res_braze_users['response']);
+
+            if (isset($braze_users->users[0])) {
+                $braze_user = $braze_users->users[0];
+
+                $has_braze_user = true;
+
+                // $user_attributes['custom_attributes'] = $braze_user->custom_attributes;
+
+                if (isset($braze_user->external_id)) {
+                    $user_attributes['external_id'] = $braze_user->external_id;
+                } else {
+                    $user_attributes['user_alias'] = $braze_user->user_aliases[0];
+                    $user_attributes['_update_existing_only'] = false;
+                }
+            }
+        }
+        if (!$has_braze_user) {
+            if (get_user_meta($user_id, $wpdb->prefix . 'auth0_id')) {
+                $user_attributes['external_id'] = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
+            } else if (get_user_meta($user_id, 'wp_auth0_id')) {
+                // If user's Auth0 ID is not set using wpdb prefix, check if set using wp_ prefix
+                $user_attributes['external_id'] = get_user_meta($user_id, 'wp_auth0_id', true);
+            } else {
+                // User's Auth0 ID not set, set alias for user
+                $user_attributes['user_alias'] = [
+                    'alias_name' => $user_info->user_email,
+                    'alias_label' => 'email',
+                ];
+                $user_attributes['_update_existing_only'] = false;
+            }
+        }
+
+        return [
+            'user' => isset($braze_user) ? $braze_user : null,
+            'user_attributes' => $user_attributes,
+        ];
+    }
 }

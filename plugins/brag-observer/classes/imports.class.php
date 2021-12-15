@@ -126,28 +126,27 @@ class Imports extends BragObserver
             $message_user .= $tmp_sub->email . '<br>';
             $return_msg .= $message_user;
             $user = get_user_by('ID', $user_id);
-
-            if (!is_null($tmp_sub->gender) && $tmp_sub->gender != '') {
-              if (!get_user_meta($user->ID, 'gender') && !get_user_meta($user->ID, 'predicted_gender')) {
-                update_user_meta($user->ID, 'predicted_gender', strtoupper($tmp_sub->gender));
-              }
-            }
-
-            if (!is_null($tmp_sub->state) && $tmp_sub->state != '') {
-              if (!get_user_meta($user->ID, 'state') && !get_user_meta($user->ID, 'predicted_state')) {
-                update_user_meta($user->ID, 'predicted_state', strtoupper($tmp_sub->state));
-              }
-            }
-
-            if (!is_null($tmp_sub->birthday) && $tmp_sub->birthday != '') {
-              if (!get_user_meta($user->ID, 'birthday') && !get_user_meta($user->ID, 'predicted_birthday')) {
-                update_user_meta($user->ID, 'predicted_birthday', strtoupper($tmp_sub->birthday));
-              }
-            }
           }
         }
 
         if ($user) {
+          if (!is_null($tmp_sub->gender) && $tmp_sub->gender != '') {
+            if (!get_user_meta($user->ID, 'gender') && !get_user_meta($user->ID, 'predicted_gender')) {
+              update_user_meta($user->ID, 'predicted_gender', strtoupper($tmp_sub->gender));
+            }
+          }
+
+          if (!is_null($tmp_sub->state) && $tmp_sub->state != '') {
+            if (!get_user_meta($user->ID, 'state') && !get_user_meta($user->ID, 'predicted_state')) {
+              update_user_meta($user->ID, 'predicted_state', strtoupper($tmp_sub->state));
+            }
+          }
+
+          if (!is_null($tmp_sub->birthday) && $tmp_sub->birthday != '') {
+            if (!get_user_meta($user->ID, 'birthday') && !get_user_meta($user->ID, 'predicted_birthday')) {
+              update_user_meta($user->ID, 'predicted_birthday', strtoupper($tmp_sub->birthday));
+            }
+          }
 
           update_user_meta($user->ID, 'no_welcome_email', 1);
           update_user_meta($user->ID, 'is_activated', 1);
