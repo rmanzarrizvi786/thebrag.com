@@ -27,6 +27,7 @@ class TBMUsers
       [
         'rsau' => '1fc08f46-3537-43f6-b5c1-c68704acf3fa',
         'tio' => '1bb3d123-788f-4ec4-8d4c-a68cf00406e4',
+        'dbu' => '42a1c785-f86a-48c7-aaf1-eedcb7444939'
       ];
 
     // Hide Admin Bar
@@ -466,11 +467,19 @@ class TBMUsers
     register_rest_route($this->plugin_name . '/v1', '/create_auth0', array(
       'methods' => 'POST',
       'callback' => [$this, 'rest_create_auth0'],
+      'permission_callback' => '__return_true',
     ));
 
     register_rest_route($this->plugin_name . '/v1', '/login_auth0', array(
       'methods' => 'POST',
       'callback' => [$this, 'rest_login_auth0'],
+      'permission_callback' => '__return_true',
+    ));
+
+    register_rest_route($this->plugin_name . '/v1', '/sync_with_auth0', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_sync_with_auth0'],
+      'permission_callback' => '__return_true',
     ));
   }
 
@@ -731,7 +740,6 @@ class TBMUsers
   */
   public function rest_create_auth0($request_data)
   {
-
     global $wpdb;
 
     $data = $request_data->get_params();
@@ -810,6 +818,8 @@ class TBMUsers
   */
   public function rest_login_auth0($request_data)
   {
+    global $wpdb;
+
     $data = $request_data->get_params();
     /* if (!isset($data['key']) || !$this->isRequestValid($data['key'])) {
       wp_send_json_error(['invalid_request']);
@@ -906,6 +916,31 @@ class TBMUsers
     ];
 
     wp_update_user($user_data);
+  }
+
+  public function rest_sync_with_auth0($request_data)
+  {
+    global $wpdb;
+
+    $data = $request_data->get_params();
+
+    if (!isset($data['key']) || !$this->isRequestValid($data['key'])) {
+      wp_send_json_error(['invalid_request']);
+      wp_die();
+    }
+
+    $data = stripslashes_deep($data);
+
+    $errors = [];
+
+    if (!isset($data['auth0_id']) || '' == trim($data['auth0_id'])) {
+      $errors[] = 'missing_data';
+    }
+
+    if (!empty($errors))
+      return $errors;
+
+    return true;
   }
 
   /*
