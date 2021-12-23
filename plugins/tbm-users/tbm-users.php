@@ -937,10 +937,41 @@ class TBMUsers
       $errors[] = 'missing_data';
     }
 
+    $user = reset(
+      get_users(
+        array(
+          'meta_key' => $wpdb->prefix . 'auth0_id',
+          'meta_value' => $data['auth0_id'],
+          'number' => 1
+        )
+      )
+    );
+    if (!$user) {
+      $user = reset(
+        get_users(
+          array(
+            'meta_key' => 'wp_auth0_id',
+            'meta_value' => $data['auth0_id'],
+            'number' => 1
+          )
+        )
+      );
+    }
+
     if (!empty($errors))
       return $errors;
 
-    return true;
+    if (!$user)
+      return false;
+
+    $task = 'sync_with_auth0';
+    include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
+    $cron = new Cron();
+    if (!$cron->getActiveBrazeQueueTask($user->ID, $task)) {
+      $cron->addToBrazeQueue($user->ID, $task);
+    }
+
+    return $user->ID;
   }
 
   /*

@@ -151,6 +151,9 @@ class BragObserver
     // Referrals
     require_once  __DIR__ . '/classes/referral.class.php';
 
+    // User
+    // require_once  __DIR__ . '/classes/user.class.php';
+
     // TMP
     add_action('wp_ajax_update_profile_strength', [$this, 'update_profile_strength']);
 
@@ -366,6 +369,10 @@ class BragObserver
       wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile', array(NULL, NULL));
     }
 
+    if (!wp_next_scheduled('cron_hook_observer_sync_with_auth0', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:07:00'), 'every10minutes', 'cron_hook_observer_sync_with_auth0', array(NULL, NULL));
+    }
+
     /* if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
       wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
     } */
@@ -381,7 +388,7 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2', 'cron_hook_observer_ip_warmup_export_to_braze'];
+    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2', 'cron_hook_observer_ip_warmup_export_to_braze', 'cron_hook_observer_sync_with_auth0'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {

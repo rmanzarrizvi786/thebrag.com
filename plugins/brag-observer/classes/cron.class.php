@@ -22,6 +22,7 @@ class Cron // extends BragObserver
         add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
         add_action('cron_hook_observer_braze_update_newsletter_interests', [$this, 'exec_cron_observer_braze_update_newsletter_interests']);
         add_action('cron_hook_observer_braze_update_profile', [$this, 'exec_cron_observer_braze_update_profile']);
+        add_action('cron_hook_observer_sync_with_auth0', [$this, 'exec_cron_observer_sync_with_auth0']);
 
         add_filter('cron_schedules', [$this, '_cron_schedules']);
 
@@ -584,6 +585,139 @@ class Cron // extends BragObserver
                 $wpdb->query("UPDATE {$wpdb->prefix}observer_braze_cron SET `completed_at` = '" . current_time('mysql') . "' WHERE `id` IN (" . implode(',', $task_ids) . ")");
             } else {
                 wp_mail('sachin.patel@thebrag.media', 'Braze error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r " . print_r($res_track, true));
+            }
+        }
+    }
+
+    public function exec_cron_observer_sync_with_auth0()
+    {
+        $task_ids = [];
+
+        $query_tasks = " SELECT c.`id`, c.`user_id`
+            FROM {$wpdb->prefix}observer_braze_cron c
+            WHERE c.`task` = 'sync_with_auth0' AND c.`completed_at` IS NULL
+            ORDER BY c.`queued_at`
+            LIMIT 10
+            ";
+        $tasks = $wpdb->get_results($query_tasks);
+
+        if ($tasks) {
+            $task_ids = wp_list_pluck($tasks, 'id');
+            foreach ($tasks as $task) {
+                require get_template_directory() . '/vendor/autoload.php';
+
+                $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
+                $dotenv->load();
+
+                $auth0_api = new Auth0\SDK\API\Authentication(
+                    $_ENV['AUTH0_DOMAIN'],
+                    $_ENV['AUTH0_CLIENT_ID']
+                );
+
+                $config = [
+                    'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+                    'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+                    'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+                ];
+
+                try {
+                    $result = $auth0_api->client_credentials($config);
+                    $access_token = $result['access_token'];
+                } catch (Exception $e) {
+                    // die($e->getMessage());
+                }
+
+                if (isset($access_token)) {
+                    // Instantiate the base Auth0 class.
+                    $auth0 = new Auth0\SDK\Auth0([
+                        // The values below are found on the Application settings tab.
+                        'domain' => $_ENV['AUTH0_DOMAIN'],
+                        'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+                        'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+                        'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
+                    ]);
+
+                    $mgmt_api = new Auth0\SDK\API\Management($access_token, $_ENV['AUTH0_DOMAIN']);
+                    try {
+                        $auth0_user = $mgmt_api->users()->get($data['auth0_id']);
+                    } catch (Exception $e) {
+                        // die($e->getMessage());
+                    }
+                }
+
+                $first_name = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['first_name'])
+                    ?
+                    $auth0_user['user_metadata']['first_name']
+                    :
+                    get_user_meta($task->user_id, 'first_name', true);
+
+                $last_name = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['last_name'])
+                    ?
+                    $auth0_user['user_metadata']['last_name']
+                    :
+                    get_user_meta($task->user_id, 'last_name', true);
+
+                $state = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
+                    ?
+                    $auth0_user['user_metadata']['state']
+                    : get_user_meta($task->user_id, 'state', true);
+
+                $birthday = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['birthday'])
+                    ?
+                    $auth0_user['user_metadata']['birthday']
+                    : get_user_meta($task->user_id, 'birthday', true);
+
+                $gender = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
+                    ?
+                    $auth0_user['user_metadata']['gender']
+                    : get_user_meta($task->user_id, 'gender', true);
+
+                $user_data = [
+                    'ID' => $task->user_id,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'display_name' => $first_name . ' ' . $last_name,
+                ];
+
+                /**
+                 * Queue to update in Braze
+                 */
+                $braze_updates = [];
+                if (get_user_meta($task->user_id, 'first_name', true) != $user_data['first_name']) {
+                    $braze_updates['first_name'] = $user_data['first_name'];
+                }
+
+                if (get_user_meta($task->user_id, 'last_name', true) != $user_data['last_name']) {
+                    $braze_updates['last_name'] = $user_data['last_name'];
+                }
+
+                if (!get_user_meta($task->user_id, 'birthday') || get_user_meta($task->user_id, 'birthday', true) != $birthday) {
+                    $braze_updates['birthday'] = $birthday;
+                }
+
+                if (!get_user_meta($task->user_id, 'state') || get_user_meta($task->user_id, 'state', true) != trim($state)) {
+                    $braze_updates['state'] = trim($state);
+                }
+
+                if (!get_user_meta($task->user_id, 'gender') || get_user_meta($task->user_id, 'gender', true) != trim($gender)) {
+                    $braze_updates['gender'] = trim($gender);
+                }
+
+
+                wp_update_user($user_data);
+
+                update_user_meta($task->user_id, 'birthday', $birthday);
+                update_user_meta($task->user_id, 'state', $state);
+                update_user_meta($task->user_id, 'gender', $gender);
+
+                if (!empty($braze_updates)) {
+                    $task = 'update_profile';
+                    include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
+                    $cron = new Cron();
+                    if (!$cron->getActiveBrazeQueueTask($task->user_id, $task)) {
+                        $cron->addToBrazeQueue($task->user_id, $task, $braze_updates);
+                    }
+                }
             }
         }
     }

@@ -149,7 +149,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     // 'gender',
   ];
 
-  $braze_udpates = [];
+  $braze_updates = [];
 
   // if (get_user_meta($current_user->ID, 'is_imported', true) === '1') {
   // array_push( $required_fields, 'password', 'confirm_password' );
@@ -171,12 +171,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
   $user_data['first_name'] = sanitize_text_field($post_vars['first_name']);
   if (get_user_meta($current_user->ID, 'first_name', true) != $user_data['first_name']) {
-    $braze_udpates['first_name'] = $user_data['first_name'];
+    $braze_updates['first_name'] = $user_data['first_name'];
   }
 
   $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
   if (get_user_meta($current_user->ID, 'last_name', true) != $user_data['last_name']) {
-    $braze_udpates['last_name'] = $user_data['last_name'];
+    $braze_updates['last_name'] = $user_data['last_name'];
   }
 
   $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
@@ -241,7 +241,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       $birthday = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
 
       if (get_user_meta($current_user->ID, 'birthday', true) != $birthday) {
-        $braze_udpates['birthday'] = $birthday;
+        $braze_updates['birthday'] = $birthday;
       }
 
       update_user_meta($current_user->ID, 'birthday', $birthday);
@@ -256,7 +256,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       if ('' != trim($post_vars['state'])) {
 
         if (get_user_meta($current_user->ID, 'state', true) != trim($post_vars['state'])) {
-          $braze_udpates['state'] = trim($post_vars['state']);
+          $braze_updates['state'] = trim($post_vars['state']);
         }
 
         update_user_meta($current_user->ID, 'state', $post_vars['state']);
@@ -275,7 +275,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       if ('' != trim($post_vars['gender'])) {
 
         if (get_user_meta($current_user->ID, 'gender', true) != trim($post_vars['gender'])) {
-          $braze_udpates['gender'] = trim($post_vars['gender']);
+          $braze_updates['gender'] = trim($post_vars['gender']);
         }
 
         update_user_meta($current_user->ID, 'gender', $post_vars['gender']);
@@ -372,12 +372,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     /**
      * Queue to update in Braze
      */
-    if (!empty($braze_udpates)) {
+    if (!empty($braze_updates)) {
       $task = 'update_profile';
       include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
       $cron = new Cron();
       if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
-        $cron->addToBrazeQueue($current_user->ID, $task, $braze_udpates);
+        $cron->addToBrazeQueue($current_user->ID, $task, $braze_updates);
       }
     }
 
