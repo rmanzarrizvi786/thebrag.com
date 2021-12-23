@@ -591,6 +591,7 @@ class Cron // extends BragObserver
 
     public function exec_cron_observer_sync_with_auth0()
     {
+        global $wpdb;
         $task_ids = [];
 
         $query_tasks = " SELECT c.`id`, c.`user_id`
@@ -602,7 +603,6 @@ class Cron // extends BragObserver
         $tasks = $wpdb->get_results($query_tasks);
 
         if ($tasks) {
-            $task_ids = wp_list_pluck($tasks, 'id');
             foreach ($tasks as $task) {
                 require get_template_directory() . '/vendor/autoload.php';
 
@@ -639,7 +639,12 @@ class Cron // extends BragObserver
 
                     $mgmt_api = new Auth0\SDK\API\Management($access_token, $_ENV['AUTH0_DOMAIN']);
                     try {
-                        $auth0_user = $mgmt_api->users()->get($data['auth0_id']);
+                        if ($wp_auth0_id = get_user_meta($task->user_id, 'wp_auth0_id', true)) {
+                            $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
+                        } elseif ($wp_auth0_id = get_user_meta($task->user_id, $wpdb->prefix . 'auth0_id', true)) {
+                            $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
+                        }
+                        // $auth0_user = $mgmt_api->users()->get($data['auth0_id']);
                     } catch (Exception $e) {
                         // die($e->getMessage());
                     }
@@ -703,7 +708,6 @@ class Cron // extends BragObserver
                     $braze_updates['gender'] = trim($gender);
                 }
 
-
                 wp_update_user($user_data);
 
                 update_user_meta($task->user_id, 'birthday', $birthday);
@@ -711,13 +715,13 @@ class Cron // extends BragObserver
                 update_user_meta($task->user_id, 'gender', $gender);
 
                 if (!empty($braze_updates)) {
-                    $task = 'update_profile';
-                    include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
-                    $cron = new Cron();
-                    if (!$cron->getActiveBrazeQueueTask($task->user_id, $task)) {
-                        $cron->addToBrazeQueue($task->user_id, $task, $braze_updates);
+                    $task_name = 'update_profile';
+                    if (!$this->getActiveBrazeQueueTask($task->user_id, $task_name)) {
+                        $this->addToBrazeQueue($task->user_id, $task_name, $braze_updates);
                     }
                 }
+
+                $wpdb->query("UPDATE {$wpdb->prefix}observer_braze_cron SET `completed_at` = '" . current_time('mysql') . "' WHERE `id` = '{$task->id}'");
             }
         }
     }
