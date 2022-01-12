@@ -747,9 +747,6 @@ class BragObserver
             'tags' => $details['tags'],
           ]);
           if (is_array($entry_subscribe)) {
-            echo '<pre>';
-            print_r($entry_subscribe);
-            echo '</pre>';
             $wpdb->update(
               $wpdb->prefix . 'observer_lead_generator_responses',
               [
@@ -1076,7 +1073,8 @@ class BragObserver
   {
     // if ( is_page_template( $this->page_template1 ) || is_page_template( $this->page_template2 ) )
     {
-      wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/scripts.min.js', array('jquery'), '20211014', true);
+      wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/scripts.min.js', array('jquery'), '20220112', true);
+      // wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/scripts.js', array('jquery'), time(), true);
       $args = array(
         'url'   => admin_url('admin-ajax.php'),
         // 'ajax_nonce' => wp_create_nonce( $this->plugin_slug . '-nonce' ),
@@ -1171,7 +1169,9 @@ class BragObserver
 
       global $wpdb;
 
-      if (is_user_logged_in()) {
+      if (isset($formData['user_id']) && absint($formData['user_id']) > 0) {
+        $user_id = absint($formData['user_id']);
+      } elseif (is_user_logged_in()) {
         $current_user = wp_get_current_user();
         if (!$current_user->roles) {
           $current_user->add_role('subscriber');

@@ -250,6 +250,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       $auth0_usermeta['birthday'] = $birthday;
     } else {
       delete_user_meta($current_user->ID, 'birthday');
+      $auth0_usermeta['birthday'] = "";
+      $braze_updates['birthday'] = "";
     }
 
     if (isset($post_vars['state'])) {
@@ -267,6 +269,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
         update_user_meta($current_user->ID, 'incomplete_profile', "false");
       } else {
         delete_user_meta($current_user->ID, 'state');
+        $auth0_usermeta['state'] = "";
+        $braze_updates['state'] = "";
       }
     }
 
@@ -284,6 +288,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
         $auth0_usermeta['gender'] = $post_vars['gender'];
       } else {
         delete_user_meta($current_user->ID, 'gender');
+        $auth0_usermeta['gender'] = "";
+        $braze_updates['gender'] = "";
       }
     }
 

@@ -312,9 +312,18 @@ jQuery(document).ready(function ($) {
     checkbox.addClass("d-none");
     checkbox.next(".loading").show();
     checkbox.prop("disabled", true);
+
+    var formDataStr = "list=" + $(this).val() + "&status=" + status;
+
+    if ($("#user_id").length) {
+      if (parseInt($("#user_id").val()) > 0) {
+        formDataStr += "&user_id=" + $("#user_id").val();
+      }
+    }
+
     var data = {
       action: "subscribe_observer",
-      formData: "list=" + $(this).val() + "&status=" + status,
+      formData: formDataStr,
     };
     $.post(brag_observer.url, data, function (res) {
       checkbox.removeClass("d-none");

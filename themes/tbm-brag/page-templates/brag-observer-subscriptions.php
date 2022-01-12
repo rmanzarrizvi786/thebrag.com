@@ -1,12 +1,25 @@
 <?php /* Template name: Brag Observer Subscriptions */
+$temp_user = false;
+if (isset($_GET['oc'])) {
+  $data = @unserialize(base64_decode($_GET['oc']));
+  if ($data) {
+    $oc_token = get_user_meta($data['id'], 'oc_token', true);
+    if ($oc_token == $data['oc_token']) {
+      $user_id = $data['id'];
+    }
+    $temp_user = true;
+  }
+}
 
-if (!is_user_logged_in()) :
-  wp_redirect(home_url('/wp-login.php?redirect_to=') . urlencode(home_url('/observer-subscriptions/')));
-  exit;
-endif;
+if (!$temp_user) {
+  if (!is_user_logged_in()) :
+    wp_redirect(home_url('/wp-login.php?redirect_to=') . urlencode(home_url('/observer-subscriptions/')));
+    exit;
+  endif;
 
-$current_user = wp_get_current_user();
-$user_id = $current_user->ID;
+  $current_user = wp_get_current_user();
+  $user_id = $current_user->ID;
+}
 
 if (isset($_GET['a'])) {
   if ('unsub-all' == trim($_GET['a'])) {
@@ -22,6 +35,13 @@ if (isset($_GET['a'])) {
         'user_id' => $user_id,
       ]
     );
+
+    $task = 'update_newsletter_interests';
+    $cron = new Cron();
+    if (!$cron->getActiveBrazeQueueTask($user_id, $task)) {
+      $cron->addToBrazeQueue($user_id, $task);
+    }
+
     wp_redirect(home_url('/observer-subscriptions/'));
     exit;
   }
@@ -180,6 +200,12 @@ if ($profile_strength < 20) {
   $profile_complete_class = 'text-primary';
 } else if ($profile_strength <= 100) {
   $profile_complete_class = 'text-success';
+}
+
+if ($temp_user) {
+?>
+  <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id; ?>">
+<?php
 }
 ?>
 
