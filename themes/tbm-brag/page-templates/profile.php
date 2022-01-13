@@ -214,9 +214,9 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     }
   }
 
-  if ('0' == $post_vars['state']) {
-    $errors[] = 'Please select your state.';
-  }
+  // if (isset($post_vars['state']) && '0' == $post_vars['state']) {
+  //   $errors[] = 'Please select your state.';
+  // }
 
   $update_user = wp_update_user($user_data);
 
@@ -237,6 +237,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
       if (get_user_meta($current_user->ID, 'birthday', true) != $birthday) {
         $braze_updates['birthday'] = $birthday;
+        $braze_updates['dob'] = $birthday;
       }
 
       update_user_meta($current_user->ID, 'birthday', $birthday);
@@ -247,6 +248,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       delete_user_meta($current_user->ID, 'birthday');
       $auth0_usermeta['birthday'] = "";
       $braze_updates['birthday'] = "";
+      $braze_updates['dob'] = "";
     }
 
     /* if (isset($post_vars['state'])) {
@@ -409,9 +411,9 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       $task = 'update_profile';
       include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
       $cron = new Cron();
-      if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
-        $cron->addToBrazeQueue($current_user->ID, $task, $braze_updates);
-      }
+      // if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
+      $cron->addToBrazeQueue($current_user->ID, $task, $braze_updates);
+      // }
     }
 
     wp_redirect($returnTo);
@@ -628,7 +630,7 @@ get_header();
                 <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo  $last_name; ?>">
               </div>
 
-              <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
+              <div class="col-12 mt-3 px-0 px-md-1">
                 <?php
                 $countries = file_get_contents(get_template_directory() . '/countries.json');
                 $countries = json_decode($countries);
@@ -656,12 +658,12 @@ get_header();
                     <?php foreach ($countries as $country) : ?>
                       <optgroup label="<?php echo $country->name; ?>">
                         <?php foreach ($country->states as $state) : ?>
-                          <option value="<?php echo $country->code3; ?>_<?php echo $state->code; ?>" <?php echo (isset($post_vars) && isset($post_vars['country_state']) && $post_vars['country_state'] == $state->code) ?
+                          <option value="<?php echo $country->code2; ?>_<?php echo $state->code; ?>" <?php echo (isset($post_vars) && isset($post_vars['country_state']) && $post_vars['country_state'] == $state->code) ?
                                                                                                         ' selected' : (isset($user_country_state) ?
                                                                                                           ($user_country
                                                                                                             ?
                                                                                                             (
-                                                                                                              ($user_country_state == $country->code3 . '_' . $state->code ? ' selected' : '')
+                                                                                                              ($user_country_state == $country->code2 . '_' . $state->code ? ' selected' : '')
                                                                                                             )
                                                                                                             : (
                                                                                                               ($user_country_state == $state->code ? ' selected' : '')
@@ -699,7 +701,7 @@ get_header();
                 </select>
               </div> -->
 
-              <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
+              <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
                 <?php
                 $birthday = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['birthday'])
                   ?
@@ -739,7 +741,7 @@ get_header();
                 </div>
               </div>
 
-              <div class="col-12 mt-3 col-md-2 px-0 px-md-1">
+              <div class="col-12 mt-3 col-md-6 px-0 px-md-1">
                 <?php
                 $user_gender = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
                   ?
