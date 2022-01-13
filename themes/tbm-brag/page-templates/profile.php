@@ -84,8 +84,11 @@ if (get_user_meta($current_user->ID, 'profile_strength', true)) {
   if (get_user_meta($current_user->ID, 'last_name', true))
     $profile_strength += 20;
 
+  if (get_user_meta($current_user->ID, 'country', true))
+    $profile_strength += 10;
+
   if (get_user_meta($current_user->ID, 'state', true))
-    $profile_strength += 20;
+    $profile_strength += 10;
 
   if (get_user_meta($current_user->ID, 'birthday', true))
     $profile_strength += 20;
@@ -139,17 +142,9 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     'ID' => $current_user->ID
   ];
 
-  $required_fields = [
-    // 'first_name',
-    // 'last_name',
-    // 'birthday_day',
-    // 'birthday_month',
-    // 'birthday_year',
-    // 'state',
-    // 'gender',
-  ];
+  $required_fields = [];
 
-  $braze_udpates = [];
+  $braze_updates = [];
 
   // if (get_user_meta($current_user->ID, 'is_imported', true) === '1') {
   // array_push( $required_fields, 'password', 'confirm_password' );
@@ -171,12 +166,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
 
   $user_data['first_name'] = sanitize_text_field($post_vars['first_name']);
   if (get_user_meta($current_user->ID, 'first_name', true) != $user_data['first_name']) {
-    $braze_udpates['first_name'] = $user_data['first_name'];
+    $braze_updates['first_name'] = $user_data['first_name'];
   }
 
   $user_data['last_name'] = sanitize_text_field($post_vars['last_name']);
   if (get_user_meta($current_user->ID, 'last_name', true) != $user_data['last_name']) {
-    $braze_udpates['last_name'] = $user_data['last_name'];
+    $braze_updates['last_name'] = $user_data['last_name'];
   }
 
   $user_data['display_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
@@ -241,7 +236,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       $birthday = $post_vars['birthday_year'] . '-' . $post_vars['birthday_month'] . '-' . $post_vars['birthday_day'];
 
       if (get_user_meta($current_user->ID, 'birthday', true) != $birthday) {
-        $braze_udpates['birthday'] = $birthday;
+        $braze_updates['birthday'] = $birthday;
       }
 
       update_user_meta($current_user->ID, 'birthday', $birthday);
@@ -250,13 +245,15 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       $auth0_usermeta['birthday'] = $birthday;
     } else {
       delete_user_meta($current_user->ID, 'birthday');
+      $auth0_usermeta['birthday'] = "";
+      $braze_updates['birthday'] = "";
     }
 
-    if (isset($post_vars['state'])) {
+    /* if (isset($post_vars['state'])) {
       if ('' != trim($post_vars['state'])) {
 
         if (get_user_meta($current_user->ID, 'state', true) != trim($post_vars['state'])) {
-          $braze_udpates['state'] = trim($post_vars['state']);
+          $braze_updates['state'] = trim($post_vars['state']);
         }
 
         update_user_meta($current_user->ID, 'state', $post_vars['state']);
@@ -267,6 +264,40 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
         update_user_meta($current_user->ID, 'incomplete_profile', "false");
       } else {
         delete_user_meta($current_user->ID, 'state');
+        $auth0_usermeta['state'] = "";
+        $braze_updates['state'] = "";
+      }
+    } */
+
+    if (isset($post_vars['country_state'])) {
+      if ('' != trim($post_vars['country_state'])) {
+
+        $country_state = explode('_', $post_vars['country_state']);
+        $post_vars['country'] = $country_state[0];
+        $post_vars['state'] = $country_state[1];
+
+        if (get_user_meta($current_user->ID, 'country', true) != trim($post_vars['country'])) {
+          $braze_updates['country'] = trim($post_vars['country']);
+        }
+        update_user_meta($current_user->ID, 'country', $post_vars['country']);
+        $auth0_usermeta['country'] = $post_vars['country'];
+
+        if (get_user_meta($current_user->ID, 'state', true) != trim($post_vars['state'])) {
+          $braze_updates['state'] = trim($post_vars['state']);
+        }
+        delete_user_meta($current_user->ID, 'predicted_state');
+        update_user_meta($current_user->ID, 'state', $post_vars['state']);
+        $auth0_usermeta['state'] = $post_vars['state'];
+
+        update_user_meta($current_user->ID, 'incomplete_profile', "false");
+      } else {
+        delete_user_meta($current_user->ID, 'country');
+        $auth0_usermeta['country'] = "";
+        $braze_updates['country'] = "";
+
+        delete_user_meta($current_user->ID, 'state');
+        $auth0_usermeta['state'] = "";
+        $braze_updates['state'] = "";
       }
     }
 
@@ -275,7 +306,7 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       if ('' != trim($post_vars['gender'])) {
 
         if (get_user_meta($current_user->ID, 'gender', true) != trim($post_vars['gender'])) {
-          $braze_udpates['gender'] = trim($post_vars['gender']);
+          $braze_updates['gender'] = trim($post_vars['gender']);
         }
 
         update_user_meta($current_user->ID, 'gender', $post_vars['gender']);
@@ -284,6 +315,8 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
         $auth0_usermeta['gender'] = $post_vars['gender'];
       } else {
         delete_user_meta($current_user->ID, 'gender');
+        $auth0_usermeta['gender'] = "";
+        $braze_updates['gender'] = "";
       }
     }
 
@@ -372,12 +405,12 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
     /**
      * Queue to update in Braze
      */
-    if (!empty($braze_udpates)) {
+    if (!empty($braze_updates)) {
       $task = 'update_profile';
       include_once WP_PLUGIN_DIR . '/brag-observer/classes/cron.class.php';
       $cron = new Cron();
       if (!$cron->getActiveBrazeQueueTask($current_user->ID, $task)) {
-        $cron->addToBrazeQueue($current_user->ID, $task, $braze_udpates);
+        $cron->addToBrazeQueue($current_user->ID, $task, $braze_updates);
       }
     }
 
@@ -492,7 +525,7 @@ get_header();
                   </div>
 
                   <div class="text-center">
-                    <img src="<?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? $auth0_user['user_metadata']['picture'] : 'd-none'; ?>" id="chosen-profile-picture" class="rounded-circle <?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? '' : 'd-none'; ?>" style="width: 200px; height: 200px;">
+                    <img src="<?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? $auth0_user['user_metadata']['picture'] : ''; ?>" id="chosen-profile-picture" class="rounded-circle <?php echo (!is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['picture'])) ? '' : 'd-none'; ?>" style="width: 200px; height: 200px;">
                     <textarea name="chosen_profile_picture_data" id="chosen_profile_picture_data" readonly class="d-none"></textarea>
                   </div>
 
@@ -550,9 +583,11 @@ get_header();
                             type: 'canvas',
                             size: 'viewport'
                           }).then(function(response) {
-                            $('#chosen_profile_picture_data').val(response);
-                            $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
-                            $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
+                            if (response.length > 7) {
+                              $('#chosen_profile_picture_data').val(response);
+                              $('#chosen-profile-picture').attr('src', response).removeClass('d-none');
+                              $('#profile-picture-crop-wrap, #btn-ok-wrap').addClass('d-none');
+                            }
                           });
                         }
                       });
@@ -593,22 +628,76 @@ get_header();
                 <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo  $last_name; ?>">
               </div>
 
-              <div class="col-12 mt-3 col-md-4 px-0 px-md-1">
+              <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
                 <?php
-                $user_state = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
-                  ?
-                  $auth0_user['user_metadata']['state']
-                  : get_user_meta($current_user->ID, 'state', true);
+                $countries = file_get_contents(get_template_directory() . '/countries.json');
+                $countries = json_decode($countries);
+                if ($countries) {
+
+                  $user_country = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['country'])
+                    ?
+                    $auth0_user['user_metadata']['country']
+                    : get_user_meta($current_user->ID, 'country', true);
+
+                  $user_state = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
+                    ?
+                    $auth0_user['user_metadata']['state']
+                    : get_user_meta($current_user->ID, 'state', true);
+
+                  if ($user_country) {
+                    $user_country_state = $user_country . '_' . $user_state;
+                  } else {
+                    $user_country_state = $user_state;
+                  }
+                ?>
+                  <h4 class="mb-0">State</h4>
+                  <select aria-label="Country/State" name="country_state" id="country_state" title="State" class="form-control select-2">
+                    <option value="" selected="true" disabled="disabled"></option>
+                    <?php foreach ($countries as $country) : ?>
+                      <optgroup label="<?php echo $country->name; ?>">
+                        <?php foreach ($country->states as $state) : ?>
+                          <option value="<?php echo $country->code3; ?>_<?php echo $state->code; ?>" <?php echo (isset($post_vars) && isset($post_vars['country_state']) && $post_vars['country_state'] == $state->code) ?
+                                                                                                        ' selected' : (isset($user_country_state) ?
+                                                                                                          ($user_country
+                                                                                                            ?
+                                                                                                            (
+                                                                                                              ($user_country_state == $country->code3 . '_' . $state->code ? ' selected' : '')
+                                                                                                            )
+                                                                                                            : (
+                                                                                                              ($user_country_state == $state->code ? ' selected' : '')
+                                                                                                            )
+                                                                                                          )
+                                                                                                          : ''
+                                                                                                        ); ?>><?php echo $state->name; ?></option>
+                        <?php endforeach; ?>
+                      </optgroup>
+                    <?php endforeach; ?>
+                  </select>
+                <?php
+                } // If $countries JSON decoded
+                ?>
+              </div>
+
+              <!-- <div class="col-12 mt-3 col-md-4 px-0 px-md-1">
+                <?php
+                // $user_state = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['state'])
+                //   ?
+                //   $auth0_user['user_metadata']['state']
+                //   : get_user_meta($current_user->ID, 'state', true);
                 ?>
                 <h4 class="mb-0">State</h4>
                 <select aria-label="State" name="state" id="state" title="State" class="form-control">
                   <option value=""></option>
-                  <?php foreach (getStates() as $state_abbr => $state) : ?>
-                    <option value="<?php echo $state_abbr; ?>" <?php echo (isset($post_vars) && isset($post_vars['state']) && $post_vars['state'] == $state_abbr) ?
-                                                                  ' selected' : (isset($user_state) && $user_state == $state_abbr ? ' selected' : ''); ?>><?php echo $state; ?></option>
-                  <?php endforeach; ?>
+                  <?php // foreach (getStates() as $state_abbr => $state) : 
+                  ?>
+                    <option value="<?php // echo $state_abbr; 
+                                    ?>" <?php // echo (isset($post_vars) && isset($post_vars['state']) && $post_vars['state'] == $state_abbr) ? ' selected' : (isset($user_state) && $user_state == $state_abbr ? ' selected' : ''); 
+                                        ?>><?php // echo $state; 
+                                            ?></option>
+                  <?php // endforeach; 
+                  ?>
                 </select>
-              </div>
+              </div> -->
 
               <div class="col-12 mt-3 col-md-5 px-0 px-md-1">
                 <?php
@@ -650,7 +739,7 @@ get_header();
                 </div>
               </div>
 
-              <div class="col-12 mt-3 col-md-3 px-0 px-md-1">
+              <div class="col-12 mt-3 col-md-2 px-0 px-md-1">
                 <?php
                 $user_gender = !is_null($auth0_user) && isset($auth0_user['user_metadata']) && isset($auth0_user['user_metadata']['gender'])
                   ?
@@ -697,6 +786,38 @@ get_header();
     </div><!-- #primary -->
   </div><!-- .row -->
 </div><!-- .container -->
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    $('#country_state').select2();
+
+    $("#country_state").one("select2:open", function(e) {
+      $("input.select2-search__field").prop("placeholder", "Search for your State").addClass('form-control');
+      document
+        .querySelector(".select2-container--open .select2-search__field")
+        .focus();
+    });
+  });
+</script>
+<style>
+  .select2-selection__rendered {
+    line-height: 41px !important;
+  }
+
+  .select2-container .select2-selection--single {
+    height: 45px !important;
+  }
+
+  .select2-selection__arrow {
+    height: 44px !important;
+  }
+
+  .select2-search--dropdown .select2-search__field {
+    padding: 0.75rem !important;
+  }
+</style>
 
 <?php
 get_footer();
