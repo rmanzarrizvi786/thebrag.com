@@ -476,6 +476,12 @@ class TBMUsers
       'permission_callback' => '__return_true',
     ));
 
+    register_rest_route($this->plugin_name . '/v1', '/identify_braze', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_identify_braze'],
+      'permission_callback' => '__return_true',
+    ));
+
     register_rest_route($this->plugin_name . '/v1', '/sync_with_auth0', array(
       'methods' => 'POST',
       'callback' => [$this, 'rest_sync_with_auth0'],
@@ -905,7 +911,89 @@ class TBMUsers
     }
 
     return $return;
-  }
+  } // rest_login_auth0()
+
+  /*
+  * REST - Identify user in Braze
+  */
+  public function rest_identify_braze($request_data)
+  {
+    $data = $request_data->get_params();
+    $data = stripslashes_deep($data);
+
+    if (!isset($data['email']) || !is_email($data['email']) || !isset($data['user_id'])) {
+      return;
+    }
+
+    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new Braze();
+    $braze->setMethod('POST');
+
+    $braze->setPayload([
+      'email_address' => $data['email']
+    ]);
+    $res_braze_users = $braze->request('/users/export/ids');
+
+    if (201 == $res_braze_users['code']) {
+      $braze_users = json_decode($res_braze_users['response']);
+      if (isset($braze_users->users[0])) {
+        $braze_user = $braze_users->users[0];
+        if (isset($braze_user->external_id)) {
+          wp_send_json_success();
+          die();
+        } else {
+          $user_alias = $braze_user->user_aliases[0];
+        }
+      }
+    }
+
+    // User is not there in Braze
+    if (!isset($braze_user)) {
+      $braze->setPayload(
+        [
+          'attributes' => [
+            [
+              'email' => $data['email'],
+              'external_id' => $data['user_id'],
+            ]
+          ]
+        ]
+      );
+      $res_user = $braze->request('/users/track');
+      if (201 === $res_user['code']) {
+        wp_send_json_success();
+        die();
+      } else {
+        wp_send_json_error('Error tracking user. ' . print_r($res_user, true));
+        die();
+      }
+    }
+
+    if (!isset($user_alias)) {
+      $user_alias = [
+        'alias_name' => $data['email'],
+        'alias_label' => 'email'
+      ];
+    }
+
+    $braze->setPayload([
+      'aliases_to_identify' => [
+        [
+          'external_id' => $data['user_id'],
+          'user_alias' => $user_alias
+        ]
+      ]
+    ]);
+    $res_user = $braze->request('/users/identify');
+
+    if (201 === $res_user['code']) {
+      wp_send_json_success();
+      die();
+    } else {
+      wp_send_json_error('Error Identifying User. ' . print_r($res_user, true));
+      die();
+    }
+  } // rest_identify_braze()
 
   public function _wpa0_user_created($user_id, $email, $password, $f_name, $l_name)
   {
