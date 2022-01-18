@@ -328,9 +328,9 @@ add_action('edit_form_after_title', function ($post) {
 });
 
 // Coil - Monetize content
-add_action('wp_head', function () {
+/* add_action('wp_head', function () {
     echo '<meta name="monetization" content="$ilp.uphold.com/68Q7DryfNX4d">';
-});
+}); */
 
 class TBM_WP_HTML_Compression
 {
