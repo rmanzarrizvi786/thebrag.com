@@ -786,6 +786,8 @@ class TBMUsers
       if (!get_user_meta($user_id, 'oc_token', true)) :
         $oc_token = md5($user_id . time()); // creates md5 code to verify later
         update_user_meta($user_id, 'oc_token', $oc_token);
+      else :
+        $oc_token = get_user_meta($user_id, 'oc_token', true);
       endif;
 
       $auth0_user_id = 'auth0|' . $data['user_id'];
@@ -814,6 +816,34 @@ class TBMUsers
 
         update_user_meta($user_id,  $wpdb->prefix . 'auth0_obj', json_encode($wp_auth0_obj));
       endif;
+
+      // Braze
+      $attributes = [];
+
+      $unserialized_oc_token = [
+        'id' => $user->ID,
+        'oc_token' => $oc_token,
+      ]; // makes it into a code to send it to user via email
+
+      $user_attributes = [
+        'email' => $data['email'],
+        'external_id' => $data['user_id'],
+        'observer_token' => base64_encode(serialize($unserialized_oc_token))
+      ];
+
+      $attributes[] = $user_attributes;
+
+      if (!empty($attributes)) {
+        require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+        $braze = new Braze();
+        $braze->setMethod('POST');
+        $braze->setPayload(
+          [
+            'attributes' => $attributes
+          ]
+        );
+        $braze->request('/users/track', true);
+      }
     }
     wp_send_json_success();
     wp_die();
@@ -908,6 +938,34 @@ class TBMUsers
     }
     if (get_user_meta($user_id, 'state', true)) {
       $return['state'] = get_user_meta($user_id, 'state', true);
+    }
+
+    // Braze
+    $attributes = [];
+
+    $unserialized_oc_token = [
+      'id' => $user->ID,
+      'oc_token' => $oc_token,
+    ]; // makes it into a code to send it to user via email
+
+    $user_attributes = [
+      'email' => $data['email'],
+      'external_id' => $data['user_id'],
+      'observer_token' => base64_encode(serialize($unserialized_oc_token))
+    ];
+
+    $attributes[] = $user_attributes;
+
+    if (!empty($attributes)) {
+      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+      $braze = new Braze();
+      $braze->setMethod('POST');
+      $braze->setPayload(
+        [
+          'attributes' => $attributes
+        ]
+      );
+      $braze->request('/users/track', true);
     }
 
     return $return;
