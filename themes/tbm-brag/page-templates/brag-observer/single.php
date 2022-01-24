@@ -202,7 +202,7 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
             ?>
 
             <?php
-            $vote_target = 2000;
+            $vote_target = 5000;
             $vote_progress = $list->votes_count * 100 / $vote_target;
             ?>
             <div>
