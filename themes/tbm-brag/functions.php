@@ -3547,7 +3547,7 @@ function inject_roymorgan()
 /*
 * Add Comps link in article
 */
-add_filter('the_content', function ($content) {
+/* add_filter('the_content', function ($content) {
     if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
         return $content;
     endif;
@@ -3566,6 +3566,19 @@ add_filter('the_content', function ($content) {
     } else {
         $content .= '<div class="comp-footer"><a href="https://thebrag.com/observer/competitions/" target="_blank" rel="noopener">Did you know we\'re constantly giving away <strong>FREE</strong> stuff? Check out our giveaways here.</a></div>';
     }
+
+    return $content;
+}); */
+
+add_filter('the_content', function ($content) {
+    if ((function_exists('get_field') && get_field('paid_content')) || is_page_template('single-template-featured.php')) :
+        return $content;
+    endif;
+
+    if (is_singular('page'))
+        return $content;
+
+    $content .= '<div class="rs-subscribe-footer"><a href="https://au.rollingstone.com/subscribe-magazine/" target="_blank" rel="noopener">Want more in-depth culture content? <span>Subscribe</span> to <strong>Rolling Stone magazine</strong> for deep reporting, unforgettable interviews, and criticism you can trust.</a></div>';
 
     return $content;
 });

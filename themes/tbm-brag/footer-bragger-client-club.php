@@ -1,20 +1,31 @@
-<?php get_template_part('template-parts/footer/footer'); ?>
+<div class="bg-dark">
+  <footer class="container footer mb-1 py-2">
+
+  </footer>
+  <div class="container footer-menu-2 pb-2" style="padding-bottom: 50px !important;">
+    <nav class="bg-white rounded mx-2">
+      <ul class="d-flex flex-column flex-md-row justify-content-center p-0">
+
+      </ul>
+    </nav>
+  </div>
+</div>
 </div><!-- .content -->
 
-<div id="network" class="network" style="display: none;">
-  <?php get_template_part('template-parts/network'); ?>
-</div>
-<?php get_template_part('template-parts/observer-list'); ?>
+<?php
+// get_template_part('template-parts/observer-list');
+?>
 
-<div id="skin" class="d-none d-md-block">
-  <?php render_ad_tag('skin'); ?>
-</div>
+<!-- <div id="skin" class="d-none d-md-block"> -->
+<?php // render_ad_tag('skin'); 
+?>
+<!-- </div> -->
 
 </main>
 <noscript id="deferred-styles">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@200;300;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" id="tbm-css" href="<?php echo CDN_URL; ?>css/style.css?v=20220127" type="text/css" media="all" />
-  <!-- <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/style.css?v=<?php echo time(); ?>" type="text/css" media="all" /> -->
+  <link rel="stylesheet" id="tbm-css" href="<?php echo CDN_URL; ?>css/style.css?v=20211025.1" type="text/css" media="all" />
+  <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/bragger-client-club.css?v=<?php echo time(); ?>" type="text/css" media="all" />
 </noscript>
 
 <script src="https://www.youtube.com/iframe_api" defer></script>
@@ -95,26 +106,11 @@
 
 <div id="overlay" class="d-none"></div>
 
-
 <script>
   jQuery(document).ready(function($) {
     $(window).trigger('scroll');
   });
 </script>
-
-<!-- <div class="sticky-ad-bottom" style="
-display: none;
-position: fixed;
-    bottom: 0;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    z-index: 4;
-    width: 100%;">
-  <?php // render_ad_tag('mob_sticky'); 
-  ?>
-</div> -->
 
 </body>
 

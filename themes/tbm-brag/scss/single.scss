@@ -211,6 +211,7 @@
   }
 }
 
+.rs-subscribe-footer a,
 .comp-footer a {
   display: block;
   background-color: #fff;
@@ -218,8 +219,22 @@
   padding: 1rem;
   text-align: center;
   text-decoration: none;
-  color: $primaryColor;
-  border: 1px solid $primaryColor;
   box-shadow: 0 0 5px;
   margin: 2rem auto;
+}
+.comp-footer a {
+  color: $primaryColor;
+  border: 1px solid $primaryColor;
+}
+.rs-subscribe-footer a {
+  color: #d32531;
+  border: 1px solid #d32531;
+  line-height: 1.75;
+  span {
+    background-color: #d32531;
+    color: #fff;
+    border-radius: $roundedRadius / 2;
+    padding: 0.25rem;
+    font-weight: bold;
+  }
 }

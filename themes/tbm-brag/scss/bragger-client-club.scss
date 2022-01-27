@@ -1,0 +1,16 @@
+@import "utilities/variables";
+html,
+body {
+  background-color: $primaryBlack;
+}
+@media (min-width: 48rem) {
+  header {
+    height: 80px !important;
+  }
+  main {
+    margin-top: 80px !important;
+  }
+  .content.container {
+    max-width: none;
+  }
+}
