@@ -10,6 +10,7 @@ wflogs
 plugins/*
 !plugins/tbm-shout-writer-beer
 !plugins/tbm-adm
+!plugins/tbm-media-helper
 
 !plugins/brag-observer
 plugins/brag-observer/*
