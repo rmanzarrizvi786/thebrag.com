@@ -32,7 +32,7 @@ class MediaHelper
         $this->logo_file_name = 'THEBRAG_socialshare_LOGO';
         $this->social_img_width = 1200;
         $this->social_img_height = 628;
-        $this->logo_height = 100;
+        $this->logo_height = 150;
         $this->allowed_hosts = [
             'images.thebrag.com',
             'au.rollingstone.com',

@@ -1590,6 +1590,7 @@ class BragObserver
         if ($meta->getAttribute('property') == 'og:image') {
           if (!isset($meta_og_img)) {
             $meta_og_img = $meta->getAttribute('content');
+            $meta_og_img = str_ireplace('/img-socl/?url=', '', substr($meta_og_img, strpos($meta_og_img, '/img-socl/?url=')));
           }
         } elseif ($meta->getAttribute('property') == 'og:title') {
           if (!isset($meta_og_title)) {
