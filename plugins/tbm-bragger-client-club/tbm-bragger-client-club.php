@@ -75,12 +75,14 @@ class BraggerClientClub
         <table class="table table-sm">
           <tr>
             <th>Email</th>
+            <th>Status</th>
             <th>Invited at</th>
             <th>Joined at</th>
           </tr>
           <?php foreach ($invitees as $invitee) : ?>
             <tr>
               <td><?php echo $invitee->email; ?></td>
+              <td><?php echo $invitee->status; ?></td>
               <td><?php echo $invitee->created_at; ?></td>
               <td><?php echo $invitee->joined_at; ?></td>
             </tr>
