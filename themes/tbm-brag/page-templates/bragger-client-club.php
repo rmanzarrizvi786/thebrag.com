@@ -36,7 +36,6 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 if (is_user_logged_in()) :
   $user_id = get_current_user_id();
   if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `user_id` = '{$user_id}' AND `status` = 'joined'")) :
-
     $lists_query = "SELECT l.id, l.title, l.description, l.image_url, l.frequency
           FROM {$wpdb->prefix}observer_lists l
           WHERE l.status = 'active'
@@ -44,7 +43,6 @@ if (is_user_logged_in()) :
         ";
     $lists = $wpdb->get_results($lists_query);
     if ($lists) :
-
       $my_sub_lists = [];
       $my_vote_lists = [];
       $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");

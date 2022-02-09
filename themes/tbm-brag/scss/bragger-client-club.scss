@@ -9,6 +9,8 @@ body {
   background-repeat: repeat;
   background-size: contain;
 }
+.text-primary {
+}
 .hero {
   position: relative;
   &::before,
@@ -64,6 +66,7 @@ h1.content-heading {
   line-height: 4rem;
   margin: 2rem 1rem;
   text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  color: goldenrod;
 }
 
 .container {
