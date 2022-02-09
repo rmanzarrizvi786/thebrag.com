@@ -117,6 +117,7 @@ class BraggerClientClub
             theForm.find('.result').addClass('text-success').text('Success!');
             console.info(res.data);
             btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
+            $('#club-member-email').val('').focus();
             return;
           }).error(function(e) {
             theForm.find('.result').addClass('text-danger').text(res.data);
