@@ -6,6 +6,26 @@
 get_header('bragger-client-club');
 
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
+
+/**
+ * Update DB as joined if already logged in as invitee
+ */
+$current_user = wp_get_current_user();
+if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email` = '{$current_user->user_email}' AND `status` = 'invited' LIMIT 1")) {
+  $wpdb->update(
+    $wpdb->prefix . 'client_club',
+    [
+      'status' => 'joined',
+      'user_id' => $current_user->ID,
+      'joined_at' => current_time('mysql')
+    ],
+    [
+      'email' => $current_user->user_email
+    ],
+    ['%s', '%d', '%s'],
+    ['%s']
+  );
+}
 ?>
 
 <div class="hero-wrap">
