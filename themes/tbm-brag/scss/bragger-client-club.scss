@@ -1,5 +1,7 @@
 @import "utilities/variables";
 
+$primaryColor: #d4af37;
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
 body {
@@ -10,6 +12,7 @@ body {
   background-size: contain;
 }
 .text-primary {
+  color: $primaryColor !important;
 }
 .hero {
   position: relative;
@@ -66,7 +69,7 @@ h1.content-heading {
   line-height: 4rem;
   margin: 2rem 1rem;
   text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-  color: goldenrod;
+  color: $primaryColor;
 }
 
 .container {
@@ -109,11 +112,15 @@ body.logged-in {
 }
 
 .btn-login {
+  font-family: $headingFonts;
   border-radius: 4rem;
   font-size: 2rem;
   padding: 0.5rem 1rem;
   text-transform: uppercase;
   transition: 0.25s all linear;
+  background-color: $primaryColor !important;
+  color: $primaryBlack;
+  font-weight: bold;
   &:hover {
     color: $primaryColor !important;
     background-color: $primaryBlack !important;
@@ -143,7 +150,7 @@ body.logged-in {
     }
   }
 
-  .login .btn-primary {
+  .btn-login {
     padding: 1rem 2rem;
   }
 }

@@ -24,7 +24,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
       <?php if (!is_user_logged_in()) : ?>
         <div class="col-12 pt-3 pt-md-4">
           <div class="login mx-2 mx-md-0">
-            <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn btn-primary btn-login">Get started</a>
+            <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn-login">Get started</a>
           </div>
         </div>
       <?php endif; ?>
