@@ -487,6 +487,12 @@ class TBMUsers
       'callback' => [$this, 'rest_sync_with_auth0'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/check_if_client_club_member', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_check_if_client_club_member'],
+      'permission_callback' => '__return_true',
+    ));
   }
 
   /*
@@ -983,6 +989,8 @@ class TBMUsers
       return;
     }
 
+    $data['email'] = trim($data['email']);
+
     require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
     $braze = new Braze();
     $braze->setMethod('POST');
@@ -1118,6 +1126,56 @@ class TBMUsers
     }
 
     return $user->ID;
+  }
+
+  public function rest_check_if_client_club_member($request_data)
+  {
+    global $wpdb;
+
+    $data = $request_data->get_params();
+    $data = stripslashes_deep($data);
+
+    if (!isset($data['email']) || !is_email($data['email']) || !isset($data['user_id'])) {
+      return false;
+    }
+
+    $email = trim($data['email']);
+
+    if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email` = '{$email}'")) {
+      $user = get_user_by('email', $email);
+
+      if (!$user)
+        return false;
+
+      // Update DB
+      $wpdb->update(
+        $wpdb->prefix . 'client_club',
+        [
+          'status' => 'joined',
+          'user_id' => $user->ID,
+          'joined_at' => current_time('mysql')
+        ],
+        [
+          'email' => $email
+        ],
+        ['%s', '%d', '%s'],
+        ['%s']
+      );
+
+      /**
+       * Trigger Event in Braze
+       */
+      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+      $braze = new \Braze();
+      $braze->setMethod('POST');
+
+      $braze->triggerEvent($user->ID, 'brag_joined_bragger_client_club', [
+        'login_url' => home_url("/bragger-client-club/"),
+      ]);
+
+      return true;
+    }
+    return false;
   }
 
   /*
