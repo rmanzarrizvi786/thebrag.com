@@ -68,7 +68,7 @@ if ($event) {
 
 <div class="hero-wrap">
   <div class="text-primary content container p-r h-100 d-flex flex-wrap hero">
-    <div class="py-3" style="z-index: 3;">
+    <div class="p-3" style="z-index: 3;">
       <div class="d-flex col-12">
         <div class="logo-wrap">
           <a href="https://thebrag.com/media" target="_blank"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-light.svg" width="200" height="19" alt="The Brag Media" title="The Brag Media" loading="lazy"></a>
