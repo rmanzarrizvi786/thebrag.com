@@ -32,6 +32,9 @@ class BraggerClientClub
     add_action('wp_ajax_update_status_bragger_client_club', [$this, 'ajax_update_status']);
     add_action('wp_ajax_invite_to_bragger_client_event', [$this, 'ajax_invite_to_event']);
 
+    add_action('wp_ajax_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
+    add_action('wp_ajax_nopriv_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
+
     // Activation
     register_activation_hook(__FILE__, [$this, 'activate']);
 
@@ -173,7 +176,8 @@ class BraggerClientClub
             $wpdb->prefix . 'client_club_event_invites',
             ['status' => 'invited',],
             ['id' => $invite->invite_id],
-            ['%s',]['%d']
+            ['%s',],
+            ['%d']
           );
         }
       }
@@ -299,6 +303,72 @@ class BraggerClientClub
       $response .= "<tr><td class=\"text-success\">{$user->user_email} will be invited</td></tr>";
     }
     wp_send_json_success($response);
+    die();
+  } // ajax_invite_to_event()
+
+  public function ajax_rsponse_to_event()
+  {
+    global $wpdb;
+
+    $event_id = isset($_POST['event_id']) ? absint($_POST['event_id']) : null;
+    $guid = isset($_POST['guid']) ? trim($_POST['guid']) : null;
+
+    // $invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites i WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}' LIMIT 1 ");
+    $invite = $wpdb->get_row("SELECT
+        i.`id`,
+        i.`user_id`,
+        e.`title` event_title,
+        e.`event_date`,
+        e.`location` event_location,
+        i.`guid`
+      FROM {$wpdb->prefix}client_club_event_invites i
+      JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
+      WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
+      LIMIT 1
+");
+
+
+    if (!$invite) {
+      wp_send_json_error('Sorry, the invitation was not found :(');
+      die();
+    }
+
+    $response = isset($_POST['response']) ? trim($_POST['response']) : null;
+    if (!in_array($response, ['yes', 'no'])) {
+      wp_send_json_error('Sorry, invalid response :(');
+      die();
+    }
+
+    $wpdb->update(
+      $wpdb->prefix . 'client_club_event_invites',
+      [
+        'status' => $response,
+        'updated_at' => current_time('mysql')
+      ],
+      ['id' => $invite->id],
+      ['%s', '%s'],
+      ['%d']
+    );
+
+    /**
+     * Trigger Event in Braze
+     */
+    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new \Braze();
+    $braze->setMethod('POST');
+
+    $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
+      'event_title' => $invite->event_title,
+      'event_date' => $invite->event_date,
+      'location' => $invite->event_location,
+      'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
+    ]);
+
+    error_log(print_r($brazeEventRes, true));
+
+    $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
+
+    wp_send_json_success($message);
     die();
   }
 

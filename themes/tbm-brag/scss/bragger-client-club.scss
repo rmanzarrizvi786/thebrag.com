@@ -67,7 +67,7 @@ h1.content-heading {
   text-transform: uppercase;
   font-size: 4rem;
   line-height: 4rem;
-  margin: 2rem 1rem;
+  // margin: 2rem 1rem;
   text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
   color: $primaryColor;
 }
@@ -128,6 +128,48 @@ body.logged-in {
   }
 }
 
+.rsvp-wrap {
+  font-size: 2rem;
+}
+.btn-rsvp {
+  padding: 0.5rem 1rem !important;
+  font-size: 2rem;
+  border-radius: 1rem !important;
+  // box-shadow: 0 0 10px $primaryBlack;
+  transition: 0.25s all linear;
+  color: $primaryBlack;
+  cursor: pointer;
+  &:hover {
+    background-color: $primaryBlack !important;
+    color: #fff !important;
+  }
+  &.yes {
+    background-color: #badc58;
+  }
+  &.no {
+    background-color: #ff7979;
+  }
+  &.muted {
+    background-color: $lightGray !important;
+    cursor: default;
+    &:hover {
+      color: $primaryBlack !important;
+    }
+  }
+}
+.btn-change-rsvp {
+  font-size: 1rem;
+  background-color: $primaryColor;
+  border-radius: 0.25rem;
+  color: $primaryBlack;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.rsvp-response {
+  font-size: 1.5rem;
+}
+
 @media (min-width: $tablet) {
   h1.content-heading {
     font-size: 6rem;
@@ -136,7 +178,7 @@ body.logged-in {
     top: 50%;
     left: 0;
     transform: translateY(-50%); */
-    margin: 2rem auto;
+    // margin: 2rem auto;
   }
 
   main,
@@ -152,6 +194,9 @@ body.logged-in {
 
   .btn-login {
     padding: 1rem 2rem;
+  }
+  .btn-rsvp {
+    border-radius: 1rem;
   }
 }
 

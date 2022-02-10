@@ -1,40 +1,68 @@
 <?php
 /*
-* Template Name: Bragger Client Club (Index)
+* Template Name: Bragger Client Event (RSVP)
 */
+
+$event_id = isset($_GET['id']) ? absint($_GET['id']) : null;
+$guid = isset($_GET['guid']) ? trim($_GET['guid']) : null;
+
+$event = $wpdb->get_row("SELECT
+  e.*, i.`status` invite_status
+FROM {$wpdb->prefix}client_club_event_invites i
+JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
+WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
+LIMIT 1
+");
 
 get_header('bragger-client-club');
 
+// if (!$invite)
+//   return;
+
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
-/**
- * Update DB as joined if already logged in as invitee
- */
-$current_user = wp_get_current_user();
-if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}' AND `status` = 'invited' LIMIT 1")) {
-  $wpdb->update(
-    $wpdb->prefix . 'client_club_members',
-    [
-      'status' => 'joined',
-      'user_id' => $current_user->ID,
-      'joined_at' => current_time('mysql')
-    ],
-    [
-      'email' => $current_user->user_email
-    ],
-    ['%s', '%d', '%s'],
-    ['%s']
-  );
-}
+if ($event) {
+  add_action('wp_footer', function () use ($event_id, $guid) {
+?>
+    <script>
+      jQuery(document).ready(function($) {
+        $('.btn-change-rsvp').on('click', function(e) {
+          e.preventDefault();
+          $(this).hide();
+          $('.rsvp-response').addClass('d-none');
+          $('.rsvp-wrap').removeClass('d-none').addClass('d-flex flex-column flex-md-row align-items-start');
+        });
+        $('.btn-rsvp.active').on('click', function(e) {
+          e.preventDefault();
 
-/**
- * Update DB as active if already logged in has joined
- * Add Auth0 app_metadata
- */
-if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}' AND `status` = 'joined' LIMIT 1")) {
-  require_once WP_PLUGIN_DIR . '/tbm-bragger-client-club/tbm-bragger-client-club.php';
-  $bcc = new \TBM\BraggerClientClub();
-  $auth0_user = $bcc->updateStatus(get_current_user_id(), 'active');
+          if (!$(this).hasClass('active'))
+            return;
+
+          $('.rsvp-response').text('').addClass('d-none');
+          $('.btn-rsvp').addClass('muted').removeClass('active');
+          var response = $(this).data('response');
+          $.post({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            data: {
+              action: 'response_to_bragger_client_event',
+              event_id: '<?php echo $event_id; ?>',
+              guid: '<?php echo $guid; ?>',
+              response: response,
+            }
+          }).success(function(res) {
+            console.log(res.data);
+            if (res.success) {
+              $('.rsvp-wrap').hide();
+            }
+            $('.rsvp-response').text(res.data).removeClass('d-none');
+            return;
+            return;
+          }).done(function() {});
+        });
+      });
+    </script>
+<?php
+  });
 }
 ?>
 
@@ -47,16 +75,46 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHER
         </div>
       </div>
       <div class="col-12">
-        <h1 class="content-heading">
-          Bragger<br>Client<br>Club
-        </h1>
+        <?php if ($event) : ?>
+          <h1 class="content-heading my-3">
+            <?php echo $event->title; ?>
+          </h1>
+          <h2><?php echo $event->location; ?></h2>
+          <?php if (!is_null($event->event_date)) : ?>
+            <h2><?php echo date('d M, Y', strtotime($event->event_date)); ?></h2>
+          <?php endif; ?>
+        <?php else : ?>
+          <h1 class="content-heading">
+            Bragger<br>Client<br>Club
+          </h1>
+        <?php endif; ?>
       </div>
-      <?php if (!is_user_logged_in()) : ?>
-        <div class="col-12 pt-3 pt-md-4">
-          <div class="login">
-            <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn-login">Get started</a>
+      <?php if ($event) : ?>
+        <div class="d-flex justify-content-start align-items-start pt-3 pt-md-4">
+          <div class="rsvp-wrap <?php echo in_array($event->invite_status, ['yes', 'no']) ? 'd-none' : 'd-flex flex-column flex-md-row align-items-start'; ?>">
+            <div>Going?</div>
+            <div class="mt-3 mt-md-0">
+              <buttton class="text-white btn btn-rsvp active yes mr-1 ml-md-2" data-response="yes">Yes</buttton>
+              <buttton class="text-white btn btn-rsvp active no ml-1" data-response="no">No</buttton>
+            </div>
+          </div>
+          <div class="rsvp-response <?php echo !in_array($event->invite_status, ['yes', 'no']) ? 'd-none' : ''; ?>">
+            <?php echo 'yes' == $event->invite_status ? 'Thank you, see you there!' : ('no' == $event->invite_status ? 'You wil be missed!' : 'Thank you!'); ?>
+            <?php if (in_array($event->invite_status, ['yes', 'no'])) : ?>
+              <div class="mt-3">
+                <buttton class="btn-change-rsvp active">I changed my mind</buttton>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
+      <?php else : ?>
+        <?php if (!is_user_logged_in()) : ?>
+          <div class="col-12 pt-3 pt-md-4">
+            <div class="login">
+              <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn-login">Get started</a>
+            </div>
+          </div>
+        <?php endif; ?>
       <?php endif; ?>
     </div>
   </div>
