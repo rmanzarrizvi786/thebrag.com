@@ -30,8 +30,8 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                 <th>Email</th>
                 <th>Status</th>
                 <th>Invited at</th>
-                <th>Joined at</th>
-                <th>Updated at</th>
+                <!-- <th>Joined at</th>
+                <th>Updated at</th> -->
                 <th>Action</th>
             </tr>
             <?php foreach ($invites as $invite) : ?>
@@ -39,8 +39,10 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                     <td><?php echo $invite->email; ?></td>
                     <td><span class="invite_status text-uppercase"><?php echo $invite->status; ?></span></td>
                     <td><?php echo $invite->created_at; ?></td>
-                    <td><?php echo $invite->joined_at; ?></td>
-                    <td><?php echo $invite->updated_at; ?></td>
+                    <!-- <td><?php // echo $invite->joined_at; 
+                                ?></td>
+                    <td><?php // echo $invite->updated_at; 
+                        ?></td> -->
                     <td>
                         <?php if ('invited' != $invite->status) : ?>
                             <button class="btn btn-sm btn-action <?php echo in_array($invite->status, ['joined', 'active']) ? 'btn-danger' : 'btn-success'; ?>" data-id="<?php echo $invite->id; ?>" data-newstatus="<?php echo in_array($invite->status, ['joined', 'active']) ? 'inactive' : 'active'; ?>" data-userid="<?php echo $invite->user_id; ?>">
