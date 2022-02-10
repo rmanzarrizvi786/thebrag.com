@@ -488,11 +488,11 @@ class TBMUsers
       'permission_callback' => '__return_true',
     ));
 
-    register_rest_route($this->plugin_name . '/v1', '/check_if_client_club_member', array(
+    /* register_rest_route($this->plugin_name . '/v1', '/check_if_client_club_member', array(
       'methods' => 'POST',
       'callback' => [$this, 'rest_check_if_client_club_member'],
       'permission_callback' => '__return_true',
-    ));
+    )); */
   }
 
   /*

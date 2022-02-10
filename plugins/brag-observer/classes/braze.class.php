@@ -266,6 +266,7 @@ class Braze
             if (201 !== $res_track['code']) {
                 error_log("Error pushing event to Braze in " . __METHOD__ . " on line " . __LINE__ . ". " .  print_r($res_track, true)) . print_r($braze_payload, true);
             }
+            return $res_track;
         }
     }
 

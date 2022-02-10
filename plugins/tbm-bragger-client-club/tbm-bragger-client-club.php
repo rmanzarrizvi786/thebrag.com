@@ -28,8 +28,60 @@ class BraggerClientClub
 
     add_action('admin_menu', array($this, 'admin_menu'));
 
-    add_action('wp_ajax_invite_to_bragger_client_club', [$this, 'ajax_invite']);
+    add_action('wp_ajax_invite_to_bragger_client_club', [$this, 'ajax_invite_to_club']);
     add_action('wp_ajax_update_status_bragger_client_club', [$this, 'ajax_update_status']);
+    add_action('wp_ajax_invite_to_bragger_client_event', [$this, 'ajax_invite_to_event']);
+
+    // Activation
+    register_activation_hook(__FILE__, [$this, 'activate']);
+
+    // Deactivation
+    register_deactivation_hook(__FILE__, [$this, 'deactivate']);
+
+    add_action('cron_hook_bragger_client_club_invites', [$this, 'exec_cron_club_invites']);
+    add_action('cron_hook_bragger_client_event_invites', [$this, 'exec_cron_event_invites']);
+  }
+
+  public function activate()
+  {
+    if (!wp_next_scheduled('cron_hook_bragger_client_club_invites', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:00:00'), 'every10minutes', 'cron_hook_bragger_client_club_invites', array(NULL, NULL));
+    }
+
+    if (!wp_next_scheduled('cron_hook_bragger_client_event_invites', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_bragger_client_event_invites', array(NULL, NULL));
+    }
+  }
+
+  /**
+   * Hook cron_schedules
+   */
+  public function _cron_schedules($schedules)
+  {
+    $schedules['every10minutes'] = array(
+      'interval' => 10 * 60,
+      'display'  => esc_html__('Every 10 Minutes'),
+    );
+  }
+
+  public function deactivate()
+  {
+    $crons = _get_cron_array();
+    if (empty($crons)) {
+      return;
+    }
+    $hooks = ['cron_hook_bragger_client_club_invites', 'cron_hook_bragger_client_event_invites'];
+    foreach ($crons as $timestamp => $cron) {
+      foreach ($hooks as $hook) {
+        if (!empty($cron[$hook])) {
+          unset($crons[$timestamp][$hook]);
+        }
+      }
+      if (empty($crons[$timestamp])) {
+        unset($crons[$timestamp]);
+      }
+    }
+    _set_cron_array($crons);
   }
 
   public function admin_menu()
@@ -39,164 +91,113 @@ class BraggerClientClub
       $this->plugin_title,
       'administrator',
       $this->plugin_slug,
-      array($this, 'index'),
+      [$this, 'index'],
       'dashicons-superhero',
       10
     );
+    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Members", 'Members', 'administrator', "{$this->plugin_slug}", [$this, 'index']);
+    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Events", 'Events', 'administrator', "{$this->plugin_slug}-events", [$this, 'manage_events']);
   }
+
+  public function exec_cron_club_invites()
+  {
+    global $wpdb;
+    $invites = $wpdb->get_results("SELECT
+        m.`id`,
+        m.`email`
+      FROM {$wpdb->prefix}client_club_members m
+      WHERE m.`status` IS NULL
+      LIMIT 40
+    ");
+    if ($invites) {
+      foreach ($invites as $invite) {
+        /**
+         * Trigger Event in Braze
+         */
+        require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+        $braze = new \Braze();
+        $braze->setMethod('POST');
+
+        $brazeEventRes = $braze->triggerEventByEmail($invite->email, 'brag_invited_bragger_client_club', [
+          'login_url' => home_url("/bragger-client-club/"),
+        ]);
+
+        if (201 ==  $brazeEventRes['code']) {
+          $wpdb->update(
+            $wpdb->prefix . 'client_club_members',
+            ['status' => 'invited',],
+            ['id' => $invite->id],
+            ['%s',]['%d']
+          );
+        }
+      }
+    }
+  } // exec_cron_club_invites()
+
+  public function exec_cron_event_invites()
+  {
+    global $wpdb;
+    $invites = $wpdb->get_results("SELECT
+        i.`id` invite_id,
+        i.`user_id`,
+        i.`guid`,
+        e.`id` event_id,
+        e.`title` event_title,
+        e.`event_date`,
+        e.`location` event_location
+      FROM {$wpdb->prefix}client_club_event_invites i
+      JOIN {$wpdb->prefix}client_club_events e ON e.`id` = i.`event_id`
+      -- JOIN {$wpdb->prefix}users u ON u.`ID` = i.`user_id`
+      WHERE i.`status` IS NULL
+      LIMIT 40
+    ");
+    if ($invites) {
+      foreach ($invites as $invite) {
+        /**
+         * Trigger Event in Braze
+         */
+        require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+        $braze = new \Braze();
+        $braze->setMethod('POST');
+
+        $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_invited_bragger_client_event', [
+          'event_title' => $invite->event_title,
+          'event_date' => $invite->event_date,
+          'location' => $invite->event_location,
+          'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$invite->event_id}&guid={$invite->guid}")
+        ]);
+
+        if (201 ==  $brazeEventRes['code']) {
+          $wpdb->update(
+            $wpdb->prefix . 'client_club_event_invites',
+            ['status' => 'invited',],
+            ['id' => $invite->invite_id],
+            ['%s',]['%d']
+          );
+        }
+      }
+    }
+  } // exec_cron_event_invites()
 
   public function index()
   {
-    global $wpdb;
-    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css');
-?>
-    <h1><?php echo $this->plugin_title; ?></h1>
-
-    <div class="mt-3">
-      <h2>Invite someone to <?php echo $this->plugin_title; ?></h2>
-      <form id="invite-to-club">
-        <div class="row">
-          <div class="col d-flex align-items-center">
-            <input type="email" id="club-member-email" class="form-control" placeholder="Email address">
-          </div>
-          <div class="col d-flex align-items-center">
-            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
-            <div class="result mx-2"></div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="mt-3">
-      <h2>Past Invitations</h2>
-      <?php
-      $invites = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}client_club_members");
-      if ($invites) :
-      ?>
-        <table class="table table-sm">
-          <tr>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Invited at</th>
-            <th>Joined at</th>
-            <th>Updated at</th>
-            <th>Action</th>
-          </tr>
-          <?php foreach ($invites as $invite) : ?>
-            <tr id="invite-<?php echo $invite->id; ?>">
-              <td><?php echo $invite->email; ?></td>
-              <td><span class="invite_status text-uppercase"><?php echo $invite->status; ?></span></td>
-              <td><?php echo $invite->created_at; ?></td>
-              <td><?php echo $invite->joined_at; ?></td>
-              <td><?php echo $invite->updated_at; ?></td>
-              <td>
-                <?php if ('invited' != $invite->status) : ?>
-                  <button class="btn btn-sm btn-action <?php echo in_array($invite->status, ['joined', 'active']) ? 'btn-danger' : 'btn-success'; ?>" data-id="<?php echo $invite->id; ?>" data-newstatus="<?php echo in_array($invite->status, ['joined', 'active']) ? 'inactive' : 'active'; ?>" data-userid="<?php echo $invite->user_id; ?>">
-                    <?php echo in_array($invite->status, ['joined', 'active']) ? 'Deactivate' : 'Activate'; ?>
-                  </button>
-                <?php endif; ?>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </table>
-      <?php endif; ?>
-    </div>
-
-    <style>
-      .blink {
-        animation: blinker .5s linear infinite;
-      }
-
-      @keyframes blinker {
-        50% {
-          opacity: 0;
-        }
-      }
-    </style>
-
-    <script>
-      jQuery(document).ready(function($) {
-
-        $('.btn-action').on('click', function() {
-          var invite_id = $(this).data('id');
-          if (!invite_id)
-            return false;
-
-          var user_id = $(this).data('userid');
-          if (!user_id)
-            return false;
-
-          var btnAction = $(this);
-
-          var newStatus = $(this).data('newstatus');
-
-          btnAction.prop('disabled', true).addClass('blink');
-          $('#invite-' + invite_id).find('.invite_status').addClass('blink');
-
-          $.post({
-            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-            data: {
-              action: 'update_status_bragger_client_club',
-              invite_id: invite_id,
-              user_id: user_id,
-              new_status: newStatus
-            }
-          }).success(function(res) {
-            if (res.success) {
-              if (newStatus == 'active') {
-                btnAction.removeClass('btn-success').addClass('btn-danger').text('Deactivate').data('newstatus', 'inactive');
-                $('#invite-' + invite_id).find('.invite_status').text('Active');
-                return;
-              }
-              if (newStatus == 'inactive') {
-                btnAction.removeClass('btn-danger').addClass('btn-success').text('Activate').data('newstatus', 'active');
-                $('#invite-' + invite_id).find('.invite_status').text('Inactive');
-                return;
-              }
-            }
-          }).done(function() {
-            btnAction.prop('disabled', false).removeClass('blink');
-            $('#invite-' + invite_id).find('.invite_status').removeClass('blink');
-          });
-        });
-
-        $('#invite-to-club').on('submit', function(e) {
-          e.preventDefault();
-          var theForm = $(this);
-          var btnSubmit = $(this).find('.btn-submit');
-          btnSubmit.prop('disabled', true).removeClass('btn-primary').addClass('btn-secondary');
-
-          theForm.find('.result').removeClass('text-success text-danger').text('Processing, please wait...');
-
-          $.post({
-            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-            data: {
-              action: 'invite_to_bragger_client_club',
-              email: $('#club-member-email').val()
-            }
-          }).success(function(res) {
-            if (!res.success) {
-              console.error(res);
-              theForm.find('.result').addClass('text-danger').text(res.data);
-              btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-              return;
-            }
-            theForm.find('.result').addClass('text-success').text('Success!');
-            console.info(res.data);
-            btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-            $('#club-member-email').val('').focus();
-            return;
-          }).error(function(e) {
-            theForm.find('.result').addClass('text-danger').text(res.data);
-            console.error(e);
-            btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-            return;
-          });
-        })
-      })
-    </script>
-<?php
+    include __DIR__ . '/views/members.php';
   } // index()
+
+  public function manage_events()
+  {
+    $action = isset($_GET['action']) ? trim($_GET['action']) : 'index';
+    switch ($action):
+      case 'invite':
+        include __DIR__ . '/views/invite-to-event.php';
+
+        break;
+      case 'index':
+      default:
+        include __DIR__ . '/views/events.php';
+        break;
+    endswitch;
+  } // manage_events()
 
   public function ajax_update_status()
   {
@@ -220,7 +221,7 @@ class BraggerClientClub
     die();
   }
 
-  public function ajax_invite()
+  public function ajax_invite_to_club()
   {
     global $wpdb;
 
@@ -232,7 +233,7 @@ class BraggerClientClub
     }
 
     /**
-     * Save to DB
+     * Add to DB
      */
     // Check if already in DB
     $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
@@ -244,7 +245,7 @@ class BraggerClientClub
       $wpdb->prefix . 'client_club_members',
       [
         'email' => $email,
-        'status' => 'invited',
+        'status' => null, //'invited',
         'created_at' => current_time('mysql')
       ],
       [
@@ -252,18 +253,51 @@ class BraggerClientClub
       ]
     );
 
+    wp_send_json_success("{$email} will be invited to join the club!");
+    die();
+  } // ajax_invite_to_club()
+
+  public function ajax_invite_to_event()
+  {
+    global $wpdb;
+
+    $user_ids = isset($_POST['members']) ? $_POST['members'] : [];
+
+    if (!is_array($user_ids) || empty($user_ids)) {
+      wp_send_json_error('Empty members list');
+      die();
+    }
+
+    $event_id = isset($_POST['event_id']) ? absint($_POST['event_id']) : null;
+    if (is_null($event_id) || 0 == $event_id) {
+      wp_send_json_error('Missing Event ID');
+      die();
+    }
+
     /**
-     * Trigger Event in Braze
+     * Add to DB
      */
-    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
-    $braze = new \Braze();
-    $braze->setMethod('POST');
+    $response = '';
+    foreach ($user_ids as $user_id) {
 
-    $res_track = $braze->triggerEventByEmail($email, 'brag_invited_bragger_client_club', [
-      'login_url' => home_url("/bragger-client-club/"),
-    ]);
+      $user = get_user_by('ID', $user_id);
 
-    wp_send_json_success($res_track);
+      $guid = $this->generate_guid();
+
+      $wpdb->insert(
+        $wpdb->prefix . 'client_club_event_invites',
+        [
+          'event_id' => $event_id,
+          'user_id' => $user_id,
+          // 'status' => 'invited',
+          'guid' => $guid,
+        ],
+        ['%d', '%d', '%s', '%s',]
+      );
+
+      $response .= "<tr><td class=\"text-success\">{$user->user_email} will be invited</td></tr>";
+    }
+    wp_send_json_success($response);
     die();
   }
 
@@ -355,6 +389,15 @@ class BraggerClientClub
     }
     return false;
   } // updateStatus()
+
+  private function generate_guid()
+  {
+    if (function_exists('com_create_guid') === true) {
+      return trim(com_create_guid(), '{}');
+    }
+
+    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+  }
 }
 
 new BraggerClientClub();
