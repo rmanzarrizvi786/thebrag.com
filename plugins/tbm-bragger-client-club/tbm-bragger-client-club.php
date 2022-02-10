@@ -361,10 +361,9 @@ class BraggerClientClub
       'event_title' => $invite->event_title,
       'event_date' => $invite->event_date,
       'location' => $invite->event_location,
+      'rsvp' => $response,
       'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
     ]);
-
-    error_log(print_r($brazeEventRes, true));
 
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
