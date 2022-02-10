@@ -127,7 +127,8 @@ class BraggerClientClub
             $wpdb->prefix . 'client_club_members',
             ['status' => 'invited',],
             ['id' => $invite->id],
-            ['%s',]['%d']
+            ['%s',],
+            ['%d']
           );
         }
       }
