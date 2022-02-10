@@ -11,9 +11,9 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
  * Update DB as joined if already logged in as invitee
  */
 $current_user = wp_get_current_user();
-if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email` = '{$current_user->user_email}' AND `status` = 'invited' LIMIT 1")) {
+if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}' AND `status` = 'invited' LIMIT 1")) {
   $wpdb->update(
-    $wpdb->prefix . 'client_club',
+    $wpdb->prefix . 'client_club_members',
     [
       'status' => 'joined',
       'user_id' => $current_user->ID,
@@ -25,6 +25,16 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email
     ['%s', '%d', '%s'],
     ['%s']
   );
+}
+
+/**
+ * Update DB as active if already logged in has joined
+ * Add Auth0 app_metadata
+ */
+if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}' AND `status` = 'joined' LIMIT 1")) {
+  require_once WP_PLUGIN_DIR . '/tbm-bragger-client-club/tbm-bragger-client-club.php';
+  $bcc = new \TBM\BraggerClientClub();
+  $auth0_user = $bcc->updateStatus(get_current_user_id(), 'active');
 }
 ?>
 
@@ -55,7 +65,7 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email
 <?php
 if (is_user_logged_in()) :
   $user_id = get_current_user_id();
-  if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `user_id` = '{$user_id}' AND `status` = 'joined'")) :
+  if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `user_id` = '{$user_id}' AND `status` = 'active'")) :
     $lists_query = "SELECT l.id, l.title, l.description, l.image_url, l.frequency
           FROM {$wpdb->prefix}observer_lists l
           WHERE l.status = 'active'

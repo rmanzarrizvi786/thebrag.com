@@ -1141,7 +1141,7 @@ class TBMUsers
 
     $email = trim($data['email']);
 
-    if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club WHERE `email` = '{$email}'")) {
+    if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}'")) {
       $user = get_user_by('email', $email);
 
       if (!$user)
@@ -1149,7 +1149,7 @@ class TBMUsers
 
       // Update DB
       $wpdb->update(
-        $wpdb->prefix . 'client_club',
+        $wpdb->prefix . 'client_club_members',
         [
           'status' => 'joined',
           'user_id' => $user->ID,
