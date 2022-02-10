@@ -230,35 +230,72 @@ class BraggerClientClub
   {
     global $wpdb;
 
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
-    if (!is_email($email)) {
-      wp_send_json_error("Invalid Email");
+    $emails = [];
+    // $fh = fopen($_FILES['csv']['tmp_name'], 'r+');
+    // while (($row = fgetcsv($fh)) !== FALSE) {
+    //   $emails[] = $row;
+    // }
+
+    // $emails = array_map('str_getcsv', file($_FILES['csv']['tmp_name']));
+
+    $bom = "\xef\xbb\xbf";
+    $fp = fopen($_FILES['csv']['tmp_name'], 'r');
+    if (fgets($fp, 4) !== $bom) {
+      rewind($fp);
+    }
+    while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
+      $emails[] = $line;
+    }
+
+    if (!is_array($emails) || empty($emails)) {
+      wp_send_json_error("List is empty");
       die();
     }
 
-    /**
-     * Add to DB
-     */
-    // Check if already in DB
-    $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
-    if ($check) {
-      wp_send_json_error("Already invited, status: {$check->status}");
-      die();
-    }
-    $wpdb->insert(
-      $wpdb->prefix . 'client_club_members',
-      [
-        'email' => $email,
-        'status' => null, //'invited',
-        'created_at' => current_time('mysql')
-      ],
-      [
-        '%s', '%s', '%s'
-      ]
-    );
+    // $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $message = '';
 
-    wp_send_json_success("{$email} will be invited to join the club!");
+    foreach ($emails as $email_arr) {
+
+      $email = $email_arr[0];
+
+      $errors = [];
+
+      if (!is_email($email)) {
+        $errors[] = "Invalid Email {$email}";
+      }
+
+      /**
+       * Add to DB
+       */
+      // Check if already in DB
+      $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
+      if ($check) {
+        // wp_send_json_error("Already invited, status: {$check->status}");
+        // die();
+        $errors[] = "{$email} already invited"; // , status: {$check->status}";
+      }
+
+      if (empty($errors)) {
+        $wpdb->insert(
+          $wpdb->prefix . 'client_club_members',
+          [
+            'email' => $email,
+            'status' => null, //'invited',
+            'created_at' => current_time('mysql')
+          ],
+          [
+            '%s', '%s', '%s'
+          ]
+        );
+        $message .= "<tr><td class=\"text-success\">{$email} will be invited to join the club!</td></tr>";
+      } else {
+        $message .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+      }
+    }
+
+    wp_send_json_success($message);
     die();
   } // ajax_invite_to_club()
 

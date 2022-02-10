@@ -14,12 +14,9 @@ WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
 LIMIT 1
 ");
 
-get_header('bragger-client-club');
-
-// if (!$invite)
-//   return;
-
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
+
+get_header('bragger-client-club');
 
 if ($event) {
   add_action('wp_footer', function () use ($event_id, $guid) {
