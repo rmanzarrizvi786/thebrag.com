@@ -189,7 +189,16 @@ class Imports extends BragObserver
                   $insert_values['source'] = $tmp_sub->source;
                 }
                 $wpdb->insert($wpdb->prefix . 'observer_subs', $insert_values);
-              }
+
+                /**
+                 * Add to queue for Braze
+                 */
+                $task = 'update_newsletter_interests';
+                $cron = new Cron();
+                if (!$cron->getActiveBrazeQueueTask($user->ID, $task)) {
+                  $cron->addToBrazeQueue($user->ID, $task);
+                }
+              } // Not already subscribed/unsubscribed
             } // For Each $list_id
           }
         } // If $user
@@ -562,6 +571,7 @@ class Imports extends BragObserver
 
   public function ip_warmup_export_to_braze()
   {
+    return;
     global $wpdb;
 
     $limit = 30;

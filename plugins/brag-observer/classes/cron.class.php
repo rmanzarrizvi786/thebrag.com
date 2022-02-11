@@ -444,18 +444,18 @@ class Cron // extends BragObserver
     public function process_braze()
     {
         date_default_timezone_set('Australia/NSW');
-        echo '<br>Current Date/Time: ' . date('d-M-Y h:i:sa');
+        echo '<h2>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</h2>';
 
         echo '<hr>';
 
         $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
-        echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+        echo '<h2>update_newsletter_interests</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
         $this->exec_cron_observer_braze_update_newsletter_interests();
 
         echo '<hr>';
 
         $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL));
-        echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+        echo '<h2>update_profile</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
         $this->exec_cron_observer_braze_update_profile();
     }
 
@@ -744,7 +744,7 @@ class Cron // extends BragObserver
             FROM {$wpdb->prefix}observer_braze_cron c
             WHERE c.`task` = 'update_newsletter_interests' AND c.`completed_at` IS NULL
             ORDER BY c.`queued_at`
-            LIMIT 30
+            LIMIT 50
             ";
         $tasks = $wpdb->get_results($query_tasks);
 

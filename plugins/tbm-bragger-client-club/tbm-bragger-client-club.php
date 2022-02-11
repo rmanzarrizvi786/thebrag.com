@@ -193,9 +193,8 @@ class BraggerClientClub
   {
     $action = isset($_GET['action']) ? trim($_GET['action']) : 'index';
     switch ($action):
-      case 'invite':
-        include __DIR__ . '/views/invite-to-event.php';
-
+      case 'invitations':
+        include __DIR__ . '/views/manage-invitations.php';
         break;
       case 'index':
       default:
@@ -230,14 +229,7 @@ class BraggerClientClub
   {
     global $wpdb;
 
-
     $emails = [];
-    // $fh = fopen($_FILES['csv']['tmp_name'], 'r+');
-    // while (($row = fgetcsv($fh)) !== FALSE) {
-    //   $emails[] = $row;
-    // }
-
-    // $emails = array_map('str_getcsv', file($_FILES['csv']['tmp_name']));
 
     $bom = "\xef\xbb\xbf";
     $fp = fopen($_FILES['csv']['tmp_name'], 'r');
@@ -254,7 +246,7 @@ class BraggerClientClub
     }
 
     // $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $message = '';
+    $response = '';
 
     foreach ($emails as $email_arr) {
 
@@ -289,13 +281,13 @@ class BraggerClientClub
             '%s', '%s', '%s'
           ]
         );
-        $message .= "<tr><td class=\"text-success\">{$email} will be invited to join the club!</td></tr>";
+        $response .= "<tr><td class=\"text-success\">{$email} will be invited to join the club!</td></tr>";
       } else {
-        $message .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+        $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
       }
     }
 
-    wp_send_json_success($message);
+    wp_send_json_success($response);
     die();
   } // ajax_invite_to_club()
 
@@ -303,23 +295,95 @@ class BraggerClientClub
   {
     global $wpdb;
 
-    $user_ids = isset($_POST['members']) ? $_POST['members'] : [];
+    // Check if Event ID is sent
+    $event_id = isset($_POST['event_id']) ? absint($_POST['event_id']) : null;
+    if (is_null($event_id) || 0 == $event_id) {
+      wp_send_json_error('<tr><td class="text-danger">Missing Event ID</td></tr>');
+      die();
+    }
+
+    // Check if file is sent
+    $fp = fopen($_FILES['csv']['tmp_name'], 'r');
+    if (!$fp) {
+      wp_send_json_error('<tr><td class="text-danger">Please upload a file.</td></tr>');
+      die();
+    }
+
+    $bom = "\xef\xbb\xbf";
+    if (fgets($fp, 4) !== $bom) {
+      rewind($fp);
+    }
+
+    // Add each line from CSV to $emails array
+    $emails = [];
+    while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
+      $emails[] = $line;
+    }
+
+    if (!is_array($emails) || empty($emails)) {
+      wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
+      die();
+    }
+
+    $response = '';
+    foreach ($emails as $email_arr) {
+      $email = $email_arr[0];
+
+      if (!is_email($email)) { // Check if email is valid
+        $response .= '<tr><td>' . $email . '</td><td class="text-danger">Invalid Email</td></tr>';
+      } else {
+
+        // Get user by email
+        $user = get_user_by('email', $email);
+
+        if (!$user) { // Do not proceed if user doesn't exit
+          $response .= '<tr><td>' . $email . '</td><td class="text-danger">User doesn\'t exist</td></tr>';
+        } else {
+
+          // Check if user is club member
+          $check_member = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `user_id` = '{$user->ID}' AND `status` IN ('active', 'joined')");
+          if (!$check_member) { // Do not proceed if user is not a club member
+            $response .= '<tr><td>' . $email . '</td><td class="text-warning">Not a club member.</td></tr>';
+          } else {
+            // Check if already invited and member responded yes/no
+            $check_invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites WHERE `event_id` = '{$event_id}' AND `user_id` = '{$user->ID}' AND `status` IN ('yes', 'no')");
+            if ($check_invite) { // Already invited
+              $response .= '<tr><td>' . $email . '</td><td class="text-info">Already responded: ' . strtoupper($check_invite->status) . '</td></tr>';
+            } else { // Member was not invited OR not responded yes/no yet i.e. Invite
+              $guid = $this->generate_guid();
+
+              $wpdb->insert(
+                $wpdb->prefix . 'client_club_event_invites',
+                [
+                  'event_id' => $event_id,
+                  'user_id' => $user->ID,
+                  // 'status' => 'invited',
+                  'guid' => $guid,
+                ],
+                ['%d', '%d', '%s', '%s',]
+              );
+
+              $response .= "<tr><td>' . $email . '</td><td class=\"text-success\">Will be invited</td></tr>";
+            }
+          }
+        }
+      }
+    }
+
+    wp_send_json_success($response);
+    die();
+
+    /* $user_ids = isset($_POST['members']) ? $_POST['members'] : [];
 
     if (!is_array($user_ids) || empty($user_ids)) {
       wp_send_json_error('Empty members list');
       die();
-    }
-
-    $event_id = isset($_POST['event_id']) ? absint($_POST['event_id']) : null;
-    if (is_null($event_id) || 0 == $event_id) {
-      wp_send_json_error('Missing Event ID');
-      die();
-    }
+    } */
 
     /**
      * Add to DB
      */
-    $response = '';
+
     foreach ($user_ids as $user_id) {
 
       $user = get_user_by('ID', $user_id);

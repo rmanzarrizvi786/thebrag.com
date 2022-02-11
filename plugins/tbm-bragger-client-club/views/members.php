@@ -128,29 +128,25 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
             /**
              * Using file upload
              */
-            // var formData = new FormData($('#invite-to-club')[0]);
-            var fd = new FormData();
-            fd.append('action', 'invite_to_bragger_client_club');
+            var formData = new FormData();
+            formData.append('action', 'invite_to_bragger_client_club');
 
             var file = $('#file-club-member-emails')[0].files[0];
-            fd.append('csv', file);
+            formData.append('csv', file);
 
             $.post({
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
-                data: fd,
+                data: formData,
                 processData: false,
                 contentType: false
             }).success(function(res) {
-                if (!res.success) {
-                    theForm.find('.result').prepend(res.data);
-                    btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-                    return;
-                }
-
                 theForm.find('.result').prepend(res.data);
                 theForm.find('.result').find('.result-status').hide();
+
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-                $('#club-member-email').val('').focus();
+
+                return;
+                // $('#club-member-email').val('').focus();
                 return;
             }).error(function(e) {
                 // theForm.find('.result').addClass('text-danger').text(res.data);
