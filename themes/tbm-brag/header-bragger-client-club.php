@@ -188,6 +188,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
       }
     }
   </style>
+  <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/bragger-client-club.css?v=<?php echo time(); ?>" type="text/css" media="all" />
 </head>
 
 <body <?php body_class(); ?> id="body">
@@ -208,72 +209,8 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <header class="fixed-top pb-1 py-md-0 d-flex">
-    <div class="w-100 d-flex d-md-none justify-content-between header-mobile">
-      <div class="d-flex">
-        <div class="logo-wrap ml-1 mr-2">
-          <a href="<?php echo site_url(); ?>"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-light.svg" width="200" height="19" alt="The Brag" title="The Brag"></a>
-        </div>
-      </div>
-
-      <div class="d-flex">
-        <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
-          <div class="user-info d-flex flex-row my-1">
-            <?php
-            if (is_user_logged_in()) :
-              $current_user = wp_get_current_user();
-              $user_info = get_userdata($current_user->ID);
-            ?>
-              <button class="btn btn-primary btn-observer-top btn-toggle-slidedown d-flex" data-target="observer-list-top" style="padding: .15rem .45rem !important">
-                <span class="">
-                  <img src="<?php echo ICONS_URL; ?>icon_mail.svg" class="btn-img" width="24" height="24" alt="Mail">
-                  <img src="<?php echo ICONS_URL; ?>icon_mail-tb.svg" class="btn-img hover" width="24" height="24" alt="Mail">
-                </span>
-              </button>
-              <a href="<?php echo home_url('/profile/'); ?>" class="ml-1 user-name d-flex flex-row btn user text-white" style="padding: 0;">
-                <?php echo get_avatar($current_user, 24, 'mystery', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-              </a>
-            <?php else : ?>
-              <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn btn-primary">Login</a>
-            <?php endif; ?>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="d-none w-100 d-md-block">
-      <div class="d-flex justify-content-between container">
-        <div class="network-socials-wrap d-none d-md-block">
-
-        </div><!-- .network-socials-wrap -->
-
-        <div class="d-flex">
-          <div class="logo-wrap">
-            <a href="<?php echo site_url(); ?>"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-light.svg" width="200" height="19" alt="The Brag Media" title="The Brag Media" loading="lazy"></a>
-          </div>
-        </div>
-        <div class="user-wrap d-flex flex-column justify-content-end pr-1 pr-md-2 w-sm-auto">
-          <div class="user-info d-none d-md-flex flex-row">
-            <?php
-            if (is_user_logged_in()) :
-            ?>
-              <a href="<?php echo home_url('/profile/'); ?>" class="user-name d-flex flex-row btn user text-white" style="padding: 0;">
-                <?php echo get_avatar($current_user, 24, 'mystery', $user_info->first_name, ['class' => 'rounded-circle']); ?>
-              </a>
-            <?php else : ?>
-              <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white" style="font-size: 0.9rem;">Login</a>
-            <?php endif; ?>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
-        <div class="btn d-block d-md-none btn-close-menu">
-          <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- <header class="fixed-top pb-1 py-md-0 d-flex">
+  </header> -->
 
   <main>
     <div class="content container">

@@ -249,9 +249,6 @@ if ($temp_user) {
 </div>
 
 <?php
-$colors_pool = [
-  'ff7979', 'badc58', '6ab04c', 'eb4d4b', '686de0', '30336b', '130f40', 'be2edd', '4834d4', '22a6b3', 'f9ca24'
-];
 if ($lists) :
 ?>
   <div class="row <?php echo isset($q_ids) ? 'justify-content-center' : ''; ?>">
@@ -298,9 +295,6 @@ if ($lists) :
           if (48 == $list->id) // Exclude Tone Deaf Tastemakers
             continue;
           $list_image_url = $list->image_url;
-          if (!$list->image_url || '' == $list->image_url) :
-            $list_image_url = 'https://dummyimage.com/800x800/' . $colors_pool[array_rand($colors_pool)] . '/fff.jpg&text=' . $list->title;
-          endif; // If image url is not set
     ?>
           <div class="col-lg-2 col-md-4 col-6 my-4 px-2 topic">
             <label class="text-center d-flex flex-column justify-content-between h-100 sub-unsub <?php echo in_array($list->id, $my_sub_lists) ? 'subscribed' : ''; ?>" style="border: 1px solid #ccc; padding: .5rem; cursor: pointer; ">
@@ -338,9 +332,6 @@ if ($lists) :
         continue;
 
       $list_image_url = $list->image_url;
-      if (!$list->image_url || '' == $list->image_url) :
-        $list_image_url = 'https://dummyimage.com/800x800/' . $colors_pool[array_rand($colors_pool)] . '/fff.jpg&text=' . $list->title;
-      endif; // If image url is not set
       ?>
       <div class="col-lg-2 col-md-4 col-6 my-4 px-2 topic">
         <label class="text-center d-flex flex-column justify-content-between h-100 sub-unsub <?php echo in_array($list->id, $my_sub_lists) ? 'subscribed' : ''; ?>" style="border: 1px solid #ccc; padding: .5rem; cursor: pointer; ">

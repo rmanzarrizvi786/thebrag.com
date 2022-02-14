@@ -34,6 +34,12 @@ class TBMAds
   */
   public function action_wp_enqueue_scripts()
   {
+    if (
+      is_page_template('page-templates/brag-observer.php') ||
+      is_page_template('page-templates/bragger-client-club.php') ||
+      is_page_template('page-templates/bragger-client-rsvp-event.php')
+    )
+      return;
     wp_enqueue_script('adm-fuse', 'https://cdn.fuseplatform.net/publift/tags/2/2355/fuse.js', [], '1');
   }
 
@@ -75,6 +81,13 @@ class TBMAds
   */
   public function get_ad($ad_location = '', $slot_no = 0, $post_id = null, $device = '', $ad_width = '')
   {
+    if (
+      is_page_template('page-templates/brag-observer.php') ||
+      is_page_template('page-templates/bragger-client-club.php') ||
+      is_page_template('page-templates/bragger-client-rsvp-event.php')
+    )
+      return;
+
     if ('' == $ad_location)
       return;
 

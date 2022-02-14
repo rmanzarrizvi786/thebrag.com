@@ -158,6 +158,7 @@ class Braze
                 }
             }
         }
+
         if (!$has_braze_user) {
             if (get_user_meta($user_id, $wpdb->prefix . 'auth0_id')) {
                 $user_attributes['external_id'] = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
@@ -172,11 +173,128 @@ class Braze
                 ];
                 $user_attributes['_update_existing_only'] = false;
             }
+
+            $attributes[] = array_merge($user_attributes, ['email' => $user_info->user_email]);
+            $braze_payload['attributes'] = $attributes;
+            $this->setPayload($braze_payload);
+            $this->request('/users/track', true);
+
+            $braze_user = $this->getUser($user_id);
         }
 
         return [
             'user' => isset($braze_user) ? $braze_user : null,
             'user_attributes' => $user_attributes,
         ];
+    } // getUser($user_id)
+
+    public function getUserByEmail($email)
+    {
+        $user = get_user_by('email', $email);
+        if ($user) {
+            return $this->getUser($user->ID);
+        }
+
+        $user_attributes = [];
+        $user_attributes['email'] = $email;
+
+        $this->setMethod('POST');
+        $this->setPayload([
+            'email_address' => $email
+        ]);
+        $res_braze_users = $this->request('/users/export/ids');
+
+        $has_braze_user = false;
+
+        if (201 == $res_braze_users['code']) {
+            $braze_users = json_decode($res_braze_users['response']);
+
+            if (isset($braze_users->users[0])) {
+                $braze_user = $braze_users->users[0];
+
+                $has_braze_user = true;
+
+                if (isset($braze_user->external_id)) {
+                    $user_attributes['external_id'] = $braze_user->external_id;
+                } else {
+                    $user_attributes['user_alias'] = $braze_user->user_aliases[0];
+                    $user_attributes['_update_existing_only'] = false;
+                }
+            }
+        }
+
+        if (!$has_braze_user) {
+            $user_attributes['user_alias'] = [
+                'alias_name' => $email,
+                'alias_label' => 'email',
+            ];
+            $user_attributes['_update_existing_only'] = false;
+
+            $attributes[] = array_merge($user_attributes, ['email' => $email]);
+            $braze_payload['attributes'] = $attributes;
+            $this->setPayload($braze_payload);
+            $this->request('/users/track', true);
+
+            $braze_user = $this->getUserByEmail($email);
+        }
+
+        return [
+            'user' => isset($braze_user) ? $braze_user : null,
+            'user_attributes' => $user_attributes,
+        ];
+    } // getUser($user_id)
+
+    public function triggerEvent($user_id, $event_name, $properties = [])
+    {
+        $braze_user = $this->getUser($user_id);
+        $user_attributes = $braze_user['user_attributes'];
+
+        $braze_payload = [];
+
+        $event_payload = [
+            'name' => $event_name,
+            'time' => current_time('c')
+        ];
+        if (is_array($properties) && !empty($properties)) {
+            $event_payload = array_merge($event_payload, ['properties' => $properties]);
+        }
+        $braze_payload['events'] = [array_merge($user_attributes, $event_payload)];
+
+        if (!empty($braze_payload)) {
+            $this->setPayload($braze_payload);
+            $res_track = $this->request('/users/track', true);
+            if (201 !== $res_track['code']) {
+                error_log("Error pushing event to Braze in " . __METHOD__ . " on line " . __LINE__ . ". " .  print_r($res_track, true)) . print_r($braze_payload, true);
+            }
+            return $res_track;
+        }
+    }
+
+    public function triggerEventByEmail($email, $event_name, $properties = [])
+    {
+        $braze_user = $this->getUserByEmail($email);
+
+        $user_attributes = $braze_user['user_attributes'];
+
+        $braze_payload = [];
+
+        $event_payload = [
+            'name' => $event_name,
+            'time' => current_time('c')
+        ];
+        if (is_array($properties) && !empty($properties)) {
+            $event_payload = array_merge($event_payload, ['properties' => $properties]);
+        }
+        $braze_payload['events'] = [array_merge($user_attributes, $event_payload)];
+
+        if (!empty($braze_payload)) {
+            $this->setPayload($braze_payload);
+            $res_track = $this->request('/users/track', true);
+            if (201 !== $res_track['code']) {
+                error_log("Error pushing event to Braze in " . __METHOD__ . " on line " . __LINE__ . ". " .  print_r($res_track, true)) . print_r($braze_payload, true);
+            }
+            return $res_track;
+        }
+        return false;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-$is_sandbox = isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT'];
+$is_sandbox = (defined('WP_ENVIRONMENT_TYPE') && 'sandbox' == WP_ENVIRONMENT_TYPE) || (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']);
 
 if ($is_sandbox) {
     $braze = [

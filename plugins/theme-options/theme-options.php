@@ -501,6 +501,12 @@ function tbm_theme_options_get_cat_count() {
 
 // JS to make BB sticky
 add_action('wp_footer', function () {
+    if (
+        is_page_template('page-templates/brag-observer.php') ||
+        is_page_template('page-templates/bragger-client-club.php') ||
+        is_page_template('page-templates/bragger-client-rsvp-event.php')
+    )
+        return;
 ?>
     <script>
         fusetag.onSlotRenderEnded((e) => {
