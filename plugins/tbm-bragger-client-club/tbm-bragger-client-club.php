@@ -186,6 +186,15 @@ class BraggerClientClub
 
   public function index()
   {
+
+    /* require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+    $bo = new \BragObserver();
+    $current_user = wp_get_current_user();
+    $subscriptions = $bo->getMagSubscriptions($current_user->user_email);
+    echo '<pre>';
+    print_r($subscriptions);
+    exit; */
+
     include __DIR__ . '/views/members.php';
   } // index()
 
@@ -346,9 +355,21 @@ class BraggerClientClub
             $response .= '<tr><td>' . $email . '</td><td class="text-warning">Not a club member.</td></tr>';
           } else {
             // Check if already invited and member responded yes/no
-            $check_invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites WHERE `event_id` = '{$event_id}' AND `user_id` = '{$user->ID}' AND `status` IN ('yes', 'no')");
+            $check_invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites WHERE `event_id` = '{$event_id}' AND `user_id` = '{$user->ID}'");
+            // AND `status` IN ('yes', 'no')");
             if ($check_invite) { // Already invited
-              $response .= '<tr><td>' . $email . '</td><td class="text-info">Already responded: ' . strtoupper($check_invite->status) . '</td></tr>';
+              if (in_array($check_invite->status, ['yes', 'no'])) {
+                $response .= '<tr><td>' . $email . '</td><td class="text-info">Already responded: ' . strtoupper($check_invite->status) . '</td></tr>';
+              } else { // Not responded yet, set status to NULL, so cron picks and sends another email
+                $wpdb->update(
+                  $wpdb->prefix . 'client_club_event_invites',
+                  ['status' => NULL,],
+                  ['id' => $check_invite->id,],
+                  ['%s'],
+                  ['%d']
+                );
+                $response .= '<tr><td>' . $email . '</td><td class="text-success">Will be invited</td></tr>';
+              }
             } else { // Member was not invited OR not responded yes/no yet i.e. Invite
               $guid = $this->generate_guid();
 

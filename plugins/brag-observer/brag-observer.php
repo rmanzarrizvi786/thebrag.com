@@ -53,7 +53,9 @@ class BragObserver
 
     $this->mag_sub['rest_api_key'] = '39d733e9-5277-4389-811a-a14c9f1e9294';
     if ($this->is_sandbox) {
-      $this->mag_sub['api_url'] = 'http://au.rolling-stone.com/wp-json/tbm_mag_sub/v1/';
+      // $this->mag_sub['api_url'] = 'http://au.rolling-stone.com/wp-json/tbm_mag_sub/v1/';
+      // $this->mag_sub['api_url'] = 'http://au.rolling-stone.com:8082/wp-json/tbm_mag_sub/v1/';
+      $this->mag_sub['api_url'] = 'http://host.docker.internal:8082/wp-json/tbm_mag_sub/v1/';
     } else {
       $this->mag_sub['api_url'] = 'https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/';
     }
@@ -1564,8 +1566,9 @@ class BragObserver
     // if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
     if (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) {
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     }
+
     // EXECUTE:
     $result = curl_exec($curl);
 
