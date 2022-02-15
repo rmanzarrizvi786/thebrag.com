@@ -180,7 +180,7 @@ if (!$subscriptions) {
                     $user_country = get_user_meta($current_user->ID, 'country', true) ?: 'AU';
                     foreach ($bo::getCountries() as $country_code => $country) :
                     ?>
-                      <option value=" <?php echo $country; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>
+                      <option value="<?php echo $country_code; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </span>

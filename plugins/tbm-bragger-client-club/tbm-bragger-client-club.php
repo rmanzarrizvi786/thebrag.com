@@ -558,9 +558,23 @@ class BraggerClientClub
     $formData['coupon_id'] = null;
     $formData['is_gift'] = 'no';
 
-    require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+    /**
+     * Update user metas
+     */
+    update_user_meta($current_user->ID, 'address_1', $formData['shipping_address_1']);
+    if ('' != trim($formData['shipping_address_2']))
+      update_user_meta($current_user->ID, 'address_2', $formData['shipping_address_2']);
+
+    update_user_meta($current_user->ID, 'city', $formData['shipping_city']);
+    update_user_meta($current_user->ID, 'state', $formData['shipping_state']);
+    update_user_meta($current_user->ID, 'postcode', $formData['shipping_postcode']);
+    update_user_meta($current_user->ID, 'country', $formData['shipping_country']);
+    update_user_meta($current_user->ID, 'company_name', $formData['company_name']);
+    update_user_meta($current_user->ID, 'job_title', $formData['job_title']);
+
+    /* require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
     $bo = new \BragObserver();
-    $bo->createRSMagSubscription($formData);
+    $bo->createRSMagSubscription($formData); */
 
     wp_send_json_success('Thank you!');
     die();
