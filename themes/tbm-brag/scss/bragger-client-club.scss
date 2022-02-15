@@ -29,10 +29,10 @@ body {
     top: 0;
     background: linear-gradient(to top, transparent, $primaryBlack);
   }
-  &::after {
+  /* &::after {
     bottom: 0;
     background: linear-gradient(to bottom, transparent, $primaryBlack);
-  }
+  } */
 }
 .hero-wrap {
   background-image: url(../images/bragger-client-club/prism.jpg);

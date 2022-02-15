@@ -53,7 +53,6 @@ if ($event) {
             }
             $('.rsvp-response').text(res.data).removeClass('d-none');
             return;
-            return;
           }).done(function() {});
         });
       });

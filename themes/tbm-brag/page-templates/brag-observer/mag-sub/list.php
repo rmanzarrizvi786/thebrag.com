@@ -39,16 +39,14 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
             <!-- <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_shipping', 'id' => $subscription->uniqid]); ?>">Update shipping details</a> -->
             <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_billing_shipping', 'id' => $subscription->uniqid]); ?>">Update billing/shipping details</a>
 
-            <?php // if ($subscription->is_gift != 'yes') : 
-            ?>
+            <?php if (!is_null($subscription->stripe_customer_id)) : ?>
+              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">Update payment details</a>
+            <?php endif; ?>
 
-            <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">Update payment details</a>
             <?php if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) : ?>
-
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="mailto:subscribe@thebrag.media?subject=Cancel%20auto-renew&body=ID:<?php echo $subscription->uniqid; ?>">Cancel auto-renew</a>
-              <!-- <a class="dropdown-item" href="<?php // echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); 
-                                                  ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a> -->
+              <!-- <a class="dropdown-item" href="mailto:subscribe@thebrag.media?subject=Cancel%20auto-renew&body=ID:<?php echo $subscription->uniqid; ?>">Cancel auto-renew</a> -->
+              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a>
             <?php else : ?>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'enable-auto-renew', 'id' => $subscription->uniqid]); ?>">Enable auto-renew</a>
@@ -60,28 +58,26 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
         </div>
 
         <div class="mt-2">
-          <?php // if ($subscription->is_gift != 'yes') : 
-          ?>
-          <?php if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) :
-          ?>
-            <?php if (isset($subscription->paymentMethods) && count($subscription->paymentMethods) > 0) : ?>
-              <div class="text-success">
-                Active, will be auto-renewed
-                <?php echo !$subscription->crm_record->Remaining_Issues__c ? 'shortly' : 'after ' . $subscription->crm_record->Remaining_Issues__c . ' issues'; ?>
-              </div>
+          <?php if (!is_null($subscription->stripe_customer_id)) : ?>
+            <?php if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) :
+            ?>
+              <?php if (isset($subscription->paymentMethods) && count($subscription->paymentMethods) > 0) : ?>
+                <div class="text-success">
+                  Active, will be auto-renewed
+                  <?php echo !$subscription->crm_record->Remaining_Issues__c ? 'shortly' : 'after ' . $subscription->crm_record->Remaining_Issues__c . ' issues'; ?>
+                </div>
+              <?php else : ?>
+                <div class="text-danger">
+                  Please <a class="text-danger" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">update payment details</a>
+                </div>
+              <?php endif; ?>
+            <?php elseif (isset($subscription->crm_record->Active__c) && !$subscription->crm_record->Active__c && $subscription->crm_record->Remaining_Issues__c > 0) : ?>
+              <div class="text-danger">Inactive, will NOT be auto-renewed after <?php echo $subscription->crm_record->Remaining_Issues__c; ?> issues</div>
             <?php else : ?>
-              <div class="text-danger">
-                Please <a class="text-danger" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">update payment details</a>
-              </div>
-            <?php endif; ?>
-          <?php elseif (isset($subscription->crm_record->Active__c) && !$subscription->crm_record->Active__c && $subscription->crm_record->Remaining_Issues__c > 0) : ?>
-            <div class="text-danger">Inactive, will NOT be auto-renewed after <?php echo $subscription->crm_record->Remaining_Issues__c; ?> issues</div>
-          <?php else : ?>
-            <div class="text-danger">Inactive, will NOT be auto-renewed.</div>
-          <?php endif; // If Active 
-          ?>
-          <?php // endif; // If Gift 
-          ?>
+              <div class="text-danger">Inactive, will NOT be auto-renewed.</div>
+            <?php endif; // If Active 
+            ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>

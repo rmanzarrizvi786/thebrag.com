@@ -36,6 +36,37 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHER
   $bcc = new \TBM\BraggerClientClub();
   $auth0_user = $bcc->updateStatus(get_current_user_id(), 'active');
 }
+
+/**
+ * RS AU Mag Subscriptions
+ */
+require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+$bo = new \BragObserver();
+$current_user = wp_get_current_user();
+$subscriptions = $bo->getMagSubscriptions($current_user->user_email);
+
+// If there are no subscriptions, and if user is active member, create one
+$has_rsmag_subscription = false;
+$member_status = $wpdb->get_var("SELECT `status` FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}'  LIMIT 1");
+
+if (!$subscriptions) {
+} else {
+  foreach ($subscriptions as $key => $subscription) {
+    if (isset($subscription->crm_record)) {
+      if ('inactive' == $member_status) { // Deactivate RS Mag Sub if member is still active
+        $bo->cancelSubscription(['uniqid' => $subscription->uniqid]);
+        $has_rsmag_subscription = false;
+      } else if ('active' == $member_status) { // Activate RS Mag Sub if member is still active
+        if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) {
+          $has_rsmag_subscription = true;
+        } else {
+          $bo->enableAutoRenew(['uniqid' => $subscription->uniqid]);
+          $has_rsmag_subscription = true;
+        }
+      }
+    }
+  }
+}
 ?>
 
 <div class="hero-wrap">
@@ -46,20 +77,125 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHER
           <a href="https://thebrag.com/media" target="_blank"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-light.svg" width="200" height="19" alt="The Brag Media" title="The Brag Media" loading="lazy"></a>
         </div>
       </div>
-      <div class="col-12">
-        <h1 class="content-heading">
-          Bragger<br>Client<br>Club
-        </h1>
+      <div class="d-flex">
+        <div class="col-12 col-md-9">
+          <h1 class="content-heading text-center">
+            Bragger<br>Client<br>Club
+          </h1>
+        </div>
       </div>
-      <?php if (!is_user_logged_in()) : ?>
-        <div class="col-12 pt-3 pt-md-4">
-          <div class="login">
-            <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn-login">Get started</a>
+
+      <?php if ($has_rsmag_subscription) { ?>
+        <div class="d-flex flex-column align-items-center">
+          <h2 class="text-center">Rolling Stone Australia Magazine Subscriptions</h2>
+          <div class="d-flex flex-column flex-md-row align-items-start">
+            <div class="col-12 col-md-3 p-2">
+              <?php
+              $res_next_mag_issue_cover = wp_remote_get('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
+              if (is_array($res_next_mag_issue_cover) && !is_wp_error($res_next_mag_issue_cover)) {
+                $body_next_mag_issue_cover    = $res_next_mag_issue_cover['body'];
+                $body_next_mag_issue_cover = json_decode($body_next_mag_issue_cover);
+                if ($body_next_mag_issue_cover) {
+              ?>
+                  <img src="<?php echo $body_next_mag_issue_cover; ?>">
+              <?php
+                }
+              }
+              ?>
+            </div>
+            <div class="d-flex flex-column py-2 py-md-0">
+              <?php
+              foreach ($subscriptions as $key => $subscription) {
+              ?>
+                <div class="p-2 mt-2" style="background-color: #fff; border-radius: .5rem">
+                  <div>
+                    <h3><?php echo $subscription->crm_record->Name; ?></h3>
+                    <?php
+                    echo $subscription->crm_record->Shipping_Address_1__c ? $subscription->crm_record->Shipping_Address_1__c . '<br>' : '';
+                    echo $subscription->crm_record->Shipping_Address_2__c ? '<br>' . $subscription->crm_record->Shipping_Address_2__c . '<br>' : '';
+                    echo $subscription->crm_record->Shipping_City__c ? $subscription->crm_record->Shipping_City__c . '<br>' : '';
+                    echo $subscription->crm_record->Shipping_State__c ? $subscription->crm_record->Shipping_State__c . ' ' : '';
+                    echo $subscription->crm_record->Shipping_Postcode__c ? $subscription->crm_record->Shipping_Postcode__c . ' ' : '';
+                    echo $subscription->crm_record->Shipping_Country__c ? '<br>' . $subscription->crm_record->Shipping_Country__c : '';
+                    ?>
+                    <br><br>
+                    <a href="<?php echo add_query_arg(['a' => 'update_billing_shipping', 'id' => $subscription->uniqid], home_url('/observer/magazine-subscriptions/')); ?>" target="_blank">Update shipping details</a>
+                  </div>
+                </div>
+              <?php
+              } // For Each $subscription
+              ?>
+            </div>
           </div>
         </div>
-      <?php endif; ?>
     </div>
+    <?php } else {
+        if ('active' == $member_status) {
+          // Show form for Mag Subscription
+
+          $userinfo = get_userdata($current_user->ID);
+    ?>
+      <form id="form-rs-mag-sub" method="POST">
+        <div class="d-flex align-items-center">
+          <div class="col-12 col-md-7">
+            <h2 class="text-center">Rolling Stone Australia Magazine Subscriptions</h2>
+            <p class="text-center">Please submit this form to activate subscription</p>
+            <div class="d-flex flex-wrap w-100" id="shipping_address_wrap">
+
+              <div class="col-12 px-1">
+                <input type="text" name="sub_full_name" placeholder="Full Name *" maxlength="30" value="<?php echo isset($userinfo->first_name) ? $userinfo->first_name : ''; ?><?php echo isset($userinfo->last_name) ? ' ' . $userinfo->last_name : ''; ?>" class="form-control">
+              </div>
+
+              <div class="col-12 mt-2 px-1"><input type="text" name="shipping_address_1" placeholder="Address Line 1 *" maxlength="30" value="" class="form-control"></div>
+
+              <div class="col-12 col-md-6 mt-2 px-1"><input type="text" name="shipping_address_2" placeholder="Address Line 2" maxlength="30" value="" class="form-control"></div>
+
+              <div class="col-12 col-md-6 mt-2 px-1">
+                <input type="text" name="shipping_city" placeholder="City *" maxlength="30" value="" class="form-control">
+              </div>
+
+              <div class="col-12 col-md-4 mt-2 px-1">
+                <input type="text" name="shipping_state" placeholder="State *" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'state', true) ? get_user_meta($current_user->ID, 'state', true) : ''; ?>" required class="form-control">
+              </div>
+
+              <div class="col-12 col-md-4 mt-2 px-1"><input type="text" name="shipping_postcode" placeholder="Postcode (Zip) *" maxlength="10" value="<?php echo isset($_SESSION['shipping_postcode']) ? $_SESSION['shipping_postcode'] : ''; ?>" class="form-control"></div>
+
+              <div class="col-12 col-md-4 mt-2 px-1">
+                <span class="custom-dropdown custom-dropdown--white">
+                  <select class="custom-dropdown__select custom-dropdown--white form-control" name="shipping_country" required>
+                    <option value="" disabled selected>Country *</option>
+                    <?php
+                    $user_country = get_user_meta($current_user->ID, 'country', true);
+                    foreach ($bo::getCountries() as $country_code => $country) :
+                    ?>
+                      <option value="<?php echo $country; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </span>
+              </div>
+
+              <div class="col-12 d-flex flex-column mt-2 px-1">
+                <div class="alert mb-2" id="sub-response"></div>
+                <button type=" submit" class="text-white btn btn-primary btn-submit">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  <?php
+        }
+      }
+  ?>
+
+  <?php if (!is_user_logged_in()) : ?>
+    <div class="col-12 pt-3 pt-md-4">
+      <div class="login">
+        <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="text-white btn-login">Get started</a>
+      </div>
+    </div>
+  <?php endif; ?>
   </div>
+</div>
 </div>
 
 <?php

@@ -6,9 +6,9 @@ if (isset($_POST)) {
     $update = json_decode($bo->updateBillingShippingDetails($post_data));
     // echo '<pre>'; var_dump( $update ); echo '</pre>';
     if (!$update->success) {
-      echo '<div class="alert alert-danger">' . $update->data->error->message . '</div>';
+      echo '<div class="alert alert-danger mb-2">' . $update->data->error->message . '</div>';
     } else {
-      echo '<div class="alert alert-success">Your details have been updated!</div>
+      echo '<div class="alert alert-success mb-2">Your details have been updated!</div>
       <script>
       setTimeout(function(){
         window.location.href = "' . home_url('/observer/magazine-subscriptions/') . '";
@@ -18,8 +18,9 @@ if (isset($_POST)) {
   } // If update-billing-shipping
 } // If form is submitted
 ?>
-<form action="" method="post">
-  <div class="row">
+<form action="" method="post" onSubmit="jQuery('#btn-update-billing-shipping').prop('disabled', true).removeClass('btn-dark').text('Please wait...');">
+  <input type="hidden" name="update-billing-shipping" value="1">
+  <div class=" row">
     <div class="col-12">
       <div id="billing_address_wrap" class="p-r">
         <div class="row">
@@ -42,19 +43,19 @@ if (isset($_POST)) {
             Address Line 2
             <input type="text" name="sub_address_2" id="sub_address_2" placeholder="Address Line 2" maxlength="30" value="<?php echo isset($post_data['sub_address_2']) ? $post_data['sub_address_2'] : (isset($subscription->address_2) ? $subscription->address_2 : ''); ?>" data-bind="shipping_address_2" class="form-control">
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             City
             <input type="text" name="sub_city" id="sub_city" placeholder="City *" maxlength="30" value="<?php echo isset($post_data['sub_city']) ? $post_data['sub_city'] : (isset($subscription->city) ? $subscription->city : ''); ?>" class="form-control" data-bind="shipping_city" required>
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             State
             <input type="text" name="sub_state" id="sub_state" placeholder="State *" maxlength="30" value="<?php echo isset($post_data['sub_state']) ? $post_data['sub_state'] : (isset($subscription->state) ? $subscription->state : ''); ?>" class="form-control" data-bind="shipping_state" required>
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             Postcode (Zip)
             <input type="text" name="sub_postcode" id="sub_postcode" placeholder="Postcode (Zip) *" maxlength="10" value="<?php echo isset($post_data['sub_postcode']) ? $post_data['sub_postcode'] : (isset($subscription->postcode) ? $subscription->postcode : ''); ?>" data-bind="shipping_postcode" class="form-control" required>
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             Country
             <select class="form-control" name="sub_country" id="sub_country" data-bind="shipping_country" required>
               <option value="" disabled selected>Country *</option>
@@ -105,19 +106,19 @@ if (isset($_POST)) {
             Address Line 2
             <input type="text" name="shipping_address_2" id="shipping_address_2" placeholder="" maxlength="30" value="<?php echo isset($post_data['shipping_address_2']) ? $post_data['shipping_address_2'] : (isset($subscription->shipping_address_2) ? $subscription->shipping_address_2 : ''); ?>" class="form-control">
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             City <span class="text-danger">*</span>
             <input type="text" name="shipping_city" id="shipping_city" placeholder="" maxlength="30" value="<?php echo isset($post_data['shipping_city']) ? $post_data['shipping_city'] : (isset($subscription->shipping_city) ? $subscription->shipping_city : ''); ?>" class="form-control" required>
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             State <span class="text-danger">*</span>
             <input type="text" name="shipping_state" id="shipping_state" placeholder="" maxlength="30" value="<?php echo isset($post_data['shipping_state']) ? $post_data['shipping_state'] : (isset($subscription->shipping_state) ? $subscription->shipping_state : ''); ?>" class="form-control" required>
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             Postcode (Zip) <span class="text-danger">*</span>
             <input type="text" name="shipping_postcode" id="shipping_postcode" placeholder="" maxlength="10" value="<?php echo isset($post_data['shipping_postcode']) ? $post_data['shipping_postcode'] : (isset($subscription->shipping_postcode) ? $subscription->shipping_postcode : ''); ?>" class="form-control">
           </div>
-          <div class="col-lg-3 col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
             Country <span class="text-danger">*</span>
             <select class="form-control" name="shipping_country" id="shipping_country" required>
               <option value="" disabled selected></option>
@@ -141,7 +142,7 @@ if (isset($_POST)) {
         <div class="double-bounce1"></div>
         <div class="double-bounce2"></div>
       </div>
-      <button id="btn-update-billing-shipping" name="update-billing-shipping" class="btn btn-dark">Submit</button>
+      <button id="btn-update-billing-shipping" name="btn-update-billing-shipping" class="btn btn-dark">Submit</button>
     </div>
   </div>
 

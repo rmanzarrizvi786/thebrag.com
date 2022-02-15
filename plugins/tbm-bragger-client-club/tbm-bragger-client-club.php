@@ -2,6 +2,8 @@
 
 namespace TBM;
 
+use AmpProject\Validator\Spec\Tag\P;
+
 /**
  * Plugin Name: TBM Bragger Client Club
  * Plugin URI: https://thebrag.media/
@@ -34,6 +36,9 @@ class BraggerClientClub
 
     add_action('wp_ajax_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
     add_action('wp_ajax_nopriv_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
+
+    add_action('wp_ajax_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
+    add_action('wp_ajax_nopriv_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
 
     // Activation
     register_activation_hook(__FILE__, [$this, 'activate']);
@@ -186,15 +191,6 @@ class BraggerClientClub
 
   public function index()
   {
-
-    /* require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
-    $bo = new \BragObserver();
-    $current_user = wp_get_current_user();
-    $subscriptions = $bo->getMagSubscriptions($current_user->user_email);
-    echo '<pre>';
-    print_r($subscriptions);
-    exit; */
-
     include __DIR__ . '/views/members.php';
   } // index()
 
@@ -229,6 +225,7 @@ class BraggerClientClub
 
     if ($this->updateStatus($user_id, $new_status)) {
       wp_send_json_success();
+      die();
     }
     wp_send_json_error("Error!");
     die();
@@ -437,17 +434,17 @@ class BraggerClientClub
 
     // $invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites i WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}' LIMIT 1 ");
     $invite = $wpdb->get_row("SELECT
-        i.`id`,
-        i.`user_id`,
-        e.`title` event_title,
-        e.`event_date`,
-        e.`location` event_location,
-        i.`guid`
-      FROM {$wpdb->prefix}client_club_event_invites i
-      JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
-      WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
-      LIMIT 1
-");
+          i.`id`,
+          i.`user_id`,
+          e.`title` event_title,
+          e.`event_date`,
+          e.`location` event_location,
+          i.`guid`
+        FROM {$wpdb->prefix}client_club_event_invites i
+        JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
+        WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
+        LIMIT 1
+      ");
 
 
     if (!$invite) {
@@ -490,6 +487,64 @@ class BraggerClientClub
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
     wp_send_json_success($message);
+    die();
+  } // ajax_rsponse_to_event()
+
+  public function ajax_rs_mag_new_subscription()
+  {
+    global $wpdb;
+
+    parse_str($_POST['formData'], $formData);
+
+    $required_fields = [
+      'buyer_full_name',
+      'sub_email',
+
+      'sub_address_1',
+      'sub_city',
+      'sub_state',
+      'sub_postcode',
+      'sub_country',
+
+      'sub_full_name',
+
+      'shipping_address_1',
+      'shipping_city',
+      'shipping_state',
+      'shipping_postcode',
+      'shipping_country',
+    ];
+
+    $current_user = wp_get_current_user();
+
+    $formData['sub_email'] = $current_user->user_email;
+
+    $formData['buyer_full_name'] = isset($formData['sub_full_name']) ? $formData['sub_full_name'] : '';
+    $formData['sub_address_1'] = isset($formData['shipping_address_1']) ? $formData['shipping_address_1'] : '';
+    $formData['sub_address_2'] = isset($formData['shipping_address_2']) ? $formData['shipping_address_2'] : '';
+    $formData['sub_city'] = isset($formData['shipping_city']) ? $formData['shipping_city'] : '';
+    $formData['sub_state'] = isset($formData['shipping_state']) ? $formData['shipping_state'] : '';
+    $formData['sub_postcode'] = isset($formData['shipping_postcode']) ? $formData['shipping_postcode'] : '';
+    $formData['sub_country'] = isset($formData['shipping_country']) ? $formData['shipping_country'] : '';
+
+    foreach ($required_fields as $required_field) :
+      if (!isset($formData[$required_field]) || '' == trim($formData[$required_field])) :
+        wp_send_json_error('Whoops, looks like you have forgotten to fill out all the necessary fields. Make sure you go back and give us all the info we need!');
+        die();
+      endif;
+    endforeach;
+
+    $formData['coupon_code'] = 'Comp (BCC)';
+    $formData['coupon_id'] = null;
+    $formData['is_gift'] = 'no';
+
+    require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+    $bo = new \BragObserver();
+    $response_json = $bo->createRSMagSubscription($formData);
+    $response = json_decode($response_json);
+
+    // wp_send_json_success(print_r($response, true));
+    wp_send_json_success('Thank you!');
     die();
   }
 
@@ -572,6 +627,25 @@ class BraggerClientClub
                 ['%s', '%d', '%s'],
                 ['%s']
               );
+
+              require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+              $bo = new \BragObserver();
+
+              $subscriptions = $bo->getMagSubscriptions($user->user_email);
+              if ($subscriptions) { // If there are Subscriptions
+                foreach ($subscriptions as $key => $subscription) {
+                  if (isset($subscription->crm_record)) {
+                    if ('inactive' == $status) { // Deactivate RS Mag Sub if member is still active
+                      $bo->cancelSubscription(['uniqid' => $subscription->uniqid]);
+                    } else if ('active' == $status) { // Activate RS Mag Sub if member is still active
+                      if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) {
+                      } else {
+                        $bo->enableAutoRenew(['uniqid' => $subscription->uniqid]);
+                      }
+                    }
+                  } // If Subscription CRM Record is set
+                } // For Each $subscription
+              } // If there are Subscription
             }
             return true;
           }

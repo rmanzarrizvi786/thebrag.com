@@ -109,6 +109,9 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                         $('#invite-' + invite_id).find('.invite_status').text('Inactive');
                         return;
                     }
+                } else {
+                    alert(res.data);
+                    return;
                 }
             }).done(function() {
                 btnAction.prop('disabled', false).removeClass('blink');
