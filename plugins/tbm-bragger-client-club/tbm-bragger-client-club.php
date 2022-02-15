@@ -237,6 +237,8 @@ class BraggerClientClub
 
     $emails = [];
 
+    /* 
+    // CSV Method
     $bom = "\xef\xbb\xbf";
     $fp = fopen($_FILES['csv']['tmp_name'], 'r');
     if (fgets($fp, 4) !== $bom) {
@@ -244,25 +246,36 @@ class BraggerClientClub
     }
     while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
       $emails[] = $line;
-    }
+    } */
+
+
+    $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
 
     if (!is_array($emails) || empty($emails)) {
-      wp_send_json_error("List is empty");
+      wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
       die();
     }
+
+    $emails = array_map('trim', $emails);
+    $emails = array_unique($emails);
 
     // $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $response = '';
 
-    foreach ($emails as $email_arr) {
+    $count = 0;
+    foreach ($emails as $email) {
+      $count++;
 
-      $email = $email_arr[0];
+      // $email = $email_arr[0]; // Was used with CSV option
 
       $errors = [];
 
       if (!is_email($email)) {
-        $errors[] = "Invalid Email {$email}";
+        $errors[] = "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>Invalid Email</td></tr>";
       }
+
+      // wp_send_json_error(print_r($errors, true));
+      // die();
 
       /**
        * Add to DB
@@ -270,9 +283,7 @@ class BraggerClientClub
       // Check if already in DB
       $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
       if ($check) {
-        // wp_send_json_error("Already invited, status: {$check->status}");
-        // die();
-        $errors[] = "{$email} already invited"; // , status: {$check->status}";
+        $errors[] = "<tr class='text-warning'><th>{$count}</th><td>{$email}</td><td>Already invited</td></tr>";
       }
 
       if (empty($errors)) {
@@ -287,9 +298,10 @@ class BraggerClientClub
             '%s', '%s', '%s'
           ]
         );
-        $response .= "<tr><td class=\"text-success\">{$email} will be invited to join the club!</td></tr>";
+        $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited to join the club!</td></tr>";
       } else {
-        $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+        // $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+        $response .= implode('', $errors);
       }
     }
 
@@ -309,7 +321,7 @@ class BraggerClientClub
     }
 
     // Check if file is sent
-    $fp = fopen($_FILES['csv']['tmp_name'], 'r');
+    /* $fp = fopen($_FILES['csv']['tmp_name'], 'r');
     if (!$fp) {
       wp_send_json_error('<tr><td class="text-danger">Please upload a file.</td></tr>');
       die();
@@ -325,38 +337,45 @@ class BraggerClientClub
     while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
       $emails[] = $line;
     }
+    */
+
+    $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
 
     if (!is_array($emails) || empty($emails)) {
       wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
       die();
     }
 
+    $emails = array_map('trim', $emails);
+    $emails = array_unique($emails);
+
     $response = '';
-    foreach ($emails as $email_arr) {
-      $email = $email_arr[0];
+    $count = 0;
+    foreach ($emails as $email) {
+      $count++;
+      // $email = $email_arr[0]; // Was used with CSV option
 
       if (!is_email($email)) { // Check if email is valid
-        $response .= '<tr><td>' . $email . '</td><td class="text-danger">Invalid Email</td></tr>';
+        $response .= "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>Invalid Email</td></tr>";
       } else {
 
         // Get user by email
         $user = get_user_by('email', $email);
 
         if (!$user) { // Do not proceed if user doesn't exit
-          $response .= '<tr><td>' . $email . '</td><td class="text-danger">User doesn\'t exist</td></tr>';
+          $response .= "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>User doesn't exist</td></tr>";
         } else {
-
           // Check if user is club member
           $check_member = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `user_id` = '{$user->ID}' AND `status` IN ('active', 'joined')");
           if (!$check_member) { // Do not proceed if user is not a club member
-            $response .= '<tr><td>' . $email . '</td><td class="text-warning">Not a club member.</td></tr>';
+            $response .= "<tr class='text-warning'><th>{$count}</th><td>{$email}</td><td>Not a club member</td></tr>";
           } else {
             // Check if already invited and member responded yes/no
             $check_invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites WHERE `event_id` = '{$event_id}' AND `user_id` = '{$user->ID}'");
             // AND `status` IN ('yes', 'no')");
             if ($check_invite) { // Already invited
               if (in_array($check_invite->status, ['yes', 'no'])) {
-                $response .= '<tr><td>' . $email . '</td><td class="text-info">Already responded: ' . strtoupper($check_invite->status) . '</td></tr>';
+                $response .= "<tr class='text-info'><th>{$count}</th><td>{$email}</td><td>Already responded: " . strtoupper($check_invite->status) . "</td></tr>";
               } else { // Not responded yet, set status to NULL, so cron picks and sends another email
                 $wpdb->update(
                   $wpdb->prefix . 'client_club_event_invites',
@@ -365,7 +384,7 @@ class BraggerClientClub
                   ['%s'],
                   ['%d']
                 );
-                $response .= '<tr><td>' . $email . '</td><td class="text-success">Will be invited</td></tr>';
+                $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited</td></tr>";
               }
             } else { // Member was not invited OR not responded yes/no yet i.e. Invite
               $guid = $this->generate_guid();
@@ -381,7 +400,7 @@ class BraggerClientClub
                 ['%d', '%d', '%s', '%s',]
               );
 
-              $response .= "<tr><td>' . $email . '</td><td class=\"text-success\">Will be invited</td></tr>";
+              $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited</td></tr>";
             }
           }
         }
@@ -492,10 +511,11 @@ class BraggerClientClub
 
   public function ajax_rs_mag_new_subscription()
   {
-    global $wpdb;
-
     parse_str($_POST['formData'], $formData);
 
+    /**
+     * RS Mag Subscription
+     */
     $required_fields = [
       'buyer_full_name',
       'sub_email',
@@ -540,10 +560,8 @@ class BraggerClientClub
 
     require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
     $bo = new \BragObserver();
-    $response_json = $bo->createRSMagSubscription($formData);
-    $response = json_decode($response_json);
+    $bo->createRSMagSubscription($formData);
 
-    // wp_send_json_success(print_r($response, true));
     wp_send_json_success('Thank you!');
     die();
   }

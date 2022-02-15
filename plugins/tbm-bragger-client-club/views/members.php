@@ -7,17 +7,14 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
 <div class="mt-3">
     <h2>Invite to <?php echo $this->plugin_title; ?></h2>
     <form id="invite-to-club">
-        <div class="row">
-            <div class="col d-flex align-items-center">
-                <!-- <input type="email" id="club-member-email" class="form-control" placeholder="Email address"> -->
-                <input type="file" id="file-club-member-emails" class="form-control" accept=".csv">
-            </div>
-            <div class="col d-flex align-items-center">
-                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
-                <!-- <div class="result mx-2"></div> -->
-            </div>
-        </div>
-        <table class="result mt-2"></table>
+        <!-- <div class="col d-flex align-items-center"> -->
+        <!-- <input type="email" id="club-member-email" class="form-control" placeholder="Email address"> -->
+        <!-- <input type="file" id="file-club-member-emails" class="form-control" accept=".csv"> -->
+        <textarea id="club-member-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea>
+
+        <button type="submit" class="btn btn-primary btn-submit mt-3">Submit</button>
+        <!-- <div class="result mx-2"></div> -->
+        <table class="table table-sm table-striped result mt-2"></table>
     </form>
 </div>
 
@@ -131,7 +128,7 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
             /**
              * Using file upload
              */
-            var formData = new FormData();
+            /* var formData = new FormData();
             formData.append('action', 'invite_to_bragger_client_club');
 
             var file = $('#file-club-member-emails')[0].files[0];
@@ -156,35 +153,32 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                 console.error(e);
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
                 return;
-            });
+            }); */
 
             /**
-             * Using Single Email Input
+             * Using Textarea
              */
-            /* $.post({
+            $('.result').html('');
+            $.post({
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
                 data: {
                     action: 'invite_to_bragger_client_club',
-                    email: $('#club-member-email').val()
+                    emails: $('#club-member-emails').val()
                 }
             }).success(function(res) {
-                if (!res.success) {
-                    console.error(res);
-                    theForm.find('.result').addClass('text-danger').text(res.data);
-                    btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-                    return;
-                }
-                theForm.find('.result').addClass('text-success').text(res.data);
-                console.info(res.data);
+                theForm.find('.result').prepend(res.data);
+                theForm.find('.result').find('.result-status').hide();
+
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
-                $('#club-member-email').val('').focus();
+
+                // $('#club-member-emails').val('');
+
                 return;
             }).error(function(e) {
-                theForm.find('.result').addClass('text-danger').text(res.data);
                 console.error(e);
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
                 return;
-            }); */
+            });
         })
     })
 </script>

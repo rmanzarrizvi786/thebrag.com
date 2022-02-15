@@ -138,8 +138,7 @@ if (!$subscriptions) {
       <form id="form-rs-mag-sub" method="POST">
         <div class="d-flex align-items-center">
           <div class="col-12 col-md-7">
-            <h2 class="text-center">Rolling Stone Australia Magazine Subscriptions</h2>
-            <p class="text-center">Please submit this form to activate subscription</p>
+            <h2 class="text-center">Please submit the form to activate your membership</h2>
             <div class="d-flex flex-wrap w-100" id="shipping_address_wrap">
 
               <div class="col-12 px-1">
@@ -165,7 +164,7 @@ if (!$subscriptions) {
                   <select class="custom-dropdown__select custom-dropdown--white form-control" name="shipping_country" required>
                     <option value="" disabled selected>Country *</option>
                     <?php
-                    $user_country = get_user_meta($current_user->ID, 'country', true);
+                    $user_country = get_user_meta($current_user->ID, 'country', true) ?: 'AU';
                     foreach ($bo::getCountries() as $country_code => $country) :
                     ?>
                       <option value="<?php echo $country; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>

@@ -88,7 +88,7 @@ if ($event) {
       <?php if ($event) : ?>
         <div class="d-flex justify-content-start align-items-start pt-3 pt-md-4">
           <div class="rsvp-wrap <?php echo in_array($event->invite_status, ['yes', 'no']) ? 'd-none' : 'd-flex flex-column flex-md-row align-items-start'; ?>">
-            <div>Going?</div>
+            <div>Attending?</div>
             <div class="mt-3 mt-md-0">
               <buttton class="text-white btn btn-rsvp active yes mr-1 ml-md-2" data-response="yes">Yes</buttton>
               <buttton class="text-white btn btn-rsvp active no ml-1" data-response="no">No</buttton>
