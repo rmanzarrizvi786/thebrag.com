@@ -142,35 +142,57 @@ if (!$subscriptions) {
             <div class="d-flex flex-wrap w-100" id="shipping_address_wrap">
 
               <div class="col-12 px-1">
-                <input type="text" name="sub_full_name" placeholder="Full Name *" maxlength="30" value="<?php echo isset($userinfo->first_name) ? $userinfo->first_name : ''; ?><?php echo isset($userinfo->last_name) ? ' ' . $userinfo->last_name : ''; ?>" class="form-control">
+                <label for="sub_full_name">Full Name *</label>
+                <input type="text" name="sub_full_name" id="sub_full_name" placeholder="" maxlength="30" value="<?php echo isset($userinfo->first_name) ? $userinfo->first_name : ''; ?><?php echo isset($userinfo->last_name) ? ' ' . $userinfo->last_name : ''; ?>" required class="form-control">
               </div>
 
-              <div class="col-12 mt-2 px-1"><input type="text" name="shipping_address_1" placeholder="Address Line 1 *" maxlength="30" value="" class="form-control"></div>
-
-              <div class="col-12 col-md-6 mt-2 px-1"><input type="text" name="shipping_address_2" placeholder="Address Line 2" maxlength="30" value="" class="form-control"></div>
+              <div class="col-12 mt-2 px-1">
+                <label for="shipping_address_1">Address Line 1 *</label>
+                <input type="text" name="shipping_address_1" id="shipping_address_1" placeholder="" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'address_1', true) ?: ''; ?>" required class="form-control">
+              </div>
 
               <div class="col-12 col-md-6 mt-2 px-1">
-                <input type="text" name="shipping_city" placeholder="City *" maxlength="30" value="" class="form-control">
+                <label for="shipping_address_2">Address Line 2</label>
+                <input type="text" name="shipping_address_2" id="shipping_address_2" placeholder="" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'address_2', true) ?: ''; ?>" class="form-control">
+              </div>
+
+              <div class="col-12 col-md-6 mt-2 px-1">
+                <label for="shipping_city">City *</label>
+                <input type="text" name="shipping_city" id="shipping_city" placeholder="" maxlength=" 30" value="<?php echo get_user_meta($current_user->ID, 'city', true) ?: ''; ?>" required class="form-control">
               </div>
 
               <div class="col-12 col-md-4 mt-2 px-1">
-                <input type="text" name="shipping_state" placeholder="State *" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'state', true) ? get_user_meta($current_user->ID, 'state', true) : ''; ?>" required class="form-control">
+                <label for="shipping_state">State *</label>
+                <input type="text" name="shipping_state" id="shipping_state" placeholder="" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'state', true) ?: ''; ?>" required class="form-control">
               </div>
 
-              <div class="col-12 col-md-4 mt-2 px-1"><input type="text" name="shipping_postcode" placeholder="Postcode (Zip) *" maxlength="10" value="<?php echo isset($_SESSION['shipping_postcode']) ? $_SESSION['shipping_postcode'] : ''; ?>" class="form-control"></div>
+              <div class="col-12 col-md-4 mt-2 px-1">
+                <label for="shipping_postcode">Postcode (Zip) *</label>
+                <input type="text" name="shipping_postcode" id="shipping_postcode" placeholder="" maxlength="10" value="<?php echo get_user_meta($current_user->ID, 'postcode', true) ?: ''; ?>" required class="form-control">
+              </div>
 
               <div class="col-12 col-md-4 mt-2 px-1">
+                <label for="shipping_country">Country *</label>
                 <span class="custom-dropdown custom-dropdown--white">
-                  <select class="custom-dropdown__select custom-dropdown--white form-control" name="shipping_country" required>
-                    <option value="" disabled selected>Country *</option>
+                  <select class="custom-dropdown__select custom-dropdown--white form-control" name="shipping_country" id="shipping_country" required>
+                    <option value="" disabled selected></option>
                     <?php
                     $user_country = get_user_meta($current_user->ID, 'country', true) ?: 'AU';
                     foreach ($bo::getCountries() as $country_code => $country) :
                     ?>
-                      <option value="<?php echo $country; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>
+                      <option value=" <?php echo $country; ?>" <?php echo $country_code === $user_country ? ' selected' : ''; ?><?php echo '' == $country_code ? ' disabled' : ''; ?>><?php echo $country; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </span>
+              </div>
+
+              <div class="col-12 col-md-6 mt-2 px-1">
+                <label for="company_name">Company Name *</label>
+                <input type="text" name="company_name" id="company_name" placeholder="" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'company_name', true) ?: ''; ?>" required class="form-control">
+              </div>
+              <div class="col-12 col-md-6 mt-2 px-1">
+                <label for="job_title">Job Title *</label>
+                <input type="text" name="job_title" id="job_title" placeholder="" maxlength="30" value="<?php echo get_user_meta($current_user->ID, 'job_title', true) ?: ''; ?>" required class="form-control">
               </div>
 
               <div class="col-12 d-flex flex-column mt-2 px-1">
