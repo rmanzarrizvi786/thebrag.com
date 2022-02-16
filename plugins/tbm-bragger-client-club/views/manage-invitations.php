@@ -14,7 +14,7 @@ if (!$event)
 ?>
 <h1>Invite members to <strong><?php echo $event->title; ?></strong> <small>(<?php echo $event->event_date; ?>)</small></h1>
 <?php
-$members = $wpdb->get_results("SELECT 
+/* $members = $wpdb->get_results("SELECT 
     u.`ID`, u.`user_email`
     FROM {$wpdb->prefix}users u
     JOIN {$wpdb->prefix}client_club_members m ON m.`user_id` = u.`ID`
@@ -22,19 +22,12 @@ $members = $wpdb->get_results("SELECT
     AND u.`ID` NOT IN (
         SELECT i.`user_id` FROM {$wpdb->prefix}client_club_event_invites i WHERE i.`event_id` = '{$id}'
         )
-");
-
-// if (!$members)
-//     return;
+"); */
 ?>
 <form method="post" id="invite-to-event">
     <div>
-        <!-- <select class="select2-members form-control" name="members[]" multiple="multiple">
-            <?php foreach ($members as $member) : ?>
-                <option value="<?php echo $member->ID; ?>"><?php echo $member->user_email; ?></option>
-            <?php endforeach; ?>
-        </select> -->
-        <input type="file" id="file-event-invite-emails" class="form-control" accept=".csv">
+        <!-- <input type="file" id="file-event-invite-emails" class="form-control" accept=".csv"> -->
+        <textarea id="club-event-invite-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea>
         <button type="submit" class="btn btn-primary btn-submit mt-3">Submit</button>
         <table id="result" class="result my-2 table table-sm table-striped"></table>
     </div>
@@ -59,9 +52,9 @@ WHERE i.`event_id` = '{$id}'
     <?php
     if ($invites) :
         foreach ($invites as $invite) : ?>
-            <tr>
+            <tr class="<?php echo 'yes' == $invite->status ? 'text-success' : ('no' == $invite->status ? 'text-danger' : ''); ?>">
                 <td><?php echo $invite->user_email; ?></td>
-                <td class="text-uppercase"><?php echo $invite->status; ?></td>
+                <td><?php echo is_null($invite->status) || 'invited' == $invite->status ? 'Awaiting response' : ('yes' == $invite->status ? 'Attending' : 'Not attending'); ?></td>
             </tr>
     <?php
         endforeach;
@@ -86,7 +79,7 @@ WHERE i.`event_id` = '{$id}'
             /**
              * Using file upload
              */
-            var formData = new FormData();
+            /* var formData = new FormData();
             formData.append('action', 'invite_to_bragger_client_event');
 
             var file = $('#file-event-invite-emails')[0].files[0];
@@ -112,9 +105,9 @@ WHERE i.`event_id` = '{$id}'
             }).done(function() {
                 btnSubmit.prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
             });
+ */
 
-
-            /* var members = theForm.find('select[name="members[]"]').val();
+            // var members = theForm.find('select[name="members[]"]').val();
 
             $('.result').html('');
 
@@ -123,16 +116,16 @@ WHERE i.`event_id` = '{$id}'
                 data: {
                     action: 'invite_to_bragger_client_event',
                     event_id: <?php echo $id; ?>,
-                    members: members,
+                    emails: $('#club-event-invite-emails').val(),
                 }
             }).success(function(res) {
-                $('#result').prepend(res.data);
-                if (res.success) {
-                    select2Members.val(null).trigger('change');
-                }
+                theForm.find('.result').prepend(res.data);
+                theForm.find('.result').find('.result-status').hide();
+                btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
+                return;
             }).done(function() {
                 btnSubmit.prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
-            }); */
+            });
         })
     });
 </script>

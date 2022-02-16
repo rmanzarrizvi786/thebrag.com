@@ -965,6 +965,7 @@ function print_video_record_of_week($obj, $newsletter)
 		foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
 			if ($meta->getAttribute('property') == 'og:image') {
 				$featured_video_img_src = $meta->getAttribute('content');
+				$featured_video_img_src = str_ireplace('/img-socl/?url=', '', substr($featured_video_img_src, strpos($featured_video_img_src, '/img-socl/?url=')));
 				break;
 			}
 		}

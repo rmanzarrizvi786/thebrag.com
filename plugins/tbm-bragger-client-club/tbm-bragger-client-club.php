@@ -2,6 +2,8 @@
 
 namespace TBM;
 
+use AmpProject\Validator\Spec\Tag\P;
+
 /**
  * Plugin Name: TBM Bragger Client Club
  * Plugin URI: https://thebrag.media/
@@ -31,9 +33,13 @@ class BraggerClientClub
     add_action('wp_ajax_invite_to_bragger_client_club', [$this, 'ajax_invite_to_club']);
     add_action('wp_ajax_update_status_bragger_client_club', [$this, 'ajax_update_status']);
     add_action('wp_ajax_invite_to_bragger_client_event', [$this, 'ajax_invite_to_event']);
+    add_action('wp_ajax_bcc_toggle_welcome_package_sent', [$this, 'ajax_toggle_welcome_package_sent']);
 
     add_action('wp_ajax_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
     add_action('wp_ajax_nopriv_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
+
+    add_action('wp_ajax_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
+    add_action('wp_ajax_nopriv_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
 
     // Activation
     register_activation_hook(__FILE__, [$this, 'activate']);
@@ -186,15 +192,6 @@ class BraggerClientClub
 
   public function index()
   {
-
-    /* require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
-    $bo = new \BragObserver();
-    $current_user = wp_get_current_user();
-    $subscriptions = $bo->getMagSubscriptions($current_user->user_email);
-    echo '<pre>';
-    print_r($subscriptions);
-    exit; */
-
     include __DIR__ . '/views/members.php';
   } // index()
 
@@ -229,8 +226,46 @@ class BraggerClientClub
 
     if ($this->updateStatus($user_id, $new_status)) {
       wp_send_json_success();
+      die();
     }
     wp_send_json_error("Error!");
+    die();
+  } // ajax_update_status()
+
+  public function ajax_toggle_welcome_package_sent()
+  {
+    $user_id = isset($_POST['user_id']) ? absint($_POST['user_id']) : null;
+    $status =  isset($_POST['status']) ? trim($_POST['status']) : null;
+
+    if (
+      is_null($user_id) || 0 == $user_id ||
+      is_null($status) || '' == $status
+    ) {
+      wp_send_json_error("Invalid Data");
+      die();
+    }
+
+    $meta_value = ['status' => $status, 'updated_at' => current_time('mysql'), 'user_id' => get_current_user_id()];
+    update_user_meta($user_id, 'bcc_welcome_package_status', json_encode($meta_value));
+    /*
+    if ('sent' == $status) {
+    } elseif ('not-sent' == $status) {
+      delete_user_meta($user_id, 'bcc_welcome_package_status');
+    }
+    */
+
+    /**
+     * Trigger Event in Braze
+     */
+    /* require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new \Braze();
+    $braze->setMethod('POST');
+
+    $braze->triggerEvent($user_id, 'brag_bcc_welcome_package_sent', [
+      'status' => $status
+    ]); */
+
+    wp_send_json_success($status);
     die();
   }
 
@@ -240,6 +275,8 @@ class BraggerClientClub
 
     $emails = [];
 
+    /* 
+    // CSV Method
     $bom = "\xef\xbb\xbf";
     $fp = fopen($_FILES['csv']['tmp_name'], 'r');
     if (fgets($fp, 4) !== $bom) {
@@ -247,25 +284,36 @@ class BraggerClientClub
     }
     while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
       $emails[] = $line;
-    }
+    } */
+
+
+    $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
 
     if (!is_array($emails) || empty($emails)) {
-      wp_send_json_error("List is empty");
+      wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
       die();
     }
+
+    $emails = array_map('trim', $emails);
+    $emails = array_unique($emails);
 
     // $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $response = '';
 
-    foreach ($emails as $email_arr) {
+    $count = 0;
+    foreach ($emails as $email) {
+      $count++;
 
-      $email = $email_arr[0];
+      // $email = $email_arr[0]; // Was used with CSV option
 
       $errors = [];
 
       if (!is_email($email)) {
-        $errors[] = "Invalid Email {$email}";
+        $errors[] = "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>Invalid Email</td></tr>";
       }
+
+      // wp_send_json_error(print_r($errors, true));
+      // die();
 
       /**
        * Add to DB
@@ -273,9 +321,7 @@ class BraggerClientClub
       // Check if already in DB
       $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
       if ($check) {
-        // wp_send_json_error("Already invited, status: {$check->status}");
-        // die();
-        $errors[] = "{$email} already invited"; // , status: {$check->status}";
+        $errors[] = "<tr class='text-warning'><th>{$count}</th><td>{$email}</td><td>Already invited</td></tr>";
       }
 
       if (empty($errors)) {
@@ -290,9 +336,10 @@ class BraggerClientClub
             '%s', '%s', '%s'
           ]
         );
-        $response .= "<tr><td class=\"text-success\">{$email} will be invited to join the club!</td></tr>";
+        $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited to join the club!</td></tr>";
       } else {
-        $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+        // $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
+        $response .= implode('', $errors);
       }
     }
 
@@ -312,7 +359,7 @@ class BraggerClientClub
     }
 
     // Check if file is sent
-    $fp = fopen($_FILES['csv']['tmp_name'], 'r');
+    /* $fp = fopen($_FILES['csv']['tmp_name'], 'r');
     if (!$fp) {
       wp_send_json_error('<tr><td class="text-danger">Please upload a file.</td></tr>');
       die();
@@ -328,38 +375,45 @@ class BraggerClientClub
     while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
       $emails[] = $line;
     }
+    */
+
+    $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
 
     if (!is_array($emails) || empty($emails)) {
       wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
       die();
     }
 
+    $emails = array_map('trim', $emails);
+    $emails = array_unique($emails);
+
     $response = '';
-    foreach ($emails as $email_arr) {
-      $email = $email_arr[0];
+    $count = 0;
+    foreach ($emails as $email) {
+      $count++;
+      // $email = $email_arr[0]; // Was used with CSV option
 
       if (!is_email($email)) { // Check if email is valid
-        $response .= '<tr><td>' . $email . '</td><td class="text-danger">Invalid Email</td></tr>';
+        $response .= "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>Invalid Email</td></tr>";
       } else {
 
         // Get user by email
         $user = get_user_by('email', $email);
 
         if (!$user) { // Do not proceed if user doesn't exit
-          $response .= '<tr><td>' . $email . '</td><td class="text-danger">User doesn\'t exist</td></tr>';
+          $response .= "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>User doesn't exist</td></tr>";
         } else {
-
           // Check if user is club member
           $check_member = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `user_id` = '{$user->ID}' AND `status` IN ('active', 'joined')");
           if (!$check_member) { // Do not proceed if user is not a club member
-            $response .= '<tr><td>' . $email . '</td><td class="text-warning">Not a club member.</td></tr>';
+            $response .= "<tr class='text-warning'><th>{$count}</th><td>{$email}</td><td>Not a club member</td></tr>";
           } else {
             // Check if already invited and member responded yes/no
             $check_invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites WHERE `event_id` = '{$event_id}' AND `user_id` = '{$user->ID}'");
             // AND `status` IN ('yes', 'no')");
             if ($check_invite) { // Already invited
               if (in_array($check_invite->status, ['yes', 'no'])) {
-                $response .= '<tr><td>' . $email . '</td><td class="text-info">Already responded: ' . strtoupper($check_invite->status) . '</td></tr>';
+                $response .= "<tr class='text-info'><th>{$count}</th><td>{$email}</td><td>Already responded: " . strtoupper($check_invite->status) . "</td></tr>";
               } else { // Not responded yet, set status to NULL, so cron picks and sends another email
                 $wpdb->update(
                   $wpdb->prefix . 'client_club_event_invites',
@@ -368,7 +422,7 @@ class BraggerClientClub
                   ['%s'],
                   ['%d']
                 );
-                $response .= '<tr><td>' . $email . '</td><td class="text-success">Will be invited</td></tr>';
+                $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited</td></tr>";
               }
             } else { // Member was not invited OR not responded yes/no yet i.e. Invite
               $guid = $this->generate_guid();
@@ -384,7 +438,7 @@ class BraggerClientClub
                 ['%d', '%d', '%s', '%s',]
               );
 
-              $response .= "<tr><td>' . $email . '</td><td class=\"text-success\">Will be invited</td></tr>";
+              $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited</td></tr>";
             }
           }
         }
@@ -437,17 +491,17 @@ class BraggerClientClub
 
     // $invite = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_event_invites i WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}' LIMIT 1 ");
     $invite = $wpdb->get_row("SELECT
-        i.`id`,
-        i.`user_id`,
-        e.`title` event_title,
-        e.`event_date`,
-        e.`location` event_location,
-        i.`guid`
-      FROM {$wpdb->prefix}client_club_event_invites i
-      JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
-      WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
-      LIMIT 1
-");
+          i.`id`,
+          i.`user_id`,
+          e.`title` event_title,
+          e.`event_date`,
+          e.`location` event_location,
+          i.`guid`
+        FROM {$wpdb->prefix}client_club_event_invites i
+        JOIN {$wpdb->prefix}client_club_events e ON i.`event_id` = e.`id`
+        WHERE i.`event_id` = '{$event_id}' AND i.`guid` = '{$guid}'
+        LIMIT 1
+      ");
 
 
     if (!$invite) {
@@ -460,6 +514,8 @@ class BraggerClientClub
       wp_send_json_error('Sorry, invalid response :(');
       die();
     }
+
+    $old_response = $wpdb->get_var("SELECT `status` FROM {$wpdb->prefix}client_club_event_invites WHERE `id` = '{$invite->id}' LIMIT 1");
 
     $wpdb->update(
       $wpdb->prefix . 'client_club_event_invites',
@@ -475,21 +531,94 @@ class BraggerClientClub
     /**
      * Trigger Event in Braze
      */
-    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
-    $braze = new \Braze();
-    $braze->setMethod('POST');
+    if ($response != $old_response) {
+      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+      $braze = new \Braze();
+      $braze->setMethod('POST');
 
-    $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
-      'event_title' => $invite->event_title,
-      'event_date' => $invite->event_date,
-      'location' => $invite->event_location,
-      'rsvp' => $response,
-      'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
-    ]);
+      $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
+        'event_title' => $invite->event_title,
+        'event_date' => $invite->event_date,
+        'location' => $invite->event_location,
+        'rsvp' => $response,
+        'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
+      ]);
+    }
 
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
     wp_send_json_success($message);
+    die();
+  } // ajax_rsponse_to_event()
+
+  public function ajax_rs_mag_new_subscription()
+  {
+    parse_str($_POST['formData'], $formData);
+
+    /**
+     * RS Mag Subscription
+     */
+    $required_fields = [
+      'buyer_full_name',
+      'sub_email',
+
+      'sub_address_1',
+      'sub_city',
+      'sub_state',
+      'sub_postcode',
+      'sub_country',
+
+      'sub_full_name',
+
+      'shipping_address_1',
+      'shipping_city',
+      'shipping_state',
+      'shipping_postcode',
+      'shipping_country',
+    ];
+
+    $current_user = wp_get_current_user();
+
+    $formData['sub_email'] = $current_user->user_email;
+
+    $formData['buyer_full_name'] = isset($formData['sub_full_name']) ? $formData['sub_full_name'] : '';
+    $formData['sub_address_1'] = isset($formData['shipping_address_1']) ? $formData['shipping_address_1'] : '';
+    $formData['sub_address_2'] = isset($formData['shipping_address_2']) ? $formData['shipping_address_2'] : '';
+    $formData['sub_city'] = isset($formData['shipping_city']) ? $formData['shipping_city'] : '';
+    $formData['sub_state'] = isset($formData['shipping_state']) ? $formData['shipping_state'] : '';
+    $formData['sub_postcode'] = isset($formData['shipping_postcode']) ? $formData['shipping_postcode'] : '';
+    $formData['sub_country'] = isset($formData['shipping_country']) ? $formData['shipping_country'] : '';
+
+    foreach ($required_fields as $required_field) :
+      if (!isset($formData[$required_field]) || '' == trim($formData[$required_field])) :
+        wp_send_json_error('Whoops, looks like you have forgotten to fill out all the necessary fields. Make sure you go back and give us all the info we need!');
+        die();
+      endif;
+    endforeach;
+
+    $formData['coupon_code'] = 'Comp (BCC)';
+    $formData['coupon_id'] = null;
+    $formData['is_gift'] = 'no';
+
+    /**
+     * Update user metas
+     */
+    update_user_meta($current_user->ID, 'address_1', $formData['shipping_address_1']);
+    if ('' != trim($formData['shipping_address_2']))
+      update_user_meta($current_user->ID, 'address_2', $formData['shipping_address_2']);
+
+    update_user_meta($current_user->ID, 'city', $formData['shipping_city']);
+    update_user_meta($current_user->ID, 'state', $formData['shipping_state']);
+    update_user_meta($current_user->ID, 'postcode', $formData['shipping_postcode']);
+    update_user_meta($current_user->ID, 'country', $formData['shipping_country']);
+    update_user_meta($current_user->ID, 'company_name', $formData['company_name']);
+    update_user_meta($current_user->ID, 'job_title', $formData['job_title']);
+
+    /* require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+    $bo = new \BragObserver();
+    $bo->createRSMagSubscription($formData); */
+
+    wp_send_json_success('Thank you!');
     die();
   }
 
@@ -572,6 +701,25 @@ class BraggerClientClub
                 ['%s', '%d', '%s'],
                 ['%s']
               );
+
+              require_once WP_PLUGIN_DIR . '/brag-observer/brag-observer.php';
+              $bo = new \BragObserver();
+
+              $subscriptions = $bo->getMagSubscriptions($user->user_email);
+              if ($subscriptions) { // If there are Subscriptions
+                foreach ($subscriptions as $key => $subscription) {
+                  if (isset($subscription->crm_record)) {
+                    if ('inactive' == $status) { // Deactivate RS Mag Sub if member is still active
+                      $bo->cancelSubscription(['uniqid' => $subscription->uniqid]);
+                    } else if ('active' == $status) { // Activate RS Mag Sub if member is still active
+                      if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) {
+                      } else {
+                        $bo->enableAutoRenew(['uniqid' => $subscription->uniqid]);
+                      }
+                    }
+                  } // If Subscription CRM Record is set
+                } // For Each $subscription
+              } // If there are Subscription
             }
             return true;
           }

@@ -96,6 +96,31 @@
 <script>
   jQuery(document).ready(function($) {
     $(window).trigger('scroll');
+
+    $('#form-rs-mag-sub').on('submit', function(e) {
+      e.preventDefault();
+      theForm = $(this);
+      var formData = theForm.serialize();
+      var elemResponse = $('#sub-response');
+      elemResponse.removeClass('alert-danger alert-success').addClass('alert-success').text('Processing, please wait...');
+      $.post({
+        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+        data: {
+          action: 'submit_rs_mag_new_subscription',
+          formData: formData
+        }
+      }).success(function(res) {
+        elemResponse.removeClass('d-none').text(res.data);
+        if (res.success) {
+          elemResponse.removeClass('alert-danger').addClass('alert-success');
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
+        } else {
+          elemResponse.removeClass('alert-success').addClass('alert-danger');
+        }
+      }).done(function() {});
+    })
   });
 </script>
 

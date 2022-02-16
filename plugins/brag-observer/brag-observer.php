@@ -2230,11 +2230,27 @@ class BragObserver
   }
 
   /*
-  * Mag Sub: Cancel Autorenew - Tick Active field in Salesforce
+  * Mag Sub: Cancel Subscription - Untick Active field in Salesforce
+  */
+  public function cancelSubscription($data)
+  {
+    $data['key'] = $this->mag_sub['rest_api_key'];
+
+    $cancelSubscription = $this->callAPI(
+      'POST',
+      $this->mag_sub['api_url'] . 'cancel_subscription',
+      $data,
+      false
+    );
+
+    return $cancelSubscription;
+  }
+
+  /*
+  * Mag Sub: Enable Autorenew - Tick Active field in Salesforce
   */
   public function enableAutoRenew($data)
   {
-
     $data['key'] = $this->mag_sub['rest_api_key'];
 
     $enableAutoRenew = $this->callAPI(
@@ -2264,6 +2280,23 @@ class BragObserver
     } else {
       error_log('BO Error: Subscription not found for : ' . $sub_id);
     }
+  }
+
+  /*
+  * Mag Sub: Create New
+  */
+  public function createRSMagSubscription($data)
+  {
+    $data['key'] = $this->mag_sub['rest_api_key'];
+
+    $createSubscription = $this->callAPI(
+      'POST',
+      $this->mag_sub['api_url'] . 'create_new',
+      $data,
+      false
+    );
+
+    return $createSubscription;
   }
 
   protected function getPluginSlug()
