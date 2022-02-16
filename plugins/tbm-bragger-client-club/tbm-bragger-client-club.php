@@ -33,6 +33,7 @@ class BraggerClientClub
     add_action('wp_ajax_invite_to_bragger_client_club', [$this, 'ajax_invite_to_club']);
     add_action('wp_ajax_update_status_bragger_client_club', [$this, 'ajax_update_status']);
     add_action('wp_ajax_invite_to_bragger_client_event', [$this, 'ajax_invite_to_event']);
+    add_action('wp_ajax_bcc_toggle_welcome_package_sent', [$this, 'ajax_toggle_welcome_package_sent']);
 
     add_action('wp_ajax_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
     add_action('wp_ajax_nopriv_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
@@ -228,6 +229,43 @@ class BraggerClientClub
       die();
     }
     wp_send_json_error("Error!");
+    die();
+  } // ajax_update_status()
+
+  public function ajax_toggle_welcome_package_sent()
+  {
+    $user_id = isset($_POST['user_id']) ? absint($_POST['user_id']) : null;
+    $status =  isset($_POST['status']) ? trim($_POST['status']) : null;
+
+    if (
+      is_null($user_id) || 0 == $user_id ||
+      is_null($status) || '' == $status
+    ) {
+      wp_send_json_error("Invalid Data");
+      die();
+    }
+
+    $meta_value = ['status' => $status, 'updated_at' => current_time('mysql'), 'user_id' => get_current_user_id()];
+    update_user_meta($user_id, 'bcc_welcome_package_status', json_encode($meta_value));
+    /*
+    if ('sent' == $status) {
+    } elseif ('not-sent' == $status) {
+      delete_user_meta($user_id, 'bcc_welcome_package_status');
+    }
+    */
+
+    /**
+     * Trigger Event in Braze
+     */
+    /* require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new \Braze();
+    $braze->setMethod('POST');
+
+    $braze->triggerEvent($user_id, 'brag_bcc_welcome_package_sent', [
+      'status' => $status
+    ]); */
+
+    wp_send_json_success($status);
     die();
   }
 
@@ -477,6 +515,8 @@ class BraggerClientClub
       die();
     }
 
+    $old_response = $wpdb->get_var("SELECT `status` FROM {$wpdb->prefix}client_club_event_invites WHERE `id` = '{$invite->id}' LIMIT 1");
+
     $wpdb->update(
       $wpdb->prefix . 'client_club_event_invites',
       [
@@ -491,17 +531,19 @@ class BraggerClientClub
     /**
      * Trigger Event in Braze
      */
-    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
-    $braze = new \Braze();
-    $braze->setMethod('POST');
+    if ($response != $old_response) {
+      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+      $braze = new \Braze();
+      $braze->setMethod('POST');
 
-    $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
-      'event_title' => $invite->event_title,
-      'event_date' => $invite->event_date,
-      'location' => $invite->event_location,
-      'rsvp' => $response,
-      'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
-    ]);
+      $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
+        'event_title' => $invite->event_title,
+        'event_date' => $invite->event_date,
+        'location' => $invite->event_location,
+        'rsvp' => $response,
+        'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
+      ]);
+    }
 
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
