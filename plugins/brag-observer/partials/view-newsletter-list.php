@@ -88,17 +88,17 @@ $newsletters = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_ne
           <small><?php echo $newsletter->status == 1 ? 'Created on MC' : 'Draft'; ?></small>
         </th>
         <td class="text-right" style="width: 50%;">
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id]); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview (MC)</a>
+          <!-- <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id]); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview (MC)</a> -->
 
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id, 'template' => 'braze']); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview (Braze)</a>
+          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id, 'template' => 'braze']); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview</a>
 
           <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'edit', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-info my-1">Edit</a>
 
           <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'copy', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-warning my-1">Copy</a>
 
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'create-on-mc', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-success my-1">Push to MailChimp</a>
+          <!-- <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'create-on-mc', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-success my-1">Push to MailChimp</a> -->
 
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'show-html', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-success my-1">Show HTML</a>
+          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'show-html', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" target="_blank" class="btn btn-sm btn-success my-1">Show HTML</a>
         </td>
       </tr>
     <?php
