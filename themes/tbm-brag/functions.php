@@ -3627,7 +3627,20 @@ add_filter('the_content', function ($content) {
     if (is_singular('page'))
         return $content;
 
-    $content .= '<div class="rs-subscribe-footer"><a href="https://au.rollingstone.com/subscribe-magazine/" target="_blank" rel="noopener">Want more in-depth culture content? <span>Subscribe</span> to <strong>Rolling Stone magazine</strong> for deep reporting, unforgettable interviews, and criticism you can trust.</a></div>';
+    $mag_cover_res = wp_remote_get('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
+
+    if (is_array($mag_cover_res) && !is_wp_error($mag_cover_res)) {
+        $mag_cover = json_decode($mag_cover_res['body']);
+    }
+
+    $content .= '<a href="https://au.rollingstone.com/subscribe-magazine/" target="_blank" rel="noopener" class="d-flex flex-column flex-md-row align-items-start rs-subscribe-footer"><div class="d-flex">';
+    if (isset($mag_cover) && '' != $mag_cover) {
+        $content .= '<div class="flex-fill img-wrap"><img src="' . $mag_cover . '" width="100"></div>';
+    }
+    $content .= '<div>Get unlimited access to the coverage that shapes our culture.';
+    $content .= '<div class="d-none d-md-block mt-1"><span class="subscribe">Subscribe</span> to <strong>Rolling Stone magazine</strong></div></div></div>';
+    $content .= '<div class="d-block d-md-none mt-3 w-100"><span class="subscribe">Subscribe</span> to <strong>Rolling Stone magazine</strong></div>';
+    $content .= '</a>';
 
     return $content;
 });

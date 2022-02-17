@@ -134,7 +134,7 @@ class BraggerClientClub
         if (201 ==  $brazeEventRes['code']) {
           $wpdb->update(
             $wpdb->prefix . 'client_club_members',
-            ['status' => 'invited',],
+            ['status' => 'invited'],
             ['id' => $invite->id],
             ['%s',],
             ['%d']
@@ -544,6 +544,10 @@ class BraggerClientClub
         'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
       ]);
     }
+
+    /**
+     * Add/Update Custom Attribute in Braze
+     */
 
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
