@@ -297,4 +297,78 @@ class Braze
         }
         return false;
     }
+
+    public function setAttribute($user_id, $attributes = [], $overwrite = true)
+    {
+        if (!is_array($attributes) || empty($attributes))
+            return;
+        $braze_user = $this->getUser($user_id);
+
+        if (!$overwrite) {
+            $custom_attribute_name = "{$attributes['key']}";
+            if (!is_null($braze_user['user'])) {
+                if (isset($braze_user['user']->custom_attributes)) {
+                    if (isset($braze_user['user']->custom_attributes->$custom_attribute_name)) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        if ($braze_user['user_attributes']) {
+            $user_attributes = $braze_user['user_attributes'];
+
+            $braze_payload = [];
+
+            if (is_array($attributes) && !empty($attributes)) {
+                $braze_payload['attributes'] = [array_merge($user_attributes, [$attributes['key'] => $attributes['value']])];
+            }
+
+            // error_log(print_r($braze_payload, true));
+
+            if (!empty($braze_payload)) {
+                $this->setPayload($braze_payload);
+                $res_track = $this->request('/users/track', true);
+                if (201 !== $res_track['code']) {
+                    error_log("Error pushing attribute to Braze in " . __METHOD__ . " on line " . __LINE__ . ". " .  print_r($res_track, true)) . print_r($braze_payload, true);
+                }
+            }
+        }
+    } // setAttribute($user_id, $attributes = [], $overwrite = true)
+
+    public function setAttributeByEmail($email, $attributes = [], $overwrite = true)
+    {
+        if (!is_array($attributes) || empty($attributes))
+            return;
+        $braze_user = $this->getUserByEmail($email);
+
+        if (!$overwrite) {
+            $custom_attribute_name = "{$attributes['key']}";
+            if (!is_null($braze_user['user'])) {
+                if (isset($braze_user['user']->custom_attributes)) {
+                    if (isset($braze_user['user']->custom_attributes->$custom_attribute_name)) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        if ($braze_user['user_attributes']) {
+            $user_attributes = $braze_user['user_attributes'];
+
+            $braze_payload = [];
+
+            if (is_array($attributes) && !empty($attributes)) {
+                $braze_payload['attributes'] = [array_merge($user_attributes, [$attributes['key'] => $attributes['value']])];
+            }
+
+            if (!empty($braze_payload)) {
+                $this->setPayload($braze_payload);
+                $res_track = $this->request('/users/track', true);
+                if (201 !== $res_track['code']) {
+                    error_log("Error pushing attribute to Braze in " . __METHOD__ . " on line " . __LINE__ . ". " .  print_r($res_track, true)) . print_r($braze_payload, true);
+                }
+            }
+        }
+    }
 }
