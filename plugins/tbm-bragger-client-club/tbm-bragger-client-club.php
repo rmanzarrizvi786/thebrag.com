@@ -528,15 +528,14 @@ class BraggerClientClub
       ['%d']
     );
 
+    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new \Braze();
+    $braze->setMethod('POST');
     /**
      * Trigger Event in Braze
      */
     if ($response != $old_response) {
-      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
-      $braze = new \Braze();
-      $braze->setMethod('POST');
-
-      $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event', [
+      $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event_' . $event_id, [
         'event_title' => $invite->event_title,
         'event_date' => $invite->event_date,
         'location' => $invite->event_location,
@@ -548,6 +547,23 @@ class BraggerClientClub
     /**
      * Add/Update Custom Attribute in Braze
      */
+    $braze_user = $braze->getUser($invite->user_id);
+    $braze_bcc_events = [];
+    if (!is_null($braze_user['user'])) {
+      if (isset($braze_user['user']->custom_attributes)) {
+        if (isset($braze_user['user']->custom_attributes->brag_bcc_events)) {
+          $braze_bcc_events = $braze_user['user']->custom_attributes->brag_bcc_events;
+        }
+      }
+    }
+    $braze_bcc_new_event = $invite->event_title . ' - ' . date('m/Y', strtotime($invite->event_date));
+    if ('yes' == $response) {
+      $braze_bcc_events = array_merge($braze_bcc_events, [$braze_bcc_new_event]);
+    } else {
+      $braze_bcc_events = array_values(array_diff($braze_bcc_events, [$braze_bcc_new_event]));
+    }
+    $braze->setAttribute($invite->user_id, ['key' => 'brag_bcc_events', 'value' => $braze_bcc_events], true);
+
 
     $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
 
