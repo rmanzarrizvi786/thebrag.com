@@ -99,8 +99,7 @@ class BragClientClub
       'edit_posts',
       $this->plugin_slug,
       [$this, 'index'],
-      'dashicons-superhero',
-      10
+      'dashicons-superhero'
     );
     add_submenu_page($this->plugin_slug, "{$this->plugin_title} Members", 'Members', 'edit_posts', "{$this->plugin_slug}", [$this, 'index']);
     add_submenu_page($this->plugin_slug, "{$this->plugin_title} Events", 'Events', 'edit_posts', "{$this->plugin_slug}-events", [$this, 'manage_events']);
