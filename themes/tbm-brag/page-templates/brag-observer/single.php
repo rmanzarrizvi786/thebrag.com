@@ -223,31 +223,17 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
     <div class="menu-pubs menu-network mt-5 mb-3 ml-lg-5 ml-md-3 mx-4 d-flex align-items-start">
 
       <ul class="nav d-flex align-items-center justify-content-start">
-        <?php foreach (array_merge(brands(), brands_network()) as $brand => $brand_details) : ?>
+        <?php
+        $brands_network = brands_network();
+        ksort($brands_network);
+        foreach (array_merge(brands(), $brands_network) as $brand => $brand_details) : ?>
           <li class="nav-item">
             <a href="<?php echo $brand_details['link']; ?>" title="<?php echo $brand_details['title']; ?>" target="_blank" class="nav-link my-2">
-              <img src="https://images.thebrag.com/common/pubs/<?php echo $brand_details['logo_name']; ?>.jpg" alt="<?php echo $brand_details['title']; ?>" class="lazyload" style="height: 25px;">
+              <img src="https://images.thebrag.com/common/pubs/<?php echo $brand_details['logo_name']; ?>.jpg" alt="<?php echo $brand_details['title']; ?>" class="lazyload" style="height: <?php echo 'lwa' == $brand ? '40' : '25'; ?>px;">
             </a>
           </li><!-- Rolling Stone Australia -->
         <?php endforeach; ?>
       </ul>
-
-      <?php if (0) : ?>
-        <ul class="nav d-flex align-items-center justify-content-start">
-          <li class="nav-item"><a href="https://au.rollingstone.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/Rolling-Stone-Australia.jpg" alt="Rolling Stone Australia" class="lazyload" style="width: 110px"></a></li><!-- Rolling Stone Australia -->
-
-          <li class="nav-item"><a href="https://variety.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/Variety.jpg" alt="Variety" class="lazyload" style="width: 70px;"></a></li><!-- Variety -->
-
-          <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/Tone-Deaf.jpg" alt="Tone Deaf" class="lazyload" style="width: 80px"></a></li><!-- Tone Deaf -->
-
-          <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/Dont-Bore-Us.jpg" alt="Don't Bore Us" class="lazyload" style="width: 100px;"></a></li><!-- Don't Bore Us -->
-
-          <li class="nav-item"><a href="https://thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/The-Brag.jpg" alt="The Brag" class="lazyload" style="width: 80px;"></a></li>
-
-          <li class="nav-item"><a href="https://theindustryobserver.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs/The-Industry-Observer.jpg" alt="The Industry Observer" class="lazyload" style="width: 65px;"></a></li><!-- The Industry Observer -->
-        </ul>
-      <?php endif; ?>
-
     </div><!-- .menu-network -->
   </div>
 
