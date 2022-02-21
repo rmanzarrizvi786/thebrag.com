@@ -95,7 +95,7 @@ if ($event) {
             </div>
           </div>
           <div class="rsvp-response <?php echo !in_array($event->invite_status, ['yes', 'no']) ? 'd-none' : ''; ?>">
-            <?php echo 'yes' == $event->invite_status ? 'Thank you, see you there!' : ('no' == $event->invite_status ? 'You wil be missed!' : 'Thank you!'); ?>
+            <?php echo 'yes' == $event->invite_status ? 'Thank you, see you there!' : ('no' == $event->invite_status ? 'You will be missed!' : 'Thank you!'); ?>
             <?php if (in_array($event->invite_status, ['yes', 'no'])) : ?>
               <div class="mt-3">
                 <buttton class="btn-change-rsvp active">I changed my mind</buttton>
