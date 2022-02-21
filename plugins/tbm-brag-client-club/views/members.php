@@ -10,8 +10,8 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
         <!-- <div class="col d-flex align-items-center"> -->
         <!-- <input type="email" id="club-member-email" class="form-control" placeholder="Email address"> -->
 
-        <input type="file" id="file-club-member-emails" class="form-control" accept=".csv">
-        <!-- <textarea id="club-member-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea> -->
+        <!-- <input type="file" id="file-club-member-emails" class="form-control" accept=".csv"> -->
+        <textarea id="club-member-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea>
 
         <button type="submit" class="btn btn-primary btn-submit mt-3">Submit</button>
         <!-- <div class="result mx-2"></div> -->
@@ -29,19 +29,23 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
             <tr>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Status</th>
                 <th>Welcome package</th>
             </tr>
             <?php foreach ($members as $member) : ?>
                 <tr id="invite-<?php echo $member->id; ?>">
                     <td><?php echo $member->email; ?></td>
-                    <td><span class="invite_status text-uppercase"><?php echo $member->status; ?></span></td>
                     <td>
-                        <?php if (!is_null($member->status) && !is_null($member->user_id)) : ?>
-                            <button class="btn btn-sm btn-action <?php echo in_array($member->status, ['joined', 'active']) ? 'btn-danger' : 'btn-success'; ?>" data-id="<?php echo $member->id; ?>" data-newstatus="<?php echo in_array($member->status, ['joined', 'active']) ? 'inactive' : 'active'; ?>" data-userid="<?php echo $member->user_id; ?>">
-                                <?php echo in_array($member->status, ['joined', 'active']) ? 'Deactivate' : 'Activate'; ?>
-                            </button>
-                        <?php endif; ?>
+                        <div class="d-flex align-items-center">
+                            <div><span class="invite_status text-uppercase"><?php echo $member->status; ?></span></div>
+
+                            <?php if (!is_null($member->status) && !is_null($member->user_id)) : ?>
+                                <div class="ml-2">
+                                    <button class="btn btn-sm btn-action <?php echo in_array($member->status, ['joined', 'active']) ? 'btn-danger' : 'btn-success'; ?>" data-id="<?php echo $member->id; ?>" data-newstatus="<?php echo in_array($member->status, ['joined', 'active']) ? 'inactive' : 'active'; ?>" data-userid="<?php echo $member->user_id; ?>">
+                                        <?php echo in_array($member->status, ['joined', 'active']) ? 'Deactivate' : 'Activate'; ?>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </td>
                     <td>
                         <?php if ('active' == $member->status) : ?>

@@ -80,7 +80,7 @@ WHERE i.`event_id` = '{$id}'
              * Using file upload
              */
             /* var formData = new FormData();
-            formData.append('action', 'invite_to_bragger_client_event');
+            formData.append('action', 'invite_to_brag_client_event');
 
             var file = $('#file-event-invite-emails')[0].files[0];
             formData.append('csv', file);
@@ -114,7 +114,7 @@ WHERE i.`event_id` = '{$id}'
             $.post({
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
                 data: {
-                    action: 'invite_to_bragger_client_event',
+                    action: 'invite_to_brag_client_event',
                     event_id: <?php echo $id; ?>,
                     emails: $('#club-event-invite-emails').val(),
                 }

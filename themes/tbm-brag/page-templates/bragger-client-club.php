@@ -1,9 +1,9 @@
 <?php
 /*
-* Template Name: Bragger Client Club (Index)
+* Template Name: Brag Client Club (Index)
 */
 
-get_header('bragger-client-club');
+get_header('brag-client-club');
 
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
@@ -32,8 +32,8 @@ if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHER
  * Add Auth0 app_metadata
  */
 if ($wpdb->get_var("SELECT COUNT(1) FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$current_user->user_email}' AND `status` = 'joined' LIMIT 1")) {
-  require_once WP_PLUGIN_DIR . '/tbm-bragger-client-club/tbm-bragger-client-club.php';
-  $bcc = new \TBM\BraggerClientClub();
+  require_once WP_PLUGIN_DIR . '/tbm-brag-client-club/tbm-brag-client-club.php';
+  $bcc = new \TBM\bragClientClub();
   $auth0_user = $bcc->updateStatus(get_current_user_id(), 'active');
 }
 
@@ -80,7 +80,7 @@ if (!$subscriptions) {
       <div class="d-flex">
         <div class="col-12 col-md-9">
           <h1 class="content-heading text-center">
-            Bragger<br>Client<br>Club
+            Brag<br>Client<br>Club
           </h1>
         </div>
       </div>
@@ -353,4 +353,4 @@ if (is_user_logged_in()) :
 endif; // If logged in
 ?>
 <?php
-get_footer('bragger-client-club');
+get_footer('brag-client-club');

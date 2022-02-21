@@ -503,8 +503,8 @@ function tbm_theme_options_get_cat_count() {
 add_action('wp_footer', function () {
     if (
         is_page_template('page-templates/brag-observer.php') ||
-        is_page_template('page-templates/bragger-client-club.php') ||
-        is_page_template('page-templates/bragger-client-rsvp-event.php')
+        is_page_template('page-templates/brag-client-club.php') ||
+        is_page_template('page-templates/brag-client-rsvp-event.php')
     )
         return;
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*
-* Template Name: Bragger Client Event (RSVP)
+* Template Name: Brag Client Event (RSVP)
 */
 
 $event_id = isset($_GET['id']) ? absint($_GET['id']) : null;
@@ -16,7 +16,7 @@ LIMIT 1
 
 $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
-get_header('bragger-client-club');
+get_header('brag-client-club');
 
 if ($event) {
   add_action('wp_footer', function () use ($event_id, $guid) {
@@ -41,7 +41,7 @@ if ($event) {
           $.post({
             url: '<?php echo admin_url('admin-ajax.php'); ?>',
             data: {
-              action: 'response_to_bragger_client_event',
+              action: 'response_to_brag_client_event',
               event_id: '<?php echo $event_id; ?>',
               guid: '<?php echo $guid; ?>',
               response: response,
@@ -81,7 +81,7 @@ if ($event) {
           <?php endif; ?>
         <?php else : ?>
           <h1 class="content-heading">
-            Bragger<br>Client<br>Club
+            Brag<br>Client<br>Club
           </h1>
         <?php endif; ?>
       </div>
@@ -250,4 +250,4 @@ if (is_user_logged_in()) :
 endif; // If logged in
 ?>
 <?php
-get_footer('bragger-client-club');
+get_footer('brag-client-club');

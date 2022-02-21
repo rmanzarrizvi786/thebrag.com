@@ -188,7 +188,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
       }
     }
   </style>
-  <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/bragger-client-club.css?v=<?php echo time(); ?>" type="text/css" media="all" />
+  <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/brag-client-club.css?v=<?php echo time(); ?>" type="text/css" media="all" />
 </head>
 
 <body <?php body_class(); ?> id="body">

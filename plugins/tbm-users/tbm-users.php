@@ -1128,7 +1128,7 @@ class TBMUsers
     return $user->ID;
   }
 
-  public function rest_check_if_client_club_member($request_data)
+  /* public function rest_check_if_client_club_member($request_data)
   {
     global $wpdb;
 
@@ -1162,21 +1162,19 @@ class TBMUsers
         ['%s']
       );
 
-      /**
-       * Trigger Event in Braze
-       */
+      //Trigger Event in Braze
       require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
       $braze = new \Braze();
       $braze->setMethod('POST');
 
-      $braze->triggerEvent($user->ID, 'brag_joined_bragger_client_club', [
-        'login_url' => home_url("/bragger-client-club/"),
+      $braze->triggerEvent($user->ID, 'brag_joined_brag_client_club', [
+        'login_url' => home_url("/brag-client-club/"),
       ]);
 
       return true;
     }
     return false;
-  }
+  } */
 
   /*
   * Validate Key for REST API

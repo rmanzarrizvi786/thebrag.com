@@ -36,8 +36,8 @@ class TBMAds
   {
     if (
       is_page_template('page-templates/brag-observer.php') ||
-      is_page_template('page-templates/bragger-client-club.php') ||
-      is_page_template('page-templates/bragger-client-rsvp-event.php')
+      is_page_template('page-templates/brag-client-club.php') ||
+      is_page_template('page-templates/brag-client-rsvp-event.php')
     )
       return;
     wp_enqueue_script('adm-fuse', 'https://cdn.fuseplatform.net/publift/tags/2/2355/fuse.js', [], '1');
@@ -83,8 +83,8 @@ class TBMAds
   {
     if (
       is_page_template('page-templates/brag-observer.php') ||
-      is_page_template('page-templates/bragger-client-club.php') ||
-      is_page_template('page-templates/bragger-client-rsvp-event.php')
+      is_page_template('page-templates/brag-client-club.php') ||
+      is_page_template('page-templates/brag-client-rsvp-event.php')
     )
       return;
 

@@ -2,10 +2,8 @@
 
 namespace TBM;
 
-use AmpProject\Validator\Spec\Tag\P;
-
 /**
- * Plugin Name: TBM Bragger Client Club
+ * Plugin Name: TBM Brag Client Club
  * Plugin URI: https://thebrag.media/
  * Description:
  * Version: 1.0.0
@@ -13,7 +11,7 @@ use AmpProject\Validator\Spec\Tag\P;
  * Author URI:
  */
 
-class BraggerClientClub
+class BragClientClub
 {
 
   protected $plugin_title;
@@ -24,19 +22,19 @@ class BraggerClientClub
 
   public function __construct()
   {
-    $this->plugin_title = 'Bragger Client Club';
-    $this->plugin_name = 'tbm_bragger_client_club';
-    $this->plugin_slug = 'tbm-bragger-client-club';
+    $this->plugin_title = 'Brag Client Club';
+    $this->plugin_name = 'tbm_brag_client_club';
+    $this->plugin_slug = 'tbm-brag-client-club';
 
     add_action('admin_menu', array($this, 'admin_menu'));
 
-    add_action('wp_ajax_invite_to_bragger_client_club', [$this, 'ajax_invite_to_club']);
-    add_action('wp_ajax_update_status_bragger_client_club', [$this, 'ajax_update_status']);
-    add_action('wp_ajax_invite_to_bragger_client_event', [$this, 'ajax_invite_to_event']);
+    add_action('wp_ajax_invite_to_brag_client_club', [$this, 'ajax_invite_to_club']);
+    add_action('wp_ajax_update_status_brag_client_club', [$this, 'ajax_update_status']);
+    add_action('wp_ajax_invite_to_brag_client_event', [$this, 'ajax_invite_to_event']);
     add_action('wp_ajax_bcc_toggle_welcome_package_sent', [$this, 'ajax_toggle_welcome_package_sent']);
 
-    add_action('wp_ajax_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
-    add_action('wp_ajax_nopriv_response_to_bragger_client_event', [$this, 'ajax_rsponse_to_event']);
+    add_action('wp_ajax_response_to_brag_client_event', [$this, 'ajax_rsponse_to_event']);
+    add_action('wp_ajax_nopriv_response_to_brag_client_event', [$this, 'ajax_rsponse_to_event']);
 
     add_action('wp_ajax_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
     add_action('wp_ajax_nopriv_submit_rs_mag_new_subscription', [$this, 'ajax_rs_mag_new_subscription']);
@@ -47,18 +45,18 @@ class BraggerClientClub
     // Deactivation
     register_deactivation_hook(__FILE__, [$this, 'deactivate']);
 
-    add_action('cron_hook_bragger_client_club_invites', [$this, 'exec_cron_club_invites']);
-    add_action('cron_hook_bragger_client_event_invites', [$this, 'exec_cron_event_invites']);
+    add_action('cron_hook_brag_client_club_invites', [$this, 'exec_cron_club_invites']);
+    add_action('cron_hook_brag_client_event_invites', [$this, 'exec_cron_event_invites']);
   }
 
   public function activate()
   {
-    if (!wp_next_scheduled('cron_hook_bragger_client_club_invites', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'every10minutes', 'cron_hook_bragger_client_club_invites', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_brag_client_club_invites', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:00:00'), 'every10minutes', 'cron_hook_brag_client_club_invites', array(NULL, NULL));
     }
 
-    if (!wp_next_scheduled('cron_hook_bragger_client_event_invites', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_bragger_client_event_invites', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_brag_client_event_invites', array(NULL, NULL))) {
+      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_brag_client_event_invites', array(NULL, NULL));
     }
   }
 
@@ -79,7 +77,7 @@ class BraggerClientClub
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_bragger_client_club_invites', 'cron_hook_bragger_client_event_invites'];
+    $hooks = ['cron_hook_brag_client_club_invites', 'cron_hook_brag_client_event_invites'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {
@@ -127,8 +125,8 @@ class BraggerClientClub
         $braze = new \Braze();
         $braze->setMethod('POST');
 
-        $brazeEventRes = $braze->triggerEventByEmail($invite->email, 'brag_invited_bragger_client_club', [
-          'login_url' => home_url("/bragger-client-club/"),
+        $brazeEventRes = $braze->triggerEventByEmail($invite->email, 'brag_invited_brag_client_club', [
+          'login_url' => home_url("/brag-client-club/"),
         ]);
 
         if (201 ==  $brazeEventRes['code']) {
@@ -170,11 +168,11 @@ class BraggerClientClub
         $braze = new \Braze();
         $braze->setMethod('POST');
 
-        $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_invited_bragger_client_event', [
+        $brazeEventRes = $braze->triggerEvent($invite->user_id, 'brag_invited_brag_client_event_' . $invite->event_id, [
           'event_title' => $invite->event_title,
           'event_date' => $invite->event_date,
           'location' => $invite->event_location,
-          'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$invite->event_id}&guid={$invite->guid}")
+          'rsvp_url' => home_url("/brag-client-club/rsvp-event/?id={$invite->event_id}&guid={$invite->guid}")
         ]);
 
         if (201 ==  $brazeEventRes['code']) {
@@ -535,12 +533,12 @@ class BraggerClientClub
      * Trigger Event in Braze
      */
     if ($response != $old_response) {
-      $braze->triggerEvent($invite->user_id, 'brag_rsvped_bragger_client_event_' . $event_id, [
+      $braze->triggerEvent($invite->user_id, 'brag_rsvped_brag_client_event', [
         'event_title' => $invite->event_title,
         'event_date' => $invite->event_date,
         'location' => $invite->event_location,
         'rsvp' => $response,
-        'rsvp_url' => home_url("/bragger-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
+        'rsvp_url' => home_url("/brag-client-club/rsvp-event/?id={$event_id}&guid={$invite->guid}")
       ]);
     }
 
@@ -677,6 +675,19 @@ class BraggerClientClub
       $wp_auth0_id = get_user_meta($user_id, 'wp_auth0_id', true);
     }
 
+    if ('active' == $status) {
+      /**
+       * Trigger Event in Braze
+       */
+      require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+      $braze = new \Braze();
+      $braze->setMethod('POST');
+
+      $braze->triggerEvent($user_id, 'brag_joined_brag_client_club', [
+        'login_url' => home_url("/brag-client-club/"),
+      ]);
+    }
+
     if ($wp_auth0_id) {
       $auth0_token = $auth0_api->oauth_token(
         [
@@ -760,4 +771,4 @@ class BraggerClientClub
   }
 }
 
-new BraggerClientClub();
+new BragClientClub();

@@ -11,7 +11,7 @@ plugins/*
 !plugins/tbm-shout-writer-beer
 !plugins/tbm-adm
 !plugins/tbm-media-helper
-!plugins/tbm-bragger-client-club
+!plugins/tbm-brag-client-club
 
 !plugins/brag-observer
 plugins/brag-observer/*
