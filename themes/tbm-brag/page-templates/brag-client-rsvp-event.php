@@ -80,9 +80,11 @@ if ($event) {
             <h2><?php echo date('d M, Y', strtotime($event->event_date)); ?></h2>
           <?php endif; ?>
         <?php else : ?>
-          <h1 class="content-heading">
-            Brag<br>Client<br>Club
-          </h1>
+          <div class="col-12 col-md-9">
+            <h1 class="content-heading text-center">
+              Brag<br>Client<br>Club
+            </h1>
+          </div>
         <?php endif; ?>
       </div>
       <?php if ($event) : ?>
