@@ -10,8 +10,12 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
         <!-- <div class="col d-flex align-items-center"> -->
         <!-- <input type="email" id="club-member-email" class="form-control" placeholder="Email address"> -->
 
-        <!-- <input type="file" id="file-club-member-emails" class="form-control" accept=".csv"> -->
-        <textarea id="club-member-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea>
+        <div class="d-flex align-items-center">
+            <div><input type="file" id="file-club-member-emails" class="form-control" accept=".csv"></div>
+            <a href="<?php echo plugin_dir_url(__FILE__); ?>../BCC-Invite-Template.csv" class="btn btn-sm btn-info ml-2">Download template</a>
+        </div>
+
+        <!-- <textarea id="club-member-emails" class="form-control" placeholder="Email addresses (one per line)" rows="10"></textarea> -->
 
         <button type="submit" class="btn btn-primary btn-submit mt-3">Submit</button>
         <!-- <div class="result mx-2"></div> -->
@@ -204,7 +208,7 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
             /**
              * Using file upload
              */
-            /* var formData = new FormData();
+            var formData = new FormData();
             formData.append('action', 'invite_to_brag_client_club');
 
             var file = $('#file-club-member-emails')[0].files[0];
@@ -222,20 +226,18 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
 
                 return;
-                // $('#club-member-email').val('').focus();
-                return;
             }).error(function(e) {
                 // theForm.find('.result').addClass('text-danger').text(res.data);
                 console.error(e);
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
                 return;
-            }); */
+            });
 
             /**
              * Using Textarea
              */
 
-            $.post({
+            /* $.post({
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
                 data: {
                     action: 'invite_to_brag_client_club',
@@ -254,7 +256,7 @@ wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist
                 console.error(e);
                 btnSubmit.prop('disabled', false).addClass('btn-primary').removeClass('btn-secondary');
                 return;
-            });
+            }); */
         })
     })
 </script>

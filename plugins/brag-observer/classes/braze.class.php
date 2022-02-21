@@ -156,6 +156,13 @@ class Braze
                     $user_attributes['user_alias'] = $braze_user->user_aliases[0];
                     $user_attributes['_update_existing_only'] = false;
                 }
+
+                if (isset($braze_user->first_name)) {
+                    $user_attributes['first_name'] = $braze_user->first_name;
+                }
+                if (isset($braze_user->last_name)) {
+                    $user_attributes['last_name'] = $braze_user->last_name;
+                }
             }
         }
 
@@ -220,6 +227,13 @@ class Braze
                     $user_attributes['user_alias'] = $braze_user->user_aliases[0];
                     $user_attributes['_update_existing_only'] = false;
                 }
+
+                if (isset($braze_user->first_name)) {
+                    $user_attributes['first_name'] = $braze_user->first_name;
+                }
+                if (isset($braze_user->last_name)) {
+                    $user_attributes['last_name'] = $braze_user->last_name;
+                }
             }
         }
 
@@ -242,14 +256,18 @@ class Braze
             'user' => isset($braze_user) ? $braze_user : null,
             'user_attributes' => $user_attributes,
         ];
-    } // getUser($user_id)
+    } // getUserByEmail($email)
 
-    public function triggerEvent($user_id, $event_name, $properties = [])
+    public function triggerEvent($user_id, $event_name, $properties = [], $attributes = [])
     {
         $braze_user = $this->getUser($user_id);
         $user_attributes = $braze_user['user_attributes'];
 
         $braze_payload = [];
+
+        if (!empty($attributes)) {
+            $braze_payload['attributes'] = [array_merge($braze_user['user_attributes'], $attributes)];
+        }
 
         $event_payload = [
             'name' => $event_name,
@@ -270,13 +288,17 @@ class Braze
         }
     }
 
-    public function triggerEventByEmail($email, $event_name, $properties = [])
+    public function triggerEventByEmail($email, $event_name, $properties = [], $attributes = [])
     {
         $braze_user = $this->getUserByEmail($email);
 
         $user_attributes = $braze_user['user_attributes'];
 
         $braze_payload = [];
+
+        if (!empty($attributes)) {
+            $braze_payload['attributes'] = [array_merge($braze_user['user_attributes'], $attributes)];
+        }
 
         $event_payload = [
             'name' => $event_name,
@@ -323,8 +345,6 @@ class Braze
             if (is_array($attributes) && !empty($attributes)) {
                 $braze_payload['attributes'] = [array_merge($user_attributes, [$attributes['key'] => $attributes['value']])];
             }
-
-            // error_log(print_r($braze_payload, true));
 
             if (!empty($braze_payload)) {
                 $this->setPayload($braze_payload);

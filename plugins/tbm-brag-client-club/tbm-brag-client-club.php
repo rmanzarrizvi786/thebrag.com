@@ -110,8 +110,7 @@ class BragClientClub
   {
     global $wpdb;
     $invites = $wpdb->get_results("SELECT
-        m.`id`,
-        m.`email`
+        *
       FROM {$wpdb->prefix}client_club_members m
       WHERE m.`status` IS NULL
       LIMIT 40
@@ -125,9 +124,19 @@ class BragClientClub
         $braze = new \Braze();
         $braze->setMethod('POST');
 
-        $brazeEventRes = $braze->triggerEventByEmail($invite->email, 'brag_invited_brag_client_club', [
-          'login_url' => home_url("/brag-client-club/"),
-        ]);
+        $attributes = [
+          'first_name' => trim($invite->first_name),
+        ];
+        if (!is_null($invite->last_name) && '' != trim($invite->last_name)) {
+          $attributes['last_name'] = trim($invite->last_name);
+        }
+
+        $brazeEventRes = $braze->triggerEventByEmail(
+          $invite->email,
+          'brag_invited_brag_client_club',
+          ['login_url' => home_url("/brag-client-club/"),],
+          $attributes
+        );
 
         if (201 ==  $brazeEventRes['code']) {
           $wpdb->update(
@@ -190,6 +199,14 @@ class BragClientClub
 
   public function index()
   {
+
+    /* $a = [
+      'a' => 'A',
+      'b' => 'B',
+    ];
+
+    echo '<pre>' . print_r($a, true) . '</pre>'; */
+
     include __DIR__ . '/views/members.php';
   } // index()
 
@@ -271,43 +288,63 @@ class BragClientClub
   {
     global $wpdb;
 
-    $emails = [];
+    if (!isset($_FILES['csv'])) {
+      wp_send_json_error('<tr><td class="text-danger">Missing file.</td></tr>');
+      die();
+    }
 
-    /* 
     // CSV Method
     $bom = "\xef\xbb\xbf";
     $fp = fopen($_FILES['csv']['tmp_name'], 'r');
     if (fgets($fp, 4) !== $bom) {
       rewind($fp);
     }
+
+    $headers = fgetcsv($fp);
+    $users = [];
     while (!feof($fp) && ($line = fgetcsv($fp)) !== false) {
-      $emails[] = $line;
-    } */
+      // $users[] = $line;
+      $users[] = array_combine($headers, $line);
+    }
 
+    // TextArea method
+    // $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
 
-    $emails = explode("\n", str_replace("\r", "", trim($_POST['emails'])));
+    // wp_send_json_error('<tr><td class="text-danger"><pre>' . print_r($users, true) . '</pre></td></tr>');
+    // die();
 
-    if (!is_array($emails) || empty($emails)) {
+    if (!is_array($users) || empty($users)) {
       wp_send_json_error('<tr><td class="text-danger">List is empty</td></tr>');
       die();
     }
 
-    $emails = array_map('trim', $emails);
-    $emails = array_unique($emails);
+    // $emails = array_map('trim', $emails);
+    // $emails = array_unique($emails);
 
     // $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $response = '';
 
     $count = 0;
-    foreach ($emails as $email) {
+    $errors = [];
+    foreach ($users as $user) {
       $count++;
+      $user_errors = [];
+
+      $first_name = isset($user['First Name']) ? trim($user['First Name']) : null;
+      $last_name = isset($user['Last Name']) ? trim($user['Last Name']) : null;
+      $email = $user['Email'];
 
       // $email = $email_arr[0]; // Was used with CSV option
 
-      $errors = [];
+      if (
+        is_null($first_name) || '' == $first_name
+        // || is_null($last_name) || '' == $last_name
+      ) {
+        $user_errors[] = "<div class='text-danger'>Missing First and/or Last Name</div>";
+      }
 
       if (!is_email($email)) {
-        $errors[] = "<tr class='text-danger'><th>{$count}</th><td>{$email}</td><td>Invalid Email</td></tr>";
+        $user_errors[] = "<div class='text-danger'>Invalid Email</div>";
       }
 
       // wp_send_json_error(print_r($errors, true));
@@ -319,14 +356,16 @@ class BragClientClub
       // Check if already in DB
       $check = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}client_club_members WHERE `email` = '{$email}' LIMIT 1");
       if ($check) {
-        $errors[] = "<tr class='text-warning'><th>{$count}</th><td>{$email}</td><td>Already invited</td></tr>";
+        $user_errors[] = "<div class='text-warning'>Already invited</div>";
       }
 
-      if (empty($errors)) {
+      if (empty($user_errors)) {
         $wpdb->insert(
           $wpdb->prefix . 'client_club_members',
           [
             'email' => $email,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
             'status' => null, //'invited',
             'created_at' => current_time('mysql')
           ],
@@ -334,10 +373,13 @@ class BragClientClub
             '%s', '%s', '%s'
           ]
         );
-        $response .= "<tr class='text-success'><th>{$count}</th><td>{$email}</td><td>Will be invited to join the club!</td></tr>";
+        $response .= "<tr class='text-success'><th>{$count}</th><td>{$first_name} {$last_name}</td><td>{$email}</td><td>Will be invited to join the club!</td></tr>";
       } else {
         // $response .= '<tr><td class="text-danger">' . implode('<br>', $errors) . '</td></tr>';
-        $response .= implode('', $errors);
+        $response .= "<tr><th>{$count}</th><td>{$first_name} {$last_name}</td><td>{$email}</td><td>";
+        $response .= implode('', $user_errors);
+        $response .= "</td></tr>";
+        // $response .= implode('', $errors);
       }
     }
 
