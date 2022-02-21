@@ -565,7 +565,7 @@ class BraggerClientClub
     $braze->setAttribute($invite->user_id, ['key' => 'brag_bcc_events', 'value' => $braze_bcc_events], true);
 
 
-    $message = 'yes' == $response ? 'Thank you, see you there!' : 'You wil be missed!';
+    $message = 'yes' == $response ? 'Thank you, see you there!' : 'You will be missed!';
 
     wp_send_json_success($message);
     die();
