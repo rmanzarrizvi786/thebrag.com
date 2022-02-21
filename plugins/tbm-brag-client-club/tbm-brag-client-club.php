@@ -96,14 +96,14 @@ class BragClientClub
     $main_menu = add_menu_page(
       $this->plugin_title,
       $this->plugin_title,
-      'administrator',
+      'edit_posts',
       $this->plugin_slug,
       [$this, 'index'],
       'dashicons-superhero',
       10
     );
-    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Members", 'Members', 'administrator', "{$this->plugin_slug}", [$this, 'index']);
-    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Events", 'Events', 'administrator', "{$this->plugin_slug}-events", [$this, 'manage_events']);
+    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Members", 'Members', 'edit_posts', "{$this->plugin_slug}", [$this, 'index']);
+    add_submenu_page($this->plugin_slug, "{$this->plugin_title} Events", 'Events', 'edit_posts', "{$this->plugin_slug}-events", [$this, 'manage_events']);
   }
 
   public function exec_cron_club_invites()
