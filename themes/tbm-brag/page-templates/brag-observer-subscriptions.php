@@ -425,7 +425,7 @@ if ($lists) :
             </div>
           <?php endif; ?>
           <?php
-          $vote_target = 2000;
+          $vote_target = 5000;
           $vote_progress = $list->votes_count * 100 / $vote_target;
           ?>
           <div class="progress mt-3" style="height: .5rem;">
