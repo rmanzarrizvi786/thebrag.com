@@ -1,4 +1,7 @@
 <?php
+
+use AmpProject\Validator\Spec\Tag\P;
+
 class Cron // extends BragObserver
 {
     protected $plugin_name;
@@ -25,6 +28,9 @@ class Cron // extends BragObserver
         add_action('cron_hook_observer_sync_with_auth0', [$this, 'exec_cron_observer_sync_with_auth0']);
 
         add_filter('cron_schedules', [$this, '_cron_schedules']);
+
+        // AJAX
+        add_action('wp_ajax_brag_observer_process_braze', [$this, 'ajax_process_braze']);
 
         // Config
         self::$config = include __DIR__ . '/config.php';
@@ -54,7 +60,7 @@ class Cron // extends BragObserver
             'Process Braze cron',
             'administrator',
             $this->plugin_slug . '-process-braze-cron',
-            array($this, 'process_braze')
+            array($this, 'show_process_braze')
         );
         /* }} Admins only */
     }
@@ -441,22 +447,67 @@ class Cron // extends BragObserver
         return $wpdb->get_results($query);
     }
 
-    public function process_braze()
+    public function ajax_process_braze()
+    {
+        $this->exec_cron_observer_braze_update_newsletter_interests();
+        wp_send_json_success();
+        die();
+    }
+
+    public function show_process_braze()
     {
         date_default_timezone_set('Australia/NSW');
-        echo '<h2>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</h2>';
 
-        echo '<hr>';
+        if (isset($_GET['manual']) && 1 == trim($_GET['manual'])) {
+?>
+            <div style="margin-top: 2rem;">
+                <button id="brag-observer-process-braze" class="button button-primary">Process</button>
+            </div>
+            <script>
+                jQuery(document).ready(function($) {
+                    var bragObserverProcessingBraze = false;
+                    $('#brag-observer-process-braze').on('click', function() {
+                        $(this).prop('disabled', true).text('Processing...');
+                        processBraze();
+                    });
 
-        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
-        echo '<h2>update_newsletter_interests</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
-        $this->exec_cron_observer_braze_update_newsletter_interests();
+                    function processBraze() {
+                        if (!bragObserverProcessingBraze) {
+                            bragObserverProcessingBraze = true;
+                            $.post(
+                                '<?php echo admin_url('admin-ajax.php'); ?>', {
+                                    action: 'brag_observer_process_braze',
+                                },
+                                function(res) {
+                                    if (res.success) {
+                                        bragObserverProcessingBraze = false;
+                                        processBraze();
+                                    } else {
+                                        alert(res.data);
+                                        $('#brag-observer-process-braze').prop('disabled', false).text('Process');
+                                    }
+                                }
+                            )
+                        }
+                    }
+                });
+            </script>
+<?php
+        } else {
+            echo '<h2>Current Date/Time: ' . date('d-M-Y h:i:sa') . '</h2>';
 
-        echo '<hr>';
+            echo '<hr>';
 
-        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL));
-        echo '<h2>update_profile</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
-        $this->exec_cron_observer_braze_update_profile();
+            $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
+            echo '<h2>update_newsletter_interests</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+            $this->exec_cron_observer_braze_update_newsletter_interests();
+
+            echo '<hr>';
+
+            $next_run_timestamp = wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL));
+            echo '<h2>update_profile</h2>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
+            $this->exec_cron_observer_braze_update_profile();
+        }
     }
 
     public function exec_cron_observer_braze_update_profile()
