@@ -840,12 +840,31 @@ class Cron // extends BragObserver
                     ";
                 $subs = $wpdb->get_results($query_subs);
 
-                // echo '<pre>' . print_r($subs, true) . '</pre>';
 
                 if ($subs) {
                     $user_attributes['newsletter_interests'] = wp_list_pluck($subs, 'slug');
                 } else {
                     $user_attributes['newsletter_interests'] = [];
+                }
+
+                /**
+                 * Set `imported_from` custom attribute if set
+                 */
+                if (get_user_meta($user->ID, 'imported_from', true)) {
+                    $arr_imported_from = [];
+                    if ($braze_user_found && isset($braze_user->custom_attributes->imported_from)) {
+                        if (is_array($braze_user->custom_attributes->imported_from)) {
+                            $arr_imported_from = array_merge($braze_user->custom_attributes->imported_from, [get_user_meta($user->ID, 'imported_from', true)]);
+                        } else {
+                            $arr_imported_from = [
+                                $braze_user->custom_attributes->imported_from,
+                                get_user_meta($user->ID, 'imported_from', true)
+                            ];
+                        }
+                    } else {
+                        $arr_imported_from = [get_user_meta($user->ID, 'imported_from', true)];
+                    }
+                    $user_attributes['imported_from'] = $arr_imported_from;
                 }
 
                 if (!empty($user_attributes)) {
@@ -865,9 +884,13 @@ class Cron // extends BragObserver
             );
             $res_track = $braze->request('/users/track', true);
             if (201 === $res_track['code']) {
-                // echo '<pre>' . print_r($attributes, true) . '</pre>';
-                // echo '<pre>' . print_r($res_track, true) . '</pre>';
+
                 $wpdb->query("UPDATE {$wpdb->prefix}observer_braze_cron SET `completed_at` = '" . current_time('mysql') . "' WHERE `id` IN (" . implode(',', $task_ids) . ")");
+
+                /**
+                 * Delete user meta, as it doesn't need to be processed again unless set again
+                 */
+                delete_user_meta($user->ID, 'imported_from');
             } else {
                 wp_mail('sachin.patel@thebrag.media', 'Braze error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r " . print_r($res_track, true));
             }

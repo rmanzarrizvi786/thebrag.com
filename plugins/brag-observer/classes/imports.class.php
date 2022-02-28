@@ -130,6 +130,8 @@ class Imports extends BragObserver
         }
 
         if ($user) {
+          $add_braze_cron = false;
+
           if (!is_null($tmp_sub->gender) && $tmp_sub->gender != '') {
             if (!get_user_meta($user->ID, 'gender') && !get_user_meta($user->ID, 'predicted_gender')) {
               update_user_meta($user->ID, 'predicted_gender', strtoupper($tmp_sub->gender));
@@ -146,6 +148,14 @@ class Imports extends BragObserver
             if (!get_user_meta($user->ID, 'birthday') && !get_user_meta($user->ID, 'predicted_birthday')) {
               update_user_meta($user->ID, 'predicted_birthday', strtoupper($tmp_sub->birthday));
             }
+          }
+
+          /**
+           * Add `imported_from` meta if set
+           */
+          if ($tmp_sub->imported_from && '' != trim($tmp_sub->imported_from)) {
+            update_user_meta($user->ID, 'imported_from', trim($tmp_sub->imported_from));
+            $add_braze_cron = true;
           }
 
           update_user_meta($user->ID, 'no_welcome_email', 1);
@@ -190,16 +200,20 @@ class Imports extends BragObserver
                 }
                 $wpdb->insert($wpdb->prefix . 'observer_subs', $insert_values);
 
-                /**
-                 * Add to queue for Braze
-                 */
-                $task = 'update_newsletter_interests';
-                $cron = new Cron();
-                if (!$cron->getActiveBrazeQueueTask($user->ID, $task)) {
-                  $cron->addToBrazeQueue($user->ID, $task);
-                }
+                $add_braze_cron = true;
               } // Not already subscribed/unsubscribed
             } // For Each $list_id
+
+            /**
+             * Add to queue for Braze
+             */
+            if ($add_braze_cron) {
+              $task = 'update_newsletter_interests';
+              $cron = new Cron();
+              if (!$cron->getActiveBrazeQueueTask($user->ID, $task)) {
+                $cron->addToBrazeQueue($user->ID, $task);
+              }
+            }
           }
         } // If $user
 
