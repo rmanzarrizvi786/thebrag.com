@@ -739,6 +739,7 @@ class Cron // extends BragObserver
 
         $attributes = [];
         $task_ids = [];
+        $user_ids = [];
 
         $query_tasks = " SELECT c.`id`, c.`user_id`
             FROM {$wpdb->prefix}observer_braze_cron c
@@ -768,6 +769,8 @@ class Cron // extends BragObserver
                     );
                     continue;
                 }
+
+                $user_ids[] = $user->ID;
 
                 /**
                  * Set user's Auth0 ID as external ID (if set)
@@ -890,7 +893,8 @@ class Cron // extends BragObserver
                 /**
                  * Delete user meta, as it doesn't need to be processed again unless set again
                  */
-                delete_user_meta($user->ID, 'imported_from');
+                foreach ($user_ids as $user_id)
+                    delete_user_meta($user_id, 'imported_from');
             } else {
                 wp_mail('sachin.patel@thebrag.media', 'Braze error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r " . print_r($res_track, true));
             }
