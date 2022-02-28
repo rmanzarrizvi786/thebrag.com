@@ -465,6 +465,7 @@ class Cron // extends BragObserver
             </div>
             <script>
                 jQuery(document).ready(function($) {
+                    var counterBrazeProcess = 0;
                     var bragObserverProcessingBraze = false;
                     $('#brag-observer-process-braze').on('click', function() {
                         $(this).prop('disabled', true).text('Processing...');
@@ -472,6 +473,7 @@ class Cron // extends BragObserver
                     });
 
                     function processBraze() {
+                        counterBrazeProcess++;
                         if (!bragObserverProcessingBraze) {
                             bragObserverProcessingBraze = true;
                             $.post(
@@ -480,6 +482,7 @@ class Cron // extends BragObserver
                                 },
                                 function(res) {
                                     if (res.success) {
+                                        console.log('counterBrazeProcess', counterBrazeProcess);
                                         bragObserverProcessingBraze = false;
                                         processBraze();
                                     } else {
