@@ -29,7 +29,7 @@ if (is_null($list_id)) {
       <div class="row">
         <?php foreach ($lists as $list) { ?>
           <a href="<?php echo add_query_arg('list_id', $list->id); ?>" class="btn btn-default col-md-2 m-2" style="height: 150px; overflow: hidden;">
-            <img src="<?php echo $list->image_url; ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 100%; height: auto; opacity: .7">
+            <img src="<?php echo $list->image_url; ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 100%; height: auto;">
 
             <span class="text-white p-2 d-block w-100" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.7)"><?php echo $list->title; ?></span>
 
