@@ -62,7 +62,7 @@ $newsletters = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_ne
   <a href="admin.php?page=brag-observer-manage-newsletter&list_id=<?php echo $list->id; ?>" class="btn btn-sm btn-primary">Create <?php echo $list->title; ?> Newsletter</a>
 </div>
 
-<div class="d-flex justify-content-center mb-3">
+<div class="d-flex flex-wrap justify-content-center mb-3">
   <div class="btn">Total: <?php echo $total; ?></div>
   <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
     <a href="<?php echo esc_url(add_query_arg(array('p' => $i))); ?>" class="btn <?php echo $i == $page ? ' btn-dark' : ''; ?>"><?php echo $i; ?></a>
