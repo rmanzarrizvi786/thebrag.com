@@ -1472,6 +1472,13 @@ function print_video_record_of_week($obj, $newsletter)
 						'title' => 'The Industry Observer',
 					];
 				break;
+			case 'themusicnetwork.com':
+				$pub_logo =
+					[
+						'url' => $pubs_base_url .= 'ico_The-Music-Network-32x32.png',
+						'title' => 'The Music Network',
+					];
+				break;
 			case 'thebrag.com':
 				$pub_logo =
 					[
