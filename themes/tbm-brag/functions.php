@@ -3401,6 +3401,13 @@ function brands()
             'ext' => 'svg',
             'width' => 80
         ],
+        'tmn' => [
+            'title' => 'The Music Network',
+            'link' => 'https://themusicnetwork.com/',
+            'logo_name' => 'TMN',
+            'ext' => 'svg',
+            'width' => 80
+        ],
     ];
     return $pub_logos;
 } // brands()
