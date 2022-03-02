@@ -2,7 +2,7 @@
     <div class="container">
         <div class="btn d-none d-md-block btn-media-top btn-toggle-slidedown" data-target="network">
             <span class="brag-media-top"><img src="https://cdn.thebrag.com/tbm/The-Brag-Media-300px-light.png" loading="lazy"></span>
-            <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>icon_arrow-down-td.svg" class="rotate180"></span>
+            <span class="arrow-down"><img src="<?php echo ICONS_URL; ?>icon_arrow-down-tb.svg" class="rotate180"></span>
         </div>
         <div class="d-flex flex-column" id="brands_wrap">
             <div class="d-flex flex-row flex-wrap justify-content-start">
