@@ -1145,62 +1145,136 @@ function print_video_record_of_week($obj, $newsletter)
 						<tr style="padding:0;text-align:center;vertical-align:top">
 							<td>
 								<?php
-								// Articles from TheBrag.com
-								$ch_brag_jobs = curl_init();
+								// Jobs from TheBrag.com/jobs
+
+								/* $ch_brag_jobs = curl_init();
 								curl_setopt($ch_brag_jobs, CURLOPT_URL, "https://thebrag.com/jobs/wp-json/api/v1/jobs?keywords=music&industry=music&size=10");
 								curl_setopt($ch_brag_jobs, CURLOPT_RETURNTRANSFER, 1);
 								$output_brag_jobs = curl_exec($ch_brag_jobs);
 								curl_close($ch_brag_jobs);
-								$jobs = json_decode($output_brag_jobs);
-								if (count($jobs) > 0) :
-									$counter_jobs = 0;
+								$jobs = json_decode($output_brag_jobs); */
+
+								$base_url = 'https://thebrag.com/jobs/';
+								if (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) {
+									$base_url = 'http://host.docker.internal:8088/';
+								}
+
+								$url = $base_url . 'wp-json/api/v1/jobs?type=power-listing&size=10&order=desc';
+								$power_jobs_res = wp_remote_get($url);
+								$power_jobs = json_decode(wp_remote_retrieve_body($power_jobs_res));
+
+								$url = $base_url . 'wp-json/api/v1/jobs?keywords=music&industry=music&type=basic-listing&size=10&order=rand';
+								$basic_jobs_res = wp_remote_get($url);
+								$basic_jobs = json_decode(wp_remote_retrieve_body($basic_jobs_res));
+
+								if (
+									($power_jobs && is_array($power_jobs) && !empty($power_jobs)) ||
+									($basic_jobs && is_array($basic_jobs) && !empty($basic_jobs))
+								) :
 								?>
 									<h1 style="text-align: center;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif; margin: 10px auto; font-weight: bold; word-break: normal; font-size: 26px;">BEST JOBS IN MUSIC</h1>
-									<?php foreach ($jobs as $key => $job) :
-										if (is_null($job->image)) :
-											continue;
-										endif;
-										$counter_jobs++;
-										if ($counter_jobs > 4) :
-											break;
-										endif;
-									?>
-										<table style="width: 100%;  max-width: 100%; <?php echo $key < (count($jobs) - 1) ? ' border-bottom: 1px solid #dddddd;' : ''; ?>" align="center" width="600">
+									<?php
+									if ($power_jobs && is_array($power_jobs) && !empty($power_jobs)) :
+										$counter_jobs = 0;
+										foreach ($power_jobs as $key => $job) :
+											if (is_null($job->image))
+												continue;
 
-											<tr>
-												<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
-													<?php if (!is_null($job->image)) : ?>
-														<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-															<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
-														</a>
-													<?php endif; ?>
-												</td>
-												<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
-													<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
-														<?php if (isset($job->link) && $job->link != '') : ?>
+											$counter_jobs++;
+											if ($counter_jobs > 4)
+												break;
+
+									?>
+											<table style="width: 100%;  max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
+												<tr>
+													<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
+														<?php if (!is_null($job->image)) : ?>
 															<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-																<?php echo $job->title; ?>
+																<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
 															</a>
-														<?php else : ?>
-															<?php echo $job->title; ?>
 														<?php endif; ?>
-													</h5>
-													<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
-														<?php echo $job->description; ?>
-													</p>
-												</td>
-											</tr>
-
-										</table>
-									<?php endforeach; // For Each Job 
+													</td>
+													<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
+														<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
+															<?php if (isset($job->link) && $job->link != '') : ?>
+																<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+																	<span style="color: #666; font-size: 13px;"><?php echo date('d M Y', strtotime($job->publish_date)); ?></span>
+																	<br>
+																	<?php echo $job->title; ?>
+																	<br>
+																	<span style="color: #666; font-size: 13px;"><?php echo $job->location; ?></span>
+																</a>
+															<?php else : ?>
+																<?php echo $job->title; ?>
+															<?php endif; ?>
+														</h5>
+														<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
+															<?php // echo $job->description; 
+															?>
+														</p>
+													</td>
+												</tr>
+											</table>
+										<?php endforeach; // For Each Job
+										?>
+									<?php endif; // If there are Power listing jobs 
 									?>
-								<?php endif; // If there are jobs 
+
+									<?php
+									if ($basic_jobs && is_array($basic_jobs) && !empty($basic_jobs)) :
+									?>
+										<?php
+										$counter_jobs = 0;
+										foreach ($basic_jobs as $key => $job) :
+											if (is_null($job->image))
+												continue;
+
+											$counter_jobs++;
+											if ($counter_jobs > 4)
+												break;
+
+										?>
+											<table align="left" class="small-12" style="width: 50%;  max-width: 100%;" align="center" width="300">
+												<tr>
+													<td class="td-block" style="padding: 10px; width: 80px; text-align: center; vertical-align: middle;">
+														<?php if (!is_null($job->image)) : ?>
+															<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+																<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="70" style="max-width: 70px; outline: 0; border: 0;">
+															</a>
+														<?php endif; ?>
+													</td>
+													<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
+														<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
+															<?php if (isset($job->link) && $job->link != '') : ?>
+																<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+																	<span style="color: #666; font-size: 13px;"><?php echo date('d M Y', strtotime($job->publish_date)); ?></span>
+																	<br>
+																	<?php echo $job->title; ?>
+																	<br>
+																	<span style="color: #666; font-size: 13px;"><?php echo $job->location; ?></span>
+																</a>
+															<?php else : ?>
+																<?php echo $job->title; ?>
+															<?php endif; ?>
+														</h5>
+													</td>
+												</tr>
+											</table>
+										<?php
+											echo $counter_jobs % 2 == 0 ? '<div>&nbsp;</div>' : '';
+										endforeach; // For Each Job
+										?>
+									<?php endif; // If there are Power listing jobs 
+									?>
+								<?php endif; // If there are Power Or Basic listing jobs 
 								?>
+
+
 								<table style="width: 100%; max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
 									<tr>
 										<td>
 											<p align="center" style="text-align: center;margin-top: 20px;margin-bottom: 10px;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif;font-weight: normal;padding: 0;line-height: 19px;font-size: 14px;">
-												<a href="https://thebrag.com/jobs/" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
+												<a href="<?php echo $base_url; ?>" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
 													MORE JOBS
 												</a><br>
 												<br>
