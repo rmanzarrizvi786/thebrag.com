@@ -2021,7 +2021,7 @@ function ssm_limit_image_size($file)
         }
 
         // File size limit in KB
-        $limit = 250;
+        $limit = 500;
 
         if (($file_size > $limit))
             array_push($errors, '(+) Uploaded file is too large. It has to be smaller than ' . $limit . 'KB');
