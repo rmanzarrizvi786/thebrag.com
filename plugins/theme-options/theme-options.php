@@ -10,9 +10,50 @@
  */
 
 add_action('admin_menu', 'tbm_theme_options_plugin_menu');
+add_action('rest_api_init', 'tbm_theme_options_rest_api_init');
 function tbm_theme_options_plugin_menu()
 {
     add_menu_page('Theme Options', 'Theme Options', 'edit_pages', 'tbm_theme_options', 'tbm_theme_options');
+}
+
+function tbm_theme_options_rest_api_init()
+{
+    register_rest_route('tbm', '/votw', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_votw',
+        'permission_callback' => '__return_true',
+    ));
+}
+
+function rest_get_votw()
+{
+    $featured_yt_vid_id = NULL;
+    $featured_video = get_option('tbm_featured_video');
+    $tbm_featured_video_link = get_option('tbm_featured_video_link');
+    if (!is_null($featured_video) && $featured_video != '') :
+        parse_str(parse_url($featured_video, PHP_URL_QUERY), $featured_video_vars);
+        $featured_yt_vid_id = isset($featured_video_vars['v']) ? $featured_video_vars['v'] : NULL;
+        $featured_video_img = !is_null($featured_yt_vid_id) ? 'https://i.ytimg.com/vi/' . $featured_yt_vid_id . '/0.jpg' : NULL;
+        if ($tbm_featured_video_link) :
+            $tbm_featured_video_link_html = file_get_contents($tbm_featured_video_link);
+            $tbm_featured_video_link_html_dom = new DOMDocument();
+            @$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
+            // $meta_og_img_tbm_featured_video_link = null;
+            foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
+                if ($meta->getAttribute('property') == 'og:image') {
+                    $featured_video_img = $meta->getAttribute('content');
+                    break;
+                }
+            }
+        endif;
+    endif;
+    $featured_video_img = str_ireplace('/img-socl/?url=', '', substr($featured_video_img, strpos($featured_video_img, '/img-socl/?url=')));
+    return [
+        'image' => $featured_video_img,
+        'artist' => get_option('tbm_featured_video_artist') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_artist'))) : '',
+        'song' => get_option('tbm_featured_video_song') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) : '',
+        'link' => $tbm_featured_video_link,
+    ];
 }
 
 function tbm_theme_options()
