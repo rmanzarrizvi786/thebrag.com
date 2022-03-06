@@ -47,7 +47,7 @@ if (!post_password_required($post)) :
             $author_byline = $author_name = get_field('Author');
         endif; // If custom author is set
 
-        $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture'), 'thumbnail');
+        $author_img_src = wp_get_attachment_image_src(get_field('author_profile_picture'), 'full');
         if ($author_img_src) :
             $author_image = '<img src="' . $author_img_src[0] . '" width="64" class="rounded-circle">';
         else :
