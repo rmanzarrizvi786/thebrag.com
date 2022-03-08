@@ -1233,6 +1233,15 @@ class BragObserver
         $cron->addToBrazeQueue($user_id, $task);
       }
 
+      $crons = _get_cron_array();
+      if (!empty($crons)) {
+        foreach ($crons as $timestamp => $cron) {
+          if (!wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests')) {
+            wp_schedule_event(strtotime('00:00:00'), 'every20minutes', 'cron_hook_observer_braze_update_newsletter_interests');
+          }
+        }
+      }
+
       // require_once __DIR__ . '/classes/email.class.php';
       // $email = new Email();
       // $email->sendSubscribeConfirmationEmail( $formData['list'] );
