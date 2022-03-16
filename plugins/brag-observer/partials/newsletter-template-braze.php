@@ -598,11 +598,16 @@ $container_width = 700;
 			}
 		}
 
+		.list-christian_hull_top_five {
+			font-family: Helvetica;
+		}
+
 		.list-christian_hull_top_five ul li {
-			list-style-type: "★";
+			list-style-type: disc;
 			color: #419df2;
 			margin-left: 16px;
 			padding-left: 16px;
+			padding-bottom: 10px;
 		}
 	</style>
 </head>
