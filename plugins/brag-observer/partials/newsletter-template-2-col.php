@@ -173,6 +173,13 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
         </table>
       <?php endfor; ?>
 
+      <?php
+      // Ad after article 14
+      if (in_array(14, $ads_after_articles)) :
+        print_ad(14, $ads_after_articles, $newsletter, $container_width);
+      endif;
+      ?>
+
     </td>
   </tr>
 <?php endif; // if there are $post_ids 
