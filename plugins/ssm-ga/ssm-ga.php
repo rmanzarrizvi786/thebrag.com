@@ -17,8 +17,6 @@ function ssm_ga_func($data)
     $from = isset($_GET['from']) ? date_i18n('c', strtotime(trim($_GET['from']))) : NULL;
     $to = isset($_GET['to']) ? date_i18n('c', strtotime(trim($_GET['to']))) : NULL;
 
-    // echo $from . ' ' . $to . '<br>';
-
     $query_author = isset($_GET['author']) ? trim($_GET['author']) : NULL;
     if (is_null($from) || is_null($to))
         return $return;
