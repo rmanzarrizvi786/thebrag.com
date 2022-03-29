@@ -15,7 +15,6 @@ if (!is_null($id)) :
     SELECT
       u.user_email Email,
       r.response1 Response,
-      r.source Source,
       r.consent_promotional_marketing Consent,
       r.status Status,
       r.created_at 'Submitted at'
