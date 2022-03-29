@@ -36,7 +36,7 @@ $lead_generators = $wpdb->get_results($lead_generators_query);
       <th>Thanks Message (verify)</th>
       <th style="width: 330px;">Shortcode</th>
       <th>Verified Responses</th>
-      <th>Actions</th>
+      <th colspan="2">Actions</th>
     </tr>
     <?php foreach ($lead_generators as $lead_generator) :
       $lead_generator->lists = $wpdb->get_results("SELECT title FROM {$wpdb->base_prefix}observer_lists l WHERE id IN ({$lead_generator->list_id})");
