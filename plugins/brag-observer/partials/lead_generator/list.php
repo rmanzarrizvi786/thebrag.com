@@ -3,6 +3,13 @@ global $wpdb;
 
 wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
 
+$per_page = 10;
+$page = isset($_GET['p']) ? $_GET['p'] : 1;
+$limit_from = ($page - 1) * $per_page;
+
+$total = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->base_prefix}observer_lead_generators");
+$total_pages = ceil($total / $per_page);
+
 $lead_generators_query = "
   SELECT
     t.id,
@@ -18,12 +25,21 @@ $lead_generators_query = "
     t.id
   ORDER BY
     t.id DESC
+  LIMIT {$limit_from}, {$per_page}
 ";
 
 $lead_generators = $wpdb->get_results($lead_generators_query);
 ?>
-<div class="text-right my-3">
+<div class="d-flex justify-content-between align-items-center">
+  <h1>Lead Generators</h1>
   <a href="admin.php?page=brag-observer-manage-lead-generator" class="btn btn-sm btn-primary">Create Lead Generator</a>
+</div>
+
+<div class="d-flex flex-wrap justify-content-center mb-3">
+  <div class="btn">Total: <?php echo $total; ?></div>
+  <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+    <a href="<?php echo esc_url(add_query_arg(array('p' => $i))); ?>" class="btn <?php echo $i == $page ? ' btn-dark' : ''; ?>"><?php echo $i; ?></a>
+  <?php endfor; ?>
 </div>
 
 <?php if ($lead_generators) : ?>
