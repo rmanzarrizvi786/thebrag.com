@@ -32,12 +32,8 @@ if (!is_null($id)) :
   $reviews = $wpdb->get_results($reviews_query);
 
   if ($reviews) :
-
-    // $reviews = array_map('array', $reviews);
     $reviews = json_decode(json_encode($reviews), true);
-
-    // echo '<pre>' . print_r($reviews, true) . '</pre>';
-    // exit;
+    $reviews = stripslashes_deep($reviews);
 
     ob_start();
     $df = fopen("php://output", 'w');
