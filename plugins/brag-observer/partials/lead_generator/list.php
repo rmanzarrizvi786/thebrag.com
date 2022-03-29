@@ -57,10 +57,20 @@ $lead_generators = $wpdb->get_results($lead_generators_query);
         </td>
         <td><?php echo $lead_generator->msg_thanks; ?></td>
         <td><?php echo $lead_generator->msg_thanks_verify; ?></td>
-        <td><input type="text" value='[observer_lead_generator_form id="<?php echo $lead_generator->id; ?>"]' readonly class="form-control" onClick="this.select();"></td>
+        <td><input type="text" value='[observer_lead_generator_form id=<?php echo $lead_generator->id; ?>]' readonly class="form-control" onClick="this.select();"></td>
         <td><?php echo $lead_generator->total_responses; ?></td>
         <td>
           <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-lead-generator', 'action' => 'edit', 'id' => $lead_generator->id]); ?>" class="btn btn-sm btn-info">Edit</a>
+        </td>
+        <td>
+          <?php if ($lead_generator->total_responses > 0) : ?>
+            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="nds_add_user_meta_form">
+              <input type="hidden" name="id" value="<?php echo $lead_generator->id; ?>">
+              <input type="hidden" name="status" value="verified">
+              <input type="hidden" name="action" value="observer_export_lead_generator">
+              <button type="submit" class="btn btn-sm btn-success">Export</button>
+            </form>
+          <?php endif; ?>
         </td>
       </tr>
     <?php endforeach; // For Each $lead_generators 

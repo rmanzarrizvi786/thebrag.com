@@ -24,6 +24,9 @@ class LeadGenerator extends BragObserver
 
     // REST API
     add_action('rest_api_init', [$this, '_rest_api_init']);
+
+    // Export action
+    add_action('admin_post_observer_export_lead_generator', [$this, 'export_responses']);
   }
 
   public function _admin_menu()
@@ -62,6 +65,14 @@ class LeadGenerator extends BragObserver
   {
     include __DIR__ . '/../partials/lead_generator/list.php';
   } // View lead_generators list
+
+  /**
+   * Export responses to CSV
+   */
+  public function export_responses()
+  {
+    include __DIR__ . '/../partials/lead_generator/export.php';
+  }
 
   /*
   * Save lead_generator
