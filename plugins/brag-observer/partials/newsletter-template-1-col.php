@@ -159,11 +159,17 @@ function print_article($newsletter, $article_number, $container_width = 700)
                           <h1>
                             <font color="#ffffff">
                               <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
-                                <?php echo $newsletter->details->post_titles[$article_number]; ?>
+                                <?php
+                                if (4 == $newsletter->details->list_id) {
+                                  echo strtoupper($newsletter->details->post_titles[$article_number]);
+                                } else {
+                                  echo $newsletter->details->post_titles[$article_number];
+                                }
+                                ?>
                               </a>
                             </font>
                           </h1>
-                          <div style="text-align: left; font-size:16px; color:#FFFFFF; font-family:arial,helvetica neue,helvetica,sans-serif">
+                          <div style="margin-top: 9px;text-align: left; font-size:16px; color:#FFFFFF; font-family:arial,helvetica neue,helvetica,sans-serif">
                             <?php echo $newsletter->details->post_excerpts[$article_number]; ?>
                           </div>
                         </td>
