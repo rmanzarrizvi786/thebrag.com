@@ -319,13 +319,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                             <h1>
                               <font color="#ffffff">
                                 <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
-                                  <?php
-                                  if (4 == $newsletter->details->list_id) {
-                                    echo strtoupper($newsletter->details->post_titles[$article_number]);
-                                  } else {
-                                    echo $newsletter->details->post_titles[$article_number];
-                                  }
-                                  ?>
+                                  <?php echo strtoupper($newsletter->details->post_titles[$article_number]); ?>
                                 </a>
                               </font>
                             </h1>
@@ -390,13 +384,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                             <h2>
                               <font color="#ffffff">
                                 <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank" style="color: #000000; text-decoration: none;">
-                                  <?php
-                                  if (4 == $newsletter->details->list_id) {
-                                    echo strtoupper($newsletter->details->post_titles[$article_number]);
-                                  } else {
-                                    echo $newsletter->details->post_titles[$article_number];
-                                  }
-                                  ?>
+                                  <?php echo strtoupper($newsletter->details->post_titles[$article_number]); ?>
                                 </a>
                               </font>
                             </h2>
