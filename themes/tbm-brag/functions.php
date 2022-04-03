@@ -3419,6 +3419,13 @@ function brands()
             'ext' => 'svg',
             'width' => 80
         ],
+        'variety-au' => [
+            'title' => 'Variety Australia',
+            'link' => 'https://au.variety.com/',
+            'logo_name' => 'Variety-Australia',
+            'ext' => 'svg',
+            'width' => 120
+        ],
     ];
     return $pub_logos;
 } // brands()
@@ -3550,12 +3557,12 @@ function brands_network()
             'logo_name' => 'TVLine',
             'width' => 120,
         ],
-        'variety' => [
+        /* 'variety' => [
             'title' => 'Variety',
             'link' => 'https://variety.com/',
             'logo_name' => 'Variety',
             'width' => 120,
-        ],
+        ], */
         'vibe' => [
             'title' => 'VIBE',
             'link' => 'https://www.vibe.com/',
