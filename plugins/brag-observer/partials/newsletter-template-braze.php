@@ -1382,6 +1382,15 @@ function print_video_record_of_week($obj, $newsletter)
 						'height' => 25,
 					];
 				break;
+			case 'au.variety.com':
+				$pub_logo =
+					[
+						'url' => $pubs_base_url .= 'Variety.jpg',
+						'title' => 'Variety Australia',
+						'width' => 84,
+						'height' => 25,
+					];
+				break;
 			case 'artnews.com':
 				$pub_logo =
 					[
@@ -1604,6 +1613,13 @@ function print_video_record_of_week($obj, $newsletter)
 					[
 						'url' => $pubs_base_url .= 'ico_Variety-32x32.png',
 						'title' => 'Variety',
+					];
+				break;
+			case 'au.variety.com':
+				$pub_logo =
+					[
+						'url' => $pubs_base_url .= 'ico_Variety-32x32.png',
+						'title' => 'Variety Australia',
 					];
 				break;
 			case 'artnews.com':

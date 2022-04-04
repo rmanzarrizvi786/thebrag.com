@@ -3473,6 +3473,12 @@ function brands_network()
             'logo_name' => 'Gamelancer',
             'ext' => 'png',
         ],
+        'toongoggles' => [
+            'title' => 'ToonGoggles',
+            'link' => 'https://www.toongoggles.com/',
+            'logo_name' => 'ToonGoggles',
+            'ext' => 'png',
+        ],
 
         /**
          * PMC

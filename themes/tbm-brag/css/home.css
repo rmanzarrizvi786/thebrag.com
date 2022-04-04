@@ -1,17 +1,1 @@
-/* Error: Undefined variable.
- *    ,
- * 16 |                 background-color: $borderColor;
- *    |                                   ^^^^^^^^^^^^
- *    '
- *   scss/home.scss 16:35  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a    \2577 \a 16 \2502                  background-color: $borderColor;\a    \2502                                    ^^^^^^^^^^^^\a    \2575 \a   scss/home.scss 16:35  root stylesheet";
-}
+.latest .h-latest{font-weight:500}.latest .article-wrap:nth-of-type(3n + 2) article{position:relative}.latest .article-wrap:nth-of-type(3n + 2) article:before,.latest .article-wrap:nth-of-type(3n + 2) article:after{content:"";position:absolute;top:10%;height:80%;background-color:#d8d2c3;width:1px;opacity:.35}.latest .article-wrap:nth-of-type(3n + 2) article:before{left:0}.latest .article-wrap:nth-of-type(3n + 2) article:after{right:0}.latest article{display:block}.latest article h3{font-size:1.25rem;line-height:1.4}.latest a{text-decoration:none;color:#0f0c0c}.latest .cat{color:#79746b;font-size:.825rem;font-family:"Poppins",sans-serif;font-weight:500}.latest .post-thumbnail img{border-radius:.5rem .5rem 0 0;width:100%;height:auto}.video-record{background-color:#0f0c0c;color:#fff}.video-record .video{flex:2 1 0}.video-record .record{flex:1 1 0}.video-record .heading span{color:#79746b;font-weight:200}.video-record .player-wrap{height:310px;background-size:cover;background-repeat:no-repeat;background-position:center;text-indent:-200%}.video-record .youtube-player.player-wrap:after{content:"";display:block;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);position:absolute}.video-record .play-button{width:100px;z-index:2;transition:.25s all linear}/*# sourceMappingURL=home.css.map */
