@@ -3479,6 +3479,12 @@ function brands_network()
             'logo_name' => 'ToonGoggles',
             'ext' => 'png',
         ],
+        'kidoodle' => [
+            'title' => 'kidoodle',
+            'link' => 'https://www.kidoodle.tv/',
+            'logo_name' => 'kidoodle',
+            'ext' => 'png',
+        ],
 
         /**
          * PMC
