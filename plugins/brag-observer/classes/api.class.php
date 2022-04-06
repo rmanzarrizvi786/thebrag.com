@@ -421,6 +421,16 @@ class API
           $wpdb->insert($wpdb->prefix . 'observer_subs', $insert_data);
         }
 
+        /**
+         * Add to queue for Braze
+         */
+        require_once  __DIR__ . '/cron.class.php';
+        $task = 'update_newsletter_interests';
+        $cron = new Cron();
+        if (!$cron->getActiveBrazeQueueTask($user_id, $task)) {
+          $cron->addToBrazeQueue($user_id, $task);
+        }
+
         if (isset($new_user) && $new_user) {
           if (isset($formData['return']) && 'bool' == $formData['return']) {
             return true;
