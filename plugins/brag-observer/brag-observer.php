@@ -67,7 +67,7 @@ class BragObserver
     //   ]
     // ;
 
-    $this->categories = self::getCategories();
+    // $this->categories = self::getCategories();
 
     add_action('init', array($this, '_init'), 1);
 

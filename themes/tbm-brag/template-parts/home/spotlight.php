@@ -33,7 +33,7 @@
                             <div class="d-flex flex-column flex-md-row align-items-start">
                                 <div class="img-wrap rounded mr-0 mr-md-2">
                                     <?php if ('' !== get_the_post_thumbnail()) :
-                                    the_post_thumbnail('thumbnail');
+                                        the_post_thumbnail('thumbnail');
                                     endif; ?>
                                 </div>
                                 <div>
