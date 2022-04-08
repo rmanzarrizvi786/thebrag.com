@@ -90,7 +90,9 @@ $newsletters = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_ne
         <td class="text-right" style="width: 50%;">
           <!-- <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id]); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview (MC)</a> -->
 
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id, 'template' => 'braze']); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview</a>
+          <!-- <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'preview', 'id' => $newsletter->id, 'list_id' => $newsletter->list_id, 'template' => 'braze']); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview</a> -->
+
+          <a href="<?php echo home_url("/preview-newsletter/newsletter/{$newsletter->id}/"); ?>" class="btn btn-sm btn-primary my-1" target="_blank" title="Click to preview">Preview</a>
 
           <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-newsletter', 'action' => 'edit', 'id' => $newsletter->id], remove_query_arg('list_id')); ?>" class="btn btn-sm btn-info my-1">Edit</a>
 

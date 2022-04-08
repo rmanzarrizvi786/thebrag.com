@@ -41,7 +41,8 @@ $soluses = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_solus 
             <div class="list-group">
               <div class="list-group-item small p-1"><strong>Preview</strong></div>
               <?php foreach ($lists as $list) : ?>
-                <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-solus', 'action' => 'preview', 'id' => $solus->id, 'list_id' => $list->id]); ?>" target="_blank" class="list-group-item small p-1"><?php echo $list->title; ?></a>
+                <!-- <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-solus', 'action' => 'preview', 'id' => $solus->id, 'list_id' => $list->id]); ?>" target="_blank" class="list-group-item small p-1"><?php echo $list->title; ?></a> -->
+                <a href="<?php echo home_url("/preview-newsletter/solus/{$solus->id}/l/{$list->id}/"); ?>" target="_blank" class="list-group-item small p-1"><?php echo $list->title; ?></a>
               <?php endforeach; ?>
             </div>
           </div>
