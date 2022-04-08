@@ -4,10 +4,26 @@ global $wpdb;
 // wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
 wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css');
 
-$soluses = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_solus ORDER BY date_for DESC, id DESC");
+$per_page = 10;
+
+$page = isset($_GET['p']) ? $_GET['p'] : 1;
+$limit_from = ($page - 1) * $per_page;
+
+$total = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->base_prefix}observer_solus ");
+$total_pages = ceil($total / $per_page);
+
+$soluses = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_solus ORDER BY date_for DESC, id DESC LIMIT {$limit_from}, {$per_page}");
 ?>
-<div class="text-right my-3">
+<div class="d-flex justify-content-between align-items-center">
+  <h1>Solus</h1>
   <a href="admin.php?page=brag-observer-manage-solus" class="btn btn-sm btn-primary">Create Solus</a>
+</div>
+
+<div class="d-flex flex-wrap justify-content-center mb-3">
+  <div class="btn">Total: <?php echo $total; ?></div>
+  <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+    <a href="<?php echo esc_url(add_query_arg(array('p' => $i))); ?>" class="btn <?php echo $i == $page ? ' btn-dark' : ''; ?>"><?php echo $i; ?></a>
+  <?php endfor; ?>
 </div>
 
 <table class="table table-sm table-striped">
