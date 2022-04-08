@@ -652,7 +652,11 @@ $container_width = 700;
         											<tr>
         											<td align="left" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																{{ "today" | date: "%a, %e %b %Y" }}
+																<?php if (isset($frontend) && $frontend) : ?>
+																	<?php echo date('D, j M Y', strtotime($newsletter->created_at)); ?>
+																<?php else : ?>
+																	{{ "today" | date: "%a, %e %b %Y" }}
+																<?php endif; ?>
 																<!--[if gte mso 9]>
         											</td>
         											</tr>
@@ -666,16 +670,20 @@ $container_width = 700;
         											<tr>
         											<td align="right" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																{% if {{custom_attribute.${profile_completion_%}}} %}
-																{% assign profile_completion = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
-																{% if {profile_completion < 100 %}
-																Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{ profile_completion }}.jpg" alt="{{ profile_completion }}% complete" title="{{ profile_completion }}% complete" style="vertical-align: middle;">
-																<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																{% endif %}
-																{% else %}
-																Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
-																<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																{% endif %}
+																<?php if (isset($frontend) && $frontend) : ?>
+																	<a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a>
+																<?php else : ?>
+																	{% if {{custom_attribute.${profile_completion_%}}} %}
+																	{% assign profile_completion = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
+																	{% if {profile_completion < 100 %}
+																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{ profile_completion }}.jpg" alt="{{ profile_completion }}% complete" title="{{ profile_completion }}% complete" style="vertical-align: middle;">
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	{% endif %}
+																	{% else %}
+																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	{% endif %}
+																<?php endif; ?>
 																<!--[if gte mso 9]>
         											</td>
         											</tr>
@@ -800,7 +808,7 @@ $container_width = 700;
 													<tbody>
 														<tr>
 															<td valign="top" class="mcnTextContent" style="padding-top: 0px; padding-bottom: 30px; text-align: center;">
-																<?php $this->print_social_icons(); ?>
+																<?php BragObserver::print_social_icons(); ?>
 															</td>
 														</tr>
 													</tbody>
@@ -854,7 +862,7 @@ $container_width = 700;
 </html>
 <?php
 
-function print_video_record_of_week($obj, $newsletter)
+function print_video_record_of_week($newsletter)
 {
 	if (isset($newsletter->details->hide_video_record))
 		return;
@@ -887,7 +895,7 @@ function print_video_record_of_week($obj, $newsletter)
 			$featured_video_alt .= ' - \'' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) . '\'';
 		}
 
-		$featured_video_img =  $obj->resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
+		$featured_video_img =  BragObserver::resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
 ?>
 		<tr>
 			<td style="background-color:#ffffff;">
@@ -949,7 +957,7 @@ function print_video_record_of_week($obj, $newsletter)
 			$rotw = json_decode($rotw_response['body']);
 			$featured_record_alt .= esc_html(stripslashes($rotw->artist));
 			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->name));
-			$featured_record_img =  $obj->resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
+			$featured_record_img =  BragObserver::resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
 		}
 		/* $featured_record_alt .= esc_html(stripslashes(get_option('tbm_featured_album_artist')));
 		$featured_record_alt .= ' - ' . esc_html(stripslashes(get_option('tbm_featured_album_title')));

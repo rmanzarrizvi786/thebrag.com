@@ -102,7 +102,7 @@ if (4 == $list->id) {
 /**
  * Featured Video / Audio
  */
-print_video_record_of_week($this, $newsletter);
+print_video_record_of_week($newsletter);
 
 function print_article($newsletter, $article_number, $container_width = 700)
 {

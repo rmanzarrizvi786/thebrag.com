@@ -1816,7 +1816,7 @@ class BragObserver
   /*
   * Resize image
   */
-  function resize_image($url, $thumb_width, $thumb_height, $link_url = null, $import_dir_part = NULL, $filename = NULL)
+  public static function resize_image($url, $thumb_width, $thumb_height, $link_url = null, $import_dir_part = NULL, $filename = NULL)
   {
     $dir = wp_upload_dir();
 
@@ -1991,7 +1991,7 @@ class BragObserver
   /*
   * Print Social icons for newsletter
   */
-  public function print_social_icons()
+  public static function print_social_icons()
   {
     /**
      * added seperate social links and logo for all multisite

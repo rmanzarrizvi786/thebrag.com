@@ -210,7 +210,7 @@ if (4 == $list->id) {
 /**
  * Featured Video / Audio
  */
-print_video_record_of_week($this, $newsletter);
+print_video_record_of_week($newsletter);
 
 function print_ad_old($value, $ads_after_articles, $newsletter)
 {
