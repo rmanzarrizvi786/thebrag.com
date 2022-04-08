@@ -1,8 +1,12 @@
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : null;
+$id = isset($_GET['id']) ? $_GET['id'] : get_query_var('newsletter_id', null);
+
+$id = absint($id);
+
 if (is_null($id)) :
 	return;
 endif;
+
 $newsletter = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_newsletters WHERE id = {$id} LIMIT 1");
 if (is_null($newsletter)) :
 	return;

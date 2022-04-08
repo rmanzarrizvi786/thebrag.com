@@ -113,6 +113,12 @@ class BragObserver
     // Filter - Query vars
     add_filter('query_vars', [$this, '_query_vars']);
 
+    add_action('init',  function () {
+      add_rewrite_tag('%newsletter_type%', '([^&]+)');
+      add_rewrite_tag('%newsletter_id%', '([^&]+)');
+      add_rewrite_rule('^preview-newsletter/([^/]*)/([0-9]+)/?', 'index.php?pagename=preview-newsletter&newsletter_type=$matches[1]&newsletter_id=$matches[2]&', 'top');
+    });
+
     // OG Tags, etc. - Yoast
     $this->setupSEO();
 

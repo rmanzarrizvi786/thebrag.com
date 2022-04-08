@@ -1,5 +1,5 @@
 <?php
-$id = isset($_GET['id']) ? absint($_GET['id']) : null;
+$id = isset($_GET['id']) ? absint($_GET['id']) : get_query_var('newsletter_id', null);
 if (is_null($id)) :
 	return;
 endif;
@@ -671,7 +671,7 @@ $container_width = 600;
 													<tbody>
 														<tr>
 															<td valign="top" class="mcnTextContent" style="padding-top: 0px; padding-bottom: 30px; text-align: center;">
-																<?php $this->print_social_icons(); ?>
+																<?php BragObserver::print_social_icons(); ?>
 															</td>
 														</tr>
 													</tbody>
