@@ -18,7 +18,7 @@ foreach ($solus->details as $k => $v) {
 }
 $lists = $wpdb->get_results("SELECT * FROM {$wpdb->base_prefix}observer_lists WHERE id IN( {$solus->lists} )");
 
-$list_id = isset($_GET['list_id']) ? absint($_GET['list_id']) : null;
+$list_id = isset($_GET['list_id']) ? absint($_GET['list_id']) : get_query_var('list_id', null);
 if (!is_null($list_id)) {
 	$list = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_lists WHERE id = '{$list_id}' LIMIT 1");
 }

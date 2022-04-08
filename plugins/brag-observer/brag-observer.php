@@ -116,7 +116,9 @@ class BragObserver
     add_action('init',  function () {
       add_rewrite_tag('%newsletter_type%', '([^&]+)');
       add_rewrite_tag('%newsletter_id%', '([^&]+)');
-      add_rewrite_rule('^preview-newsletter/([^/]*)/([0-9]+)/?', 'index.php?pagename=preview-newsletter&newsletter_type=$matches[1]&newsletter_id=$matches[2]&', 'top');
+      add_rewrite_tag('%list_id%', '([^&]+)');
+      add_rewrite_rule('^preview-newsletter/([^/]*)/([0-9]+)/l/([0-9]+)?', 'index.php?pagename=preview-newsletter&newsletter_type=$matches[1]&newsletter_id=$matches[2]&list_id=$matches[3]', 'top');
+      add_rewrite_rule('^preview-newsletter/([^/]*)/([0-9]+)/?', 'index.php?pagename=preview-newsletter&newsletter_type=$matches[1]&newsletter_id=$matches[2]', 'top');
     });
 
     // OG Tags, etc. - Yoast
