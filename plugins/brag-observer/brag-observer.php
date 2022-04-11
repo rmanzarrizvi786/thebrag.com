@@ -140,6 +140,9 @@ class BragObserver
     // Handle Braze Webhook requests
     add_action('init', array($this, 'handle_braze_webhook'));
 
+    // Get Observer Details
+    add_action('init', array($this, 'get_observer_details_with_slug'));
+
     // REST API
     // add_action( 'rest_api_init', [ $this, '_rest_api_init' ] );
 
@@ -2790,6 +2793,32 @@ class BragObserver
       $post = $_POST;
 
       $braze->handleWebhook($post);
+    }
+  }
+
+  /**
+   * Get Observer Details with Slug
+   */
+  public function get_observer_details_with_slug()
+  {
+    global $wpdb;
+    $request = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : false;
+
+    $slug = isset($_GET['slug']) ? trim($_GET['slug']) : NULL;
+    if (is_null($slug) || '' == $slug)
+      exit;
+
+    // if ('/observer-title/' === $request) {
+    if (strpos($request, '/observer-title/') !== FALSE) {
+      $list = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}observer_lists WHERE `slug` = '{$slug}' LIMIT 1");
+
+      // var_dump($list);
+      // exit;
+
+      if (!$list)
+        exit;
+      echo $list->title;
+      exit;
     }
   }
 }
