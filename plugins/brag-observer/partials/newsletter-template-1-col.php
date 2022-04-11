@@ -126,17 +126,9 @@ function print_article($newsletter, $article_number, $container_width = 700)
                     <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%">
                       <tbody>
                         <tr>
-                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                            <table border="0" cellpadding="0" cellspacing="0">
-                              <tr>
-                                <td>
-                                  <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
-                                </td>
-                                <td style="padding-left: 8px; color: #0a0a0a; font-size: 14px; font-family: Helvetica;">
-                                  <strong><?php echo $pub_logo['title']; ?></strong>
-                                </td>
-                              </tr>
-                            </table>
+                          <td class="pub">
+                            <img src="<?php echo $pub_logo['url']; ?>" class="pub-icon" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                            <strong><?php echo $pub_logo['title']; ?></strong>
                           </td>
                         </tr>
                       </tbody>
@@ -146,7 +138,7 @@ function print_article($newsletter, $article_number, $container_width = 700)
                   <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="background-color: #000000;">
                     <tbody>
                       <tr>
-                        <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:0; padding-left:0px;">
+                        <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                           <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
                             <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank">
                               <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="<?php echo $container_width - 40; ?>" style="max-width:<?php echo $container_width - 40; ?>px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">

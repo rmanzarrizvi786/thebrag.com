@@ -70,29 +70,6 @@ $container_width = 700;
 			display: block;
 			margin: 0;
 			padding: 0;
-			color: #202020;
-			font-family: Helvetica;
-			font-style: normal;
-			font-weight: bold;
-			line-height: 125%;
-			letter-spacing: normal;
-			text-align: left;
-		}
-
-		h1 {
-			font-size: 26px;
-		}
-
-		h2 {
-			font-size: 22px;
-		}
-
-		h3 {
-			font-size: 20px;
-		}
-
-		h4 {
-			font-size: 18px;
 		}
 
 		img,
@@ -129,6 +106,10 @@ $container_width = 700;
 			width: 100%;
 		}
 
+		.ExternalClass {
+			width: 100%;
+		}
+
 		p,
 		a,
 		li,
@@ -155,6 +136,15 @@ $container_width = 700;
 			-webkit-text-size-adjust: 100%;
 		}
 
+		.ExternalClass,
+		.ExternalClass p,
+		.ExternalClass td,
+		.ExternalClass div,
+		.ExternalClass span,
+		.ExternalClass font {
+			line-height: 100%;
+		}
+
 		a[x-apple-data-detectors] {
 			color: inherit !important;
 			text-decoration: none !important;
@@ -169,8 +159,11 @@ $container_width = 700;
 		}
 
 		.templateContainer {
-			max-width: 700px !important;
-			border: 0;
+			max-width: <?php echo $container_width; ?>px !important;
+		}
+
+		a.mcnButton {
+			display: block;
 		}
 
 		.mcnImage {
@@ -185,6 +178,10 @@ $container_width = 700;
 			height: auto !important;
 		}
 
+		.mcnDividerBlock {
+			table-layout: fixed !important;
+		}
+
 		body,
 		#bodyTable {
 			background-color: #FAFAFA;
@@ -192,6 +189,86 @@ $container_width = 700;
 
 		#bodyCell {
 			border-top: 0;
+		}
+
+		.templateContainer {
+			border: 0;
+		}
+
+		h1 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 26px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h2 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 22px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h3 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h4 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 18px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		.mcnPreviewText {
+			display: none !important;
+		}
+
+		#templatePreheader {
+			background-color: #fafafa;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 9px;
+			padding-bottom: 9px;
+		}
+
+		#templatePreheader .mcnTextContent,
+		#templatePreheader .mcnTextContent p {
+			color: #656565;
+			font-family: Helvetica;
+			font-size: 12px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templatePreheader .mcnTextContent a,
+		#templatePreheader .mcnTextContent p a {
+			color: #656565;
+			font-weight: normal;
+			text-decoration: none;
 		}
 
 		#templateHeader {
@@ -222,6 +299,62 @@ $container_width = 700;
 			text-decoration: none;
 		}
 
+		#templateBody {
+			background-color: #ffffff;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		#templateBody .mcnTextContent,
+		#templateBody .mcnTextContent p {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 16px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templateBody .mcnTextContent a,
+		#templateBody .mcnTextContent p a {
+			color: #000000;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
+		#templateUpperColumns {
+			background-color: #ffffff;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		#templateUpperColumns .columnContainer .mcnTextContent,
+		#templateUpperColumns .columnContainer .mcnTextContent p {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 16px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templateUpperColumns .columnContainer .mcnTextContent a,
+		#templateUpperColumns .columnContainer .mcnTextContent p a {
+			color: #000000;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
 		.templateLowerColumns {
 			background-color: #ffffff;
 			background-image: none;
@@ -229,6 +362,7 @@ $container_width = 700;
 			background-position: center;
 			background-size: cover;
 			border-top: 0;
+			/*			border-bottom:2px solid #EAEAEA;*/
 			padding-top: 9px;
 			padding-bottom: 9px;
 		}
@@ -278,63 +412,14 @@ $container_width = 700;
 			text-decoration: underline;
 		}
 
-		.excerpt {
-			margin-top: 9px;
-			text-align: left;
-			font-size: 16px;
-			color: #000000;
-			font-family: Helvetica;
-		}
-
-		.pub {
-			color: #0a0a0a;
-			font-size: 14px;
-			font-family: Helvetica;
-			background-color: #fff;
-			padding-bottom: 9px;
-			text-align: left;
-		}
-
-		.pub-icon {
-			width: 20px;
-			max-width: 100%;
-			height: auto;
-			vertical-align: middle;
-		}
-
-		.p-0 {
-			padding-top: 0px;
-			padding-right: 0px;
-			padding-bottom: 0;
-			padding-left: 0px;
-		}
-
-		.secondary-article-text {
-			padding: 9px 0;
-			color: #000000;
-			font-family: Helvetica;
-			font-size: 14px;
-			font-style: normal;
-			font-weight: normal;
-			line-height: 150%;
-			text-align: center;
-		}
-
-		.h-article-wrap {
-			color: #0a0a0a;
-			border-bottom: 2px solid #EAEAEA;
-			font-family: Helvetica, Arial, sans-serif;
-			font-size: 14px;
-			font-weight: 400;
-			line-height: 1.4;
-			margin: 0 auto;
-			padding: 5px 0;
-			text-align: center;
+		.small-12-inner {
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 
 		@media only screen and (min-width:768px) {
 			.templateContainer {
-				width: 700px !important;
+				width: <?php echo $container_width; ?>px !important;
 			}
 		}
 
@@ -343,6 +428,12 @@ $container_width = 700;
 				width: 100% !important;
 				max-width: 100% !important;
 				display: inline-block !important;
+				/* padding: 20px 0 !important; */
+			}
+
+			.small-12-inner {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
 			}
 		}
 
@@ -376,44 +467,125 @@ $container_width = 700;
 				width: 100% !important;
 			}
 
+			.mcnCartContainer,
+			.mcnCaptionTopContent,
+			.mcnRecContentContainer,
+			.mcnCaptionBottomContent,
+			.mcnTextContentContainer,
+			.mcnBoxedTextContentContainer,
+			.mcnImageGroupContentContainer,
+			.mcnCaptionLeftTextContentContainer,
+			.mcnCaptionRightTextContentContainer,
+			.mcnCaptionLeftImageContentContainer,
+			.mcnCaptionRightImageContentContainer,
+			.mcnImageCardLeftTextContentContainer,
+			.mcnImageCardRightTextContentContainer {
+				max-width: 100% !important;
+				width: 100% !important;
+			}
+
+			.mcnBoxedTextContentContainer {
+				min-width: 100% !important;
+			}
+
+			.mcnImageGroupContent {
+				padding: 9px !important;
+			}
+
+			.mcnCaptionLeftContentOuter .mcnTextContent,
+			.mcnCaptionRightContentOuter .mcnTextContent {
+				padding-top: 9px !important;
+			}
+
+			.mcnImageCardTopImageContent,
+			.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent {
+				padding-top: 18px !important;
+			}
+
 			.mcnImageCardBottomImageContent {
 				padding-bottom: 9px !important;
 			}
 
-			.mcnTextContent {
+			.mcnImageGroupBlockInner {
+				padding-top: 0 !important;
+				padding-bottom: 0 !important;
+			}
+
+			.mcnImageGroupBlockOuter {
+				padding-top: 9px !important;
+				padding-bottom: 9px !important;
+			}
+
+			.mcnTextContent,
+			.mcnBoxedTextContentColumn {
 				padding-right: 18px !important;
 				padding-left: 18px !important;
 			}
 
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6 {
-				line-height: 125% !important;
+			.mcnImageCardLeftImageContent,
+			.mcnImageCardRightImageContent {
+				padding-right: 18px !important;
+				padding-bottom: 0 !important;
+				padding-left: 18px !important;
+			}
+
+			.mcpreview-image-uploader {
+				display: none !important;
+				width: 100% !important;
 			}
 
 			h1 {
 				font-size: 16px !important;
+				line-height: 125% !important;
 				font-weight: bold !important;
 			}
 
 			h2 {
 				font-size: 14px !important;
+				line-height: 125% !important;
 			}
 
 			h3 {
 				font-size: 14px !important;
+				line-height: 125% !important;
 			}
 
 			h4 {
 				font-size: 14px !important;
+				line-height: 150% !important;
+			}
+
+			.mcnBoxedTextContentContainer .mcnTextContent,
+			.mcnBoxedTextContentContainer .mcnTextContent p {
+				font-size: 14px !important;
+				line-height: 150% !important;
+			}
+
+			#templatePreheader {
+				display: block !important;
+			}
+
+			#templatePreheader .mcnTextContent,
+			#templatePreheader .mcnTextContent p {
+				font-size: 14px !important;
+				line-height: 150% !important;
 			}
 
 			#templateHeader .mcnTextContent,
 			#templateHeader .mcnTextContent p {
 				font-size: 16px !important;
+				line-height: 125% !important;
+			}
+
+			#templateBody .mcnTextContent,
+			#templateBody .mcnTextContent p {
+				font-size: 12px !important;
+				line-height: 125% !important;
+			}
+
+			#templateUpperColumns .columnContainer .mcnTextContent,
+			#templateUpperColumns .columnContainer .mcnTextContent p {
+				font-size: 12px !important;
 				line-height: 125% !important;
 			}
 
@@ -561,7 +733,7 @@ $container_width = 700;
 
 						<?php
 						$random_lists = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
-						if (0 && $random_lists && !isset($newsletter->details->hide_observer_recommendations)) :
+						if ($random_lists && !isset($newsletter->details->hide_observer_recommendations)) :
 						?>
 							<tr>
 								<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
@@ -875,7 +1047,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Post" src="https://images.thebrag.com/tb/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
+														<img align="none" class="" width="580" alt="Top Industry Post" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
 													</a>
 													<br>
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
@@ -926,7 +1098,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Tweet" src="https://images.thebrag.com/tb/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
+														<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
 													</a>
 													<br>
 													<div style="text-align: center;">

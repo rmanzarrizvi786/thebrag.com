@@ -2034,7 +2034,7 @@ class BragObserver
                               <tbody>
                                 <tr>
                                   <td align="center" valign="middle" width="24" class="mcnFollowIconContent">
-                                    <a href="<?php echo esc_url($bm_social_links['facebook']); ?>" target="_blank"><img alt="Facebook" src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-facebook-48.png" style="display:block;" height="24" width="24" class=""></a>
+                                    <a href="<?php echo esc_url($bm_social_links['facebook']); ?>" target="_blank"><img alt="Facebook" src="https://cdn.thebrag.com/icons/color-facebook-48.png" style="display:block;" height="24" width="24" class=""></a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -2065,7 +2065,7 @@ class BragObserver
                               <tbody>
                                 <tr>
                                   <td align="center" valign="middle" width="24" class="mcnFollowIconContent">
-                                    <a href="<?php echo esc_url($bm_social_links['twitter']); ?>" target="_blank"><img alt="Twitter" src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display:block;" height="24" width="24" class=""></a>
+                                    <a href="<?php echo esc_url($bm_social_links['twitter']); ?>" target="_blank"><img alt="Twitter" src="https://cdn.thebrag.com/icons/color-twitter-48.png" style="display:block;" height="24" width="24" class=""></a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -2096,7 +2096,7 @@ class BragObserver
                               <tbody>
                                 <tr>
                                   <td align="center" valign="middle" width="24" class="mcnFollowIconContent">
-                                    <a href="<?php echo esc_url($bm_social_links['instagram']); ?>" target="_blank"><img alt="Instagram" src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-instagram-48.png" style="display:block;" height="24" width="24" class=""></a>
+                                    <a href="<?php echo esc_url($bm_social_links['instagram']); ?>" target="_blank"><img alt="Instagram" src="https://cdn.thebrag.com/icons/color-instagram-48.png" style="display:block;" height="24" width="24" class=""></a>
                                   </td>
                                 </tr>
                               </tbody>

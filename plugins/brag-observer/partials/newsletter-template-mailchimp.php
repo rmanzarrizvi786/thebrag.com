@@ -1,12 +1,8 @@
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : get_query_var('newsletter_id', null);
-
-$id = absint($id);
-
+$id = isset($_GET['id']) ? $_GET['id'] : null;
 if (is_null($id)) :
 	return;
 endif;
-
 $newsletter = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}observer_newsletters WHERE id = {$id} LIMIT 1");
 if (is_null($newsletter)) :
 	return;
@@ -49,7 +45,7 @@ $container_width = 700;
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo $newsletter->details->subject; ?></title>
+	<title>*|MC:SUBJECT|*</title>
 
 	<style type="text/css">
 		p {
@@ -70,29 +66,6 @@ $container_width = 700;
 			display: block;
 			margin: 0;
 			padding: 0;
-			color: #202020;
-			font-family: Helvetica;
-			font-style: normal;
-			font-weight: bold;
-			line-height: 125%;
-			letter-spacing: normal;
-			text-align: left;
-		}
-
-		h1 {
-			font-size: 26px;
-		}
-
-		h2 {
-			font-size: 22px;
-		}
-
-		h3 {
-			font-size: 20px;
-		}
-
-		h4 {
-			font-size: 18px;
 		}
 
 		img,
@@ -129,6 +102,10 @@ $container_width = 700;
 			width: 100%;
 		}
 
+		.ExternalClass {
+			width: 100%;
+		}
+
 		p,
 		a,
 		li,
@@ -155,6 +132,15 @@ $container_width = 700;
 			-webkit-text-size-adjust: 100%;
 		}
 
+		.ExternalClass,
+		.ExternalClass p,
+		.ExternalClass td,
+		.ExternalClass div,
+		.ExternalClass span,
+		.ExternalClass font {
+			line-height: 100%;
+		}
+
 		a[x-apple-data-detectors] {
 			color: inherit !important;
 			text-decoration: none !important;
@@ -169,8 +155,11 @@ $container_width = 700;
 		}
 
 		.templateContainer {
-			max-width: 700px !important;
-			border: 0;
+			max-width: <?php echo $container_width; ?>px !important;
+		}
+
+		a.mcnButton {
+			display: block;
 		}
 
 		.mcnImage {
@@ -185,6 +174,10 @@ $container_width = 700;
 			height: auto !important;
 		}
 
+		.mcnDividerBlock {
+			table-layout: fixed !important;
+		}
+
 		body,
 		#bodyTable {
 			background-color: #FAFAFA;
@@ -192,6 +185,86 @@ $container_width = 700;
 
 		#bodyCell {
 			border-top: 0;
+		}
+
+		.templateContainer {
+			border: 0;
+		}
+
+		h1 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 26px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h2 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 22px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h3 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		h4 {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 18px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 125%;
+			letter-spacing: normal;
+			text-align: left;
+		}
+
+		.mcnPreviewText {
+			display: none !important;
+		}
+
+		#templatePreheader {
+			background-color: #fafafa;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 9px;
+			padding-bottom: 9px;
+		}
+
+		#templatePreheader .mcnTextContent,
+		#templatePreheader .mcnTextContent p {
+			color: #656565;
+			font-family: Helvetica;
+			font-size: 12px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templatePreheader .mcnTextContent a,
+		#templatePreheader .mcnTextContent p a {
+			color: #656565;
+			font-weight: normal;
+			text-decoration: none;
 		}
 
 		#templateHeader {
@@ -222,6 +295,62 @@ $container_width = 700;
 			text-decoration: none;
 		}
 
+		#templateBody {
+			background-color: #ffffff;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		#templateBody .mcnTextContent,
+		#templateBody .mcnTextContent p {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 16px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templateBody .mcnTextContent a,
+		#templateBody .mcnTextContent p a {
+			color: #000000;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
+		#templateUpperColumns {
+			background-color: #ffffff;
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			border-top: 0;
+			border-bottom: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		#templateUpperColumns .columnContainer .mcnTextContent,
+		#templateUpperColumns .columnContainer .mcnTextContent p {
+			color: #202020;
+			font-family: Helvetica;
+			font-size: 16px;
+			line-height: 150%;
+			text-align: left;
+		}
+
+		#templateUpperColumns .columnContainer .mcnTextContent a,
+		#templateUpperColumns .columnContainer .mcnTextContent p a {
+			color: #000000;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
 		.templateLowerColumns {
 			background-color: #ffffff;
 			background-image: none;
@@ -229,6 +358,7 @@ $container_width = 700;
 			background-position: center;
 			background-size: cover;
 			border-top: 0;
+			/*			border-bottom:2px solid #EAEAEA;*/
 			padding-top: 9px;
 			padding-bottom: 9px;
 		}
@@ -263,7 +393,7 @@ $container_width = 700;
 
 		.templateFooter .mcnTextContent,
 		.templateFooter .mcnTextContent p {
-			color: #333333;
+			color: #ffffff;
 			font-family: Helvetica;
 			font-size: 14px;
 			line-height: 150%;
@@ -278,63 +408,14 @@ $container_width = 700;
 			text-decoration: underline;
 		}
 
-		.excerpt {
-			margin-top: 9px;
-			text-align: left;
-			font-size: 16px;
-			color: #000000;
-			font-family: Helvetica;
-		}
-
-		.pub {
-			color: #0a0a0a;
-			font-size: 14px;
-			font-family: Helvetica;
-			background-color: #fff;
-			padding-bottom: 9px;
-			text-align: left;
-		}
-
-		.pub-icon {
-			width: 20px;
-			max-width: 100%;
-			height: auto;
-			vertical-align: middle;
-		}
-
-		.p-0 {
-			padding-top: 0px;
-			padding-right: 0px;
-			padding-bottom: 0;
-			padding-left: 0px;
-		}
-
-		.secondary-article-text {
-			padding: 9px 0;
-			color: #000000;
-			font-family: Helvetica;
-			font-size: 14px;
-			font-style: normal;
-			font-weight: normal;
-			line-height: 150%;
-			text-align: center;
-		}
-
-		.h-article-wrap {
-			color: #0a0a0a;
-			border-bottom: 2px solid #EAEAEA;
-			font-family: Helvetica, Arial, sans-serif;
-			font-size: 14px;
-			font-weight: 400;
-			line-height: 1.4;
-			margin: 0 auto;
-			padding: 5px 0;
-			text-align: center;
+		.small-12-inner {
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 
 		@media only screen and (min-width:768px) {
 			.templateContainer {
-				width: 700px !important;
+				width: <?php echo $container_width; ?>px !important;
 			}
 		}
 
@@ -343,6 +424,12 @@ $container_width = 700;
 				width: 100% !important;
 				max-width: 100% !important;
 				display: inline-block !important;
+				padding: 20px 0 !important;
+			}
+
+			.small-12-inner {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
 			}
 		}
 
@@ -376,44 +463,125 @@ $container_width = 700;
 				width: 100% !important;
 			}
 
+			.mcnCartContainer,
+			.mcnCaptionTopContent,
+			.mcnRecContentContainer,
+			.mcnCaptionBottomContent,
+			.mcnTextContentContainer,
+			.mcnBoxedTextContentContainer,
+			.mcnImageGroupContentContainer,
+			.mcnCaptionLeftTextContentContainer,
+			.mcnCaptionRightTextContentContainer,
+			.mcnCaptionLeftImageContentContainer,
+			.mcnCaptionRightImageContentContainer,
+			.mcnImageCardLeftTextContentContainer,
+			.mcnImageCardRightTextContentContainer {
+				max-width: 100% !important;
+				width: 100% !important;
+			}
+
+			.mcnBoxedTextContentContainer {
+				min-width: 100% !important;
+			}
+
+			.mcnImageGroupContent {
+				padding: 9px !important;
+			}
+
+			.mcnCaptionLeftContentOuter .mcnTextContent,
+			.mcnCaptionRightContentOuter .mcnTextContent {
+				padding-top: 9px !important;
+			}
+
+			.mcnImageCardTopImageContent,
+			.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent {
+				padding-top: 18px !important;
+			}
+
 			.mcnImageCardBottomImageContent {
 				padding-bottom: 9px !important;
 			}
 
-			.mcnTextContent {
+			.mcnImageGroupBlockInner {
+				padding-top: 0 !important;
+				padding-bottom: 0 !important;
+			}
+
+			.mcnImageGroupBlockOuter {
+				padding-top: 9px !important;
+				padding-bottom: 9px !important;
+			}
+
+			.mcnTextContent,
+			.mcnBoxedTextContentColumn {
 				padding-right: 18px !important;
 				padding-left: 18px !important;
 			}
 
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6 {
-				line-height: 125% !important;
+			.mcnImageCardLeftImageContent,
+			.mcnImageCardRightImageContent {
+				padding-right: 18px !important;
+				padding-bottom: 0 !important;
+				padding-left: 18px !important;
+			}
+
+			.mcpreview-image-uploader {
+				display: none !important;
+				width: 100% !important;
 			}
 
 			h1 {
 				font-size: 16px !important;
+				line-height: 125% !important;
 				font-weight: bold !important;
 			}
 
 			h2 {
 				font-size: 14px !important;
+				line-height: 125% !important;
 			}
 
 			h3 {
 				font-size: 14px !important;
+				line-height: 125% !important;
 			}
 
 			h4 {
 				font-size: 14px !important;
+				line-height: 150% !important;
+			}
+
+			.mcnBoxedTextContentContainer .mcnTextContent,
+			.mcnBoxedTextContentContainer .mcnTextContent p {
+				font-size: 14px !important;
+				line-height: 150% !important;
+			}
+
+			#templatePreheader {
+				display: block !important;
+			}
+
+			#templatePreheader .mcnTextContent,
+			#templatePreheader .mcnTextContent p {
+				font-size: 14px !important;
+				line-height: 150% !important;
 			}
 
 			#templateHeader .mcnTextContent,
 			#templateHeader .mcnTextContent p {
 				font-size: 16px !important;
+				line-height: 125% !important;
+			}
+
+			#templateBody .mcnTextContent,
+			#templateBody .mcnTextContent p {
+				font-size: 12px !important;
+				line-height: 125% !important;
+			}
+
+			#templateUpperColumns .columnContainer .mcnTextContent,
+			#templateUpperColumns .columnContainer .mcnTextContent p {
+				font-size: 12px !important;
 				line-height: 125% !important;
 			}
 
@@ -430,25 +598,20 @@ $container_width = 700;
 			}
 		}
 
-		.list-christian_hull_top_five {
-			font-family: Helvetica;
-		}
-
 		.list-christian_hull_top_five ul li {
-			list-style-type: disc;
+			list-style-type: "★";
 			color: #419df2;
 			margin-left: 16px;
 			padding-left: 16px;
-			padding-bottom: 10px;
 		}
 	</style>
 </head>
 
 <body>
-	<?php if ($newsletter->details->preview_text && '' != $newsletter->details->preview_text) : ?>
-		<!--[if !gte mso 9]><!----><span class="mcnPreview Text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"><?php echo $newsletter->details->preview_text; ?></span>
-		<!--<![endif]-->
-	<?php endif; ?>
+	<!--*|IF:MC_PREVIEW_TEXT|*-->
+	<!--[if !gte mso 9]><!----><span class="mcnPreview Text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span>
+	<!--<![endif]-->
+	<!--*|END:IF|*-->
 	<center>
 		<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
 			<tr>
@@ -484,11 +647,7 @@ $container_width = 700;
         											<tr>
         											<td align="left" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																<?php if (isset($frontend) && $frontend) : ?>
-																	<?php echo date('D, j M Y', strtotime($newsletter->created_at)); ?>
-																<?php else : ?>
-																	{{ "today" | date: "%a, %e %b %Y" }}
-																<?php endif; ?>
+																*|DATE:l, j F Y|*
 																<!--[if gte mso 9]>
         											</td>
         											</tr>
@@ -502,21 +661,15 @@ $container_width = 700;
         											<tr>
         											<td align="right" valign="top" width="330" style="width:330px;">
         											<![endif]-->
-																<?php if (isset($frontend) && $frontend) : ?>
-																	<a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a>
-																<?php else : ?>
-																	{% if {{custom_attribute.${profile_completion_%}}} %}
-																	{% assign profile_completion = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
-																	{% if {profile_completion < 100 %}
-																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{ profile_completion }}.jpg" alt="{{ profile_completion }}% complete" title="{{ profile_completion }}% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	{% endif %}
-																	{% else %}
+																*|IF:STRENGTH|*
+																*|IF:STRENGTH < 100|* Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-*|STRENGTH|*.jpg" alt="*|STRENGTH|*% complete" title="*|STRENGTH|*% complete" style="vertical-align: middle;">
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	*|END:IF|*
+																	*|ELSE:|*
 																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
-																	{% endif %}
-																<?php endif; ?>
-																<!--[if gte mso 9]>
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	*|END:IF|*
+																	<!--[if gte mso 9]>
         											</td>
         											</tr>
         											</table>
@@ -561,7 +714,7 @@ $container_width = 700;
 
 						<?php
 						$random_lists = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}observer_lists WHERE id != {$list->id} AND status  = 'active' ORDER BY RAND() LIMIT 3");
-						if (0 && $random_lists && !isset($newsletter->details->hide_observer_recommendations)) :
+						if ($random_lists && !isset($newsletter->details->hide_observer_recommendations)) :
 						?>
 							<tr>
 								<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
@@ -594,7 +747,7 @@ $container_width = 700;
 																								<tr style="padding:0;text-align:center;vertical-align:top">
 																									<?php foreach ($random_lists as $random_list_counter => $random_list) : ?>
 																										<td class="small-12.2" style="width: 33%; max-width: 100%; padding: 0 5px;">
-																											<a href="<?php echo home_url('verify'); ?>/?oc={{custom_attribute.${observer_token}}}&amp;fl=0&amp;returnTo=<?php echo urlencode(home_url('observer/' . $random_list->slug)); ?>" title="<?php echo $random_list->title; ?>" class="" target="_blank" style="color: #000; text-decoration: none; display: block; line-height: 150%;">
+																											<a href="<?php echo home_url('verify'); ?>/?oc=*|OC_TOKEN|*&amp;fl=0&amp;returnTo=<?php echo urlencode(home_url('observer/' . $random_list->slug)); ?>" title="<?php echo $random_list->title; ?>" class="" target="_blank" style="color: #000; text-decoration: none; display: block; line-height: 150%;">
 																												<img width="205" height="205" src="<?php echo $random_list->image_url; ?>" style="max-width: 100%; border-radius: 9px;"><br>
 																												<?php
 																												echo !in_array($random_list->id, [4, 48]) ? trim(str_ireplace('Observer', '', $random_list->title)) : trim($random_list->title);
@@ -621,6 +774,97 @@ $container_width = 700;
 								</td>
 							</tr>
 						<?php endif; // If $random_lists
+
+						if (!isset($newsletter->details->hide_observer_rewards)) :
+						?>
+							<tr>
+								<td valign="top" class="templateFooter" style="background: #ffffff; text-align: center; padding: 10px 10px;">
+									<table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="660">
+										<tbody>
+											<tr style="padding:0;text-align:center;vertical-align:top">
+												<td>
+													<div style="border-bottom: 1px solid rgb(249, 249, 249); border-radius: 20px; margin-bottom: 7px;">
+														<div style="border-bottom: 1px solid rgb(245, 245, 245); border-radius: 19px;">
+															<div style="border-right: 1px solid rgb(245, 245, 245); border-bottom: 1px solid rgb(242, 242, 242); border-radius: 18px;">
+																<div style="border-right: 1px solid rgb(242, 242, 242); border-bottom: 1px solid rgb(240, 240, 240); border-radius: 17px;">
+																	<div style="border-right: 1px solid rgb(238, 238, 238); border-bottom: 1px solid rgb(238, 238, 238); border-radius: 16px;">
+																		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+																			<tbody>
+																				<tr>
+																					<th style="text-align: left; font-weight: 400; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: rgb(51, 51, 51); display: block; background-color: rgb(255, 255, 255); border-radius: 15px; border: 1px solid rgb(230, 230, 230); border-collapse: collapse;">
+																						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+																							<tbody>
+																								<tr>
+																									<td style="padding: 15px;">
+																										<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #007bff; font-weight: 700; margin-top: 0px; margin-bottom: 0px;">Share The Observer for free stuff!</h3>
+																									</td>
+																								</tr>
+																							</tbody>
+																						</table>
+																						<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+																							<tbody>
+																								<tr>
+																									<td style="padding: 0px 15px 15px; font-size: 16px;">
+
+																										*|IF:REFERRALS|*
+
+																										*|IF:REFERRALS < 3|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">
+																											When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.
+																											</p>
+
+																											*|ELSEIF:REFERRALS < 10|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 10 referrals to get the next issue of Rolling Stone Australia Magazine.
+																												<br><br>
+																												Are you one of those people who likes to stay in the know? Then you probably need Rolling Stone in your life, it's the premier music &amp; entertainment magazine in Australia.</p>
+
+																												*|ELSEIF:REFERRALS < 20|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free stuff. You only need 20 referrals to win a FREE annual subscription to Rolling Stone Australia Magazine.</p>
+
+																													*|ELSEIF:REFERRALS < 30|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Beach Towel.
+																														<br><br>
+																														It's Australia, so heading to the beach is always an option. Might as well be with this bad boy with the Rolling Stone logo plastered across it.</p>
+
+																														*|ELSEIF:REFERRALS < 50|* <p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free swag like our Rolling Stone Bathrobe.
+																															<br><br>
+																															Are you one of those people who like to luxe it up when you stay in? Then you probably need a bathrobe. Might as well be this bad boy with the Rolling Stone logo plastered across it.</p>
+
+																															*|END:IF|*
+
+																															*|ELSE:|*
+																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">When you share The Brag Observer with your network, you earn free magazine's, merch and more! You only need 3 referrals to get 10% OFF Magazine Subscription.</p>
+
+																															*|END:IF|*
+
+																															<p style="text-align: center;"><img width="660" src="https://cdn.thebrag.com/observer/images/refer-a-friend/ReferAfriend_600px.gif" style="max-width: 100%; height: auto;" alt="Share The Observer for free stuff!" title="Share The Observer for free stuff!"></p>
+
+																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px; font-size: 16px;">Hit the button below to learn more and access your rewards hub.</p>
+																															<a href="https://thebrag.com/verify/?oc=*|OC_TOKEN|*&amp;returnTo=https://thebrag.com/refer-a-friend/" style="width: 100%; max-width: 150px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; font-weight: 900; text-decoration: none; text-align: center; background-color: #000000; padding: 15px; border-radius: 4px; display: block; margin: inherit;" target="_blank">Click to Share</a>
+
+																															*|IF:REFER_CODE|*
+																															<p style="margin-top: 15px; margin-bottom: 15px; line-height: 22px;font-size: 16px; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;">Or copy &amp; paste your referral link to others:
+																																<br>
+																																<?php $list_referrer_link = 'https://thebrag.com/refer/?rc=*|REFER_CODE|*&l=' . $list->id; ?>
+																																<a href="<?php echo $list_referrer_link; ?>" style="border-bottom: 2px solid #007bff; text-decoration: none; color: #262626;" target="_blank"><?php echo $list_referrer_link; ?></a>
+																															</p>
+																															*|END:IF|*
+																									</td>
+																								</tr>
+																							</tbody>
+																						</table>
+																					</th>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						<?php endif; // If not hiding Observer rewards (share)
 						?>
 
 						<tr>
@@ -640,7 +884,7 @@ $container_width = 700;
 													<tbody>
 														<tr>
 															<td valign="top" class="mcnTextContent" style="padding-top: 0px; padding-bottom: 30px; text-align: center;">
-																<?php BragObserver::print_social_icons(); ?>
+																<?php $this->print_social_icons(); ?>
 															</td>
 														</tr>
 													</tbody>
@@ -657,28 +901,38 @@ $container_width = 700;
 					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
 
 						<tr>
-							<td valign="top" class="templateFooter" align="center" style="text-align: center; padding: 5px; background: #ffffff; font-size: 10px; color: #333333;">
+							<td valign="top" class="templateFooter" align="center" style="text-align: center; padding: 5px; background: #333333; font-size: 10px; color: #ffffff;">
 								<div class="mcnTextContent">
-									Copyright &copy; <?php echo date('Y'); ?>
+									<br>
+									Copyright &copy; <?php echo date('Y'); ?><br>
+									*|HTML:LIST_ADDRESS_HTML|*
+									<br>
 								</div>
 							</td>
 						</tr>
 
 						<tr>
-							<td valign="top" class="templateFooter" style="padding-top:0; padding: 10px 0; color: #dedede; text-align: center; font-size: 10px; background: #ffffff; ">
+							<td valign="top" class="templateFooter" style="padding-top:0; padding: 10px 0; color: #dedede; text-align: center; font-size: 10px; background: #333333; ">
 								<div class="mcnTextContent">
-									<a target="_blank" href="https://thebrag.com/verify/?a=unsub&oc={{custom_attribute.${observer_token}}}" style="color: #333333 !important;text-decoration: none;font-size: 10px !important;">Unsubscribe</a>
+									<a target="_blank" href="https://thebrag.com/verify/?a=unsub&oc=*|OC_TOKEN|*" style="color: #aaaaaa !important;text-decoration: none;font-size: 10px !important;">Unsubscribe</a>
 									&nbsp;
 									<span style="font-size: 10px !important; color: #666666;">|</span>
 									&nbsp;
-									<a target="_blank" title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="color: #333333; text-decoration: none;font-size: 10px !important;">Advertise with us</a>
+									<a target="_blank" title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="color: #aaaaaa; text-decoration: none;font-size: 10px !important;">Advertise with us</a>
 									&nbsp;
 									<span style="font-size: 10px !important; color: #666666;">|</span>
 									&nbsp;
-									<a target="_blank" title="Contact us" href="mailto:observer@thebrag.media" target="_blank" style="color: #333333; text-decoration: none;font-size: 10px !important;">Contact us</a>
+									<a target="_blank" title="Contact us" href="mailto:observer@thebrag.media" target="_blank" style="color: #aaaaaa; text-decoration: none;font-size: 10px !important;">Contact us</a>
 								</div>
 							</td>
 						</tr>
+
+						<tr>
+							<td valign="top" class="templateFooter" align="center" style="text-align: right; padding: 0; background: #333333; font-size: 10px; color: #ffffff;">
+								<a href="*|UNSUB|*" style="color: #666666 !important;text-decoration: none;">.</a>
+							</td>
+						</tr>
+
 					</table>
 					<!--[if gte mso 9]>
 </td>
@@ -694,7 +948,7 @@ $container_width = 700;
 </html>
 <?php
 
-function print_video_record_of_week($newsletter)
+function print_video_record_of_week($obj, $newsletter)
 {
 	if (isset($newsletter->details->hide_video_record))
 		return;
@@ -727,7 +981,7 @@ function print_video_record_of_week($newsletter)
 			$featured_video_alt .= ' - \'' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) . '\'';
 		}
 
-		$featured_video_img =  BragObserver::resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
+		$featured_video_img =  $obj->resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
 ?>
 		<tr>
 			<td style="background-color:#ffffff;">
@@ -789,7 +1043,7 @@ function print_video_record_of_week($newsletter)
 			$rotw = json_decode($rotw_response['body']);
 			$featured_record_alt .= esc_html(stripslashes($rotw->artist));
 			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->name));
-			$featured_record_img =  BragObserver::resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
+			$featured_record_img =  $obj->resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
 		}
 		/* $featured_record_alt .= esc_html(stripslashes(get_option('tbm_featured_album_artist')));
 		$featured_record_alt .= ' - ' . esc_html(stripslashes(get_option('tbm_featured_album_title')));
@@ -875,7 +1129,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Post" src="https://images.thebrag.com/tb/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
+														<img align="none" class="" width="580" alt="Top Industry Post" src="<?php echo content_url(); ?>/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
 													</a>
 													<br>
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
@@ -926,7 +1180,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Tweet" src="https://images.thebrag.com/tb/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
+														<img align="none" class="" width="580" alt="Top Industry Tweet" src="<?php echo content_url(); ?>/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
 													</a>
 													<br>
 													<div style="text-align: center;">
@@ -990,142 +1244,62 @@ function print_video_record_of_week($newsletter)
 						<tr style="padding:0;text-align:center;vertical-align:top">
 							<td>
 								<?php
-								// Jobs from TheBrag.com/jobs
-
-								/* $ch_brag_jobs = curl_init();
+								// Articles from TheBrag.com
+								$ch_brag_jobs = curl_init();
 								curl_setopt($ch_brag_jobs, CURLOPT_URL, "https://thebrag.com/jobs/wp-json/api/v1/jobs?keywords=music&industry=music&size=10");
 								curl_setopt($ch_brag_jobs, CURLOPT_RETURNTRANSFER, 1);
 								$output_brag_jobs = curl_exec($ch_brag_jobs);
 								curl_close($ch_brag_jobs);
-								$jobs = json_decode($output_brag_jobs); */
-
-								$base_url = 'https://thebrag.com/jobs/';
-								if (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) {
-									// $base_url = 'http://host.docker.internal:8088/';
-								}
-
-								$url = $base_url . 'wp-json/api/v1/jobs?type=power-listing&size=10&order=desc';
-								$power_jobs_res = wp_remote_get($url);
-								$power_jobs = json_decode(wp_remote_retrieve_body($power_jobs_res));
-
-								$url = $base_url . 'wp-json/api/v1/jobs?keywords=music&industry=music&type=basic-listing&size=10&order=rand';
-								$basic_jobs_res = wp_remote_get($url);
-								$basic_jobs = json_decode(wp_remote_retrieve_body($basic_jobs_res));
-
-								if (
-									($power_jobs && is_array($power_jobs) && !empty($power_jobs)) ||
-									($basic_jobs && is_array($basic_jobs) && !empty($basic_jobs))
-								) :
+								$jobs = json_decode($output_brag_jobs);
+								if (count($jobs) > 0) :
+									$counter_jobs = 0;
 								?>
 									<h1 style="text-align: center;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif; margin: 10px auto; font-weight: bold; word-break: normal; font-size: 26px;">BEST JOBS IN MUSIC</h1>
-									<?php
-									if ($power_jobs && is_array($power_jobs) && !empty($power_jobs)) :
-										$counter_jobs = 0;
-										foreach ($power_jobs as $key => $job) :
-											if (is_null($job->image))
-												continue;
-
-											$counter_jobs++;
-											if ($counter_jobs > 4)
-												break;
-
+									<?php foreach ($jobs as $key => $job) :
+										if (is_null($job->image)) :
+											continue;
+										endif;
+										$counter_jobs++;
+										if ($counter_jobs > 4) :
+											break;
+										endif;
 									?>
-											<table style="width: 100%;  max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
-												<tr>
-													<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
-														<?php if (!is_null($job->image)) : ?>
-															<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-																<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
-															</a>
-														<?php endif; ?>
-													</td>
-													<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
-														<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
-															<?php if (isset($job->link) && $job->link != '') : ?>
-																<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-																	<span style="color: #666; font-size: 13px;"><?php echo date('d M Y', strtotime($job->publish_date)); ?></span>
-																	<br>
-																	<?php echo $job->title; ?>
-																	<br>
-																	<span style="color: #666; font-size: 13px;"><?php echo $job->location; ?></span>
-																</a>
-															<?php else : ?>
-																<?php echo $job->title; ?>
-															<?php endif; ?>
-														</h5>
-														<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
-															<?php // echo $job->description; 
-															?>
-														</p>
-													</td>
-												</tr>
-											</table>
-										<?php endforeach; // For Each Job
-										?>
-									<?php endif; // If there are Power listing jobs 
-									?>
+										<table style="width: 100%;  max-width: 100%; <?php echo $key < (count($jobs) - 1) ? ' border-bottom: 1px solid #dddddd;' : ''; ?>" align="center" width="600">
 
-									<?php
-									if ($basic_jobs && is_array($basic_jobs) && !empty($basic_jobs)) :
-									?>
-										<table align="left" style="width: 100%;  max-width: 100%;" align="center" width="600">
 											<tr>
-												<?php
-												$counter_jobs = 0;
-												foreach ($basic_jobs as $key => $job) :
-													if (is_null($job->image))
-														continue;
-
-													$counter_jobs++;
-													if ($counter_jobs > 4)
-														break;
-
-												?>
-													<td class="small-12" style="width: 50%;">
-														<table align="left" style="width: 100%;  max-width: 100%;" align="center" width="300">
-															<tr>
-																<td class="td-block" style="padding: 10px; width: 80px; text-align: center; vertical-align: middle;">
-																	<?php if (!is_null($job->image)) : ?>
-																		<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-																			<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="70" style="max-width: 70px; outline: 0; border: 0;">
-																		</a>
-																	<?php endif; ?>
-																</td>
-																<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
-																	<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
-																		<?php if (isset($job->link) && $job->link != '') : ?>
-																			<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
-																				<span style="color: #666; font-size: 13px;"><?php echo date('d M Y', strtotime($job->publish_date)); ?></span>
-																				<br>
-																				<?php echo $job->title; ?>
-																				<br>
-																				<span style="color: #666; font-size: 13px;"><?php echo $job->location; ?></span>
-																			</a>
-																		<?php else : ?>
-																			<?php echo $job->title; ?>
-																		<?php endif; ?>
-																	</h5>
-																</td>
-															</tr>
-														</table>
-													</td>
-												<?php
-													echo $counter_jobs % 2 == 0 ? '</tr><tr>' : '';
-												endforeach; // For Each Job
-												?>
+												<td class="td-block" style="padding: 10px; width: 160px; text-align: center; vertical-align: middle;">
+													<?php if (!is_null($job->image)) : ?>
+														<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+															<img src="<?php echo $job->image; ?>" alt="<?php echo $job->title; ?>" width="150" style="max-width: 150px; outline: 0; border: 0;">
+														</a>
+													<?php endif; ?>
+												</td>
+												<td align="left" class="td-block" style="padding: 10px; width: 400px; vertical-align: middle;">
+													<h5 style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 5px 0; font-weight:900; font-size: 17px;vertical-align: top;">
+														<?php if (isset($job->link) && $job->link != '') : ?>
+															<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;">
+																<?php echo $job->title; ?>
+															</a>
+														<?php else : ?>
+															<?php echo $job->title; ?>
+														<?php endif; ?>
+													</h5>
+													<p style="font-family: Helvetica, Arial, sans-serif;font-weight: normal; font-size:14px; line-height:1.4; margin: 0;">
+														<?php echo $job->description; ?>
+													</p>
+												</td>
 											</tr>
+
 										</table>
-									<?php endif; // If there are Power listing jobs 
+									<?php endforeach; // For Each Job 
 									?>
-								<?php endif; // If there are Power Or Basic listing jobs 
+								<?php endif; // If there are jobs 
 								?>
-
-
 								<table style="width: 100%; max-width: 100%; border-bottom: 1px solid #dddddd;" align="center" width="600">
 									<tr>
 										<td>
 											<p align="center" style="text-align: center;margin-top: 20px;margin-bottom: 10px;color: #333333;font-family: 'Helvetica', 'Arial', sans-serif;font-weight: normal;padding: 0;line-height: 19px;font-size: 14px;">
-												<a href="<?php echo $base_url; ?>" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
+												<a href="https://thebrag.com/jobs/" style="color: #231f20 !important;display: inline-block;width: auto !important;text-align: center;border: 1px solid #231f20;padding: 8px 20px;font-size: 16px;font-weight: bold;border-radius: 6px;text-decoration: none;">
 													MORE JOBS
 												</a><br>
 												<br>
@@ -1218,15 +1392,6 @@ function print_video_record_of_week($newsletter)
 					[
 						'url' => $pubs_base_url .= 'Variety.jpg',
 						'title' => 'Variety',
-						'width' => 84,
-						'height' => 25,
-					];
-				break;
-			case 'au.variety.com':
-				$pub_logo =
-					[
-						'url' => $pubs_base_url .= 'Variety.jpg',
-						'title' => 'Variety Australia',
 						'width' => 84,
 						'height' => 25,
 					];
@@ -1453,13 +1618,6 @@ function print_video_record_of_week($newsletter)
 					[
 						'url' => $pubs_base_url .= 'ico_Variety-32x32.png',
 						'title' => 'Variety',
-					];
-				break;
-			case 'au.variety.com':
-				$pub_logo =
-					[
-						'url' => $pubs_base_url .= 'ico_Variety-32x32.png',
-						'title' => 'Variety Australia',
 					];
 				break;
 			case 'artnews.com':

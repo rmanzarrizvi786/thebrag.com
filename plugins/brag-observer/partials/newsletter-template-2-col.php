@@ -57,7 +57,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
             <?php
             foreach ([1, 2] as $i) :
               if (isset($post_ids[$i])) : ?>
-                <td class="small-12" style="color:#0a0a0a;border-bottom:2px solid #EAEAEA;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0 auto;padding:0;padding-bottom:20px;padding-top:20px;text-align:center;width:320px;vertical-align:top">
+                <td class="small-12 h-article-wrap">
                   <?php print_article($newsletter, $post_ids[$i], 'half'); ?>
                 </td>
             <?php
@@ -83,7 +83,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
             <?php
             foreach ([3, 4] as $i) :
               if (isset($post_ids[$i])) : ?>
-                <td class="small-12" style="color:#0a0a0a;border-bottom:2px solid #EAEAEA;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0 auto;padding:0;padding-bottom:20px;padding-top:20px;text-align:center;width:320px;vertical-align:top">
+                <td class="small-12 h-article-wrap">
                   <?php print_article($newsletter, $post_ids[$i], 'half'); ?>
                 </td>
             <?php
@@ -116,7 +116,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
             <?php
             foreach ([6, 7] as $i) :
               if (isset($post_ids[$i])) : ?>
-                <td class="small-12" style="color:#0a0a0a;border-bottom:2px solid #EAEAEA;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0 auto;padding:0;padding-bottom:20px;padding-top:20px;text-align:center;width:320px;vertical-align:top">
+                <td class="small-12 h-article-wrap">
                   <?php print_article($newsletter, $post_ids[$i], 'half'); ?>
                 </td>
             <?php
@@ -135,7 +135,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
             <?php
             foreach ([8, 9] as $i) :
               if (isset($post_ids[$i])) : ?>
-                <td class="small-12" style="color:#0a0a0a;border-bottom:2px solid #EAEAEA;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0 auto;padding:0;padding-bottom:20px;padding-top:20px;text-align:center;width:320px;vertical-align:top">
+                <td class="small-12 h-article-wrap">
                   <?php print_article($newsletter, $post_ids[$i], 'half'); ?>
                 </td>
             <?php
@@ -161,7 +161,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
               <?php
               foreach ([$j, $j + 1] as $i) :
                 if (isset($post_ids[$i])) : ?>
-                  <td class="small-12" style="color:#0a0a0a;border-bottom:2px solid #EAEAEA;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0 auto;padding:0;padding-bottom:20px;padding-top:20px;text-align:center;width:320px;vertical-align:top">
+                  <td class="small-12 h-article-wrap">
                     <?php print_article($newsletter, $post_ids[$i], 'half'); ?>
                   </td>
               <?php
@@ -286,17 +286,9 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                       <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%">
                         <tbody>
                           <tr>
-                            <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                  <td>
-                                    <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
-                                  </td>
-                                  <td style="padding-left: 8px; color: #0a0a0a; font-size: 14px; font-family: Helvetica;">
-                                    <strong><?php echo $pub_logo['title']; ?></strong>
-                                  </td>
-                                </tr>
-                              </table>
+                            <td class="pub">
+                              <img src="<?php echo $pub_logo['url']; ?>" class="pub-icon" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                              <strong><?php echo $pub_logo['title']; ?></strong>
                             </td>
                           </tr>
                         </tbody>
@@ -306,7 +298,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                     <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="background-color: #000000;">
                       <tbody>
                         <tr>
-                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:0; padding-left:0px;">
+                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                             <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
                               <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank">
                                 <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="<?php echo $container_width - 40; ?>" style="max-width:<?php echo $container_width - 40; ?>px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
@@ -351,17 +343,9 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                       <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%">
                         <tbody>
                           <tr>
-                            <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:9px; padding-left:0px;">
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                  <td>
-                                    <img src="<?php echo $pub_logo['url']; ?>" style="width: <?php echo $pub_logo['width']; ?>px; max-width: 100%; height: auto;" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
-                                  </td>
-                                  <td style="padding-left: 8px; color: #0a0a0a; font-size: 14px; font-family: Helvetica;">
-                                    <strong><?php echo $pub_logo['title']; ?></strong>
-                                  </td>
-                                </tr>
-                              </table>
+                            <td class="pub">
+                              <img src="<?php echo $pub_logo['url']; ?>" class="pub-icon" title="<?php echo $pub_logo['title']; ?>" alt="<?php echo $pub_logo['title']; ?>">
+                              <strong><?php echo $pub_logo['title']; ?></strong>
                             </td>
                           </tr>
                         </tbody>
@@ -371,7 +355,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                     <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="background-color: #ffffff;">
                       <tbody>
                         <tr>
-                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:0; padding-left:0px;">
+                          <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                             <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
                               <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank">
                                 <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="310" style="max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
