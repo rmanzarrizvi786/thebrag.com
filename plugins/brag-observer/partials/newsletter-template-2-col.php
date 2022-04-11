@@ -30,10 +30,10 @@ if (count($ads) > 1) {
   array_push($ads_after_articles, 6);
 }
 if (count($ads) > 2) {
-  array_push($ads_after_articles, 10);
+  array_push($ads_after_articles, 8);
 }
 if (count($ads) > 3) {
-  array_push($ads_after_articles, 14);
+  array_push($ads_after_articles, 12);
 }
 // var_dump( $ads_after_articles ); exit;
 // $ads_after_articles = [ 3, 6, 10, 14 ];
@@ -128,6 +128,13 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       </table>
       <!-- 7, 8 -->
 
+      <?php
+      // Ad after article 8
+      if (in_array(8, $ads_after_articles)) :
+        print_ad(8, $ads_after_articles, $newsletter, $container_width);
+      endif;
+      ?>
+
       <!-- 9, 10 -->
       <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
         <tbody>
@@ -146,13 +153,6 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
         </tbody>
       </table>
       <!-- 9, 10 -->
-
-      <?php
-      // Ad after article 10
-      if (in_array(10, $ads_after_articles)) :
-        print_ad(10, $ads_after_articles, $newsletter, $container_width);
-      endif;
-      ?>
 
       <?php for ($j = 10; $j < count($post_ids); $j += 2) : ?>
         <table align="center" style="background:#fff;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;" width="700">
@@ -174,9 +174,9 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
       <?php endfor; ?>
 
       <?php
-      // Ad after article 14
-      if (in_array(14, $ads_after_articles)) :
-        print_ad(14, $ads_after_articles, $newsletter, $container_width);
+      // Ad after article 12
+      if (in_array(12, $ads_after_articles)) :
+        print_ad(12, $ads_after_articles, $newsletter, $container_width);
       endif;
       ?>
 
