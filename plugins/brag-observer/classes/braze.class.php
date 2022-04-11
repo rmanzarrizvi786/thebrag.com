@@ -391,4 +391,55 @@ class Braze
             }
         }
     }
+
+    public function handleWebhook()
+    {
+        global $wpdb;
+        $action = isset($_POST['action']) ? trim($_POST['action']) : NULL;
+        $token = isset($_POST['token']) ? trim($_POST['token']) : NULL;
+        if (is_null($action) || is_null($token)) {
+            wp_send_json_error();
+            die();
+        }
+
+        $data = @unserialize(base64_decode($token));
+
+        if (!$data) {
+            wp_send_json_error();
+            die();
+        }
+
+        $user_id = $data['id'];
+
+        $oc_token = get_user_meta($user_id, 'oc_token', true);
+
+        if ($oc_token == $data['oc_token']) {
+            if ('unsubscribe_observer_all' == $action) {
+                $update_data = [
+                    'status' => 'unsubscribed',
+                    'status_mailchimp' => NULL,
+                    'unsubscribed_at' => current_time('mysql'),
+                ];
+                $wpdb->update(
+                    $wpdb->prefix . 'observer_subs',
+                    $update_data,
+                    [
+                        'user_id' => $user_id,
+                    ]
+                );
+
+                require_once __DIR__ . '/cron.class.php';
+                $cron = new Cron();
+                $task = 'update_newsletter_interests';
+                if (!$cron->getActiveBrazeQueueTask($user_id, $task)) {
+                    $cron->addToBrazeQueue($user_id, $task);
+                }
+
+                wp_send_json_success();
+                die();
+            }
+        }
+        wp_send_json_error();
+        die();
+    }
 }
