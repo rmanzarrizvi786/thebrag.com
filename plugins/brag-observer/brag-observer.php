@@ -141,7 +141,7 @@ class BragObserver
     add_action('init', array($this, 'handle_braze_webhook'));
 
     // Get Observer Details
-    add_action('init', array($this, 'get_observer_details_with_slug'));
+    // add_action('init', array($this, 'get_observer_details_with_slug'));
 
     // REST API
     // add_action( 'rest_api_init', [ $this, '_rest_api_init' ] );
