@@ -392,11 +392,11 @@ class Braze
         }
     }
 
-    public function handleWebhook()
+    public function handleWebhook($args)
     {
         global $wpdb;
-        $action = isset($_POST['action']) ? trim($_POST['action']) : NULL;
-        $token = isset($_POST['token']) ? trim($_POST['token']) : NULL;
+        $action = isset($args['action']) ? trim($args['action']) : NULL;
+        $token = isset($args['token']) ? trim($args['token']) : NULL;
         if (is_null($action) || is_null($token)) {
             wp_send_json_error();
             die();

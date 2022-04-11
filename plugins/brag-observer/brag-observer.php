@@ -2786,7 +2786,10 @@ class BragObserver
     if ('/braze-webhook/' === $request) {
       require_once __DIR__ . '/classes/braze.class.php';
       $braze = new Braze();
-      $braze->handleWebhook();
+
+      $post = $_POST;
+
+      $braze->handleWebhook($post);
     }
   }
 }
