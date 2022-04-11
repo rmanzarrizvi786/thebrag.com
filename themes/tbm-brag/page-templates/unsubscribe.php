@@ -11,6 +11,7 @@ $unsub_types_redirects_mapping = [
 ];
 $site_abbrs = [
   'dbu',
+  'observer',
 ];
 
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -21,16 +22,14 @@ if (isset($_GET['type'])) {
 
   if (in_array($unsub_type, array_keys($unsub_types_redirects_mapping))) {
     $redirectTo = isset($unsub_types_redirects_mapping[$unsub_type]) ? $unsub_types_redirects_mapping[$unsub_type] : home_url('/observer-subscriptions/');
+  }
 
-    $unsub_type_e = explode('_', $unsub_type);
-    $site_abbr = $unsub_type_e[0];
+  $unsub_type_e = explode('_', $unsub_type);
+  $site_abbr = $unsub_type_e[0];
 
-    $unsub_attr = str_replace($site_abbr . '_', '', $unsub_type);
+  $unsub_attr = str_replace($site_abbr . '_', '', $unsub_type);
 
-    if (!in_array($site_abbr, $site_abbrs)) {
-      $valid_link = false;
-    }
-  } else {
+  if (!in_array($site_abbr, $site_abbrs)) {
     $valid_link = false;
   }
 }
