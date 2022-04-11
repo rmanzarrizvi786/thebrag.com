@@ -20,9 +20,7 @@ $valid_link = true;
 if (isset($_GET['type'])) {
   $unsub_type = trim($_GET['type']);
 
-  // if (in_array($unsub_type, array_keys($unsub_types_redirects_mapping))) {
   $redirectTo = isset($unsub_types_redirects_mapping[$unsub_type]) ? $unsub_types_redirects_mapping[$unsub_type] : home_url('/observer-subscriptions/');
-  // }
 
   $unsub_type_e = explode('_', $unsub_type);
   $site_abbr = $unsub_type_e[0];
@@ -52,6 +50,10 @@ if ($valid_link && isset($_GET['token'])) {
       $user = get_user_by('id', $user_id);
 
       if ($user) {
+
+        /**
+         * Process Braze Custom Attribute
+         */
         require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
         $braze = new Braze();
 
@@ -62,9 +64,6 @@ if ($valid_link && isset($_GET['token'])) {
           if (isset($braze_user['user']->custom_attributes->{$custom_attribute_unsub})) {
             if (is_array($braze_user['user']->custom_attributes->{$custom_attribute_unsub})) {
               $unsubs = array_merge($braze_user['user']->custom_attributes->{$custom_attribute_unsub}, [$unsub_attr]);
-
-              // var_dump($unsubs);
-              // exit;
             } else {
               $unsubs = [
                 $braze_user['user']->custom_attributes->{$custom_attribute_unsub},
@@ -113,7 +112,6 @@ get_header();
   </div>
 </div>
 
-
 <div class="container bg-yellow">
   <div class="row justify-content-center">
     <div id="update-profile" class="col-sm-9 col-lg-9 my-3">
@@ -132,15 +130,6 @@ get_header();
             <div><?php echo $message; ?></div>
           <?php endforeach; ?>
         </div>
-
-        <?php if (0 && !is_null($redirectTo)) : ?>
-          <script>
-            window.setTimeout(function() {
-              window.location = '<?php echo $redirectTo; ?>';
-            }, 3000);
-          </script>
-        <?php endif; // If redirecting 
-        ?>
       <?php endif; ?>
 
     </div>
