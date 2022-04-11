@@ -20,9 +20,9 @@ $valid_link = true;
 if (isset($_GET['type'])) {
   $unsub_type = trim($_GET['type']);
 
-  if (in_array($unsub_type, array_keys($unsub_types_redirects_mapping))) {
-    $redirectTo = isset($unsub_types_redirects_mapping[$unsub_type]) ? $unsub_types_redirects_mapping[$unsub_type] : home_url('/observer-subscriptions/');
-  }
+  // if (in_array($unsub_type, array_keys($unsub_types_redirects_mapping))) {
+  $redirectTo = isset($unsub_types_redirects_mapping[$unsub_type]) ? $unsub_types_redirects_mapping[$unsub_type] : home_url('/observer-subscriptions/');
+  // }
 
   $unsub_type_e = explode('_', $unsub_type);
   $site_abbr = $unsub_type_e[0];
