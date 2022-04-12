@@ -16,6 +16,7 @@ class API
       'tonedeaf.thebrag.com' => '3ce4efdd-a39c-4141-80f7-08a828500831',
       'dontboreus.thebrag.com' => '23455eda-057a-44b5-aa85-09b1222d4bd8',
       'theindustryobserver.thebrag.com' => 'e0738d93-cadb-4ca7-9b75-d0da76dcd8b4',
+      'braze' => '7b9a5563-3736-4f80-9e4e-743d5f594577'
     ];
 
     // REST API
@@ -94,6 +95,46 @@ class API
       'callback' => [$this, 'rest_latest_articles'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/get_users_related_topics_by_email', array(
+      'methods' => 'GET',
+      'callback' => [$this, 'rest_get_users_related_topics_by_email'],
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  public function rest_get_users_related_topics_by_email()
+  {
+    global $wpdb;
+    if (!isset($_GET['key']) || !$this->isRequestValid($_GET['key'])) {
+      wp_send_json_error(['Invalid Request']);
+      wp_die();
+    }
+
+    $email = isset($_GET['email']) ? trim($_GET['email']) : NULL;
+    $user = get_user_by('email', $email);
+    if (!$email) {
+      die();
+    }
+
+    $count = isset($_GET['count']) ? absint($_GET['count']) : 3;
+
+    $results = $wpdb->get_results("SELECT * FROM(
+      SELECT DISTINCT l.id, l.title, l.slug, l.image_url FROM `{$wpdb->prefix}observer_lists` l
+      JOIN `{$wpdb->prefix}observer_list_categories` oc ON l.id = oc.list_id
+      AND oc.category_id IN (
+      SELECT oc.category_id FROM `{$wpdb->prefix}observer_list_categories` oc
+      JOIN `{$wpdb->prefix}observer_categories` c ON c.id = oc.category_id
+      LEFT JOIN `{$wpdb->prefix}observer_subs` s ON oc.list_id = s.list_id
+      WHERE s.status = 'subscribed' AND s.user_id = '{$user->ID}'
+      )
+      ORDER BY l.sub_count DESC
+      ) a
+      ORDER BY RAND()
+      LIMIT {$count}");
+
+    wp_send_json_success($results);
+    wp_die();
   }
 
   public function rest_latest_articles()
@@ -138,7 +179,7 @@ class API
       wp_die();
     }
 
-    $email = trim($_GET['email']);
+    $email = isset($_GET['email']) ? trim($_GET['email']) : NULL;
     $user = get_user_by('email', $email);
     if (!$email) {
       die();
