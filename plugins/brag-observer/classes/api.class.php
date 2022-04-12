@@ -96,14 +96,14 @@ class API
       'permission_callback' => '__return_true',
     ));
 
-    register_rest_route($this->plugin_name . '/v1', '/get_users_related_topics_by_email', array(
+    register_rest_route($this->plugin_name . '/v1', '/get_users_related_topics', array(
       'methods' => 'GET',
-      'callback' => [$this, 'rest_get_users_related_topics_by_email'],
+      'callback' => [$this, 'rest_get_users_related_topics'],
       'permission_callback' => '__return_true',
     ));
   }
 
-  public function rest_get_users_related_topics_by_email()
+  public function rest_get_users_related_topics()
   {
     global $wpdb;
     if (!isset($_GET['key']) || !$this->isRequestValid($_GET['key'])) {
@@ -114,24 +114,55 @@ class API
     $email = isset($_GET['email']) ? trim($_GET['email']) : NULL;
     $user = get_user_by('email', $email);
     if (!$email) {
-      die();
+      wp_send_json_error();
+      wp_die();
     }
+
+    $slug = isset($_GET['slug']) ? trim($_GET['slug']) : NULL;
+    if (is_null($slug) || '' == $slug) {
+      wp_send_json_error();
+      wp_die();
+    }
+
+    $list = $wpdb->get_row("SELECT c.id category_id, lc.list_id list_id FROM {$wpdb->prefix}observer_categories c
+    JOIN {$wpdb->prefix}observer_list_categories lc ON c.id = lc.category_id
+    JOIN {$wpdb->prefix}observer_lists l ON l.id = lc.list_id
+    WHERE l.`slug` = '{$slug}' LIMIT 1");
+
+    if (!$list) {
+      wp_send_json_error();
+      wp_die();
+    }
+
+    // wp_send_json_success($list);
+    // wp_die();
 
     $count = isset($_GET['count']) ? absint($_GET['count']) : 3;
 
     $results = $wpdb->get_results("SELECT * FROM(
       SELECT DISTINCT l.id, l.title, l.slug, l.image_url FROM `{$wpdb->prefix}observer_lists` l
       JOIN `{$wpdb->prefix}observer_list_categories` oc ON l.id = oc.list_id
-      AND oc.category_id IN (
-      SELECT oc.category_id FROM `{$wpdb->prefix}observer_list_categories` oc
-      JOIN `{$wpdb->prefix}observer_categories` c ON c.id = oc.category_id
-      LEFT JOIN `{$wpdb->prefix}observer_subs` s ON oc.list_id = s.list_id
-      WHERE s.status = 'subscribed' AND s.user_id = '{$user->ID}'
-      )
+      WHERE
+        l.`status` = 'active'
+        AND oc.list_id != '{$list->list_id}'
+        AND oc.list_id != 48
+        AND oc.category_id = '{$list->category_id}'
+        AND oc.list_id NOT IN (
+          SELECT oc.list_id FROM `{$wpdb->prefix}observer_list_categories` oc
+          -- JOIN `{$wpdb->prefix}observer_categories` c ON c.id = oc.category_id
+          JOIN `{$wpdb->prefix}observer_subs` s ON oc.list_id = s.list_id
+          WHERE s.status = 'subscribed' AND s.user_id = '{$user->ID}'
+        )
       ORDER BY l.sub_count DESC
+      LIMIT 5
       ) a
       ORDER BY RAND()
       LIMIT {$count}");
+
+    if (!$results) {
+      wp_send_json_error();
+      wp_die();
+    }
 
     wp_send_json_success($results);
     wp_die();
