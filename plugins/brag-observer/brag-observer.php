@@ -2804,21 +2804,32 @@ class BragObserver
     global $wpdb;
     $request = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : false;
 
-    if (strpos($request, '/observer-title/') !== FALSE) {
+    if (
+      strpos($request, '/observer-title/') !== FALSE ||
+      strpos($request, '/observer-image/') !== FALSE
+    ) {
       $slug = isset($_GET['slug']) ? trim($_GET['slug']) : NULL;
 
-      if ('the-industry-observer' == $slug) {
+      if ('the-industry-observer' == $slug) { // TIO was renamed to MBO
         $slug = 'music-biz-observer';
       }
 
       if (is_null($slug) || '' == $slug)
         exit;
+
       $list = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}observer_lists WHERE `slug` = '{$slug}' LIMIT 1");
 
       if (!$list)
         exit;
-      echo $list->title;
-      exit;
+
+      if (strpos($request, '/observer-title/') !== FALSE) {
+        echo $list->title;
+        exit;
+      }
+      if (strpos($request, '/observer-image/') !== FALSE) {
+        echo $list->image_url;
+        exit;
+      }
     }
   }
 }
