@@ -612,6 +612,13 @@ class Cron // extends BragObserver
                     $user_attributes['observer_token'] = base64_encode(serialize($unserialized_oc_token));
                 }
 
+                /**
+                 * Set 'manual_import' custom attribute if no_welcome_email usermeta is set
+                 */
+                if (get_user_meta($user->ID, 'no_welcome_email', true)) {
+                    $user_attributes['manual_import'] = true;
+                }
+
                 $user_attributes = array_merge($user_attributes, (array)json_decode($task->task_values));
 
                 if (!empty($user_attributes)) {
@@ -922,6 +929,13 @@ class Cron // extends BragObserver
                         $arr_imported_from = [get_user_meta($user->ID, 'imported_from', true)];
                     }
                     $user_attributes['imported_from'] = $arr_imported_from;
+                }
+
+                /**
+                 * Set 'manual_import' custom attribute if no_welcome_email usermeta is set
+                 */
+                if (get_user_meta($user->ID, 'no_welcome_email', true)) {
+                    $user_attributes['manual_import'] = true;
                 }
 
                 if (!empty($user_attributes)) {
