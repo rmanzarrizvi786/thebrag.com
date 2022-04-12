@@ -619,6 +619,13 @@ class Cron // extends BragObserver
                     $user_attributes['manual_import'] = true;
                 }
 
+                /**
+                 * Set 'profile_completion' custom attribute
+                 */
+                if (get_user_meta($user->ID, 'profile_strength', true)) {
+                    $user_attributes['profile_completion_%'] = get_user_meta($user->ID, 'profile_strength', true);
+                }
+
                 $user_attributes = array_merge($user_attributes, (array)json_decode($task->task_values));
 
                 if (!empty($user_attributes)) {

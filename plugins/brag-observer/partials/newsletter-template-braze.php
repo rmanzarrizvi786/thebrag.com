@@ -507,13 +507,13 @@ $container_width = 700;
 																<?php else : ?>
 																	{% if {{custom_attribute.${profile_completion_%}}} %}
 																	{% assign profile_completion = {{custom_attribute.${profile_completion_%}}} | plus: 0 %}
-																	{% if {profile_completion < 100 %}
+																	{% if profile_completion < 100 %}
 																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-{{ profile_completion }}.jpg" alt="{{ profile_completion }}% complete" title="{{ profile_completion }}% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</div>
 																	{% endif %}
 																	{% else %}
 																	Your Profile Strength <img src="https://thebrag.com/wp-content/uploads/edm/profile-strength-bar-0.jpg" alt="0% complete" title="0% complete" style="vertical-align: middle;">
-																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</a></div>
+																	<div style="font-size: 11px;"><a target="_blank" href="https://thebrag.com/profile/" style="color: #007bff;">Boost</a> your profile to receive emails more tailored to you!</div>
 																	{% endif %}
 																<?php endif; ?>
 																<!--[if gte mso 9]>
