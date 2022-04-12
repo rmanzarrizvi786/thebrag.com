@@ -2806,6 +2806,11 @@ class BragObserver
 
     if (strpos($request, '/observer-title/') !== FALSE) {
       $slug = isset($_GET['slug']) ? trim($_GET['slug']) : NULL;
+
+      if ('the-industry-observer' == $slug) {
+        $slug = 'music-biz-observer';
+      }
+
       if (is_null($slug) || '' == $slug)
         exit;
       $list = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}observer_lists WHERE `slug` = '{$slug}' LIMIT 1");
