@@ -397,6 +397,7 @@ class Braze
         global $wpdb;
         $action = isset($args['action']) ? trim($args['action']) : NULL;
         $token = isset($args['token']) ? trim($args['token']) : NULL;
+
         if (is_null($action) || is_null($token)) {
             wp_send_json_error();
             die();
@@ -412,6 +413,8 @@ class Braze
         $user_id = $data['id'];
 
         $oc_token = get_user_meta($user_id, 'oc_token', true);
+
+        error_log($user_id . ',,,' . $oc_token);
 
         if ($oc_token == $data['oc_token']) {
             if ('unsubscribe_observer_all' == $action) {

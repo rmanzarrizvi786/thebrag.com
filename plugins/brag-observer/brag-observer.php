@@ -137,9 +137,6 @@ class BragObserver
     add_action('wp_ajax_update_payment_details', [$this, 'update_payment_details']);
     add_action('wp_ajax_nopriv_update_payment_details', [$this, 'update_payment_details']);
 
-    // Handle Braze Webhook requests
-    add_action('init', array($this, 'handle_braze_webhook'));
-
     // Get Observer Details
     add_action('init', array($this, 'get_observer_details_with_slug'));
 
@@ -2778,22 +2775,6 @@ class BragObserver
     }
 
     return $return;
-  }
-
-  /**
-   * Handle Braze Webhook requests
-   */
-  public function handle_braze_webhook()
-  {
-    $request = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : false;
-    if ('/braze-webhook/' === $request) {
-      require_once __DIR__ . '/classes/braze.class.php';
-      $braze = new Braze();
-
-      $post = $_POST;
-
-      $braze->handleWebhook($post);
-    }
   }
 
   /**

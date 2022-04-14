@@ -101,6 +101,23 @@ class API
       'callback' => [$this, 'rest_get_users_related_topics'],
       'permission_callback' => '__return_true',
     ));
+
+    register_rest_route($this->plugin_name . '/v1', '/braze_webhook', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_braze_webhook'],
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  public function rest_braze_webhook($request_data)
+  {
+    $data = $request_data->get_params();
+    require_once __DIR__ . '/braze.class.php';
+    $braze = new Braze();
+    return $braze->handleWebhook([
+      'action' => isset($data['action']) ? trim($data['action']) : null,
+      'token' => isset($data['token']) ? trim($data['token']) : null,
+    ]);
   }
 
   public function rest_get_users_related_topics()
