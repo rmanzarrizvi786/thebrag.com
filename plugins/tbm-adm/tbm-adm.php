@@ -164,9 +164,9 @@ class TBMAds
         }
       }
 
-      if (!is_null($post_id)) {
-        // $the_post = get_post($post_id);
-        // $pagepath = get_the_permalink($post_id);
+      $tags = get_the_tags($post_id);
+      if ($tags) {
+        $tag_slugs = wp_list_pluck($tags, 'slug');
       }
 
       if (isset($section)) {
@@ -191,18 +191,13 @@ class TBMAds
         if (isset($category)) {
           $html .= 'fusetag.setTargeting("fuse_category", ["' . $category . '"]);';
         }
+        if (isset($tag_slugs)) {
+          $html .= 'fusetag.setTargeting("tbm_tags", ' . json_encode($tag_slugs) . ');';
+        }
         if (isset($pagepath)) {
           $html .= 'fusetag.setTargeting("pagepath", ["' . $pagepath . '"]);';
         }
         $html .= '</script>';
-      }
-
-      if (isset($category)) {
-        /* $html .= '<script type="text/javascript">
-      fusetag.que.push(function() {
-         fusetag.setTargeting("fuse_category", ["' . $category . '"]);
-      });
-      </script>'; */
       }
 
       return $html;
