@@ -102,22 +102,12 @@ function tbm_theme_options()
 
         foreach ($_POST as $key => $value) :
             if (strpos($key, 'tbm_') !== false && $key != 'tbm_featured_infinite_ID') :
-                /* if (is_main_site($current_blog_id)) :
-                    foreach ($sites as $site) :
-                        if (is_main_site((int) $site->blog_id)) :
-                            continue;
-                        endif;
-                        update_blog_option($site->blog_id, $key, sanitize_text_field($value));
-                    endforeach;
-                endif; */
                 update_option($key, sanitize_text_field($value));
-                $curl_metadata['data'][$key] = sanitize_text_field($value);
+            // $curl_metadata['data'][$key] = sanitize_text_field($value);
             endif;
         endforeach;
 
-        // if (is_main_site($current_blog_id)) :
-
-        if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
+        /* if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
             curl_post('https://the-industry-observer.com.au/wp-json/api/v1/update_theme_options', 'POST', $curl_metadata);
             curl_post('https://tone-deaf.com.au/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
             curl_post('https://rs-au.localhost/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
@@ -126,18 +116,13 @@ function tbm_theme_options()
             curl_post('https://dontboreus.thebrag.com/wp-json/api/v1/update_theme_options', 'POST', $curl_metadata);
             curl_post('https://tonedeaf.thebrag.com/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
             curl_post('https://au.rollingstone.com/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
-        }
-        // endif;
+        } */
 
         echo '<div class="alert alert-success">Options have been saved!</div>';
     endif;
 ?>
     <h1 class="mt-3">Theme Options</h1>
-    <?php // if (1 === $current_blog_id) : 
-    ?>
-    <h4 class="p-4 h5" style="background: gold;">Updating VOTW will also update VOTW for sites in network. You can overwrite these settings for each site individually too from their respective Wordpress theme options page.</h4>
-    <?php // endif; 
-    ?>
+    <!-- <h4 class="p-4 h5" style="background: gold;">Updating VOTW will also update VOTW for sites in network. You can overwrite these settings for each site individually too from their respective Wordpress theme options page.</h4> -->
     <form method="post" class="form">
         <div class="row">
             <div class="col-md-6">
