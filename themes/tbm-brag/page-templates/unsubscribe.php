@@ -12,6 +12,7 @@ $unsub_types_redirects_mapping = [
 $site_abbrs = [
   'dbu',
   'observer',
+  'jobs',
 ];
 
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
