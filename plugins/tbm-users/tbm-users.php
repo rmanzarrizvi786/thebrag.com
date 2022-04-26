@@ -488,6 +488,12 @@ class TBMUsers
       'permission_callback' => '__return_true',
     ));
 
+    register_rest_route($this->plugin_name . '/v1', '/set_braze_observer_token', array(
+      'methods' => 'POST',
+      'callback' => [$this, 'rest_set_braze_observer_token'],
+      'permission_callback' => '__return_true',
+    ));
+
     /* register_rest_route($this->plugin_name . '/v1', '/check_if_client_club_member', array(
       'methods' => 'POST',
       'callback' => [$this, 'rest_check_if_client_club_member'],
@@ -1060,6 +1066,42 @@ class TBMUsers
       die();
     }
   } // rest_identify_braze()
+
+  /**
+   * Set custom attribute in Braze for user with email address
+   */
+  public function rest_set_braze_observer_token($request_data)
+  {
+    $data = $request_data->get_params();
+    $data = stripslashes_deep($data);
+
+    if (!isset($data['email']) || !is_email($data['email'])) {
+      return;
+    }
+
+    $data['email'] = trim($data['email']);
+
+    $user = get_user_by('email', $data['email']);
+
+    if (!$user)
+      return;
+
+    if (!get_user_meta($user->ID, 'oc_token', true)) :
+      $oc_token = md5($user->ID . time()); // creates md5 code to verify later
+      update_user_meta($user->ID, 'oc_token', $oc_token);
+    endif;
+
+    $unserialized_oc_token = [
+      'id' => $user->ID,
+      'oc_token' => get_user_meta($user->ID, 'oc_token', true),
+    ];
+
+    require_once WP_PLUGIN_DIR . '/brag-observer/classes/braze.class.php';
+    $braze = new Braze();
+    $braze->setMethod('POST');
+
+    return $braze->setAttributeByEmail($data['email'], ['key' => 'observer_token', 'value' => base64_encode(serialize($unserialized_oc_token))]);
+  } // rest_set_braze_observer_token()
 
   public function _wpa0_user_created($user_id, $email, $password, $f_name, $l_name)
   {
