@@ -3666,6 +3666,10 @@ add_filter('the_content', function ($content) {
     if (is_singular('page'))
         return $content;
 
+    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+        return $content;
+    }
+
     $mag_cover_res = wp_remote_get('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
 
     if (is_array($mag_cover_res) && !is_wp_error($mag_cover_res)) {
