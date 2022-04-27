@@ -3666,7 +3666,7 @@ add_filter('the_content', function ($content) {
     if (is_singular('page'))
         return $content;
 
-    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+    if (function_exists('amp_is_request') && amp_is_request()) {
         return $content;
     }
 
