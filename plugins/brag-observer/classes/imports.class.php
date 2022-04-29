@@ -91,6 +91,7 @@ class Imports extends BragObserver
         $message_user = '';
 
         $process = true;
+        $is_new_user = false;
 
         $tmp_sub->email = trim($tmp_sub->email);
 
@@ -126,6 +127,7 @@ class Imports extends BragObserver
             $message_user .= $tmp_sub->email . '<br>';
             $return_msg .= $message_user;
             $user = get_user_by('ID', $user_id);
+            $is_new_user = true;
           }
         }
 
@@ -159,7 +161,9 @@ class Imports extends BragObserver
           }
 
           // update_user_meta($user->ID, 'no_welcome_email', 1);
-          update_user_meta($user->ID, 'manual_import', 1);
+          if ($is_new_user) {
+            update_user_meta($user->ID, 'manual_import', 1);
+          }
           update_user_meta($user->ID, 'is_activated', 1);
 
           if (!get_user_meta($user->ID, 'oc_token')) {
