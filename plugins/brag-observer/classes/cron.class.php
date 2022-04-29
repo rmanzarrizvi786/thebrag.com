@@ -207,9 +207,9 @@ class Cron // extends BragObserver
                     );
 
                     // Send consolidated Welcome email
-                    if (!get_user_meta($sub_user['user_id'], 'no_welcome_email', true)) {
+                    // if (!get_user_meta($sub_user['user_id'], 'no_welcome_email', true)) {
                         // $email->sendSubscribeConfirmationEmail( $sub_user['user_id'], $sub_user['sub_lists'] );
-                    }
+                    // }
                 } // If there are $sub_user['sub_lists']
 
                 if (isset($sub_user['unsub_lists']) && count($sub_user['unsub_lists']) > 0) {
@@ -613,9 +613,12 @@ class Cron // extends BragObserver
                 }
 
                 /**
-                 * Set 'manual_import' custom attribute if no_welcome_email usermeta is set
+                 * Set 'manual_import' custom attribute if no_welcome_email or manual_import usermeta is set
                  */
-                if (get_user_meta($user->ID, 'no_welcome_email', true)) {
+                if (
+                    get_user_meta($user->ID, 'no_welcome_email', true) ||
+                    get_user_meta($user->ID, 'manual_import', true)
+                ) {
                     $user_attributes['manual_import'] = true;
                 }
 
@@ -939,9 +942,12 @@ class Cron // extends BragObserver
                 }
 
                 /**
-                 * Set 'manual_import' custom attribute if no_welcome_email usermeta is set
+                 * Set 'manual_import' custom attribute if no_welcome_email or manual_import usermeta is set
                  */
-                if (get_user_meta($user->ID, 'no_welcome_email', true)) {
+                if (
+                    get_user_meta($user->ID, 'no_welcome_email', true) ||
+                    get_user_meta($user->ID, 'manual_import', true)
+                ) {
                     $user_attributes['manual_import'] = true;
                 }
 

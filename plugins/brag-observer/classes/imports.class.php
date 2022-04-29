@@ -158,7 +158,8 @@ class Imports extends BragObserver
             $add_braze_cron = true;
           }
 
-          update_user_meta($user->ID, 'no_welcome_email', 1);
+          // update_user_meta($user->ID, 'no_welcome_email', 1);
+          update_user_meta($user->ID, 'manual_import', 1);
           update_user_meta($user->ID, 'is_activated', 1);
 
           if (!get_user_meta($user->ID, 'oc_token')) {
