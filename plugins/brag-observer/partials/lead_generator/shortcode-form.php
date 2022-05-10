@@ -8,7 +8,8 @@ function observer_lead_generator_form($atts)
     'id' => NULL,
     'background' => '#e9ecef',
     'border' => '#fff',
-    'width' => NULL
+    'width' => NULL,
+    'cta' => 'Sign me up',
   ), $atts);
 
   if (is_null($lead_generator_atts['id']))
@@ -95,7 +96,7 @@ function observer_lead_generator_form($atts)
               <div class="js-errors"></div>
               <div class="js-success"></div>
             </div>
-            <button type="submit" name="lead_generator-submit" class="lead_generator-submit btn btn-danger">Sign me up</button>
+            <button type="submit" name="lead_generator-submit" class="lead_generator-submit btn btn-danger"><?php echo $lead_generator_atts['cta']; ?></button>
           </div>
         </div>
       </div>
