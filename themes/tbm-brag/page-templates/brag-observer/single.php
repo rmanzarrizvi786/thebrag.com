@@ -71,7 +71,7 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
     <div class="d-md-flex align-items-center h-100 justify-content-start mx-lg-5 mx-md-3 ml-2" style="max-width: 100%;">
       <div class="py-6">
         <a href="<?php echo home_url('/observer/'); ?>">
-          <img class="observer-logo mx-4" src="<?php echo get_template_directory_uri(); ?>/images/observer/TBOLogo.svg">
+          <img class="observer-logo mx-4" src="https://cdn.thebrag.com/observer/The-Brag-Observer-300px.jpg">
         </a>
         <h1 class="mx-4 text-dark"><?php echo $list->title; ?></h1>
         <h3 class="subheader mx-4 mb-4"><?php echo ($list->description); ?></h3>
