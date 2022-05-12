@@ -68,9 +68,7 @@ if (!is_null($topic_id)) {
     }
 ?>
     <div class="observer-sub-form justify-content-center my-3 p-0 d-flex align-items-stretch bg-dark text-white">
-        <div class="img-wrap" style="background-image: url(<?php echo $topic->image_url; ?>);">
-            <img src="<?php echo $topic->image_url; ?>" style="visibility: hidden;">
-        </div>
+        <div class="img-wrap" style="background-image: url(<?php echo $topic->image_url; ?>);"></div>
         <div class="p-2 p-md-3 d-flex justify-content-center align-items-center">
             <div>
                 <div class="mb-2">
