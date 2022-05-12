@@ -193,7 +193,7 @@ class TBM_Shout_Writer_Beer
   {
     wp_enqueue_script($this->plugin_slug, plugins_url('js/scripts.js', __FILE__), array('jquery'), NULL, true);
     // wp_enqueue_style( $this->plugin_slug, plugins_url( 'css/style.min.css', __FILE__ ) );
-    wp_enqueue_style($this->plugin_slug, plugins_url('css/style.css', __FILE__), '2022-05-12');
+    wp_enqueue_style($this->plugin_slug, plugins_url('css/style.css', __FILE__), false, '2022-05-12');
     $a = shortcode_atts(array(
       'author' => '',
     ), $atts);
