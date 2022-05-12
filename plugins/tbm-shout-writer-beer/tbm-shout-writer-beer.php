@@ -229,7 +229,7 @@ class TBM_Shout_Writer_Beer
             </span>
             <span style="text-indent: -99999px; display: inline-block;">Young Henrys</span>
           </a>
-          <span class="ico-beer"><img src="<?php echo esc_url(plugins_url('images/younghenrys.gif', __FILE__)); ?>" loading="lazy"></span>
+          <span class="ico-beer"><img src="<?php echo esc_url(plugins_url('images/younghenrys.gif', __FILE__)); ?>" width="35" height="60" loading="lazy"></span>
 
         </div>
         <span class="text-right">Love this article?<br>Shout <?php echo $a['author']; ?> a beer</span>
