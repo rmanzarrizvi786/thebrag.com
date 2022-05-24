@@ -2295,8 +2295,18 @@ class BragObserver
 
     if ($subscription && $subscription[0]) {
       $subscription = $subscription[0];
+
+      $data['key'] = $this->mag_sub['rest_api_key'];
+      $data['uniqid'] = $sub_id;
+      $this->callAPI(
+        'POST',
+        $this->mag_sub['api_url'] . 'updated_payment_details',
+        $data,
+        false
+      );
+
       $payment = Payment::getInstance();
-      return $payment->update_payment_details($subscription->stripe_customer_id);
+      $payment->update_payment_details($subscription->stripe_customer_id);
     } else {
       error_log('BO Error: Subscription not found for : ' . $sub_id);
     }

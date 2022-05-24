@@ -126,7 +126,10 @@ class Payment
           displayError.textContent = 'Please enter your name';
         } else {
 
-          displayError.classList.add("d-none");
+          // displayError.classList.add("d-none");
+          displayError.classList.add("alert-info");
+          displayError.classList.remove("d-none", "alert-danger");
+          displayError.textContent = 'Please wait, processing...';
 
           stripe
             .confirmCardSetup(clientSecret, {
@@ -142,9 +145,10 @@ class Payment
               if (result.error) {
                 changeLoadingState(false);
                 displayError.classList.remove("d-none");
+                displayError.classList.add("alert-danger");
                 displayError.textContent = result.error.message;
               } else {
-                displayError.classList.add("d-none");
+                // displayError.classList.add("d-none");
                 // The PaymentMethod was successfully set up
                 orderComplete(stripe, clientSecret, '<?php echo isset($_GET['id']) ? trim($_GET['id']) : NULL; ?>');
               }
