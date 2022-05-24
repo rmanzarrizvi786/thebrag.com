@@ -1,23 +1,17 @@
 <div class="row">
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-2">
     <h3>Update payment details <small class="text-muted">ID: <?php echo $sub_id; ?></small></h3>
   </div>
 </div>
 
 <form id="form-payment-details" action="#">
   <div class="row">
-    <div class="col-12 mt-3">
-
-    </div>
-  </div>
-
-  <div class="row">
     <div class="col-12">
       <?php
       if ($paymentMethods && count($paymentMethods) > 0) : ?>
         <?php foreach ($paymentMethods as $paymentMethod) : ?>
           <h4>Current credit card details</h4>
-          <div class="d-flex mb-2">
+          <div class="d-flex justify-content-start mb-2">
             <div>
               <?php
               if (file_exists(get_template_directory() . '/images/observer/card-types/' . $paymentMethod->card->brand . '.png')) :
@@ -53,7 +47,7 @@
   </div>
 
   <div class="row">
-    <div class="col-12 mb-1">
+    <div class="col-12">
       <input type="text" name="full_name" id="full_name" placeholder="Full Name *" maxlength="30" value="<?php echo isset($subscription->full_name) ? $subscription->full_name : ''; ?>" class="form-control" required>
     </div>
   </div>

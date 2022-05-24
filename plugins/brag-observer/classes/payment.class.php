@@ -94,7 +94,7 @@ class Payment
     </div>
     <div class="row">
       <div class="col-12 mt-3">
-        <div id="js-errors" class="alert alert-danger d-none" role="alert"></div>
+        <div id="js-errors" class="alert alert-danger d-none mb-1" role="alert"></div>
         <div class="spinner d-none" id="spinner">
           <div class="double-bounce1"></div>
           <div class="double-bounce2"></div>
@@ -230,7 +230,6 @@ class Payment
 
   public function update_payment_details($customer_id)
   {
-
     $post = stripslashes_deep($_POST);
     $setupIntent = json_decode($post['setupIntentJson']);
 

@@ -37,19 +37,19 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
           <?php endif; ?>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuReference<?php echo $key; ?>">
             <!-- <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_shipping', 'id' => $subscription->uniqid]); ?>">Update shipping details</a> -->
-            <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_billing_shipping', 'id' => $subscription->uniqid]); ?>">Update billing/shipping details</a>
+            <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_billing_shipping', 'id' => $subscription->uniqid]); ?>">Update billing/shipping details</a><br>
 
             <?php if (!is_null($subscription->stripe_customer_id)) : ?>
-              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">Update payment details</a>
+              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'update_payment', 'id' => $subscription->uniqid]); ?>">Update payment details</a><br>
             <?php endif; ?>
 
             <?php if (isset($subscription->crm_record->Active__c) && $subscription->crm_record->Active__c) : ?>
               <div class="dropdown-divider"></div>
               <!-- <a class="dropdown-item" href="mailto:subscribe@thebrag.media?subject=Cancel%20auto-renew&body=ID:<?php echo $subscription->uniqid; ?>">Cancel auto-renew</a> -->
-              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a>
+              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'cancel-auto-renew', 'id' => $subscription->uniqid]); ?>" onClick="return confirm('Are you sure?');">Cancel auto-renew</a><br>
             <?php else : ?>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'enable-auto-renew', 'id' => $subscription->uniqid]); ?>">Enable auto-renew</a>
+              <a class="dropdown-item" href="<?php echo add_query_arg(['a' => 'enable-auto-renew', 'id' => $subscription->uniqid]); ?>">Enable auto-renew</a><br>
             <?php endif; // If Active 
             ?>
             <?php // endif; // If Gift 
