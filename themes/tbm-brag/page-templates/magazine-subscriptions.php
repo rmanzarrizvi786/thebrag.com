@@ -4,7 +4,8 @@ if (is_user_logged_in()) {
   $current_user = wp_get_current_user();
   $user_id = $current_user->ID;
 } else {
-  wp_redirect(wp_login_url());
+  wp_redirect(wp_login_url(home_url('/observer/magazine-subscriptions/')));
+  die();
 }
 
 $action = isset($_GET['a']) ? trim($_GET['a']) : NULL;
