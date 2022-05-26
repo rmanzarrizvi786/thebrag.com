@@ -78,7 +78,7 @@
       "dateModified": "<?php echo the_modified_date('Y-m-d\TH:i:s+10:00'); ?>",
       "author": {
         "@type": "Person",
-        "name": "<?php echo str_replace(['"', '\\'], ['\"', '\\\\',], $author); ?>"
+        "name": "<?php echo htmlspecialchars($author, ENT_QUOTES); ?>"
       },
       "publisher": {
         "@type": "Organization",
