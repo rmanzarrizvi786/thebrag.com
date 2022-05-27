@@ -386,13 +386,15 @@ class BragObserver
       wp_schedule_event(strtotime('00:07:00'), 'every10minutes', 'cron_hook_observer_sync_with_auth0', array(NULL, NULL));
     }
 
-    /* if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
+    /*
+    if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
       wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
-    } */
-
-    if (!wp_next_scheduled('cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL))) {
+    }
+    
+    if (!wp_next_scheduled('cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL))) {      
       wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL));
     }
+    */
   }
 
   public function deactivate()

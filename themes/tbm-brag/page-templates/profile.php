@@ -416,6 +416,15 @@ if (isset($_POST) && isset($_POST['action']) && 'save-profile' == $_POST['action
       // }
     }
 
+    $crons = _get_cron_array();
+    if (!empty($crons)) {
+      foreach ($crons as $timestamp => $cron) {
+        if (!wp_next_scheduled('cron_hook_observer_braze_update_profile')) {
+          wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile');
+        }
+      }
+    }
+
     wp_redirect($returnTo);
     exit;
   } // If $errors is empty
