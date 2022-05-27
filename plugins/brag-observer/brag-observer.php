@@ -370,29 +370,29 @@ class BragObserver
 
   public function activate()
   {
-    if (!wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_brag_observer', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_brag_observer')) {
+      wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_brag_observer');
     }
 
-    if (!wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'every20minutes', 'cron_hook_observer_braze_update_newsletter_interests', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests')) {
+      wp_schedule_event(strtotime('00:00:00'), 'every20minutes', 'cron_hook_observer_braze_update_newsletter_interests');
     }
 
-    if (!wp_next_scheduled('cron_hook_observer_braze_update_profile', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_braze_update_profile')) {
+      wp_schedule_event(strtotime('00:05:00'), 'every10minutes', 'cron_hook_observer_braze_update_profile');
     }
 
-    if (!wp_next_scheduled('cron_hook_observer_sync_with_auth0', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:07:00'), 'every10minutes', 'cron_hook_observer_sync_with_auth0', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_sync_with_auth0')) {
+      wp_schedule_event(strtotime('00:07:00'), 'every10minutes', 'cron_hook_observer_sync_with_auth0');
     }
 
     /*
-    if (!wp_next_scheduled('cron_hook_observer_braze_export', array(NULL, NULL))) {
-      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_braze_export')) {
+      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_braze_export');
     }
     
-    if (!wp_next_scheduled('cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL))) {      
-      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_ip_warmup_export_to_braze', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_hook_observer_ip_warmup_export_to_braze')) {      
+      wp_schedule_event(strtotime('00:00:00'), 'everyminute', 'cron_hook_observer_ip_warmup_export_to_braze');
     }
     */
   }
