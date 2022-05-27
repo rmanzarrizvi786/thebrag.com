@@ -408,7 +408,7 @@ class Cron // extends BragObserver
         endif;
 
         update_option('BragObserver_CronEnd', date('Y-m-d H:i:s'), false);
-    } // exec_cron_observer_mailchimp
+    } // exec_cron_observer_mailchimp()
 
 
     /**
