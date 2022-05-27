@@ -131,7 +131,7 @@ class BragObserver
     register_deactivation_hook(__FILE__, [$this, 'deactivate']);
 
     // Cron
-    // add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
+    // add_action('cron_hook_observer_mailchimp', [$this, 'exec_cron_brag_observer']);
 
     // Payment Details for Mag Sub
     add_action('wp_ajax_update_payment_details', [$this, 'update_payment_details']);
@@ -370,8 +370,8 @@ class BragObserver
 
   public function activate()
   {
-    if (!wp_next_scheduled('cron_hook_brag_observer')) {
-      wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_brag_observer');
+    if (!wp_next_scheduled('cron_hook_observer_mailchimp')) {
+      wp_schedule_event(strtotime('00:03:00'), 'hourly', 'cron_hook_observer_mailchimp');
     }
 
     if (!wp_next_scheduled('cron_hook_observer_braze_update_newsletter_interests')) {
@@ -403,7 +403,7 @@ class BragObserver
     if (empty($crons)) {
       return;
     }
-    $hooks = ['cron_hook_brag_observer', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2', 'cron_hook_observer_ip_warmup_export_to_braze', 'cron_hook_observer_sync_with_auth0'];
+    $hooks = ['cron_hook_observer_mailchimp', 'cron_hook_observer_braze_update_newsletter_interests', 'cron_hook_observer_braze_update_profile', 'cron_hook_observer_braze_export', 'cron_hook_observer_braze_export2', 'cron_hook_observer_ip_warmup_export_to_braze', 'cron_hook_observer_sync_with_auth0'];
     foreach ($crons as $timestamp => $cron) {
       foreach ($hooks as $hook) {
         if (!empty($cron[$hook])) {
@@ -1050,7 +1050,7 @@ class BragObserver
   /* public function process_cron()
   {
     date_default_timezone_set('Australia/NSW');
-    $next_run_timestamp = wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL));
+    $next_run_timestamp = wp_next_scheduled('cron_hook_observer_mailchimp', array(NULL, NULL));
     echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
     echo '<br>Current Date/Time: ' . date('d-M-Y h:i:sa');
 

@@ -22,7 +22,7 @@ class Cron // extends BragObserver
         // Admin menu
         add_action('admin_menu', [$this, '_admin_menu']);
 
-        add_action('cron_hook_brag_observer', [$this, 'exec_cron_brag_observer']);
+        add_action('cron_hook_observer_mailchimp', [$this, 'exec_cron_observer_mailchimp']);
         add_action('cron_hook_observer_braze_update_newsletter_interests', [$this, 'exec_cron_observer_braze_update_newsletter_interests']);
         add_action('cron_hook_observer_braze_update_profile', [$this, 'exec_cron_observer_braze_update_profile']);
         add_action('cron_hook_observer_sync_with_auth0', [$this, 'exec_cron_observer_sync_with_auth0']);
@@ -110,14 +110,14 @@ class Cron // extends BragObserver
     public function process_cron()
     {
         date_default_timezone_set('Australia/NSW');
-        $next_run_timestamp = wp_next_scheduled('cron_hook_brag_observer', array(NULL, NULL));
+        $next_run_timestamp = wp_next_scheduled('cron_hook_observer_mailchimp', array(NULL, NULL));
         echo '<br>Scheduled automatic run is at ' . date('d-M-Y h:i:sa', $next_run_timestamp);
         echo '<br>Current Date/Time: ' . date('d-M-Y h:i:sa');
 
-        $this->exec_cron_brag_observer();
+        $this->exec_cron_observer_mailchimp();
     }
 
-    public function exec_cron_brag_observer()
+    public function exec_cron_observer_mailchimp()
     {
         update_option('BragObserver_CronStart', date('Y-m-d H:i:s'), false);
 
@@ -208,7 +208,7 @@ class Cron // extends BragObserver
 
                     // Send consolidated Welcome email
                     // if (!get_user_meta($sub_user['user_id'], 'no_welcome_email', true)) {
-                        // $email->sendSubscribeConfirmationEmail( $sub_user['user_id'], $sub_user['sub_lists'] );
+                    // $email->sendSubscribeConfirmationEmail( $sub_user['user_id'], $sub_user['sub_lists'] );
                     // }
                 } // If there are $sub_user['sub_lists']
 
@@ -408,7 +408,7 @@ class Cron // extends BragObserver
         endif;
 
         update_option('BragObserver_CronEnd', date('Y-m-d H:i:s'), false);
-    } // exec_cron_brag_observer
+    } // exec_cron_observer_mailchimp
 
 
     /**
