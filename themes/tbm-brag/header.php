@@ -269,6 +269,11 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     'link' => home_url('/observer/competitions/'),
     'text' => 'Competitions',
   ]);
+  
+  array_push($top_menu_items, [
+    'link' => home_url('/net-culture/'),
+    'text' => 'Internet Culture',
+  ]);
   ?>
   <nav class="menu-top-menu-container">
     <ul id="menu_main" class="nav flex-column flex-md-row">
