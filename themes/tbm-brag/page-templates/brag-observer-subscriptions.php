@@ -243,7 +243,7 @@ if ($temp_user) {
 </div>
 
 <div class="row content">
-  <div class="my-3 col-12 col-md-6 offset-md-3">
+  <div class="my-3 col-12 col-md-8 offset-md-2">
     <?php the_content(); ?>
   </div>
 </div>
