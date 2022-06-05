@@ -48,19 +48,22 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
   <?php
   if (is_single()) :
-    if (has_post_thumbnail()) {
-      $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
-      if (isset($src[0])) {
   ?>
-        <meta name="twitter:image" content="<?php echo $src[0]; ?>">
-        <link rel="preconnect" href="<?php echo $src[0]; ?>">
-    <?php
-      } // If full featured image src is set
-    } // If post featured image is set
-    ?>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@TheBrag">
     <meta name="twitter:title" content="<?php the_title(); ?>">
+    <meta name="twitter:image" content="<?php
+                                        if (has_post_thumbnail()) {
+                                          $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
+                                          $type = exif_imagetype($src[0]);
+
+                                          if ($type != false && ($type == (IMAGETYPE_PNG || IMAGETYPE_JPEG))) {
+                                            echo home_url("/img-socl/?url={$src[0]}");
+                                          } else {
+                                            echo $src[0];
+                                          }
+                                        }
+                                        ?>">
 
     <?php
     if (get_field('author')) {
@@ -269,7 +272,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     'link' => home_url('/observer/competitions/'),
     'text' => 'Competitions',
   ]);
-  
+
   array_push($top_menu_items, [
     'link' => home_url('/net-culture/'),
     'text' => 'Internet Culture',
