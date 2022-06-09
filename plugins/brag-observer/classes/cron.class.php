@@ -147,6 +147,7 @@ class Cron // extends BragObserver
                 ON s.user_id = u.ID
             WHERE
             ( s.status != s.status_mailchimp OR s.status_mailchimp IS NULL)
+            AND l.interest_id != ''
             ORDER BY
             s.unsubscribed_at DESC
             LIMIT 100
