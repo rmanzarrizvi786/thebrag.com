@@ -234,51 +234,55 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
           </tr>
         </table>
 
-        <table class="table table-condensed table-borderless">
-          <!-- Ads -->
-          <?php for ($i = 0; $i <= 2; $i++) :
-            // echo 'ad_middle_$i_link'; exit;
-          ?>
+        <?php
+        // Don't show where passendo ads will be shown
+        if (1 || !in_array($list->id, [11, 4, 1, 17, 5, 16, 50, 7, 27, 18])) { ?>
+          <table class="table table-condensed table-borderless">
+            <!-- Ads -->
+            <?php for ($i = 0; $i <= 2; $i++) :
+              // echo 'ad_middle_$i_link'; exit;
+            ?>
+              <tr>
+                <td colspan="2">
+                  <div><strong>Ad <?php echo $i + 1; ?></strong></div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text px-1 py-0">Link</div>
+                    </div>
+                    <input type="text" name="ads[<?php echo $i; ?>][link]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[$i]->link) ? $newsletter->details->ads[$i]->link : ''; ?>" class="form-control">
+                  </div>
+
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text px-1 py-0">Image</div>
+                    </div>
+                    <input type="text" name="ads[<?php echo $i; ?>][image]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[$i]->image) ? $newsletter->details->ads[$i]->image : ''; ?>" class="form-control">
+                  </div>
+              </tr>
+            <?php endfor; ?>
+
             <tr>
               <td colspan="2">
-                <div><strong>Ad <?php echo $i + 1; ?></strong></div>
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text px-1 py-0">Link</div>
+                <div><strong><a href="#" id="toggle-ad-4">Ad 4 &#9662;</a></strong></div>
+                <div id="ad-4-wrap" class="d-none">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text px-1 py-0">Link</div>
+                    </div>
+                    <input type="text" name="ads[3][link]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[3]->link) ? $newsletter->details->ads[3]->link : ''; ?>" class="form-control">
                   </div>
-                  <input type="text" name="ads[<?php echo $i; ?>][link]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[$i]->link) ? $newsletter->details->ads[$i]->link : ''; ?>" class="form-control">
-                </div>
 
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text px-1 py-0">Image</div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text px-1 py-0">Image</div>
+                    </div>
+                    <input type="text" name="ads[3][image]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[3]->image) ? $newsletter->details->ads[3]->image : ''; ?>" class="form-control">
                   </div>
-                  <input type="text" name="ads[<?php echo $i; ?>][image]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[$i]->image) ? $newsletter->details->ads[$i]->image : ''; ?>" class="form-control">
                 </div>
             </tr>
-          <?php endfor; ?>
-
-          <tr>
-            <td colspan="2">
-              <div><strong><a href="#" id="toggle-ad-4">Ad 4 &#9662;</a></strong></div>
-              <div id="ad-4-wrap" class="d-none">
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text px-1 py-0">Link</div>
-                  </div>
-                  <input type="text" name="ads[3][link]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[3]->link) ? $newsletter->details->ads[3]->link : ''; ?>" class="form-control">
-                </div>
-
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text px-1 py-0">Image</div>
-                  </div>
-                  <input type="text" name="ads[3][image]" value="<?php echo isset($newsletter) && isset($newsletter->details->ads[3]->image) ? $newsletter->details->ads[3]->image : ''; ?>" class="form-control">
-                </div>
-              </div>
-          </tr>
-          <!-- Ads -->
-        </table>
+            <!-- Ads -->
+          </table>
+        <?php } ?>
 
         <?php if (4 == $list->id) { // 4 = TIO list ID 
         ?>
@@ -365,16 +369,18 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
               Hide Video/Record of the week
             </label>
           </div>
-          <div>
+          
+          <!-- <div>
             <label><input type="checkbox" name="hide_observer_recommendations" id="hide_observer_recommendations" value="1" <?php echo isset($newsletter->details->hide_observer_recommendations) && '1' == $newsletter->details->hide_observer_recommendations ? 'checked' : ''; ?>>
               Hide Observer recommendations
             </label>
-          </div>
-          <div>
+          </div> -->
+
+          <!-- <div>
             <label><input type="checkbox" name="hide_observer_rewards" id="hide_observer_rewards" value="1" <?php echo isset($newsletter->details->hide_observer_rewards) && '1' == $newsletter->details->hide_observer_rewards ? 'checked' : ''; ?>>
               Hide Observer rewards (share)
             </label>
-          </div>
+          </div> -->
 
           <?php if (4 == $list->id) { // 4 = TIO list ID 
           ?>

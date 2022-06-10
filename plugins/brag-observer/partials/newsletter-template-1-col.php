@@ -42,7 +42,9 @@ if (count($ads) > 3) {
           <!--[if gte mso 9]>
         <table align="center" border="0" cellspacing="0" cellpadding="0" width="<?php echo $container_width; ?>" style="width:<?php echo $container_width; ?>px;">
         <tr><td align="center" valign="top" width="<?php echo $container_width; ?>" style="width:<?php echo $container_width; ?>px;"><![endif]-->
-          <?php print_ad($post_index, $ads_after_articles, $newsletter, $container_width); ?>
+          <?php
+          print_ad($post_index, $ads_after_articles, $newsletter, $container_width);
+          ?>
           <!--[if gte mso 9]></td></tr>
         </table>
         <![endif]-->
@@ -172,40 +174,3 @@ function print_article($newsletter, $article_number, $container_width = 700)
   <?php
   endif;
 } // print_article
-
-function print_ad($value, $ads_after_articles, $newsletter, $container_width = 700)
-{
-  $array_key = array_search($value, $ads_after_articles);
-  // var_dump( $array_key );
-  if (FALSE === $array_key)
-    return;
-  ?>
-  <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $container_width; ?>" class="columnWrapper">
-    <tr>
-      <td style="background-color: #ffffff; border-bottom:2px solid #EAEAEA;" class="templateLowerColumns">
-        <table border="0" cellpadding="0" cellspacing="0" width="300" class="mcnImageCardBlock" align="center">
-          <tbody class="mcnImageCardBlockOuter">
-            <tr>
-              <td class="mcnImageCardBlockInner" valign="top" style="padding-top:9px; padding-right:18px; padding-bottom:9px; padding-left:18px;">
-                <table align="center" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="300" style="background-color: #ffffff;">
-                  <tbody>
-                    <tr>
-                      <td class="mcnImageCardBottomImageContent" align="center" valign="top" style="padding-top:0px; padding-right:0px; padding-bottom:0; padding-left:0px; text-align: center;">
-                        <a href="<?php echo isset($newsletter->details->ads[$array_key]->image) && $newsletter->details->ads[$array_key]->link != '' ? $newsletter->details->ads[$array_key]->link : '#'; ?>" target="_blank">
-                          <?php // $ad_size = getimagesize( $newsletter->details->ads[$array_key]->image ); 
-                          ?>
-                          <img align="center" alt="" src="<?php echo $newsletter->details->ads[$array_key]->image; ?>" width="300" height="250" style="width: 300px; height: 250px; max-width: 300px; max-height: 250px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </table>
-<?php
-}
