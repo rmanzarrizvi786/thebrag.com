@@ -39,7 +39,7 @@ get_header();
   <?php get_template_part('template-parts/account/header'); ?>
   <div class="row justify-content-center align-items-start">
     <?php get_template_part('template-parts/account/menu', 'left'); ?>
-    <div class="col-12 col-md-9 p-3">
+    <div class="col-12 col-md-9 p-1 p-md-3">
       <div class="row">
         <div class="col-12 mb-3">
           <h2>Magazine Subscriptions</h2>

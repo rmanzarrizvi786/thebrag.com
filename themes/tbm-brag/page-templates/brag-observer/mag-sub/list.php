@@ -6,18 +6,22 @@ if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) :
     <div class="row align-items-start mb-2<?php echo $subscription->is_gift == 'yes' ? ' is-gift' : ''; ?>">
 
       <div class="col-md-6 mb-4">
-        <?php if (0 && $subscription->is_gift == 'yes') : ?>
-          <div class="btn btn-sm banner text-uppercase text-center text-white d-inline">Gift</div>
-        <?php endif; ?>
         <div>
           <h3><?php echo $subscription->sub_full_name; ?><br><small class="text-muted">ID: <?php echo $subscription->uniqid; ?></small></h3>
           <?php
-          echo $subscription->shipping_address_1 ? $subscription->shipping_address_1 . '<br>' : '';
-          echo $subscription->shipping_address_2 ? '<br>' . $subscription->shipping_address_2 . '<br>' : '';
-          echo $subscription->shipping_city ? $subscription->shipping_city . '<br>' : '';
-          echo $subscription->shipping_state ? $subscription->shipping_state . ' ' : '';
-          echo $subscription->shipping_postcode ? $subscription->shipping_postcode . ' ' : '';
-          echo $subscription->shipping_country ? '<br>' . $subscription->shipping_country : '';
+          // echo $subscription->shipping_address_1 ? $subscription->shipping_address_1 . '<br>' : '';
+          // echo $subscription->shipping_address_2 ? '<br>' . $subscription->shipping_address_2 . '<br>' : '';
+          // echo $subscription->shipping_city ? $subscription->shipping_city . '<br>' : '';
+          // echo $subscription->shipping_state ? $subscription->shipping_state . ' ' : '';
+          // echo $subscription->shipping_postcode ? $subscription->shipping_postcode . ' ' : '';
+          // echo $subscription->shipping_country ? '<br>' . $subscription->shipping_country : '';
+
+          echo $subscription->crm_record->Full_Shipping_Address__c ? $subscription->crm_record->Full_Shipping_Address__c : '';
+          // echo $subscription->crm_record->Shipping_Address_2__c ? $subscription->crm_record->Shipping_Address_2__c . '<br>' : '';
+          // echo $subscription->crm_record->Shipping_City__c ? $subscription->crm_record->Shipping_City__c . '<br>' : '';
+          // echo $subscription->crm_record->Shipping_State__c ? $subscription->crm_record->Shipping_State__c . ' ' : '';
+          // echo $subscription->crm_record->Shipping_Postcode__c ? $subscription->crm_record->Shipping_Postcode__c . ' ' : '';
+          // echo $subscription->crm_record->Shipping_Country__c ? '<br>' . $subscription->crm_record->Shipping_Country__c : '';
           ?>
         </div>
       </div>
