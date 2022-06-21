@@ -75,9 +75,9 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
         </a>
         <h1 class="mx-4 text-dark"><?php echo $list->title; ?></h1>
         <h3 class="subheader mx-4 mb-4"><?php echo ($list->description); ?></h3>
-        <p class="mx-4"><?php echo !is_null($list->intro_text) ? ($list->intro_text) : ''; ?></p>
+        <div class="mx-4"><?php echo !is_null($list->intro_text) ? wpautop($list->intro_text) : ''; ?></div>
 
-        <div class="btn-observer-sub">
+        <div class="btn-observer-sub mt-0" style="width: auto;">
           <?php if ('active' == $list->status) { // Active 
           ?>
             <?php if (in_array($list->id, $my_sub_lists)) { // If already subscribed
@@ -88,8 +88,7 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
               <a class="btn btn-info btn-lg btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fab fa-twitter"></i></a>
             <?php } else { // Not subscribed 
             ?>
-
-              <p>It’s free to subscribe and you can unsubscribe any time you like.</p>
+              <p>It's free to subscribe and you can unsubscribe any time you like.</p>
 
               <?php if (is_user_logged_in()) : ?>
 
@@ -100,39 +99,44 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
               <?php else : // Not logged in 
               ?>
 
-                <form action="" method="post" id="observer-subscribe-form2" name="observer-subscribe-form" class="">
-                  <div class="observer-sub-form justify-content-center">
-                    <?php if (!is_null($refer_code)) : ?>
-                      <input type="hidden" name="rc" value="<?php echo $refer_code; ?>">
-                    <?php endif; // If $refer_code is set 
-                    ?>
-                    <input type="hidden" name="list" id="modal-list-subscribe2" value="<?php echo $list->id; ?>">
-                    <input type="email" name="email" id="observer-sub-email" class="email form-control" placeholder="Your email" value="<?php echo isset($_GET['email']) ? esc_attr($_GET['email']) : ''; ?>" required>
-                    <input type="submit" value="Subscribe" name="subscribe" class="button btn rounded">
-                    <div class="loading mx-3" style="display: none;">
-                      <div class="spinner">
-                        <div class="double-bounce1"></div>
-                        <div class="double-bounce2"></div>
+                <div style="width: 450px; max-width: 100%;">
+                  <form action="" method="post" id="observer-subscribe-form2" name="observer-subscribe-form" class="">
+                    <div class="observer-sub-form justify-content-center">
+                      <?php if (!is_null($refer_code)) : ?>
+                        <input type="hidden" name="rc" value="<?php echo $refer_code; ?>">
+                      <?php endif; // If $refer_code is set 
+                      ?>
+                      <input type="hidden" name="list" id="modal-list-subscribe2" value="<?php echo $list->id; ?>">
+                      <input type="email" name="email" id="observer-sub-email" class="email form-control" placeholder="Your email" value="<?php echo isset($_GET['email']) ? esc_attr($_GET['email']) : ''; ?>" required>
+                      <input type="submit" value="Subscribe" name="subscribe" class="button btn rounded">
+                      <div class="loading mx-3" style="display: none;">
+                        <div class="spinner">
+                          <div class="double-bounce1"></div>
+                          <div class="double-bounce2"></div>
+                        </div>
                       </div>
                     </div>
+
+                    <div class="alert alert-info d-none js-msg-subscribe"></div>
+                    <div class="alert alert-danger d-none js-errors-subscribe"></div>
+                  </form>
+
+                  <div class="text-right">
+                    <!-- <button type="button" class="btn text-dark rounded btn-subscribe-observer py-2 mt-3" data-target="#subscribeobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $list->id, 'code' => md5(time() . 'tbm')]));
+                                                                                                                                                                                                                                                                                            echo $apple_signin_state; ?>"> -->
+                    <?php $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request)); ?>
+                    <a href="<?php echo esc_url(wp_login_url($current_url)); ?>" class="btn text-dark rounded btn-subscribe-observer py-2 mt-3">
+                      <div class="d-flex flex-row align-items-center">
+                        <span class="btn-text mr-2">or signup via</span>
+                        <div class="" style="margin-top: .15rem;"><i class="fab fa-lg fa-facebook-f" style="color: #3b5998;"></i></div>
+                        <div class="mx-2">
+                          <img src="<?php echo get_template_directory_uri(); ?>/images/google.svg" style="width: 1.1rem">
+                        </div>
+                        <div class="" style="margin-top: .15rem;"><i class="fab fa-lg fa-apple"></i></div>
+                      </div>
+                    </a>
+                    <!-- </button> -->
                   </div>
-
-                  <div class="alert alert-info d-none js-msg-subscribe"></div>
-                  <div class="alert alert-danger d-none js-errors-subscribe"></div>
-                </form>
-
-                <div class="text-right">
-                  <button type="button" class="btn text-dark rounded btn-subscribe-observer py-2 mt-3" data-target="#subscribeobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-apple="<?php $apple_signin_state = base64_encode(serialize(['list_id' => $list->id, 'code' => md5(time() . 'tbm')]));
-                                                                                                                                                                                                                                                                                      echo $apple_signin_state; ?>">
-                    <div class="d-flex flex-row align-items-center">
-                      <span class="btn-text mr-2">or signup via</span>
-                      <div class="" style="margin-top: .15rem;"><i class="fab fa-lg fa-facebook-f" style="color: #3b5998;"></i></div>
-                      <div class="mx-2">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/google.svg" style="width: 1.1rem">
-                      </div>
-                      <div class="" style="margin-top: .15rem;"><i class="fab fa-lg fa-apple"></i></div>
-                    </div>
-                  </button>
                 </div>
               <?php endif; // If User logged in 
               ?>
