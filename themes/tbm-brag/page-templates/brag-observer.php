@@ -189,6 +189,12 @@ if ($observer_slug) {
 
   <?php
   if ($lists) :
+
+    // Move EBO Next to MBO
+    $key_ebo = array_search("entertainment-biz", array_column(json_decode(json_encode($lists), TRUE), 'slug'));
+    $key_mbo = array_search("music-biz-observer", array_column(json_decode(json_encode($lists), TRUE), 'slug'));
+    $out_ebo = array_splice($lists, $key_ebo, 1);
+    array_splice($lists, $key_mbo + 1, 0, $out_ebo);
   ?>
     <div class="row">
       <div class="col-12">
