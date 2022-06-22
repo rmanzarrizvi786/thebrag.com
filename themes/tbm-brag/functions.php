@@ -2592,7 +2592,7 @@ function ssm_inject_fb_pixel()
         fbq('track', 'PageView');
         fbq.disablePushState = true;
     </script>
-    <noscript><img height=\"1\" width=\"1\" style=\"display:none\" src=\"https://www.facebook.com/tr?id=243859349395737&ev=PageView&noscript=1\" /></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=243859349395737&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 <?php
 }
