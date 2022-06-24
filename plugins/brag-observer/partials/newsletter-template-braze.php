@@ -1605,7 +1605,7 @@ function print_video_record_of_week($newsletter)
 		if (FALSE === $array_key)
 			return;
 
-		if (isset($_GET['passendo']) && in_array($newsletter->list_id, array_keys(passendo_ads()))) {
+		if (in_array($newsletter->list_id, array_keys(passendo_ads()))) {
 			$passendo_ads = passendo_ads();
 			$index = $value == 3 ? 1 : ($value == 6 ? 2 : 3);
 		?>
