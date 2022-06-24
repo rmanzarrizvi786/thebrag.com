@@ -171,6 +171,6 @@ function print_article($newsletter, $article_number, $container_width = 700)
         </td>
       </tr>
     </table>
-  <?php
+<?php
   endif;
 } // print_article

@@ -1409,6 +1409,9 @@ function print_video_record_of_week($newsletter)
 		if (substr($parsed_host, 0, 4) == 'www.') {
 			$parsed_host = substr($parsed_host, 4); // str_replace('www.', '', $parse['host']);
 		}
+
+		$pub_logo['width'] = $pub_logo['height'] = 32;
+
 		switch (strtolower($parsed_host)):
 			case 'theindustryobserver.thebrag.com':
 				$pub_logo =
@@ -1585,12 +1588,19 @@ function print_video_record_of_week($newsletter)
 						'title' => 'Vibe',
 					];
 				break;
+			case 'hypebeast.com':
+				$pub_logo =
+					[
+						'url' => $pubs_base_url .= 'ico_Hypebeast-32x32.png',
+						'title' => 'Hypebeast',
+					];
+				break;
 			default:
 				$pub_logo = NULL;
 				break;
 		endswitch;
 
-		$pub_logo['width'] = $pub_logo['height'] = 32;
+
 
 		return $pub_logo;
 	}

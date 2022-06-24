@@ -1870,7 +1870,10 @@ class BragObserver
     }
 
     if (is_null($filename)) {
-      $filename = str_replace('.' . $filetype, '.jpg', basename($url));
+      $filename = urldecode($url);
+      $filename_e = explode('?', $filename);
+      $filename = $filename_e[0];
+      $filename = str_replace('.' . $filetype, '.jpg', basename($filename));
     }
     $filepath = $import_dir . $filename;
 
