@@ -144,8 +144,8 @@ add_action('rest_api_init', function () {
 register_activation_hook(__FILE__, 'activate_ssm_ga');
 function activate_ssm_ga()
 {
-    if (!wp_next_scheduled('cron_tbm_ga_update_pageviews', array(NULL, NULL))) {
-        wp_schedule_event(time(), 'hourly', 'cron_tbm_ga_update_pageviews', array(NULL, NULL));
+    if (!wp_next_scheduled('cron_tbm_ga_update_pageviews')) {
+        wp_schedule_event(time(), 'hourly', 'cron_tbm_ga_update_pageviews');
     }
 }
 
