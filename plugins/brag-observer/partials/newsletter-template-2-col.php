@@ -15,25 +15,42 @@ foreach( $ads_after_articles as $k => $ads_after_article ) {
 }
 */
 $ads_after_articles = [];
-$ads = isset($newsletter->details->ads) ? wp_list_pluck($newsletter->details->ads, 'image') : [];
 
-foreach ($ads as $k => $ad) {
-  if ('' == $ads[$k]) {
-    unset($ads[$k]);
-    continue;
+if (in_array($newsletter->list_id, array_keys(passendo_ads()))) {
+  if (count($post_ids) >= 3) {
+    array_push($ads_after_articles, 3);
   }
-}
-if (count($ads) > 0) {
-  array_push($ads_after_articles, 3);
-}
-if (count($ads) > 1) {
-  array_push($ads_after_articles, 6);
-}
-if (count($ads) > 2) {
-  array_push($ads_after_articles, 8);
-}
-if (count($ads) > 3) {
-  array_push($ads_after_articles, 12);
+  if (count($post_ids) >= 6) {
+    array_push($ads_after_articles, 6);
+  }
+  if (count($post_ids) >= 8) {
+    array_push($ads_after_articles, 8);
+  }
+  if (count($post_ids) >= 12) {
+    array_push($ads_after_articles, 12);
+  }
+} else {
+  $ads = isset($newsletter->details->ads) ? wp_list_pluck($newsletter->details->ads, 'image') : [];
+
+  foreach ($ads as $k => $ad) {
+    if ('' == $ads[$k]) {
+      unset($ads[$k]);
+      continue;
+    }
+  }
+
+  if (count($ads) > 0) {
+    array_push($ads_after_articles, 3);
+  }
+  if (count($ads) > 1) {
+    array_push($ads_after_articles, 6);
+  }
+  if (count($ads) > 2) {
+    array_push($ads_after_articles, 8);
+  }
+  if (count($ads) > 3) {
+    array_push($ads_after_articles, 12);
+  }
 }
 // var_dump( $ads_after_articles ); exit;
 // $ads_after_articles = [ 3, 6, 10, 14 ];
@@ -224,7 +241,7 @@ function print_ad_old($value, $ads_after_articles, $newsletter)
     ?>
     <img align="center" alt="" src="<?php echo $newsletter->details->ads[$array_key]->image; ?>" width="300" height="250" style="width: 300px; height: 250px; max-width: 300px; max-height: 250px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
   </a>
-<?php
+  <?php
 }
 
 

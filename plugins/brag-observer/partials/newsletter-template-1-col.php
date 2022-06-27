@@ -11,25 +11,41 @@ foreach( $ads_after_articles as $k => $ads_after_article ) {
 // $ads_after_articles = [ 2, 4, 6 ];
 
 $ads_after_articles = [];
-$ads = isset($newsletter->details->ads) ? wp_list_pluck($newsletter->details->ads, 'image') : [];
 
-foreach ($ads as $k => $ad) {
-  if ('' == $ads[$k]) {
-    unset($ads[$k]);
-    continue;
+if (in_array($newsletter->list_id, array_keys(passendo_ads()))) {
+  if (count($post_ids) >= 2) {
+    array_push($ads_after_articles, 2);
   }
-}
-if (count($ads) > 0) {
-  array_push($ads_after_articles, 2);
-}
-if (count($ads) > 1) {
-  array_push($ads_after_articles, 4);
-}
-if (count($ads) > 2) {
-  array_push($ads_after_articles, 6);
-}
-if (count($ads) > 3) {
-  array_push($ads_after_articles, 8);
+  if (count($post_ids) >= 4) {
+    array_push($ads_after_articles, 4);
+  }
+  if (count($post_ids) >= 6) {
+    array_push($ads_after_articles, 6);
+  }
+  if (count($post_ids) >= 8) {
+    array_push($ads_after_articles, 8);
+  }
+} else {
+  $ads = isset($newsletter->details->ads) ? wp_list_pluck($newsletter->details->ads, 'image') : [];
+
+  foreach ($ads as $k => $ad) {
+    if ('' == $ads[$k]) {
+      unset($ads[$k]);
+      continue;
+    }
+  }
+  if (count($ads) > 0) {
+    array_push($ads_after_articles, 2);
+  }
+  if (count($ads) > 1) {
+    array_push($ads_after_articles, 4);
+  }
+  if (count($ads) > 2) {
+    array_push($ads_after_articles, 6);
+  }
+  if (count($ads) > 3) {
+    array_push($ads_after_articles, 8);
+  }
 }
 ?>
 <tr>
