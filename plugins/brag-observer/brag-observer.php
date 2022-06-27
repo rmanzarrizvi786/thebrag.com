@@ -299,9 +299,9 @@ class BragObserver
           $badUserPass = true;
           $message = $user_id->get_error_message();
         } else {
-          require_once(ABSPATH . '/wp-content/plugins/brag-observer/classes/email.class.php');
-          $email = new Email();
-          $email->sendUserVerificationEmail($user_id, home_url('/observer/'));
+          // require_once(ABSPATH . '/wp-content/plugins/brag-observer/classes/email.class.php');
+          // $email = new Email();
+          // $email->sendUserVerificationEmail($user_id, home_url('/observer/'));
 
           $username = '';
           $status = 'require_activation';
@@ -321,9 +321,9 @@ class BragObserver
             get_user_meta($try_user->ID, 'oc_token') &&
             !get_user_meta($try_user->ID, 'wfls-last-login')
           ) {
-            require_once(ABSPATH . '/wp-content/plugins/brag-observer/classes/email.class.php');
-            $email = new Email();
-            $email->sendUserVerificationEmail($try_user->ID, home_url('/observer/'));
+            // require_once(ABSPATH . '/wp-content/plugins/brag-observer/classes/email.class.php');
+            // $email = new Email();
+            // $email->sendUserVerificationEmail($try_user->ID, home_url('/observer/'));
 
             $username = '';
             $status = 'require_activation';

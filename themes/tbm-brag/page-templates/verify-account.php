@@ -94,9 +94,9 @@ if (isset($_GET['oc'])) {
     if (isset($_GET['err']) && 'unverified' == $_GET['err']) {
       $errors[] = '<p>You account is not verified yet, please click the link sent in the activation email or <a href="/verify/?a=resend&u=' . $data['id'] . '&to=' . urlencode($redirectTo) . '&p=' . $_GET['p'] . '">resend the activation email</a>.</p><p>Please note that any activation links previously sent lose their validity as soon as a new activation email gets sent.<p>';
     } else if (isset($_GET['a']) && 'resend' == $_GET['a'] && isset($_GET['u'])) { // If resending confirmation mail
-      require_once(__DIR__ . '/../../../plugins/brag-observer/classes/email.class.php');
-      $email = new Email();
-      $email->sendUserVerificationEmail($_GET['u'], $redirectTo);
+      // require_once(__DIR__ . '/../../../plugins/brag-observer/classes/email.class.php');
+      // $email = new Email();
+      // $email->sendUserVerificationEmail($_GET['u'], $redirectTo);
       $messages[] =  'Your activation email has been resent. Please check your email and your spam folder.';
       $redirectTo = null;
     } else {

@@ -52,7 +52,7 @@ class TBMUsers
 
     add_action('admin_init', [$this, '_admin_init']);
 
-    add_action('wp', [$this, '_wp']);
+    // add_action('wp', [$this, '_wp']);
 
     add_filter('send_email_change_email', '__return_false');
     add_filter('send_password_change_email', '__return_false');
