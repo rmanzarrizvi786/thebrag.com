@@ -80,8 +80,7 @@ class GTM
       if (!$user_id)
         return;
 
-      // if (!get_user_meta($user_id, 'braze_change_user_done')) 
-      {
+      if (!get_user_meta($user_id, 'braze_change_user_done')) {
         $auth0_user_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
         if ($auth0_user_id) {
           update_user_meta($user_id, 'braze_change_user_done', 1);
