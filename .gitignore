@@ -13,6 +13,7 @@ plugins/*
 !plugins/tbm-adm
 !plugins/tbm-media-helper
 !plugins/tbm-brag-client-club
+!plugins/tbm-braze
 
 !plugins/brag-observer
 plugins/brag-observer/*
