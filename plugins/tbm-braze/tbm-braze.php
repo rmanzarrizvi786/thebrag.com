@@ -75,8 +75,7 @@ class Braze
 
       // initialize the SDK
       braze.initialize('5fd1c924-ded7-46e7-b75d-1dc4831ecd92', {
-        baseUrl: "sdk.iad-05.braze.com",
-        enableLogging: true
+        baseUrl: "sdk.iad-05.braze.com"
       });
     </script>
     <?php
