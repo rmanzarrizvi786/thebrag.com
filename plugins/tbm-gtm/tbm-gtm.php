@@ -21,9 +21,9 @@ class GTM
   public function __construct()
   {
 
-    $this->plugin_title = 'TBM Braze';
-    $this->plugin_name = 'tbm_braze';
-    $this->plugin_slug = 'tbm-braze';
+    $this->plugin_title = 'TBM GTM';
+    $this->plugin_name = 'tbm_gtm';
+    $this->plugin_slug = 'tbm-gtm';
 
     add_action('wp_head', [$this, 'wp_head']);
   }
@@ -72,29 +72,8 @@ class GTM
         });
       </script>
 
-      <?php
-    }
-
-    if (is_user_logged_in()) {
-      $user_id = get_current_user_id();
-      if (!$user_id)
-        return;
-
-      if (!get_user_meta($user_id, 'braze_change_user_done')) {
-        $auth0_user_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
-        if ($auth0_user_id) {
-          update_user_meta($user_id, 'braze_change_user_done', 1);
-      ?>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-              'Auth0ID': '<?php echo $auth0_user_id; ?>',
-            });
-          </script>
     <?php
-        } // If $auth0_user_id
-      } // If braze change user not done
-    } // If user is logged in
+    }
     ?>
     <!-- Google Tag Manager -->
     <script>
