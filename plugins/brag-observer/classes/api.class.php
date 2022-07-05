@@ -107,6 +107,167 @@ class API
       'callback' => [$this, 'rest_braze_webhook'],
       'permission_callback' => '__return_true',
     ));
+
+    // Get Subscribers/Unsubscribers Count
+    register_rest_route($this->plugin_name . '/v1', '/get_users_count', array(
+      'methods' => 'GET',
+      'callback' => [$this, 'rest_get_users_count'],
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  public function rest_get_users_count()
+  {
+    global $wpdb;
+    $from_date = isset($_GET['from_date']) ? date('Y-m-d', strtotime('monday this week', strtotime($_GET['from_date']))) : date('Y-m-d', strtotime('monday this week', strtotime('-7 days')));
+    $to_date = isset($_GET['to_date']) ? date('Y-m-d', strtotime('monday this week', strtotime($_GET['to_date']))) : date('Y-m-d', strtotime('monday this week', strtotime('+1 days')));
+    $list_id = isset($_GET['list_id']) ? absint($_GET['list_id']) : NULL;
+    if ($list_id > 0) {
+      $end = new DateTime($to_date);
+      $end->setTime(0, 0, 1);
+      $period = new DatePeriod(
+        new DateTime($from_date),
+        new DateInterval('P1D'),
+        $end
+      );
+      $date_range = [];
+      foreach ($period as $value) {
+        $date_range[] = $value->format('Y-m-d');
+      }
+
+      $return = $subs = $unsubs = [];
+
+      $type = isset($_GET['type']) ? trim($_GET['type']) : 'subscribers';
+
+      // if ('subscribers' == $type) 
+      {
+        // Subscribers
+        $results = $wpdb->get_results($wpdb->prepare(
+          "SELECT
+        -- FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.subscribed_at) -2, 7)) week_start,
+        DATE(s.subscribed_at) updated_at,
+        COUNT(1) total
+      FROM `{$wpdb->prefix}observer_subs` s
+        JOIN `{$wpdb->prefix}observer_lists` l ON l.id = s.list_id
+      WHERE
+        s.status = 'subscribed'
+        AND s.list_id = '{$list_id}'
+        AND DATE(s.subscribed_at) >= '{$from_date}'
+        AND DATE(s.subscribed_at) <= '{$to_date}'
+      GROUP BY DATE(s.subscribed_at)
+      ORDER BY DATE(s.subscribed_at)
+      -- GROUP BY FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.subscribed_at) -2, 7))
+      -- ORDER BY FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.subscribed_at) -2, 7))
+      "
+        ));
+        $array_dates_subscribers = wp_list_pluck($results, 'total', 'updated_at');
+
+        foreach ($date_range as $date) {
+          if (!in_array($date, array_keys($array_dates_subscribers))) {
+            $subs[$date] = "0";
+          } else {
+            $subs[$date] = $array_dates_subscribers[$date];
+          }
+        }
+      }
+      //  else if ('unsubscribers' == $type) 
+      {
+        // UnSubscribers
+        $results = $wpdb->get_results($wpdb->prepare(
+          "SELECT
+        -- FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.unsubscribed_at) -2, 7)) week_start,
+        DATE(s.unsubscribed_at) updated_at,
+        COUNT(1) total
+      FROM `{$wpdb->prefix}observer_subs` s
+        JOIN `{$wpdb->prefix}observer_lists` l ON l.id = s.list_id
+      WHERE
+        s.status = 'unsubscribed'
+        AND s.list_id = '{$list_id}'
+        AND DATE(s.subscribed_at) >= '{$from_date}'
+        AND DATE(s.subscribed_at) <= '{$to_date}'
+      GROUP BY DATE(s.subscribed_at)
+      ORDER BY DATE(s.subscribed_at)
+      -- GROUP BY FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.subscribed_at) -2, 7))
+      -- ORDER BY FROM_DAYS(TO_DAYS(s.subscribed_at) -MOD(TO_DAYS(s.subscribed_at) -2, 7)) 
+      "
+        ));
+        $array_dates_unsubscribers = wp_list_pluck($results, 'total', 'updated_at');
+        foreach ($date_range as $date) {
+          if (!in_array($date, array_keys($array_dates_unsubscribers))) {
+            $unsubs[$date] = "0";
+          } else {
+            $unsubs[$date] = $array_dates_unsubscribers[$date];
+          }
+        }
+      }
+
+      foreach ($date_range as $date) {
+        $return[] = [
+          'date' => $date,
+          'subs-unsubs' => $subs[$date] - $unsubs[$date]
+        ];
+      }
+
+      if (isset($_GET['total_only'])) {
+        // $return = array_values($return);
+        foreach ($return as $k => $v) {
+          unset($return[$k]['date']);
+        }
+      }
+      return $return;
+    } else {
+      $return = [];
+      $lists = $wpdb->get_results($wpdb->prepare(
+        "SELECT
+            l.id, l.title, l.slug, COUNT(1) total_subscribers
+          FROM `{$wpdb->prefix}observer_subs` s
+            JOIN `{$wpdb->prefix}observer_lists` l ON l.id = s.list_id
+          WHERE
+            s.status = 'subscribed'
+            AND l.status = 'active'
+          GROUP BY l.id
+          ORDER BY l.id
+          "
+      ));
+      if ($lists) {
+        $lastweek_date = date('Y-m-d', strtotime('-7 days'));
+
+        $subs_lastweek = $wpdb->get_results("SELECT s.list_id, COUNT(1) subs FROM `{$wpdb->prefix}observer_subs` s WHERE s.status = 'subscribed' AND DATE(s.subscribed_at) >= '{$lastweek_date}' GROUP BY s.list_id");
+        $subs_lastweek = wp_list_pluck($subs_lastweek, 'subs', 'list_id');
+        $unsubs_lastweek = $wpdb->get_results("SELECT s.list_id, COUNT(1) unsubs FROM `{$wpdb->prefix}observer_subs` s WHERE s.status = 'unsubscribed' AND DATE(s.unsubscribed_at) >= '{$lastweek_date}' GROUP BY s.list_id");
+        $unsubs_lastweek = wp_list_pluck($unsubs_lastweek, 'unsubs', 'list_id');
+
+
+        foreach ($lists as $list) {
+          $l['list_id'] = $list->id;
+          $l['title'] = $list->title;
+          $l['slug'] = $list->slug;
+          $l['total_subscribers'] = $list->total_subscribers;
+          $l['subs_7days'] = in_array($list->id, array_keys($subs_lastweek)) ? $subs_lastweek[$list->id] : 0;
+          $l['unsubs_7days'] = in_array($list->id, array_keys($unsubs_lastweek)) ? $unsubs_lastweek[$list->id] : 0;
+          /* $l['subs_7days'] = $wpdb->get_var(
+            "SELECT COUNT(1)
+            FROM `{$wpdb->prefix}observer_subs` s
+            WHERE
+              s.status = 'subscribed'
+              AND s.list_id = '{$list->id}'
+              AND DATE(s.subscribed_at) > '{$lastweek_date}'
+              "
+          );
+          $l['unsubs_7days'] = $wpdb->get_var(
+            "SELECT COUNT(1)
+            FROM `{$wpdb->prefix}observer_subs` s
+            WHERE
+              s.status = 'unsubscribed'
+              AND s.list_id = '{$list->id}'
+              AND DATE(s.unsubscribed_at) > '{$lastweek_date}'
+              "
+          ); */
+          $return[] = $l;
+        }
+      }
+      return $return;
+    }
   }
 
   public function rest_braze_webhook($request_data)
