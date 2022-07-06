@@ -30,6 +30,12 @@ class Braze
   public function wp_head()
   {
     global $wpdb;
+
+    $country_code = isset($_SERVER["HTTP_CF_IPCOUNTRY"]) ? $_SERVER["HTTP_CF_IPCOUNTRY"] : null;
+    // Exclude braze for non-logged in users and non-AU users
+    if (!is_user_logged_in() && 'AU' != $country_code) {
+      return;
+    }
 ?>
     <script type="text/javascript">
       + function(a, p, P, b, y) {
