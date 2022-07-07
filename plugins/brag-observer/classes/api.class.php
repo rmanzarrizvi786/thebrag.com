@@ -275,8 +275,10 @@ class API
     $data = $request_data->get_params();
     require_once __DIR__ . '/braze.class.php';
     $braze = new Braze();
+
     return $braze->handleWebhook([
       'action' => isset($data['action']) ? trim($data['action']) : null,
+      'list' => isset($data['list']) ? trim($data['list']) : null,
       'token' => isset($data['token']) ? trim($data['token']) : null,
     ]);
   }

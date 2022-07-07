@@ -396,10 +396,10 @@ class Braze
     {
         global $wpdb;
         $action = isset($args['action']) ? trim($args['action']) : NULL;
-        $list_slug = isset($args['list']) ? trim($args['list']) : NULL;
+        $list_slug = isset($args['list']) ? trim($args['list']) : 'NULL';
         $token = isset($args['token']) ? trim($args['token']) : NULL;
 
-        if (is_null($action) || is_null($token)) {
+        if (is_null($action) || is_null($token) || is_null($list_slug)) {
             wp_send_json_error();
             die();
         }
@@ -418,9 +418,6 @@ class Braze
         error_log($user_id . ',,,' . $oc_token);
 
         if ($oc_token == $data['oc_token']) {
-            if (is_null($list_slug)) {
-                wp_mail('sachin.patel@thebrag.media', 'Braze webhook error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r List Slug is NULL");
-            }
             $list_id = $wpdb->get_var("SELECT `id` FROM {$wpdb->prefix}observer_lists WHERE `slug` = '{$list_slug}'");
             if (!$list_id) {
                 wp_mail('sachin.patel@thebrag.media', 'Braze webhook error', 'Line: ' . __LINE__  . "\n\r Method: " . __METHOD__ . "\n\r List NOT Found using Slug");
