@@ -339,6 +339,33 @@ class API
       ORDER BY RAND()
       LIMIT {$count}");
 
+    if (count($results) < $count) {
+      $new_limit = $count - count($results);
+      $result_ids = wp_list_pluck($results, 'id');
+      $result_ids_str = implode(',', $result_ids);
+      $results2 = $wpdb->get_results("SELECT * FROM(
+        SELECT DISTINCT l.id, l.title, l.slug, l.image_url FROM `{$wpdb->prefix}observer_lists` l
+        JOIN `{$wpdb->prefix}observer_list_categories` oc ON l.id = oc.list_id
+        WHERE
+          l.`status` = 'active'
+          AND oc.list_id != '{$list->list_id}'
+          AND oc.list_id != 48
+          AND oc.list_id NOT IN ({$result_ids_str})
+          AND oc.list_id NOT IN (
+            SELECT oc.list_id FROM `{$wpdb->prefix}observer_list_categories` oc
+            -- JOIN `{$wpdb->prefix}observer_categories` c ON c.id = oc.category_id
+            JOIN `{$wpdb->prefix}observer_subs` s ON oc.list_id = s.list_id
+            WHERE s.status = 'subscribed' AND s.user_id = '{$user->ID}'
+          )
+        ORDER BY l.sub_count DESC
+        LIMIT 5
+        ) a
+        ORDER BY RAND()
+        LIMIT {$new_limit}");
+
+      $results = array_merge($results, $results2);
+    }
+
     if (!$results) {
       wp_send_json_error();
       wp_die();
