@@ -81,7 +81,8 @@ $urls = [
   'https://tonedeaf.thebrag.com/',
   'https://thebrag.com/',
   'https://dontboreus.thebrag.com/',
-  'https://theindustryobserver.thebrag.com/',
+  // 'https://theindustryobserver.thebrag.com/',
+  'https://themusicnetwork.com/',
   'https://au.rollingstone.com/'
 ];
 
@@ -90,7 +91,7 @@ $after = date('Y-m-d', strtotime('-5 days'));
 $before = date('Y-m-d', strtotime('+1 days'));
 
 foreach ($urls as $url) {
-  $call_url = $url . 'wp-json/api/v1/observer/articles/?topic=' . $keywords . '&after=' . $after . '&before=' . $before;
+  $call_url = $url . 'wp-json/api/v1/observer/articles/?topic[]=' . $keywords . '&after=' . $after . '&before=' . $before;
   $articles_json = self::callAPI('GET', $call_url);
   $articles_url = json_decode($articles_json);
   if (is_array($articles_url)) {
@@ -98,15 +99,15 @@ foreach ($urls as $url) {
   }
 }
 
-if (4 == $list->id) {
-  $call_url = 'https://theindustryobserver.thebrag.com/wp-json/api/v1/articles/?after=' . $after . '&before=' . $before;
+/* if (4 == $list->id) {
+  $call_url = 'https://themusicnetwork.com/wp-json/api/v1/observer/articles/?topic[]=biz&topic[]=music&topic[]=observer&after=' . $after . '&before=' . $before;
   $articles_json = self::callAPI('GET', $call_url);
   $articles_url = json_decode($articles_json);
   // echo '<pre>'; print_r( $call_url ); exit;
   if (is_array($articles_url)) {
     $articles = array_merge($articles, $articles_url);
   }
-}
+} */
 
 // echo '<pre>'; print_r( $articles ); exit;
 ?>
