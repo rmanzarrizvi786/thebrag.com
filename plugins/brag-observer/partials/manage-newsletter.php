@@ -152,9 +152,9 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
   <?php endif; ?>
 
   <table class="table table-sm table-light">
-    <!-- MailChimp Campaign Details -->
+    <!-- Campaign Details -->
     <tr>
-      <th colspan="2">Campaign Details <small>(for MailChimp)</small></th>
+      <th colspan="2">Campaign Details</th>
     </tr>
     <tr>
       <td colspan="4">Subject <small>Max 150 characters</small>
@@ -183,7 +183,7 @@ wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css
     </tr>
 
 
-    <!-- MailChimp Campaign Details -->
+    <!-- Campaign Details -->
   </table>
 
   <table class="table table-sm table-borderless">
