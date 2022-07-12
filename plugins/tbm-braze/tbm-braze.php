@@ -31,16 +31,17 @@ class Braze
     add_action('wp_ajax_nopriv_get_user_external_id', [$this, 'get_user_external_id']);
   }
 
-  public function get_user_external_id() {
+  public function get_user_external_id()
+  {
     global $wpdb;
-		if (is_user_logged_in()) {
-			$user_id = get_current_user_id();
-			if (!$user_id)
-				return;
-			$auth0_user_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
+    if (is_user_logged_in()) {
+      $user_id = get_current_user_id();
+      if (!$user_id)
+        return;
+      $auth0_user_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);
       wp_send_json_success($auth0_user_id);
       wp_die();
-		} // If user is logged in
+    } // If user is logged in
     wp_send_json_error('Not logged in');
     wp_die();
   }
@@ -77,14 +78,14 @@ class Braze
         // initialize the SDK
         braze.initialize('5fd1c924-ded7-46e7-b75d-1dc4831ecd92', {
           baseUrl: "sdk.iad-05.braze.com",
-          <?php echo (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) || ('staging.thebrag.com' == $_SERVER['SERVER_NAME'])
-             ? 'enableLogging: true' : ''; ?>
+          <?php echo (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) || str_contains($_SERVER['SERVER_NAME'], 'staging.')
+            ? 'enableLogging: true' : ''; ?>
         });
 
         jQuery.get('<?php echo admin_url('admin-ajax.php'); ?>', {
           action: 'get_user_external_id',
-        }, function (res) {
-          if(res.success && res.data) {
+        }, function(res) {
+          if (res.success && res.data) {
             user_external_id = res.data;
             braze.changeUser(user_external_id);
           }
