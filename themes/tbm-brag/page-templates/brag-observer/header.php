@@ -987,7 +987,7 @@ $page_template = get_page_template_slug();
                     </div>
                   </div>
                 <?php else : ?>
-                  <a href="<?php echo wp_login_url(); ?>" class="btn btn-sm btn-dark rounded">Login / Signup</a>
+                  <a href="<?php echo wp_login_url(home_url('/observer-subscriptions/')); ?>" class="btn btn-sm btn-dark rounded">Login / Signup</a>
                   <!-- <button
                       type="button"
                       class="btn btn-sm btn-dark rounded btn-login"

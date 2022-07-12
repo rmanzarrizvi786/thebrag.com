@@ -6,6 +6,10 @@ if (isset($_GET['login'])) {
 $my_sub_lists = [];
 $my_vote_lists = [];
 if (is_user_logged_in()) {
+
+  wp_redirect(home_url('/observer-subscriptions/'));
+  exit;
+
   $current_user = wp_get_current_user();
   $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$current_user->ID}' AND status = 'subscribed' ");
   $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
@@ -169,17 +173,17 @@ if ($observer_slug) {
       </div>
       <div class="menu-network nav-network mx-auto mb-2">
         <ul class="nav d-flex align-items-center justify-content-center">
-          <li class="nav-item"><a href="https://au.rollingstone.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/rolling-stone-australia.png" alt="Rolling Stone Australia" class="lazyload" style="width: 120px"></a></li><!-- Rolling Stone Australia -->
+          <li class="nav-item"><a href="https://au.rollingstone.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/brands/Rolling-Stone-Australia-light.png" alt="Rolling Stone Australia" class="lazyload" style="width: 120px"></a></li><!-- Rolling Stone Australia -->
 
-          <li class="nav-item"><a href="https://variety.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/variety.png" alt="Variety" class="lazyload"></a></li><!-- Variety -->
+          <li class="nav-item"><a href="https://variety.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/brands/Variety-Australia-light.svg" alt="Variety Australia" class="lazyload"></a></li><!-- Variety -->
 
-          <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/td/Tone-Deaf-light.png" alt="Tone Deaf" class="lazyload" style="width: 60px"></a></li><!-- Tone Deaf -->
+          <li class="nav-item"><a href="https://tonedeaf.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/brands/Tone-Deaf-light.svg" alt="Tone Deaf" class="lazyload" style="width: 60px"></a></li><!-- Tone Deaf -->
 
-          <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/pubs-white/dbu.png" alt="Don't Bore Us" class="lazyload" style="width: 150px;"></a></li><!-- Don't Bore Us -->
+          <li class="nav-item"><a href="https://dontboreus.thebrag.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/brands/Dont-Bore-Us-light.svg" alt="Don't Bore Us" class="lazyload" style="width: 150px;"></a></li><!-- Don't Bore Us -->
 
           <li class="nav-item"><a href="https://thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tb/The-Brag-light.png" alt="The Brag" style="width: 120px;"></a></li>
 
-          <li class="nav-item"><a href="https://theindustryobserver.thebrag.com/" target="_blank" class="nav-link"><img src="https://cdn.thebrag.com/tio/The-Industry-Observer-light.png" alt="The Industry Observer" class="lazyload" style="width: 100px;"></a></li><!-- The Industry Observer -->
+          <li class="nav-item"><a href="https://themusicnetwork.com/" target="_blank" class="nav-link"><img src="https://images.thebrag.com/common/brands/TMN-light.svg" alt="The Music Network" style="width: 60px;"></a></li>
         </ul>
       </div>
     </div>
