@@ -77,7 +77,8 @@ class Braze
         // initialize the SDK
         braze.initialize('5fd1c924-ded7-46e7-b75d-1dc4831ecd92', {
           baseUrl: "sdk.iad-05.braze.com",
-          <?php echo isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT'] ? 'enableLogging: true' : ''; ?>
+          <?php echo (isset($_ENV) && isset($_ENV['ENVIRONMENT']) && 'sandbox' == $_ENV['ENVIRONMENT']) || ('staging.thebrag.com' == $_SERVER['SERVER_NAME'])
+             ? 'enableLogging: true' : ''; ?>
         });
 
         jQuery.get('<?php echo admin_url('admin-ajax.php'); ?>', {
