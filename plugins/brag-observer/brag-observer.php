@@ -2807,7 +2807,7 @@ class BragObserver
       $slug = isset($_GET['slug']) ? trim($_GET['slug']) : NULL;
 
       if ('the-industry-observer' == $slug) { // TIO was renamed to MBO
-        $slug = 'music-biz-observer';
+        $slug = 'the-music-network';
       }
 
       if (is_null($slug) || '' == $slug)

@@ -5,10 +5,16 @@ if (isset($_GET['login'])) {
 
 $my_sub_lists = [];
 $my_vote_lists = [];
+
+$category_slug = $wp_query->get('category_slug');
+$observer_slug = $wp_query->get('observer_slug');
+
 if (is_user_logged_in()) {
 
-  wp_redirect(home_url('/observer-subscriptions/'));
-  exit;
+  if (!$observer_slug && !$category_slug) {
+    wp_redirect(home_url('/observer-subscriptions/'));
+    exit;
+  }
 
   $current_user = wp_get_current_user();
   $my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$current_user->ID}' AND status = 'subscribed' ");
@@ -24,9 +30,6 @@ $sort_orders = [
   'frequency' => 'Frequency',
 ];
 $query_sort_order = isset($_GET['sort']) && in_array($_GET['sort'], array_keys($sort_orders)) ? $_GET['sort'] : 'popular';
-
-$category_slug = $wp_query->get('category_slug');
-$observer_slug = $wp_query->get('observer_slug');
 
 if ($observer_slug) {
   if (!$wpdb->get_row("SELECT id FROM {$wpdb->prefix}observer_lists WHERE slug = '{$observer_slug}' LIMIT 1")) {
@@ -194,11 +197,11 @@ if ($observer_slug) {
   <?php
   if ($lists) :
 
-    // Move EBO Next to MBO
+    // Move EBO Next to TMN
     $key_ebo = array_search("entertainment-biz", array_column(json_decode(json_encode($lists), TRUE), 'slug'));
-    $key_mbo = array_search("music-biz-observer", array_column(json_decode(json_encode($lists), TRUE), 'slug'));
+    $key_tmn = array_search("the-music-network", array_column(json_decode(json_encode($lists), TRUE), 'slug'));
     $out_ebo = array_splice($lists, $key_ebo, 1);
-    array_splice($lists, $key_mbo + 1, 0, $out_ebo);
+    array_splice($lists, $key_tmn + 1, 0, $out_ebo);
   ?>
     <div class="row">
       <div class="col-12">
@@ -324,7 +327,7 @@ if ($observer_slug) {
                           <!-- <div><i class="fa fa-caret-right d-xs-none"></i></div> -->
                         </button>
                       <?php else : ?>
-                        <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
+                        <a href="<?php echo wp_login_url($list->slug ? home_url('/observer/' . $list->slug . '/') : home_url('/observer/')); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Subscribe</a>
                       <?php endif; ?>
                       <div class="loading" style="display: none;">
                         <div class="spinner">
