@@ -367,91 +367,96 @@ if ($observer_slug) {
     }
   </style>
 
-  <div class="my-5 text-center" id="coming-soon">
-    <h1 class="text-center">Coming soon</h1>
-    <h4 class="col-md-8 offset-md-2" style="line-height: 1.5">If these newsletters reach their target, we'll bring on expert writers and launch them for you. Vote for all your favourites below:</h4>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <ul class="nav nav-pills justify-content-end">
-        <?php foreach ($sort_orders as $sort_order => $sort_order_title) :
-          if ('frequency' == $sort_order)
-            continue;
-        ?>
-          <li class="nav-item">
-            <a class="nav-link <?php echo $query_sort_order == $sort_order ? ' text-white active bg-dark' : 'text-dark'; ?>" href="<?php echo add_query_arg('sort', $sort_order); ?>"><?php echo $sort_order_title; ?></a>
-          </li>
-        <?php endforeach; ?>
-      </ul>
+  <?php if ($coming_soon_lists) : ?>
+    <div class="my-5 text-center" id="coming-soon">
+      <h1 class="text-center">Coming soon</h1>
+      <h4 class="col-md-8 offset-md-2" style="line-height: 1.5">If these newsletters reach their target, we'll bring on expert writers and launch them for you. Vote for all your favourites below:</h4>
     </div>
-  </div>
 
-  <div class="row <?php echo $category_slug ? 'justify-content-center' : ''; ?>">
-    <?php foreach ($coming_soon_lists as $list) :
-      $list_image_url = $list->image_url;
-      if (!$list->image_url || '' == $list->image_url) :
-        $list_image_url = null;
-      endif; // If image url is not set
-    ?>
-      <div class="col-lg-2 col-md-4 col-6 my-4 px-2 topic">
+    <div class="row">
+      <div class="col-12">
+        <ul class="nav nav-pills justify-content-end">
+          <?php foreach ($sort_orders as $sort_order => $sort_order_title) :
+            if ('frequency' == $sort_order)
+              continue;
+          ?>
+            <li class="nav-item">
+              <a class="nav-link <?php echo $query_sort_order == $sort_order ? ' text-white active bg-dark' : 'text-dark'; ?>" href="<?php echo add_query_arg('sort', $sort_order); ?>"><?php echo $sort_order_title; ?></a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
 
-        <div class="text-center d-flex flex-column justify-content-between h-100 topic-inner">
-          <?php if ($list->slug) : ?>
-            <a href="<?php echo home_url('/observer/' . $list->slug . '/'); ?>" class="text-dark">
-            <?php endif; ?>
-            <div class="list-info">
-              <?php if (!is_null($list_image_url)) : ?>
-                <figure><img alt="<?php echo $list->title; ?>" src="<?php echo $list_image_url; ?>"></figure>
-              <?php endif; ?>
-              <h3><?php
-                  echo !in_array($list->id, [4,]) ? trim(str_ireplace('Observer', '', $list->title)) : trim($list->title);
-                  ?></h3>
-              <?php echo wpautop($list->description); ?>
-            </div>
+    <div class="row <?php echo $category_slug ? 'justify-content-center' : ''; ?>">
+      <?php foreach ($coming_soon_lists as $list) :
+        $list_image_url = $list->image_url;
+        if (!$list->image_url || '' == $list->image_url) :
+          $list_image_url = null;
+        endif; // If image url is not set
+      ?>
+        <div class="col-lg-2 col-md-4 col-6 my-4 px-2 topic">
+
+          <div class="text-center d-flex flex-column justify-content-between h-100 topic-inner">
             <?php if ($list->slug) : ?>
-            </a>
-          <?php endif; ?>
-          <div class="list-subscription-action">
-            <?php if (in_array($list->id, $my_vote_lists)) :
-              $share_url = $list->slug ? home_url('/observer/' . $list->slug . '/') : home_url('/observer/');
-            ?>
-              <a class="btn btn-default btn-outline-primary btn-share mx-1" href="http://www.facebook.com/share.php?u=<?php echo $share_url; ?>" target="_blank"><i class="fab fa-facebook-f"></i></a>
-
-              <a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fab fa-twitter"></i></a>
-            <?php else : ?>
-              <?php if (is_user_logged_in()) : ?>
-                <button type="button" class="btn btn-dark rounded btn-block btn-vote-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#voteobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-votes="<?php echo $list->votes_count; ?>">
-                  <div><i class="fa fa-thumbs-up mr-2"></i> <span class="btn-text">Vote</span></div>
-                  <div><i class="fa fa-caret-right"></i></div>
-                </button>
-              <?php else : ?>
-                <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Vote</a>
+              <a href="<?php echo home_url('/observer/' . $list->slug . '/'); ?>" class="text-dark">
               <?php endif; ?>
-              <div class="loading" style="display: none;">
-                <div class="spinner">
-                  <div class="double-bounce1"></div>
-                  <div class="double-bounce2"></div>
-                </div>
+              <div class="list-info">
+                <?php if (!is_null($list_image_url)) : ?>
+                  <figure><img alt="<?php echo $list->title; ?>" src="<?php echo $list_image_url; ?>"></figure>
+                <?php endif; ?>
+                <h3><?php
+                    echo !in_array($list->id, [4,]) ? trim(str_ireplace('Observer', '', $list->title)) : trim($list->title);
+                    ?></h3>
+                <?php echo wpautop($list->description); ?>
               </div>
+              <?php if ($list->slug) : ?>
+              </a>
             <?php endif; ?>
-            <?php
-            $vote_target = 5000;
-            $vote_progress = $list->votes_count * 100 / $vote_target;
-            ?>
-            <div class="progress mt-3" style="height: .5rem;">
-              <div class="progress-bar bg-success h-100" role="progressbar" style="width: <?php echo $vote_progress; ?>%" aria-valuenow="<?php echo $vote_progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div class="votes_count"><?php echo $list->votes_count; ?></div>
-              <div class="votes_target"><?php echo $vote_target; ?></div>
+            <div class="list-subscription-action">
+              <?php if (in_array($list->id, $my_vote_lists)) :
+                $share_url = $list->slug ? home_url('/observer/' . $list->slug . '/') : home_url('/observer/');
+              ?>
+                <a class="btn btn-default btn-outline-primary btn-share mx-1" href="http://www.facebook.com/share.php?u=<?php echo $share_url; ?>" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+                <a class="btn btn-default btn-outline-info btn-share mx-1" href="https://twitter.com/share?url=<?php echo $share_url; ?>&amp;text=<?php echo urlencode($list->title); ?>" target="_blank"><i class="fab fa-twitter"></i></a>
+              <?php else : ?>
+                <?php if (is_user_logged_in()) : ?>
+                  <button type="button" class="btn btn-dark rounded btn-block btn-vote-observer<?php echo is_user_logged_in() ? '-l' : ''; ?> d-flex justify-content-between py-2" data-target="#voteobserverModal" data-topic="<?php echo $list->title; ?>" data-list="<?php echo $list->id; ?>" data-desc="<?php echo $list->description; ?>" data-votes="<?php echo $list->votes_count; ?>">
+                    <div><i class="fa fa-thumbs-up mr-2"></i> <span class="btn-text">Vote</span></div>
+                    <div><i class="fa fa-caret-right"></i></div>
+                  </button>
+                <?php else : ?>
+                  <a href="<?php echo wp_login_url(); ?>" class="btn btn-dark rounded btn-block d-flex justify-content-between py-2" target="_blank">Vote</a>
+                <?php endif; ?>
+                <div class="loading" style="display: none;">
+                  <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                  </div>
+                </div>
+              <?php endif; ?>
+              <?php
+              $vote_target = 5000;
+              $vote_progress = $list->votes_count * 100 / $vote_target;
+              ?>
+              <div class="progress mt-3" style="height: .5rem;">
+                <div class="progress-bar bg-success h-100" role="progressbar" style="width: <?php echo $vote_progress; ?>%" aria-valuenow="<?php echo $vote_progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="votes_count"><?php echo $list->votes_count; ?></div>
+                <div class="votes_target"><?php echo $vote_target; ?></div>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-    <?php endforeach; // For Each list 
-    ?>
+        </div>
+      <?php endforeach; // For Each list 
+      ?>
+    </div>
+  <?php endif; // If $coming_soon_lists 
+  ?>
+  <div class="row <?php echo $category_slug ? 'justify-content-center' : ''; ?>">
     <div class="col-lg-2 col-md-4 col-6 my-4 px-2 topic">
       <div class="text-center bg-light text-dark pt-2 pb-3 px-4 rounded" style="border: 1px solid #333;">
         <h3 class="text-center text-dark">Have an idea for a newsletter?</h3>
@@ -462,6 +467,7 @@ if ($observer_slug) {
       </div>
     </div>
   </div>
+
 
 <?php
 }
