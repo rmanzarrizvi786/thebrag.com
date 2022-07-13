@@ -52,7 +52,17 @@ if (isset($_GET['a'])) {
 
 $my_sub_lists = [];
 $my_vote_lists = [];
-$my_subs = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ");
+if ($category_slug) {
+  $my_subs_query = "SELECT s.list_id FROM {$wpdb->prefix}observer_subs s
+    JOIN {$wpdb->prefix}observer_list_categories lc
+      ON s.list_id = lc.list_id
+    JOIN {$wpdb->prefix}observer_categories c
+      ON c.id = lc.category_id
+  WHERE user_id = '{$user_id}' AND status = 'subscribed' AND c.slug = '{$category_slug}'";
+} else {
+  $my_subs_query = "SELECT list_id FROM {$wpdb->prefix}observer_subs WHERE user_id = '{$user_id}' AND status = 'subscribed' ";
+}
+$my_subs = $wpdb->get_results($my_subs_query);
 $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
 
 $my_votes = $wpdb->get_results("SELECT list_id FROM {$wpdb->prefix}observer_votes WHERE user_id = '{$current_user->ID}'");
@@ -348,7 +358,6 @@ if ($lists) :
     // }} My list
 
     foreach ($lists as $index => $list) :
-
       if (48 == $list->id || in_array($list->id, $my_sub_lists)) // Exclude Tone Deaf Tastemakers
         continue;
 
@@ -466,7 +475,7 @@ if ($lists) :
     <div class="text-center bg-light text-dark pt-2 pb-3 px-4 rounded" style="border: 1px solid #333;">
       <h3 class="text-center text-dark">Have an idea for a newsletter?</h3>
       <figure class="col-xs-12 text-center">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/observer/marketing.svg" alt="" style="width: 90%">
+        <img src="https://cdn.thebrag.com/observer/images/marketing.svg" alt="" style="width: 90%">
       </figure>
       <a class="btn btn-danger rounded" href="/propose-a-newsletter">Propose a newsletter</a>
     </div>
