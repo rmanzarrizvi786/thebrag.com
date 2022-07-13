@@ -1,4 +1,7 @@
 <?php /* Template name: Brag Observer Subscriptions */
+
+$category_slug = $wp_query->get('category_slug');
+
 $temp_user = false;
 if (isset($_GET['oc'])) {
   $data = @unserialize(base64_decode($_GET['oc']));
@@ -131,21 +134,39 @@ if (isset($_GET['id'])) {
   $q_ids = array_map('absint', $_GET['id']);
 }
 
-$lists_query = "
+if ($category_slug) {
+  $lists_query = "
 SELECT l.id, l.title, l.description, l.image_url, l.frequency FROM
   {$wpdb->prefix}observer_lists l
+  JOIN {$wpdb->prefix}observer_list_categories lc
+      ON l.id = lc.list_id
+    JOIN {$wpdb->prefix}observer_categories c
+      ON c.id = lc.category_id
 WHERE
-  l.status = 'active'
-";
-if (isset($q_ids) && is_array($q_ids) && !empty($q_ids)) {
-  $lists_query .= " AND id IN ( " . implode(',', $q_ids) . ")";
-}
-$lists_query .= "
+  l.status = 'active' AND
+  c.slug = '{$category_slug}'
 GROUP BY
   l.id
 ORDER BY
   l.sub_count DESC
 ";
+} else {
+  $lists_query = "
+SELECT l.id, l.title, l.description, l.image_url, l.frequency FROM
+  {$wpdb->prefix}observer_lists l
+WHERE
+  l.status = 'active'
+";
+  if (isset($q_ids) && is_array($q_ids) && !empty($q_ids)) {
+    $lists_query .= " AND id IN ( " . implode(',', $q_ids) . ")";
+  }
+  $lists_query .= "
+GROUP BY
+  l.id
+ORDER BY
+  l.sub_count DESC
+";
+}
 $lists = $wpdb->get_results($lists_query);
 
 // $coming_soon_lists = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}observer_lists WHERE status = 'soon'" );

@@ -11,8 +11,12 @@ $observer_slug = $wp_query->get('observer_slug');
 
 if (is_user_logged_in()) {
 
-  if (!$observer_slug && !$category_slug) {
-    wp_redirect(home_url('/observer-subscriptions/'));
+  if (!$observer_slug) {
+    $redirect_url = home_url('/observer-subscriptions/');
+    if ($category_slug) {
+      $redirect_url = home_url("/observer-subscriptions/category/{$category_slug}/");
+    }
+    wp_redirect($redirect_url);
     exit;
   }
 

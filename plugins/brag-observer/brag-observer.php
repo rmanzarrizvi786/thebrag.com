@@ -843,6 +843,12 @@ class BragObserver
     );
 
     add_rewrite_rule(
+      'observer-subscriptions/category/([a-zA-Z0-9-]+)/?$',
+      'index.php?pagename=observer-subscriptions&category_slug=$matches[1]',
+      'top'
+    );
+
+    add_rewrite_rule(
       'observer/(?!magazine-subscriptions|refer-a-friend|competitions)([a-zA-Z0-9-]+)/?$',
       'index.php?pagename=observer&observer_slug=$matches[1]',
       'top'
