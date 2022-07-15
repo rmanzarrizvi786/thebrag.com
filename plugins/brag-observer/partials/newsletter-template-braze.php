@@ -1060,7 +1060,8 @@ function print_video_record_of_week($newsletter)
 																	<div style="padding-top:15px; padding-bottom:15px; padding-right: 10px; padding-left: 10px;">
 																		<!--<![endif]-->
 																		<div class="img-container center" align="center" style="padding-right: 0px;padding-left: 0px;">
-																			<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" border="0" src="<?php echo $job->image; ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 131px; max-width: 100%;" width="131" alt="<?php echo $job->company_name; ?>">
+																			<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]-->
+																			<a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;"><img align="center" border="0" src="<?php echo $job->image; ?>" style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 131px; max-width: 100%;" width="131" alt="<?php echo $job->company_name; ?>"></a>
 																			<!--[if mso]></td></tr></table><![endif]-->
 																		</div>
 																		<!--[if (!mso)&(!IE)]><!-->
@@ -1076,7 +1077,7 @@ function print_video_record_of_week($newsletter)
 																		<table class="heading_block" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="table-layout: fixed; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="top">
 																			<tr valign="top">
 																				<td style="word-break: break-word; padding-bottom: 10px; text-align: left; width: 100%;" width="100%" align="center" valign="top">
-																					<h3 style="color: #000000;direction:ltr;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:18px;font-weight:700;letter-spacing:normal;line-height:120%;text-align:left;margin-top:0;margin-bottom:0;"><?php echo $job->title; ?></h3>
+																					<h3 style="color: #000000;direction:ltr;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:18px;font-weight:700;letter-spacing:normal;line-height:120%;text-align:left;margin-top:0;margin-bottom:0;"><a href="<?php echo $job->link; ?>" style="text-decoration: none; font-weight: bold; color: #231f20;"><?php echo $job->title; ?></a></h3>
 																				</td>
 																			</tr>
 																		</table>
