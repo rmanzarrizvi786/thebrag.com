@@ -23,6 +23,14 @@ function tbm_theme_options_rest_api_init()
         'callback' => 'rest_get_votw',
         'permission_callback' => '__return_true',
     ));
+
+    register_rest_route('tbm', '/floating_dailymotion_playlist_id', array(
+        'methods' => 'GET',
+        'callback' => function () {
+            return get_option('tbm_floating_dm_playlist_id');
+        },
+        'permission_callback' => '__return_true',
+    ));
 }
 
 function rest_get_votw()
@@ -155,6 +163,20 @@ function tbm_theme_options()
                         </div>
                     </div>
                 </div><!-- Video of the week -->
+
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Floaing player DailyMotion playlist ID</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <label class="reset">x</label>
+                            <input name="tbm_floating_dm_playlist_id" id="tbm_floating_dm_playlist_id" type="text" value="<?php echo get_option('tbm_floating_dm_playlist_id'); ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- <div class="col-md-6">
