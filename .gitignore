@@ -24,6 +24,7 @@ plugins/brag-observer/*
 !plugins/brag-observer/partials
 # !plugins/brag-observer/partials/*
 
+!plugins/tbm-floating-player
 
 !plugins/brag-observer/classes
 !plugins/brag-observer/classes/*
