@@ -185,7 +185,7 @@ class LeadGenerator extends BragObserver
         } else {
           $user = $this->create_user($formData['email']);
 
-          $verified = true;
+          $verified = $lead_generator->id != 137; // true; // 137 = where comp rules were already added
 
           $message = !is_null($lead_generator->msg_thanks_verify) ? $lead_generator->msg_thanks_verify : 'Thank you! Your feedback has been submitted.';
           // $message = 'Please verify your feedback by clicking the link we sent you via email.';
