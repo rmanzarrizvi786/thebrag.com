@@ -128,6 +128,7 @@ class Braze
             return false;
 
         $user_info = get_userdata($user_id);
+        $user_info->user_email = strtolower($user_info->user_email);
 
         $user_attributes = [];
         $user_attributes['email'] = $user->user_email;
