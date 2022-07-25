@@ -100,21 +100,19 @@ class FloatingPlayer
       <script>
         jQuery(document).ready(function($) {
           if (screen.width >= 768) {
-
             $('.floating-player-close').on('click', function() {
               $('#floating-player-wrap').detach();
             })
             dailymotion
               .createPlayer("floating-player", {
-                playlist: "<?php echo $this->playlistId; ?>",
-                mute: true
+                playlist: "<?php echo $this->playlistId; ?>"
               })
               .then((player) => {
                 $('#floating-player-wrap').show();
+                player.setMute(true);
               })
               .catch((e) => console.error(e));
           }
-
         });
       </script>
     </div>
