@@ -492,7 +492,7 @@ $container_width = 700;
 																<?php if (isset($frontend) && $frontend) : ?>
 																	<?php echo date('D, j M Y', strtotime($newsletter->created_at)); ?>
 																<?php else : ?>
-																	{{ "today" | date: "%a, %e %b %Y" }}
+																	{{ "today" | time_zone: "Australia/Sydney" | date: "%a, %e %b %Y" }}
 																<?php endif; ?>
 																<!--[if gte mso 9]>
         											</td>
