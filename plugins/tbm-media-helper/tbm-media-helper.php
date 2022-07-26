@@ -54,6 +54,8 @@ class MediaHelper
         add_action('parse_request', [$this, 'parse_request']);
 
         add_filter('wpseo_opengraph_image', [$this, 'wpseo_opengraph_image'], 99);
+
+        add_filter('wp_head', [$this, 'wp_head']);
     }
 
     public function parse_request()
@@ -180,6 +182,23 @@ class MediaHelper
         }
         return $url;
     }
+
+    /**
+     * Add og image tag if featured image is webp, Yoast currently doesn't add webp image
+     * 26 July, 2022
+     */
+    public function wp_head()
+    {
+        if (!is_single())
+            return;
+        $post_id = get_the_ID();
+        $attachment_id = get_post_thumbnail_id($post_id);
+        $image_attributes = wp_get_attachment_image_src($attachment_id, "full");
+        $image_src = $image_attributes[0];
+        if (!empty($image_src) && get_post_mime_type(get_post_thumbnail_id()) == 'image/webp') { ?>
+            <meta property="og:image" content="<?php echo $image_src; ?>">
+<?php }
+    } // wp_head()
 }
 
 new MediaHelper();
