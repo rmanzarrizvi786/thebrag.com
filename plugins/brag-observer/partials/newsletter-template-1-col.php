@@ -96,7 +96,7 @@ if (in_array($newsletter->list_id, array_keys(passendo_ads()))) {
 </tr>
 
 <?php
-if (4 == $list->id) {
+if (in_array($list->id, [4, 61])) { // 4 = TMN, 61 = EBO
   print_jobs_tio($newsletter);
 
   print_tio_tweet($newsletter);

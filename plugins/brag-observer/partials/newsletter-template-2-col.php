@@ -203,7 +203,7 @@ if (isset($post_ids) && is_array($post_ids) && count($post_ids) > 0) :
 ?>
 
 <?php
-if (4 == $list->id) {
+if (in_array($list->id, [4, 61])) { // 4 = TMN, 61 = EBO
   print_jobs_tio($newsletter);
 
   print_tio_tweet($newsletter);
