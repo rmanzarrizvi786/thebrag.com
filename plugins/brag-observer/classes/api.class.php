@@ -319,6 +319,23 @@ class API
 
     $count = isset($_GET['count']) ? absint($_GET['count']) : 3;
 
+    // Suggest EBO first if list is TMN or Film-TV
+    if (in_array($list->list_id, [4, 16])) {
+      $results_ebo = $wpdb->get_results("SELECT l.id, l.title, l.slug, l.image_url FROM `{$wpdb->prefix}observer_lists` l
+        WHERE
+          l.`status` = 'active'
+          AND l.id = 61
+          AND l.id NOT IN (
+            SELECT oc.list_id FROM `{$wpdb->prefix}observer_list_categories` oc
+            JOIN `{$wpdb->prefix}observer_subs` s ON oc.list_id = s.list_id
+            WHERE s.status = 'subscribed' AND s.user_id = '{$user->ID}'
+          )
+        LIMIT 1");
+      if ($results_ebo) {
+        $count--;
+      }
+    }
+
     $results = $wpdb->get_results("SELECT * FROM(
       SELECT DISTINCT l.id, l.title, l.slug, l.image_url FROM `{$wpdb->prefix}observer_lists` l
       JOIN `{$wpdb->prefix}observer_list_categories` oc ON l.id = oc.list_id
@@ -338,6 +355,10 @@ class API
       ) a
       ORDER BY RAND()
       LIMIT {$count}");
+
+    if (isset($results_ebo)) {
+      $results = array_merge($results_ebo, $results);
+    }
 
     if (count($results) < $count) {
       $new_limit = $count - count($results);
