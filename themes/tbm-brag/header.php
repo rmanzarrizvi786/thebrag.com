@@ -189,6 +189,12 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
         ]);
       endforeach;
     endif;
+
+    // Internet Culture doesn't have any observer topic associated, so adding it manually
+    array_push($top_menu_items, [
+      'link' => home_url('/net-culture/'),
+      'text' => 'Internet Culture',
+    ]);
   else : // Show all categories
     $menu_cats = get_categories(
       array(
