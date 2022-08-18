@@ -50,7 +50,8 @@ class Braze
         'gaming' => 'a4b3c04c-66c3-4ecf-8226-b25579f145e5',
         'travel' => 'a84f8666-cdcb-4aad-a354-70e9602d89f6',
         'technology' => 'ee0f60c1-16be-4d37-8c26-1c99d7ebdffd',
-        'net-culture' => '6c05eed8-62a8-4c4a-bf0a-6cafc14138c9'
+        'net-culture' => '6c05eed8-62a8-4c4a-bf0a-6cafc14138c9',
+        'money' => '28023350-4596-4299-b1ca-c093e4ff9455',
       ];
     }
 
