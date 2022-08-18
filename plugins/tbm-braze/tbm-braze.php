@@ -43,7 +43,14 @@ class Braze
     if ($this->is_sandbox) {
       $this->categoryToCanvasId = [];
     } else {
-      $this->categoryToCanvasId = [];
+      $this->categoryToCanvasId = [
+        'film-tv' => '6f5df4f0-ad1c-4364-a435-be8e9f5eb127',
+        'comedians' => '622e5244-9392-41bc-b6cf-802b88d03d79',
+        'food-drink' => '7ccf6fc0-9fc8-4483-baf0-f98741eba09f',
+        'gaming' => 'a4b3c04c-66c3-4ecf-8226-b25579f145e5',
+        'travel' => 'a84f8666-cdcb-4aad-a354-70e9602d89f6',
+        'technology' => 'ee0f60c1-16be-4d37-8c26-1c99d7ebdffd'
+      ];
     }
 
     $this->enablePush = true;
