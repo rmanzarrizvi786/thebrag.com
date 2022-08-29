@@ -27,21 +27,21 @@ class Imports extends BragObserver
 
     add_submenu_page(
       $this->plugin_slug,
-      'Process MC Imports to WP',
-      'Process MC Imports to WP',
+      'Process Imports to WP',
+      'Process Imports to WP',
       'administrator',
       $this->plugin_slug . '-mailchimp-imps-to-wp',
       array($this, 'show_mailchimp_imps_to_wp')
     );
 
-    add_submenu_page(
+    /*  add_submenu_page(
       $this->plugin_slug,
       'Delete users from WP',
       'Delete users from WP',
       'administrator',
       $this->plugin_slug . '-delete-from-wp',
       array($this, 'show_delete_from_wp')
-    );
+    ); */
 
     /* add_submenu_page(
       $this->plugin_slug,
@@ -61,14 +61,14 @@ class Imports extends BragObserver
       array($this, 'show_export_to_braze2')
     ); */
 
-    add_submenu_page(
+    /* add_submenu_page(
       $this->plugin_slug,
       'IP Warmup Export to Braze',
       'IP Warmup Export to Braze',
       'administrator',
       $this->plugin_slug . '-ip-warmup-export-to-braze',
       array($this, 'show_ip_warmup_export_to_braze')
-    );
+    ); */
   }
 
   public function show_mailchimp_imps_to_wp()
