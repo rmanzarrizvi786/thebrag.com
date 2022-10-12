@@ -107,77 +107,28 @@ class MediaHelper
     {
         if (!$url)
             return false;
-    
-        $url = get_final_url($url);
-    
-        $logo_file_name = '';
-    
-        if (isset($_GET['nologo'])) {
-            $logo_file_name = '';
-        } else {
-            if (strpos($url, 'images.thebrag.com/tmn/') !== FALSE) {
-                $logo_file_name = 'TMN_socialshare_LOGO';
-            } else {
-    
-                $parsed_url = parse_url($url);
-                if (isset($parsed_url['host'])) {
-                    // if (isset($_GET['site'])) {
-                    // $site = trim($_GET['site']);
-                    switch ($parsed_url['host']):
-                        case 'thebrag.com':
-                        case 'the-brag.com':
-                            $logo_file_name = 'THEBRAG_socialshare_LOGO';
-                            break;
-                        case 'tonedeaf.thebrag.com':
-                        case 'tonedeaf.the-brag.com':
-                            $logo_file_name = 'TD_socialshare_LOGO';
-                            break;
-                        case 'theindustryobserver.thebrag.com':
-                        case 'theindustryobserver.the-brag.com':
-                            $logo_file_name = 'TIO_socialshare_LOGO';
-                            break;
-                        case 'dontboreus.thebrag.com':
-                        case 'dontboreus.the-brag.com':
-                            $logo_file_name = 'DBU_socialshare_LOGO';
-                            break;
-                        case 'au.rollingstone.com':
-                        case 'au.rolling-stone.com':
-                            $logo_file_name = 'RS_socialshare_LOGO_2022';
-                            break;
-                        case 'themusicnetwork.com':
-                        case 'the-music-network.com':
-                            $logo_file_name = 'TMN_socialshare_LOGO';
-                            break;
-                        default:
-                            break;
-                    endswitch;
-                }
-            }
-        }
-    
-        $social_img_width = 1200;
-        $social_img_height = 628;
-        $logo_height = 150;
-    
+
+        $url = $this->get_final_url($url);
+
         $headers = get_headers($url, 1);
-    
+
         if ($headers[0] != 'HTTP/1.1 200 OK') {
             return false;
         }
-    
+
         $type = exif_imagetype($url);
-    
+
         if ($type == (IMAGETYPE_PNG || IMAGETYPE_JPEG)) {
-    
-    
-            $x = $social_img_width;
-            $y = $social_img_height;
+            $logo_url = "https://images.thebrag.com/common/brands/{$this->logo_file_name}.png";
+
+            $x = $this->social_img_width;
+            $y = $this->social_img_height;
             $ratio_dest = $x / $y;
-    
+
             list($xx, $yy) = getimagesize($url);
-    
+
             $ratio_original = $xx / $yy;
-    
+
             if ($ratio_original >= $ratio_dest) {
                 $yo = $yy;
                 $xo = ceil(($yo * $x) / $y);
@@ -189,11 +140,11 @@ class MediaHelper
                 $xy_ini = ceil(($yy - $yo) / 2);
                 $xo_ini = 0;
             }
-    
+
             $dest = imagecreatetruecolor($x, $y);
-    
+
             // $source = imagecreatefromjpeg($url);
-    
+
             switch ($type) {
                 case IMAGETYPE_JPEG:
                     $source = imagecreatefromjpeg($url);
@@ -204,18 +155,17 @@ class MediaHelper
                 default:
                     return false;
             }
-    
+
             imagecopyresampled($dest, $source, 0, 0, $xo_ini, $xy_ini, $x, $y, $xo, $yo);
-    
+
             if ('' != $logo_file_name) {
-                $logo_url = "https://images.thebrag.com/common/brands/{$logo_file_name}.png";
                 $png_logo = imagecreatefrompng($logo_url);
                 list($logo_real_width, $logo_real_height) = getimagesize($logo_url);
+
                 $logo_width = ceil($logo_height * $logo_real_width / $logo_real_height);
                 imagecopyresampled($dest, $png_logo, $x - $logo_width, $y - $logo_height, 0, 0, $logo_width, $logo_height, $logo_real_width, $logo_real_height);
             }
-    
-    
+
             return $dest;
         }
         return false;
