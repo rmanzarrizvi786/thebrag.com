@@ -158,13 +158,13 @@ class MediaHelper
 
             imagecopyresampled($dest, $source, 0, 0, $xo_ini, $xy_ini, $x, $y, $xo, $yo);
 
-            // if (!isset($_GET['nologo'])) {
+            if (!isset($_GET['nologo'])) {
                 $png_logo = imagecreatefrompng($logo_url);
                 list($logo_real_width, $logo_real_height) = getimagesize($logo_url);
-                
+
                 $logo_width = ceil($this->logo_height * $logo_real_width / $logo_real_height);
                 imagecopyresampled($dest, $png_logo, $x - $logo_width, $y - $this->logo_height, 0, 0, $logo_width, $this->logo_height, $logo_real_width, $logo_real_height);
-            // }
+            }
 
             return $dest;
         }
