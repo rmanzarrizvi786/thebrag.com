@@ -158,7 +158,7 @@ class MediaHelper
 
             imagecopyresampled($dest, $source, 0, 0, $xo_ini, $xy_ini, $x, $y, $xo, $yo);
 
-            if ('' != $logo_file_name) {
+            if (!isset($_GET['nologo'])) {
                 $png_logo = imagecreatefrompng($logo_url);
                 list($logo_real_width, $logo_real_height) = getimagesize($logo_url);
 
