@@ -1622,6 +1622,8 @@ class BragObserver
           if (!isset($meta_og_img)) {
             $meta_og_img = $meta->getAttribute('content');
             $meta_og_img = str_ireplace('/img-socl/?url=', '', substr($meta_og_img, strpos($meta_og_img, '/img-socl/?url=')));
+            $meta_og_img = str_ireplace('&nologo=1', '', substr($meta_og_img, strpos($meta_og_img, '&nologo=1')));
+            $meta_og_img = str_ireplace('&#038;nologo=1', '', substr($meta_og_img, strpos($meta_og_img, '&#038;nologo=1')));
           }
         } elseif ($meta->getAttribute('property') == 'og:title') {
           if (!isset($meta_og_title)) {
