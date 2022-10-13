@@ -58,7 +58,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
                                           $type = @exif_imagetype($src[0]);
 
                                           if ($type != false && ($type == (IMAGETYPE_PNG || IMAGETYPE_JPEG))) {
-                                            echo home_url("/img-socl/?url={$src[0]}");
+                                            echo home_url("/img-socl/?url={$src[0]}&nologo=1");
                                           } else {
                                             echo $src[0];
                                           }

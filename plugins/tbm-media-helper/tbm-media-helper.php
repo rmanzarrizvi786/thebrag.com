@@ -97,7 +97,7 @@ class MediaHelper
         $type = exif_imagetype($url);
 
         if ($type != false && ($type == (IMAGETYPE_PNG || IMAGETYPE_JPEG))) {
-            return home_url("/img-socl/?url={$url}?nologo=1");
+            return home_url("/img-socl/?url={$url}&nologo=1");
         }
 
         return $url;
