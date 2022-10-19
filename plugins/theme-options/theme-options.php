@@ -56,6 +56,8 @@ function rest_get_votw()
         endif;
     endif;
     $featured_video_img = str_ireplace('/img-socl/?url=', '', substr($featured_video_img, strpos($featured_video_img, '/img-socl/?url=')));
+    $featured_video_img = str_ireplace('&nologo=1', '', featured_video_img);
+
     return [
         'image' => $featured_video_img,
         'artist' => get_option('tbm_featured_video_artist') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_artist'))) : '',
@@ -167,11 +169,16 @@ function tbm_theme_options()
                 <hr>
                 <div class="row">
                     <div class="col-12">
-                        <h3>Floaing player DailyMotion playlist ID</h3>
+                        <h3>DailyMotion Player</h3>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label>ID</label>
+                            <label>Player ID</label>
+                            <label class="reset">x</label>
+                            <input name="tbm_floating_dm_player_id" id="tbm_floating_dm_player_id" type="text" value="<?php echo get_option('tbm_floating_dm_player_id'); ?>" placeholder="" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Playlist ID</label>
                             <label class="reset">x</label>
                             <input name="tbm_floating_dm_playlist_id" id="tbm_floating_dm_playlist_id" type="text" value="<?php echo get_option('tbm_floating_dm_playlist_id'); ?>" placeholder="" class="form-control">
                         </div>
@@ -259,6 +266,18 @@ function tbm_theme_options()
                         </div>
                     </div>
                 </div><!-- Force Trending on Home page -->
+                <div class="col-12">
+                    <h3>GAM Ad Unit</h3>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <label class="reset">x</label>
+                            <input name="tbm_gam_ad_unit_id" id="tbm_gam_ad_unit_id" type="text" value="<?php echo get_option('tbm_gam_ad_unit_id'); ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
