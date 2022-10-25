@@ -3187,6 +3187,8 @@ function tbm_set_cookie($data)
 
 function render_ad_tag($tag, $slot_no = 1)
 {
+    if (function_exists('get_field') && get_field('paid_content', $post->ID))
+        return;
     if (!file_exists(WP_PLUGIN_DIR . '/tbm-adm/tbm-adm.php'))
         return;
     require_once WP_PLUGIN_DIR . '/tbm-adm/tbm-adm.php';
