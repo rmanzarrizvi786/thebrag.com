@@ -458,7 +458,7 @@ function updateDB($reports, $slug_filter = NULL, $post_type = 'post', $blog_id =
                 continue;
             endif;
             $post = get_page_by_path($pagePath, OBJECT, $post_type);
-            if (!is_null($post) && $post_type == $post->post_type && 'publish' == $post->post_status) :
+            if (!is_null($post) && $post_type == $post->post_type && 'publish' == $post->post_status && !get_field('not_brand_safe', $post->ID)) :
                 $wpdb->insert(
                     $wpdb->prefix . 'tbm_trending',
                     array(
