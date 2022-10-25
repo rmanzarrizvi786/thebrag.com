@@ -117,6 +117,14 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     }
     ?>
   </style>
+  <?php if(get_field('paid_content')) { ?>
+  <style>
+    div.ad-billboard-top {
+      height: 0px !important;
+      transition: none !important;
+    }
+  </style>
+  <?php } ?>
 </head>
 
 <body <?php body_class(); ?> id="body">
