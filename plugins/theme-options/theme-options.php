@@ -24,6 +24,12 @@ function tbm_theme_options_rest_api_init()
         'permission_callback' => '__return_true',
     ));
 
+    register_rest_route('tbm', '/rotw', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_rotw',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/floating_dailymotion_playlist_id', array(
         'methods' => 'GET',
         'callback' => function () {
@@ -64,6 +70,16 @@ function rest_get_votw()
         'artist' => get_option('tbm_featured_video_artist') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_artist'))) : '',
         'song' => get_option('tbm_featured_video_song') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) : '',
         'link' => $tbm_featured_video_link,
+    ];
+}
+
+function rest_get_rotw()
+{
+    return [
+        'image' => get_option('tbm_featured_album_image_url') ? '' . esc_html(stripslashes(get_option('tbm_featured_album_image_url'))) : '',
+        'artist' => get_option('tbm_featured_album_artist') ? '' . esc_html(stripslashes(get_option('tbm_featured_album_artist'))) : '',
+        'title' => get_option('tbm_featured_album_title') ? '' . esc_html(stripslashes(get_option('tbm_featured_album_title'))) : '',
+        'link' => get_option('tbm_featured_album_link') ? '' . esc_html(stripslashes(get_option('tbm_featured_album_link'))) : '',
     ];
 }
 
