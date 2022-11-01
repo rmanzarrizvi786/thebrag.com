@@ -58,21 +58,15 @@
 
     <div class="record px-2 mt-3 mt-md-0">
         <h3 class="heading mb-2">Record <span>of the week</span></h3>
-        <a href="<?php echo get_option('tbm_featured_album_link'); 
-                    ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); 
-                                                                                                                                ?>);" rel="noreferrer">
-            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); 
-            ?>
+        <a href="<?php echo get_option('tbm_featured_album_link'); ?>" target="_blank" class="p-r d-block overflow-hidden player-wrap rounded" style="background-image: url(<?php echo get_option('tbm_featured_album_image_url'); ?>);" rel="noreferrer">
+            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
             -
-            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); 
-            ?>
+            <?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?>
         </a>
         <h4 class="mt-0 mt-md-3 text-center">
-            <?php  echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); 
-            ?>
+            <?php  echo esc_html(stripslashes(get_option('tbm_featured_album_artist'))); ?>
             -
-            <em><?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); 
-                ?></em>
+            <em><?php echo esc_html(stripslashes(get_option('tbm_featured_album_title'))); ?></em>
         </h4>
     </div>
     </div>
