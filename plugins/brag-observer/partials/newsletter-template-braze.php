@@ -796,7 +796,7 @@ function print_video_record_of_week($newsletter)
 		if (is_array($rotw_response) && !is_wp_error($rotw_response) && wp_remote_retrieve_response_code($rotw_response) == 200) {
 			$rotw = json_decode($rotw_response['body']);
 			$featured_record_alt .= esc_html(stripslashes($rotw->artist));
-			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->name));
+			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->title));
 			$featured_record_img =  BragObserver::resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
 			?>
 				<table align="left" class="small-12" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:center;vertical-align:top;width:100%;max-width:340px;margin-top:10px;margin-bottom:10px;margin-left: 5px; margin-right: 5px;">
@@ -825,8 +825,8 @@ function print_video_record_of_week($newsletter)
 																				if ($rotw->artist) {
 																					echo '' . esc_html(stripslashes($rotw->artist));
 																				}
-																				if ($rotw->name) {
-																					echo '<br><em>\'' . esc_html(stripslashes($rotw->name)) . '\'</em>';
+																				if ($rotw->title) {
+																					echo '<br><em>\'' . esc_html(stripslashes($rotw->title)) . '\'</em>';
 																				}
 																				?></font>
 											</h1>

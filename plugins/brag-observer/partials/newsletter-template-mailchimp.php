@@ -1042,7 +1042,7 @@ function print_video_record_of_week($obj, $newsletter)
 		if (is_array($rotw_response) && !is_wp_error($rotw_response)) {
 			$rotw = json_decode($rotw_response['body']);
 			$featured_record_alt .= esc_html(stripslashes($rotw->artist));
-			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->name));
+			$featured_record_alt .= ' - ' . esc_html(stripslashes($rotw->title));
 			$featured_record_img =  $obj->resize_image($rotw->image, 660, 370, null, '/edm/featured/', 'featured-record-' . date('Y\wW') . '.jpg');
 		}
 		/* $featured_record_alt .= esc_html(stripslashes(get_option('tbm_featured_album_artist')));
@@ -1075,8 +1075,8 @@ function print_video_record_of_week($obj, $newsletter)
 																			if ($rotw->artist) {
 																				echo '' . esc_html(stripslashes($rotw->artist));
 																			}
-																			if ($rotw->name) {
-																				echo '<br><em>\'' . esc_html(stripslashes($rotw->name)) . '\'</em>';
+																			if ($rotw->title) {
+																				echo '<br><em>\'' . esc_html(stripslashes($rotw->title)) . '\'</em>';
 																			}
 																			?></font>
 										</h1>
