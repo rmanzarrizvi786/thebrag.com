@@ -24,9 +24,9 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
   <link rel="manifest" href="/icons/site.webmanifest">
   <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#b98d5b">
   <link rel="shortcut icon" href="/icons/favicon.ico">
-  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileColor" content="#b98d5b">
   <meta name="msapplication-config" content="/icons/browserconfig.xml">
-  <meta name="theme-color" content="#130f40">
+  <meta name="theme-color" content="#b98d5b">
 
   <link rel="preconnect" href="https://cdn.onesignal.com/">
   <link rel="preconnect" href="https://www.googletagservices.com/">
