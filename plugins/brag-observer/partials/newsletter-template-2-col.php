@@ -282,7 +282,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                         <tr>
                           <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                             <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
-                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank">
+                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank">
                                 <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="<?php echo $container_width - 40; ?>" style="max-width:<?php echo $container_width - 40; ?>px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
                               </a>
                             <?php endif; ?>
@@ -292,7 +292,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                           <td class="mcnTextContent" valign="top" style="padding: 9px 18px;color: #F2F2F2;font-family: Helvetica;font-size: 14px;font-style: normal;font-weight: normal;line-height: 150%;text-align: center;" width="546">
                             <h1>
                               <font color="#ffffff">
-                                <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
+                                <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
                                   <?php echo strtoupper($newsletter->details->post_titles[$article_number]); ?>
                                 </a>
                               </font>
@@ -339,7 +339,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                         <tr>
                           <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                             <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
-                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank">
+                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank">
                                 <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="310" style="max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
                               </a>
                             <?php endif; ?>
@@ -349,7 +349,7 @@ function print_article($newsletter, $article_number, $style = 'full', $container
                           <td class="mcnTextContent" valign="top" style="padding: 9px 0;color: #000000;font-family: Helvetica;font-size: 14px;font-style: normal;font-weight: normal;line-height: 150%;text-align: center;">
                             <h2>
                               <font color="#ffffff">
-                                <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>" target="_blank" style="color: #000000; text-decoration: none;">
+                                <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank" style="color: #000000; text-decoration: none;">
                                   <?php echo strtoupper($newsletter->details->post_titles[$article_number]); ?>
                                 </a>
                               </font>
@@ -399,11 +399,11 @@ function print_article_old($newsletter, $article_number, $style = 'full')
               <tr style="padding:0;text-align:center;vertical-align:top">
                 <td style="color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.4;margin:0;padding-top:0;padding-bottom:18px;text-align:center;background-color: <?php echo $bgColor; ?>;padding-left:0;padding-right:0;">
                   <?php if (isset($post_images[$article_number]) && $post_images[$article_number] != '') : ?>
-                    <a href="<?php echo $post_links[$article_number]; ?>" target="_blank" style="color:<?php echo $textColor; ?>;font-family:Helvetica,Arial,sans-serif;font-weight:400;line-height:1.4;margin:0;padding:0;text-align:center;text-decoration:none"><img src="<?php echo  $post_images[$article_number]; ?>" alt="<?php echo $post_titles[$article_number]; ?>" title="<?php echo $post_titles[$article_number]; ?>" width="304" height="170" style="-ms-interpolation-mode:bicubic;border:none;clear:both;display:block;height:auto;margin-bottom:10px;max-width:100%;outline:0;text-decoration:none;width:100%;color:<?php echo $textColor; ?>;">
+                    <a href="<?php echo $post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank" style="color:<?php echo $textColor; ?>;font-family:Helvetica,Arial,sans-serif;font-weight:400;line-height:1.4;margin:0;padding:0;text-align:center;text-decoration:none"><img src="<?php echo  $post_images[$article_number]; ?>" alt="<?php echo $post_titles[$article_number]; ?>" title="<?php echo $post_titles[$article_number]; ?>" width="304" height="170" style="-ms-interpolation-mode:bicubic;border:none;clear:both;display:block;height:auto;margin-bottom:10px;max-width:100%;outline:0;text-decoration:none;width:100%;color:<?php echo $textColor; ?>;">
                     </a>
                   <?php endif; ?>
                   <div style="padding-left:<?php echo $paddingX; ?>px;padding-right:<?php echo $paddingX; ?>px">
-                    <h2 style="Margin-bottom:5px;color:inherit;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:400;line-height:1.4;margin:0;margin-bottom:5px;margin-top:5px;padding:0;word-wrap:normal"><a class="headline" href="<?php echo $post_links[$article_number]; ?>" target="_blank" title="<?php echo $post_titles[$article_number]; ?>" style="Margin:0;color:<?php echo $textColor; ?>!important;font-family:Helvetica,Arial,sans-serif;font-size:23px;font-weight:700;line-height:28px;margin:0;padding:0;text-align:center;text-decoration:none"><?php echo $post_titles[$article_number]; ?></a></h2>
+                    <h2 style="Margin-bottom:5px;color:inherit;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:400;line-height:1.4;margin:0;margin-bottom:5px;margin-top:5px;padding:0;word-wrap:normal"><a class="headline" href="<?php echo $post_links[$article_number]; ?>" target="_blank" title="<?php echo $post_titles[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" style="Margin:0;color:<?php echo $textColor; ?>!important;font-family:Helvetica,Arial,sans-serif;font-size:23px;font-weight:700;line-height:28px;margin:0;padding:0;text-align:center;text-decoration:none"><?php echo $post_titles[$article_number]; ?></a></h2>
                     <div style="text-align: left; font-size:16px;color:<?php echo $textColor; ?>;font-family:arial,helvetica neue,helvetica,sans-serif">
                       <?php echo $newsletter->details->post_excerpts[$article_number]; ?>
                     </div>
