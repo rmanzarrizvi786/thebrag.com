@@ -158,7 +158,7 @@ function print_article($newsletter, $article_number, $container_width = 700)
                       <tr>
                         <td class="mcnImageCardBottomImageContent" align="left" valign="top" class="p-0">
                           <?php if (isset($newsletter->details->post_images[$article_number]) && $newsletter->details->post_images[$article_number] != '') : ?>
-                            <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank">
+                            <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=<?php echo urlencode($newsletter->details->from_name); ?>&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank">
                               <img align="center" alt="<?php echo $newsletter->details->post_titles[$article_number]; ?>" src="<?php echo $newsletter->details->post_images[$article_number]; ?>" width="<?php echo $container_width - 40; ?>" style="max-width:<?php echo $container_width - 40; ?>px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
                             </a>
                           <?php endif; ?>
@@ -168,7 +168,7 @@ function print_article($newsletter, $article_number, $container_width = 700)
                         <td class="mcnTextContent" valign="top" style="padding: 9px 18px;color: #F2F2F2;font-family: Helvetica;font-size: 14px;font-style: normal;font-weight: normal;line-height: 150%;text-align: center;" width="546">
                           <h1>
                             <font color="#ffffff">
-                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=observer&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
+                              <a href="<?php echo $newsletter->details->post_links[$article_number]; ?>?utm_source=<?php echo urlencode($newsletter->details->from_name); ?>&utm_medium=email&utm_campaign=<?php echo urlencode($newsletter->details->title); ?>" target="_blank" style="color: #ffffff; text-decoration: none;">
                                 <?php echo strtoupper($newsletter->details->post_titles[$article_number]); ?>
                               </a>
                             </font>
