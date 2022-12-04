@@ -3619,7 +3619,7 @@ add_filter('the_content', function ($content) {
 });
 
 
-add_action('wp_footer', 'inject_roymorgan', 99, 2);
+// add_action('wp_footer', 'inject_roymorgan', 99, 2);
 function inject_roymorgan()
 {
 ?>
