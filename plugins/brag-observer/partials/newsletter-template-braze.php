@@ -633,7 +633,7 @@ $container_width = 700;
 
 								<div style="padding-top: 30px; padding-bottom: 30px;">
 									<a title="Advertise with us" href="https://thebrag.com/media/" target="_blank" style="text-decoration: none;">
-										<img alt="The Brag Media" src="<?php echo $media_logo; ?>" width="300" style="width: 300px; max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;">
+										<img alt="The Brag Media" src="<?php echo $media_logo; ?>" width="350" style="width: 350px; max-width:100%; padding-bottom: 0; display: inline !important; vertical-align: bottom;">
 									</a>
 								</div>
 
