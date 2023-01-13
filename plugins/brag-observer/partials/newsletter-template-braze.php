@@ -706,24 +706,24 @@ function print_video_record_of_week($newsletter)
 	$featured_video = get_option('tbm_featured_video');
 	$featured_video_link = get_option('tbm_featured_video_link');
 	// $featured_video_img_src = 'https://i.ytimg.com/vi/' . $featured_video . '/0.jpg';
-	if (!$featured_video_link || '' == $featured_video_link) {
-		$featured_video_link = $featured_video;
-	} {
-		$tbm_featured_video_link_html = file_get_contents($featured_video_link);
-		$tbm_featured_video_link_html_dom = new DOMDocument();
-		@$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
-		// $meta_og_img_tbm_featured_video_link = null;
-		foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
-			if ($meta->getAttribute('property') == 'og:image') {
-				$featured_video_img_src = $meta->getAttribute('content');
-				$featured_video_img_src = str_ireplace('&#038;nologo=1', '', substr($featured_video_img_src, strpos
-				($featured_video_img_src, '/img-socl/?url=')));
-				$featured_video_img_src = str_ireplace('&nologo=1', '', $featured_video_img_src);
-				$featured_video_img_src = str_ireplace('/img-socl/?url=', '', $featured_video_img_src);
-				break;
-			}
+
+	$featured_video_link = $featured_video;
+
+	$tbm_featured_video_link_html = file_get_contents($featured_video_link);
+	$tbm_featured_video_link_html_dom = new DOMDocument();
+	@$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
+	// $meta_og_img_tbm_featured_video_link = null;
+	foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
+		if ($meta->getAttribute('property') == 'og:image') {
+			$featured_video_img_src = $meta->getAttribute('content');
+			$featured_video_img_src = str_ireplace('&#038;nologo=1', '', substr($featured_video_img_src, strpos
+			($featured_video_img_src, '/img-socl/?url=')));
+			$featured_video_img_src = str_ireplace('&nologo=1', '', $featured_video_img_src);
+			$featured_video_img_src = str_ireplace('/img-socl/?url=', '', $featured_video_img_src);
+			break;
 		}
 	}
+
 	if (!is_null($featured_video) && $featured_video != '') :
 		parse_str(parse_url($featured_video, PHP_URL_QUERY), $featured_video_vars);
 		// $featured_yt_vid_id = $featured_video_vars['v'];
