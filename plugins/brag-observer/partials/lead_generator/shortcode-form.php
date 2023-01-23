@@ -59,6 +59,8 @@ function observer_lead_generator_form($atts)
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
                 <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
               </div>
+            <?php else : ?>
+              Yoooo
             <?php endif; ?>
 
             <?php if (!is_user_logged_in()) : ?>
