@@ -76,6 +76,7 @@ function observer_lead_generator_form($atts)
                 ?>
                   <option value="<?php echo $q1opt; ?>"><?php echo $q1opt; ?></option>
               <?php endforeach; ?>
+              </select>
               </div>
             <?php 
                 endif;
