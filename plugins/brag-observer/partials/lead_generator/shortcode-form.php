@@ -58,9 +58,29 @@ function observer_lead_generator_form($atts)
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
                 <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
               </div>
-            <?php else : ?>
-              Yoooo
-            <?php endif; ?>
+            <?php 
+              else : 
+
+                $q1opts = explode(',', $lead_generator_atts['q1opts']);
+                $q1opts = array_map('trim', $q1opts);
+
+                if (count($q1opts) > 0) :
+            ?>
+              <div class="col-12">
+                <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
+                <select name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1">
+                  <option value="">-</option>
+                <?php 
+                  foreach ($q1opts as $q1opt) :
+                    $q1opt = trim($q1opt);
+                ?>
+                  <option value="<?php echo $q1opt; ?>"><?php echo $q1opt; ?></option>
+              <?php endforeach; ?>
+              </div>
+            <?php 
+                endif;
+              endif; 
+            ?>
 
             <?php if (!is_user_logged_in()) : ?>
               <div class="col-12 mt-1">
