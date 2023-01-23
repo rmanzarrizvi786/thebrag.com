@@ -47,6 +47,7 @@ function observer_lead_generator_form($atts)
     }
   }
   ?>
+<?php echo $lead_generator_atts; ?>
   <?php if (!$already_voted) : ?>
     <form class="lead_generator-form" method="post">
       <div class="lead_generator-form-wrap my-3 p-2 p-md-3 rounded">
@@ -55,7 +56,6 @@ function observer_lead_generator_form($atts)
           <div class="row">
             <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1) && '' ==  $lead_generator_atts['q1opts']) : ?>
               <div class="col-12">
-                <?php echo $lead_generator_atts; ?>
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
                 <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
               </div>
