@@ -65,6 +65,7 @@ function observer_lead_generator_form($atts)
 
             <?php if (!is_user_logged_in()) : ?>
               <div class="col-12 mt-1">
+                <label for="lead_generator<?php echo $lead_generator->id; ?>-email">Please enter your email</label>
                 <input type="email" name="email" id="lead_generator<?php echo $lead_generator->id; ?>-email" class="form-control" placeholder="Your email address">
               </div>
             <?php endif; // If user is NOT logged in 
