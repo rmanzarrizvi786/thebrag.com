@@ -47,8 +47,7 @@ function observer_lead_generator_form($atts)
     }
   }
   ?>
-  <?php echo $lead_generator_atts['cta']; ?>
-<?php echo $lead_generator_atts; ?>
+<?php var_dump($lead_generator_atts); ?>
   <?php if (!$already_voted) : ?>
     <form class="lead_generator-form" method="post">
       <div class="lead_generator-form-wrap my-3 p-2 p-md-3 rounded">
