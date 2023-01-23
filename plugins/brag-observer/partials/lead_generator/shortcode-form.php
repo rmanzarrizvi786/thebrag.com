@@ -47,6 +47,7 @@ function observer_lead_generator_form($atts)
     }
   }
   ?>
+  <?php echo $lead_generator_atts['cta']; ?>
 <?php echo $lead_generator_atts; ?>
   <?php if (!$already_voted) : ?>
     <form class="lead_generator-form" method="post">
