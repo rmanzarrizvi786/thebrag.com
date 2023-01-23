@@ -10,7 +10,7 @@ function observer_lead_generator_form($atts)
     'border' => '#fff',
     'width' => NULL,
     'cta' => 'Sign me up',
-    'question1_opts' => NULL
+    'question1_opts' => ''
   ), $atts);
 
   if (is_null($lead_generator_atts['id']))
@@ -55,7 +55,7 @@ function observer_lead_generator_form($atts)
           <div class="row">
             <?php echo $lead_generator_atts['question1_opts']; ?>
 
-            <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1) && is_null($lead_generator_atts['question1_opts'])) : ?>
+            <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1) && empty($lead_generator_atts['question1_opts'])) : ?>
               <div class="col-12">
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
                 <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
