@@ -53,6 +53,7 @@ function observer_lead_generator_form($atts)
         <div class="lead_generator-wrap">
           <input type="hidden" name="id" id="lead_generator<?php echo $lead_generator->id; ?>-id" value="<?php echo $lead_generator->id; ?>">
           <div class="row">
+            <?php echo $lead_generator_atts['question1_opts']; ?>
 
             <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1) && is_null($lead_generator_atts['question1_opts'])) : ?>
               <div class="col-12">
