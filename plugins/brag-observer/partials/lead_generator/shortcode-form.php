@@ -71,6 +71,7 @@ function observer_lead_generator_form($atts)
             <?php if ($lead_generator->consent_promotional_marketing_text && '' != trim($lead_generator->consent_promotional_marketing_text)) : ?>
               <div class="col-12 mt-1">
                 <label class="d-flex align-items-stretch">
+                  <span class="mr-1" style="margin-right: 1rem;"><input type="checkbox" name="consent_promotional_marketing" id="lead_generator<?php echo $lead_generator->id; ?>-consent_promotional_marketing" value="1" checked></span>
                   <span><?php echo $lead_generator->consent_promotional_marketing_text; ?></span>
                 </label>
               </div>
