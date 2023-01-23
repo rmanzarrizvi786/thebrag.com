@@ -55,7 +55,7 @@ function observer_lead_generator_form($atts)
           <div class="row">
             <?php if ($lead_generator->question1 && '' != trim($lead_generator->question1) && '' ==  $lead_generator_atts['q1opts']) : ?>
               <div class="col-12">
-                <?php $lead_generator_atts['q1opts']; ?>
+                <?php echo $lead_generator_atts['q1opts']; ?>
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
                 <textarea name="response1" id="lead_generator<?php echo $lead_generator->id; ?>-response1" class="form-control mt-1" placeholder="Write your response here"></textarea>
               </div>
