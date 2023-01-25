@@ -86,7 +86,7 @@ function observer_lead_generator_form($atts)
             <?php if ($lead_generator->question2 && '' != trim($lead_generator->question2) && '' ==  $lead_generator_atts['q2opts']) : ?>
               <div class="col-12">
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response2"><?php echo $lead_generator->question2; ?></label>
-                <textarea name="response2" id="lead_generator<?php echo $lead_generator->id; ?>-response2" class="form-control mt-1" placeholder=""></textarea>
+                <input name="response2" id="lead_generator<?php echo $lead_generator->id; ?>-response2" class="form-control mt-1" placeholder="" />
               </div>
             <?php 
               else : 
