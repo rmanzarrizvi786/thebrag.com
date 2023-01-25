@@ -208,6 +208,7 @@ class LeadGenerator extends BragObserver
         'lead_generator_id' => $lead_generator->id,
         'user_id' => $user->ID,
         'response1' => isset($formData['response1']) ? sanitize_textarea_field($formData['response1']) : NULL,
+        'response2' => isset($formData['response2']) ? sanitize_textarea_field($formData['response2']) : NULL,
         'consent_promotional_marketing' => isset($formData['consent_promotional_marketing']) && 1 == $formData['consent_promotional_marketing'] ? 1 : NULL,
         'source' => $source,
       ];

@@ -17,6 +17,7 @@ if (!is_null($id)) :
     SELECT
       r.id,
       r.response1,
+      r.response2,
       r.consent_promotional_marketing,
       r.source,
       r.status,
@@ -52,6 +53,7 @@ if (!is_null($id)) :
       <tr>
         <th>Email</th>
         <th>Response1</th>
+        <th>Response2</th>
         <th>Consent Promotional Marketing</th>
         <th>Status</th>
         <th>Source</th>
@@ -61,6 +63,7 @@ if (!is_null($id)) :
         <tr>
           <th><?php echo $review->user_email; ?></th>
           <td><?php echo wpautop($review->response1); ?></td>
+          <td><?php echo wpautop($review->response2); ?></td>
           <td><?php echo $review->consent_promotional_marketing; ?></td>
           <td><?php echo $review->status; ?></td>
           <td><a href="<?php echo $review->source; ?>" target="_blank"><?php echo $review->source; ?></a></td>

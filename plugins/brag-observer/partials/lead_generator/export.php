@@ -14,7 +14,8 @@ if (!is_null($id)) :
   $reviews_query = "
     SELECT
       u.user_email Email,
-      r.response1 Response,
+      r.response1 Response1,
+      r.response2 Response2,
       r.consent_promotional_marketing Consent,
       r.status Status,
       r.created_at 'Submitted at'
