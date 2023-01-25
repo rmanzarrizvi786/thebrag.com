@@ -10,7 +10,8 @@ function observer_lead_generator_form($atts)
     'border' => '#fff',
     'width' => NULL,
     'cta' => 'Sign me up',
-    'q1opts' => ''
+    'q1opts' => '',
+    'q2opts' => ''
   ), $atts);
 
   if (is_null($lead_generator_atts['id']))
@@ -75,6 +76,35 @@ function observer_lead_generator_form($atts)
                     $q1opt = trim($q1opt);
                 ?>
                   <option value="<?php echo $q1opt; ?>"><?php echo $q1opt; ?></option>
+              <?php endforeach; ?>
+              </select>
+              </div>
+            <?php 
+                endif;
+              endif; 
+            ?>
+            <?php if ($lead_generator->question2 && '' != trim($lead_generator->question2) && '' ==  $lead_generator_atts['q2opts']) : ?>
+              <div class="col-12">
+                <label for="lead_generator<?php echo $lead_generator->id; ?>-response2"><?php echo $lead_generator->question2; ?></label>
+                <textarea name="response2" id="lead_generator<?php echo $lead_generator->id; ?>-response2" class="form-control mt-1" placeholder=""></textarea>
+              </div>
+            <?php 
+              else : 
+
+                $q2opts = explode(',', $lead_generator_atts['q2opts']);
+                $q2opts = array_map('trim', $q2opts);
+
+                if (count($q1opts) > 0) :
+            ?>
+              <div class="col-12">
+                <label for="lead_generator<?php echo $lead_generator->id; ?>-response2"><?php echo $lead_generator->question2; ?></label>
+                <select name="response2" id="lead_generator<?php echo $lead_generator->id; ?>-response2" class="form-control mt-1">
+                  <option value="">-</option>
+                <?php 
+                  foreach ($q2opts as $q2opt) :
+                    $q2opt = trim($q2opt);
+                ?>
+                  <option value="<?php echo $q2opt; ?>"><?php echo $q2opt; ?></option>
               <?php endforeach; ?>
               </select>
               </div>
