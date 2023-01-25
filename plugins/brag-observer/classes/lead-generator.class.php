@@ -110,6 +110,7 @@ class LeadGenerator extends BragObserver
         'msg_thanks' => $data['msg_thanks'],
         'msg_thanks_verify' => $data['msg_thanks_verify'],
         'question1' => $data['question1'],
+        'question2' => $data['question2'],
         'consent_promotional_marketing_text' => $data['consent_promotional_marketing_text'],
         'footer_text' => $data['footer_text'],
       ];

@@ -15,6 +15,7 @@ $lead_generators_query = "
     t.id,
     t.title,
     t.question1,
+    t.question2,
     t.created_at,
     t.msg_thanks,
     t.msg_thanks_verify,
@@ -47,6 +48,7 @@ $lead_generators = $wpdb->get_results($lead_generators_query);
     <tr>
       <th>Title</th>
       <th>Question1</th>
+      <th>Question2</th>
       <th>List(s)</th>
       <th>Thanks Message</th>
       <th>Thanks Message (verify)</th>
@@ -64,6 +66,7 @@ $lead_generators = $wpdb->get_results($lead_generators_query);
           <small>(Created: <?php echo date('d M, Y', strtotime($lead_generator->created_at)); ?>)</small>
         </th>
         <td><?php echo $lead_generator->question1; ?></td>
+        <td><?php echo $lead_generator->question2; ?></td>
         <td>
           <ul class="list-group list-group-flush">
             <?php foreach ($lead_generator->list_titles as $list_title) : ?>
