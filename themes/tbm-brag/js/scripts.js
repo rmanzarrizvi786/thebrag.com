@@ -246,7 +246,11 @@ jQuery(document).ready(function ($) {
     } */
 
     if ($(".single").length) {
-      if ($("#articles-wrap").length && count_articles < 4) {
+      if ($("#articles-wrap").length && $('.featured', "#articles-wrap").length === 0 && count_articles < 4) {
+        if($('.featured', "#articles-wrap")) {
+          return
+        }
+        
         if (!loading && scrollHandling.allow) {
           scrollHandling.allow = false;
           setTimeout(scrollHandling.reallow, scrollHandling.delay);
