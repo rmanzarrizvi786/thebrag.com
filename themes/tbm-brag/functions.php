@@ -3026,6 +3026,10 @@ function tbm_ajax_load_next_post()
 {
     global $post;
 
+     if ('single-template-featured.php' == get_page_template_slug($post->ID)) :
+        wp_die();
+    endif;
+
     $count_articles = isset($_POST['count_articles']) ? absint($_POST['count_articles']) : 1;
 
     if (get_field('paid_content', $_POST['id']) && 2 == $count_articles) :
