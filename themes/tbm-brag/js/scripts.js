@@ -247,7 +247,7 @@ jQuery(document).ready(function ($) {
 
     if ($(".single").length) {
       if ($("#articles-wrap").length && count_articles < 4) {
-        if($('.featured.single-article-1', "#articles-wrap")) {
+        if($('.featured.single-article-1', "#articles-wrap").length > 1) {
           return
         }
         
