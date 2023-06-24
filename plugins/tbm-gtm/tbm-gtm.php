@@ -65,6 +65,7 @@ class GTM
       <script>
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
+          'event': 'articleView',
           'AuthorCD': '<?php echo $author; ?>',
           'CategoryCD': '<?php echo $CategoryCD; ?>',
           'TagsCD': '<?php echo $TagsCD; ?>',
