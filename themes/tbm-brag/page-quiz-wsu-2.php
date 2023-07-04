@@ -1,7 +1,7 @@
 <?php /* Template Name: WSU Quiz 2 */ ?>
 <?php get_template_part('header-quiz-wsu-2');
-wp_enqueue_script('quiz-wsu-2', get_template_directory_uri() . '/js/quiz-wsu-2.js', array('jquery'), time(), true);
-wp_enqueue_script('quiz-edu-cricle-progress', get_template_directory_uri() . '/js/circle-progress/circle-progress.min.js', array('jquery'), '20180815', true);
+// wp_enqueue_script('quiz-wsu-2', get_template_directory_uri() . '/js/quiz-wsu-2.js', array('jquery'), time(), true);
+// wp_enqueue_script('quiz-edu-cricle-progress', get_template_directory_uri() . '/js/circle-progress/circle-progress.min.js', array('jquery'), '20180815', true);
 
 $args = array(
     'url'   => admin_url('admin-ajax.php'),

@@ -1,7 +1,7 @@
 <?php /* Template Name: Quiz (Edu) */ ?>
 <?php get_template_part('header-quiz-edu');
-wp_enqueue_script('quiz-edu', get_template_directory_uri() . '/js/quiz-edu.js', array('jquery'), '20180820', true);
-wp_enqueue_script('quiz-edu-cricle-progress', get_template_directory_uri() . '/js/circle-progress/circle-progress.min.js', array('jquery'), '20180815', true);
+//wp_enqueue_script('quiz-edu', get_template_directory_uri() . '/js/quiz-edu.js', array('jquery'), '20180820', true);
+//wp_enqueue_script('quiz-edu-cricle-progress', get_template_directory_uri() . '/js/circle-progress/circle-progress.min.js', array('jquery'), '20180815', true);
 ?>
 
 <?php if (!post_password_required()) : ?>
