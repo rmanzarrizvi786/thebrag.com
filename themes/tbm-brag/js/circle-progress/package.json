@@ -14,14 +14,14 @@
     "jquery": "*"
   },
   "devDependencies": {
-    "karma": "~1.2",
-    "qunitjs": "~2.0",
-    "karma-qunit": "~1.2",
+    "jsdoc": "^4.0.2",
+    "karma": "^6.4.2",
     "karma-firefox-launcher": "~1.0",
-    "karma-phantomjs-launcher": "~1.0",
-    "karma-sauce-launcher": "~1.0",
-    "uglify-js": "~2.7",
-    "jsdoc": "~3.4"
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-qunit": "~1.2",
+    "karma-sauce-launcher": "^4.3.6",
+    "qunitjs": "~2.0",
+    "uglify-js": "~2.7"
   },
   "scripts": {
     "test": "karma start",
