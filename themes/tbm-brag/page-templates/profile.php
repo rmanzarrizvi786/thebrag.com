@@ -544,8 +544,8 @@ get_header();
                     <input type="file" name="upload_profile_picture" id="upload_profile_picture" class="form-control" accept="image/*" />
                   </div>
 
-                  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/croppie/croppie.css" />
-                  <script src="<?php echo get_template_directory_uri(); ?>/croppie/croppie.js"></script>
+                  <link rel="stylesheet" href="<?php echo CDN_URL; ?>/croppie/croppie.css" />
+                  <script src="<?php echo CDN_URL; ?>/croppie/croppie.js"></script>
                   <script>
                     jQuery(document).ready(function($) {
                       $image_crop = $('#profile_picture').croppie({
