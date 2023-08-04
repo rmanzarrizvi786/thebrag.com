@@ -40,7 +40,7 @@ class TBMAds
       is_page_template('page-templates/brag-client-rsvp-event.php')
     )
       return;
-    wp_enqueue_script('adm-fuse', 'https://cdn.fuseplatform.net/publift/tags/2/2355/fuse.js', [], '1');
+    wp_enqueue_script('adm-fuse', 'https://cdn.fuseplatform.net/publift/tags/2/2355/fuse.js', [], rand(1111, 9999), true);
   }
 
   /*
