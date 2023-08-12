@@ -27,6 +27,8 @@ class TBMAds
 
     add_action('wp_enqueue_scripts', [$this, 'action_wp_enqueue_scripts']);
     add_action('wp_head', [$this, 'action_wp_head']);
+
+    add_filter( 'script_loader_tag', 'add_id_to_script', 10, 3 )
   }
 
   /*
@@ -40,7 +42,17 @@ class TBMAds
       is_page_template('page-templates/brag-client-rsvp-event.php')
     )
       return;
+
     wp_enqueue_script('adm-fuse', 'https://cdn.fuseplatform.net/publift/tags/2/2355/fuse.js', [], rand(1111, 9999), true);
+  }
+
+  
+  function add_id_to_script( $tag, $handle, $source ) {
+    if ( 'adm-fuse' === $handle ) {
+        $tag = '<script src="' . $source . '" id="adm-fuse" data-cfasync="false"></script>';
+    }
+
+      return $tag;
   }
 
   /*
