@@ -9,6 +9,7 @@
 <div id="skin" class="d-none d-md-block">
   <?php render_ad_tag('skin'); ?>
 </div>
+<!-- <?php function_exists('get_field') && get_field('paid_content', $post->ID) ? 'yes' : 'no'; ?> -->
 
 </main>
 <noscript id="deferred-styles">
