@@ -28,7 +28,7 @@ class TBMAds
     add_action('wp_enqueue_scripts', [$this, 'action_wp_enqueue_scripts']);
     add_action('wp_head', [$this, 'action_wp_head']);
 
-    add_filter( 'script_loader_tag', 'add_id_to_script', 10, 3 )
+    add_filter( 'script_loader_tag', [$this, 'add_id_to_script'], 10, 3 );
   }
 
   /*
