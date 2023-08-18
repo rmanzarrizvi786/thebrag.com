@@ -54,6 +54,12 @@ function tbm_theme_options_rest_api_init()
         'permission_callback' => '__return_true',
     ));
 
+    register_rest_route('tbm', '/latest-network', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_latest_network',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/floating_dailymotion_playlist_id', array(
         'methods' => 'GET',
         'callback' => function () {
@@ -257,6 +263,107 @@ function rest_get_trending()
 }
 
 function rest_get_latest()
+{
+    global $post;
+
+    $trending_story_args = [
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+    ];
+    if (get_option('most_viewed_yesterday')) {
+        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    }
+    $trending_story_query = new WP_Query($trending_story_args);
+    if ($trending_story_query->have_posts()) :
+        while ($trending_story_query->have_posts()) :
+            $trending_story_query->the_post();
+            $trending_story_ID = get_the_ID();
+            $exclude_posts[] = $trending_story_ID;
+            $args['exclude_posts'][] = $trending_story_ID;
+        endwhile;
+        wp_reset_query();
+    endif;
+
+    $posts_per_page = 6;
+    $news_args = array(
+        'post_status' => 'publish',
+        'post_type' => array('post', 'snaps', 'dad'),
+        'ignore_sticky_posts' => 1,
+        'post__not_in' => $exclude_posts,
+        'posts_per_page' => $posts_per_page,
+    );
+    $news_query = new WP_Query($news_args);
+    $no_of_columns = 2;
+    if ($news_query->have_posts()) :
+        $count = 1;
+        $articles_arr = array();
+
+        while ($news_query->have_posts()) :
+            $news_query->the_post();
+            $post_id = get_the_ID();
+
+            $category = '';
+
+            if ('snaps' == $post->post_type) :
+                $category = 'GALLERY';
+            elseif ('dad' == $post->post_type) :
+                $categories = get_the_terms(get_the_ID(), 'dad-category');
+                if ($categories) :
+                    if ($categories[0] && 'Uncategorised' != $categories[0]->name) :
+                        $category = $categories[0]->name;
+                    elseif (isset($categories[1])) :
+                        $category = $categories[1]->name;
+                    else :
+                    endif; // If Uncategorised 
+                endif; // If there are Dad categories 
+            else :
+                $categories = get_the_category();
+                if ($categories) :
+                    if (isset($categories[0]) && 'Evergreen' != $categories[0]->cat_name) :
+                        if (0 == $categories[0]->parent) :
+                            $category = $categories[0]->cat_name;
+                        else : $parent_category = get_category($categories[0]->parent);
+                            $category = $parent_category->cat_name;
+                        endif;
+                    elseif (isset($categories[1])) :
+                        if (0 == $categories[1]->parent) :
+                            $category = $categories[1]->cat_name;
+                        else : $parent_category = get_category($categories[1]->parent);
+                            $category = $parent_category->cat_name;
+                        endif;
+                    endif; // If Evergreen 
+                endif; // If there are Dad categories 
+            endif; // If Photo Gallery 
+            
+            // Image
+            // Title
+            // Brand logo
+            // Brand Link
+            // Excerpt
+            // Link
+
+            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
+            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+
+            $articles_arr[] = [
+                'image' => $image,
+                'title' => get_the_title(),
+                'category' => $category,
+                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+                'brank_link' => 'https://thebrag.com',
+                'excerpt' => $excerpt,
+                'link' => get_the_permalink(),
+            ];
+            
+            $count++;
+        endwhile;
+    endif;
+
+    return $articles_arr;
+}
+
+function rest_get_latest_network()
 {
     global $post;
 
