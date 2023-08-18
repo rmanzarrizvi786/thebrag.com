@@ -30,6 +30,30 @@ function tbm_theme_options_rest_api_init()
         'permission_callback' => '__return_true',
     ));
 
+    register_rest_route('tbm', '/spotlight', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_most_spotlight',
+        'permission_callback' => '__return_true',
+    ));
+
+    register_rest_route('tbm', '/most-read', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_most_read',
+        'permission_callback' => '__return_true',
+    ));
+
+    register_rest_route('tbm', '/trending', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_trending',
+        'permission_callback' => '__return_true',
+    ));
+
+    register_rest_route('tbm', '/latest', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_latest',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/floating_dailymotion_playlist_id', array(
         'methods' => 'GET',
         'callback' => function () {
@@ -37,6 +61,300 @@ function tbm_theme_options_rest_api_init()
         },
         'permission_callback' => '__return_true',
     ));
+}
+
+function rest_get_most_spotlight()
+{
+    global $wpdb;
+
+    $articles_arr = array();
+    $spotlight_article_ids = $wpdb->get_results(
+        "SELECT post_id FROM ( 
+            SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+            ORDER BY `created_at` DESC LIMIT 10
+            ) AS temptable
+            ORDER BY RAND()
+            LIMIT 20"
+    );
+    if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
+        $spotlight_articles_args = [
+            'post_status' => 'publish',
+            // 'post_type' => array('post', 'country'),
+            'ignore_sticky_posts' => 1,
+            'posts_per_page' => 3,
+            'orderby'        => 'rand',
+            'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
+        ];
+        $spotlight_articles = new WP_Query($spotlight_articles_args);
+        if ($spotlight_articles->have_posts()) :
+
+            $category = '';
+            while ($spotlight_articles->have_posts()) :
+                $spotlight_articles->the_post();
+                $categories = get_the_category(get_the_ID());
+
+                if (isset($categories)) :
+                    foreach ($categories as $cat) :
+                        if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
+                            continue;
+                        else :
+                            $category = $cat->cat_name;
+                            break;
+                        endif; // If category name is Evergreen
+                    endforeach; // For Each Category
+                endif; // If there are categories for the post
+    
+                $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
+                $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+                $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+    
+                $articles_arr[] = [
+                    'image' => $image,
+                    'title' => get_the_title(),
+                    'category' => $category,
+                    'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+                    'brank_link' => 'https://thebrag.com',
+                    'excerpt' => $excerpt,
+                    'link' => get_the_permalink(),
+                ];
+            endwhile;
+            wp_reset_postdata();
+        endif; // If there are spotlight articles
+    endif;
+
+    return $articles_arr;
+}
+
+function rest_get_most_read()
+{
+    $articles_arr = array();
+    $trending_story_args = [
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+    ];
+    if (get_option('most_viewed_yesterday')) {
+        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    }
+    $trending_story_query = new WP_Query($trending_story_args);
+    if ($trending_story_query->have_posts()) :
+        while ($trending_story_query->have_posts()) :
+            $trending_story_query->the_post();
+            $trending_story_ID = get_the_ID();
+            $exclude_posts[] = $trending_story_ID;
+            $args['exclude_posts'][] = $trending_story_ID;
+        endwhile;
+        wp_reset_query();
+    endif;
+
+    if (!is_null($trending_story_ID) && $trending_story_ID != '') :
+        $trending_story = get_post($trending_story_ID);
+        if ($trending_story) :
+            $categories = get_the_category($trending_story);
+
+            $trending_story_image_id = get_post_thumbnail_id($trending_story->ID);
+            $trending_story_src = wp_get_attachment_image_src($trending_story_image_id, 'large');
+            $trending_story_alt_text = get_post_meta(get_post_thumbnail_id($trending_story->ID), '_wp_attachment_image_alt', true);
+            if ($trending_story_alt_text == '') {
+                $trending_story_alt_text = trim(strip_tags(get_the_title()));
+            }
+
+            $articles_arr[] = [
+                'image' => $trending_story_src[0],
+                'title' => $trending_story->post_title,
+                'category' => $categories[0]->name,
+                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+                'brank_link' => 'https://thebrag.com',
+                'excerpt' =>  $trending_story->trending_story_alt_text,
+                'link' => get_the_permalink(),
+            ];            
+        endif; // If Trending Story
+    endif;
+
+    return $articles_arr;
+}
+
+function rest_get_trending()
+{
+    global $wpdb;
+
+    $articles_arr = array();
+    $trending_story_args = [
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+    ];
+    if (get_option('most_viewed_yesterday')) {
+        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    }
+    $trending_story_query = new WP_Query($trending_story_args);
+    if ($trending_story_query->have_posts()) :
+        while ($trending_story_query->have_posts()) :
+            $trending_story_query->the_post();
+            $trending_story_ID = get_the_ID();
+            $exclude_posts[] = $trending_story_ID;
+            $args['exclude_posts'][] = $trending_story_ID;
+        endwhile;
+        wp_reset_query();
+    endif;
+
+    $exclude_posts_str = implode(',', $exclude_posts);
+    $trending_article_ids = $wpdb->get_results(
+        "SELECT post_id FROM (
+            SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+                ORDER BY `created_at` DESC LIMIT 10
+            ) AS temptable
+        WHERE post_id NOT IN ( {$exclude_posts_str} )
+        ORDER BY RAND()
+        LIMIT 2"
+    );
+    $trending_articles_args = [
+        'post_status' => 'publish',
+        'post_type' => array('any'),
+        'ignore_sticky_posts' => 1,
+        'posts_per_page' => 2,
+    ];
+    if ($trending_article_ids && count($trending_article_ids) > 0) :
+        $trending_articles_args['post__in'] = wp_list_pluck($trending_article_ids, 'post_id');
+    endif;
+    $trending_articles = new WP_Query($trending_articles_args);
+    if ($trending_articles->have_posts()) :
+
+        $category = '';
+
+        while ($trending_articles->have_posts()) :
+            $trending_articles->the_post();
+            $categories = get_the_category(get_the_ID());
+
+            if (isset($categories)) :
+                foreach ($categories as $cat) :
+                    if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
+                        continue;
+                    else :
+                        $category = $cat->cat_name;
+                        break;
+                    endif; // If category name is Evergreen
+                endforeach; // For Each Category
+            endif; // If there are categories for the post
+
+            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
+            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+
+            $articles_arr[] = [
+                'image' => $image,
+                'title' => get_the_title(),
+                'category' => $category,
+                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+                'brank_link' => 'https://thebrag.com',
+                'excerpt' => $excerpt,
+                'link' => get_the_permalink(),
+            ];
+
+        endwhile;
+        wp_reset_postdata();
+    endif;
+
+    return $articles_arr;
+}
+
+function rest_get_latest()
+{
+    global $post;
+
+    $trending_story_args = [
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+    ];
+    if (get_option('most_viewed_yesterday')) {
+        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    }
+    $trending_story_query = new WP_Query($trending_story_args);
+    if ($trending_story_query->have_posts()) :
+        while ($trending_story_query->have_posts()) :
+            $trending_story_query->the_post();
+            $trending_story_ID = get_the_ID();
+            $exclude_posts[] = $trending_story_ID;
+            $args['exclude_posts'][] = $trending_story_ID;
+        endwhile;
+        wp_reset_query();
+    endif;
+
+    $posts_per_page = 6;
+    $news_args = array(
+        'post_status' => 'publish',
+        'post_type' => array('post', 'snaps', 'dad'),
+        'ignore_sticky_posts' => 1,
+        'post__not_in' => $exclude_posts,
+        'posts_per_page' => $posts_per_page,
+    );
+    $news_query = new WP_Query($news_args);
+    $no_of_columns = 2;
+    if ($news_query->have_posts()) :
+        $count = 1;
+        $articles_arr = array();
+
+        while ($news_query->have_posts()) :
+            $news_query->the_post();
+            $post_id = get_the_ID();
+
+            $category = '';
+
+            if ('snaps' == $post->post_type) :
+                $category = 'GALLERY';
+            elseif ('dad' == $post->post_type) :
+                $categories = get_the_terms(get_the_ID(), 'dad-category');
+                if ($categories) :
+                    if ($categories[0] && 'Uncategorised' != $categories[0]->name) :
+                        $category = $categories[0]->name;
+                    elseif (isset($categories[1])) :
+                        $category = $categories[1]->name;
+                    else :
+                    endif; // If Uncategorised 
+                endif; // If there are Dad categories 
+            else :
+                $categories = get_the_category();
+                if ($categories) :
+                    if (isset($categories[0]) && 'Evergreen' != $categories[0]->cat_name) :
+                        if (0 == $categories[0]->parent) :
+                            $category = $categories[0]->cat_name;
+                        else : $parent_category = get_category($categories[0]->parent);
+                            $category = $parent_category->cat_name;
+                        endif;
+                    elseif (isset($categories[1])) :
+                        if (0 == $categories[1]->parent) :
+                            $category = $categories[1]->cat_name;
+                        else : $parent_category = get_category($categories[1]->parent);
+                            $category = $parent_category->cat_name;
+                        endif;
+                    endif; // If Evergreen 
+                endif; // If there are Dad categories 
+            endif; // If Photo Gallery 
+            
+            // Image
+            // Title
+            // Brand logo
+            // Brand Link
+            // Excerpt
+            // Link
+
+            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
+            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+
+            $articles_arr[] = [
+                'image' => $image,
+                'title' => get_the_title(),
+                'category' => $category,
+                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+                'brank_link' => 'https://thebrag.com',
+                'excerpt' => $excerpt,
+                'link' => get_the_permalink(),
+            ];
+            
+            $count++;
+        endwhile;
+    endif;
+
+    return $articles_arr;
 }
 
 function rest_get_votw()
