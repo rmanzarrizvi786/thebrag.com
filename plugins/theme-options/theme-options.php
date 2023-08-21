@@ -71,112 +71,56 @@ function tbm_theme_options_rest_api_init()
 
 function rest_get_most_spotlight()
 {
-    global $wpdb;
-
     $articles_arr = array();
-    $spotlight_article_ids = $wpdb->get_results(
-        "SELECT post_id FROM ( 
-            SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
-            ORDER BY `created_at` DESC LIMIT 10
-            ) AS temptable
-            ORDER BY RAND()
-            LIMIT 20"
-    );
-    if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
-        $spotlight_articles_args = [
-            'post_status' => 'publish',
-            // 'post_type' => array('post', 'country'),
-            'ignore_sticky_posts' => 1,
-            'posts_per_page' => 3,
-            'orderby'        => 'rand',
-            'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
-        ];
-        $spotlight_articles = new WP_Query($spotlight_articles_args);
-        if ($spotlight_articles->have_posts()) :
 
-            $category = '';
-            while ($spotlight_articles->have_posts()) :
-                $spotlight_articles->the_post();
-                $categories = get_the_category(get_the_ID());
+    if (get_option('spotlight_1_network')) {
+        $spotlight_1_network = json_decode(get_option('spotlight_1_network'));
 
-                if (isset($categories)) :
-                    foreach ($categories as $cat) :
-                        if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
-                            continue;
-                        else :
-                            $category = $cat->cat_name;
-                            break;
-                        endif; // If category name is Evergreen
-                    endforeach; // For Each Category
-                endif; // If there are categories for the post
-    
-                $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
-                $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-                $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
-    
-                $articles_arr[] = [
-                    'image' => $image,
-                    'title' => get_the_title(),
-                    'category' => $category,
-                    'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                    'brand_link' => 'https://thebrag.com',
-                    'excerpt' => $excerpt,
-                    'link' => get_the_permalink(),
-                ];
-            endwhile;
-            wp_reset_postdata();
-        endif; // If there are spotlight articles
-    endif;
+        $articles_arr[] = $spotlight_1_network;
+    }
 
-    return $articles_arr;
+    if (get_option('spotlight_2_network')) {
+        $spotlight_2_network = json_decode(get_option('spotlight_2_network'));
+
+        $articles_arr[] = $spotlight_2_network;
+    }
+
+    // needs fallback option
+
+    if (count($articles_arr) > 0) {
+        return $articles_arr;
+    }
+
+    return array([
+        'image' => '',
+        'title' => '',
+        'category' => '',
+        'brand_logo' => '',
+        'brand_link' => '',
+        'excerpt' =>  '',
+        'link' => ''
+    ]);
 }
 
 function rest_get_most_read()
 {
-    $articles_arr = array();
-    $trending_story_args = [
-        'post_status' => 'publish',
-        'posts_per_page' => 1,
-    ];
-    if (get_option('most_viewed_yesterday')) {
-        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    if (get_option('must_read_network')) {
+        $must_read_network = json_decode(get_option('must_read_network'));
+
+        return $must_read_network;
     }
-    $trending_story_query = new WP_Query($trending_story_args);
-    if ($trending_story_query->have_posts()) :
-        while ($trending_story_query->have_posts()) :
-            $trending_story_query->the_post();
-            $trending_story_ID = get_the_ID();
-            $exclude_posts[] = $trending_story_ID;
-            $args['exclude_posts'][] = $trending_story_ID;
-        endwhile;
-        wp_reset_query();
-    endif;
 
-    if (!is_null($trending_story_ID) && $trending_story_ID != '') :
-        $trending_story = get_post($trending_story_ID);
-        if ($trending_story) :
-            $categories = get_the_category($trending_story);
+    // needs fallback option
 
-            $trending_story_image_id = get_post_thumbnail_id($trending_story->ID);
-            $trending_story_src = wp_get_attachment_image_src($trending_story_image_id, 'large');
-            $trending_story_alt_text = get_post_meta(get_post_thumbnail_id($trending_story->ID), '_wp_attachment_image_alt', true);
-            if ($trending_story_alt_text == '') {
-                $trending_story_alt_text = trim(strip_tags(get_the_title()));
-            }
-
-            $articles_arr[] = [
-                'image' => $trending_story_src[0],
-                'title' => $trending_story->post_title,
-                'category' => $categories[0]->name,
-                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brand_link' => 'https://thebrag.com',
-                'excerpt' =>  $trending_story->trending_story_alt_text,
-                'link' => get_the_permalink(),
-            ];            
-        endif; // If Trending Story
-    endif;
-
-    return $articles_arr;
+    return [
+        'image' => '',
+        'title' => '',
+        'category' => '',
+        'brand_logo' => '',
+        'brand_link' => '',
+        'excerpt' =>  '',
+        'link' => ''
+    ];
 }
 
 function rest_get_trending()
@@ -214,87 +158,7 @@ function rest_get_trending()
         ];
     }
 
-    return $articles_arr;    
-    
-    // global $wpdb;
-
-    // $articles_arr = array();
-    // $trending_story_args = [
-    //     'post_status' => 'publish',
-    //     'posts_per_page' => 1,
-    // ];
-    // if (get_option('most_viewed_yesterday')) {
-    //     $trending_story_args['p'] = get_option('most_viewed_yesterday');
-    // }
-    // $trending_story_query = new WP_Query($trending_story_args);
-    // if ($trending_story_query->have_posts()) :
-    //     while ($trending_story_query->have_posts()) :
-    //         $trending_story_query->the_post();
-    //         $trending_story_ID = get_the_ID();
-    //         $exclude_posts[] = $trending_story_ID;
-    //         $args['exclude_posts'][] = $trending_story_ID;
-    //     endwhile;
-    //     wp_reset_query();
-    // endif;
-
-    // $exclude_posts_str = implode(',', $exclude_posts);
-    // $trending_article_ids = $wpdb->get_results(
-    //     "SELECT post_id FROM (
-    //         SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
-    //             ORDER BY `created_at` DESC LIMIT 10
-    //         ) AS temptable
-    //     WHERE post_id NOT IN ( {$exclude_posts_str} )
-    //     ORDER BY RAND()
-    //     LIMIT 2"
-    // );
-    // $trending_articles_args = [
-    //     'post_status' => 'publish',
-    //     'post_type' => array('any'),
-    //     'ignore_sticky_posts' => 1,
-    //     'posts_per_page' => 2,
-    // ];
-    // if ($trending_article_ids && count($trending_article_ids) > 0) :
-    //     $trending_articles_args['post__in'] = wp_list_pluck($trending_article_ids, 'post_id');
-    // endif;
-    // $trending_articles = new WP_Query($trending_articles_args);
-    // if ($trending_articles->have_posts()) :
-
-    //     $category = '';
-
-    //     while ($trending_articles->have_posts()) :
-    //         $trending_articles->the_post();
-    //         $categories = get_the_category(get_the_ID());
-
-    //         if (isset($categories)) :
-    //             foreach ($categories as $cat) :
-    //                 if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
-    //                     continue;
-    //                 else :
-    //                     $category = $cat->cat_name;
-    //                     break;
-    //                 endif; // If category name is Evergreen
-    //             endforeach; // For Each Category
-    //         endif; // If there are categories for the post
-
-    //         $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
-    //         $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-    //         $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
-
-    //         $articles_arr[] = [
-    //             'image' => $image,
-    //             'title' => get_the_title(),
-    //             'category' => $category,
-    //             'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-    //             'brand_link' => 'https://thebrag.com',
-    //             'excerpt' => $excerpt,
-    //             'link' => get_the_permalink(),
-    //         ];
-
-    //     endwhile;
-    //     wp_reset_postdata();
-    // endif;
-
-    // return $articles_arr;
+    return $articles_arr;
 }
 
 function rest_get_latest()
@@ -369,13 +233,6 @@ function rest_get_latest()
                     endif; // If Evergreen 
                 endif; // If there are Dad categories 
             endif; // If Photo Gallery 
-            
-            // Image
-            // Title
-            // Brand logo
-            // Brand Link
-            // Excerpt
-            // Link
 
             $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
             $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
@@ -398,105 +255,97 @@ function rest_get_latest()
     return $articles_arr;
 }
 
-function rest_get_latest_network()
-{
-    global $post;
+function rest_get_latest_network() {
+    $transient = get_transient('tbm_latest_network');
 
-    $trending_story_args = [
-        'post_status' => 'publish',
-        'posts_per_page' => 1,
-    ];
-    if (get_option('most_viewed_yesterday')) {
-        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    if ($transient) {
+        return json_decode($transient);
     }
-    $trending_story_query = new WP_Query($trending_story_args);
-    if ($trending_story_query->have_posts()) :
-        while ($trending_story_query->have_posts()) :
-            $trending_story_query->the_post();
-            $trending_story_ID = get_the_ID();
-            $exclude_posts[] = $trending_story_ID;
-            $args['exclude_posts'][] = $trending_story_ID;
-        endwhile;
-        wp_reset_query();
-    endif;
 
-    $posts_per_page = 6;
-    $news_args = array(
-        'post_status' => 'publish',
-        'post_type' => array('post', 'snaps', 'dad'),
-        'ignore_sticky_posts' => 1,
-        'post__not_in' => $exclude_posts,
-        'posts_per_page' => $posts_per_page,
-    );
-    $news_query = new WP_Query($news_args);
-    $no_of_columns = 2;
-    if ($news_query->have_posts()) :
-        $count = 1;
-        $articles_arr = array();
+    $rsau_resp = wp_remote_get('https://au.rollingstone.com/wp-json/wp/v2/posts?per_page=1');
+    $tonedeaf_resp = wp_remote_get('https://tonedeaf.thebrag.com/wp-json/wp/v2/posts?per_page=1');
+    $variety_resp = wp_remote_get('http://au.variety.com/wp-json/wp/v2/posts?per_page=1');
+    $tmn_resp = wp_remote_get('https://themusicnetwork.com/wp-json/wp/v2/posts?per_page=1');
 
-        while ($news_query->have_posts()) :
-            $news_query->the_post();
-            $post_id = get_the_ID();
+    if (is_array($rsau_resp) && !is_wp_error($rsau_resp)) {
+        $rsau = json_decode($rsau_resp['body']);
 
-            $category = '';
+        $url_parts = parse_url($rsau[0]->link);
 
-            if ('snaps' == $post->post_type) :
-                $category = 'GALLERY';
-            elseif ('dad' == $post->post_type) :
-                $categories = get_the_terms(get_the_ID(), 'dad-category');
-                if ($categories) :
-                    if ($categories[0] && 'Uncategorised' != $categories[0]->name) :
-                        $category = $categories[0]->name;
-                    elseif (isset($categories[1])) :
-                        $category = $categories[1]->name;
-                    else :
-                    endif; // If Uncategorised 
-                endif; // If there are Dad categories 
-            else :
-                $categories = get_the_category();
-                if ($categories) :
-                    if (isset($categories[0]) && 'Evergreen' != $categories[0]->cat_name) :
-                        if (0 == $categories[0]->parent) :
-                            $category = $categories[0]->cat_name;
-                        else : $parent_category = get_category($categories[0]->parent);
-                            $category = $parent_category->cat_name;
-                        endif;
-                    elseif (isset($categories[1])) :
-                        if (0 == $categories[1]->parent) :
-                            $category = $categories[1]->cat_name;
-                        else : $parent_category = get_category($categories[1]->parent);
-                            $category = $parent_category->cat_name;
-                        endif;
-                    endif; // If Evergreen 
-                endif; // If there are Dad categories 
-            endif; // If Photo Gallery 
-            
-            // Image
-            // Title
-            // Brand logo
-            // Brand Link
-            // Excerpt
-            // Link
+        $filename = str_replace('.com', '', $url_parts['host']);
+        $filename = str_replace('.thebrag', '', $filename );
 
-            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
-            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+        $articles_arr[] = [
+            'image' => $rsau[0]->yoast_head_json->og_image[0]->url,
+            'title' => $rsau[0]->title,
+            'category' => '',
+            'brand_logo' => 'https://images.thebrag.com/common/brands/Rolling-Stone-Australia-light.png',
+            'brand_link' => 'https://au.rollingstone.com',
+            'excerpt' => $rsau[0]->excerpt->rendered,
+            'link' => $rsau[0]->link,
+        ];
+    }
 
-            $articles_arr[] = [
-                'image' => $image,
-                'title' => get_the_title(),
-                'category' => $category,
-                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brand_link' => 'https://thebrag.com',
-                'excerpt' => $excerpt,
-                'link' => get_the_permalink(),
-            ];
-            
-            $count++;
-        endwhile;
-    endif;
+    if (is_array($tonedeaf_resp) && !is_wp_error($tonedeaf_resp)) {
+        $tonedeaf = json_decode($tonedeaf_resp['body']);
 
-    return $articles_arr;
+        $url_parts = parse_url($tonedeaf[0]->link);
+
+        $filename = str_replace('.com', '', $url_parts['host']);
+        $filename = str_replace('.thebrag', '', $filename );
+
+        $articles_arr[] = [
+            'image' => $tonedeaf[0]->yoast_head_json->og_image[0]->url,
+            'title' => $tonedeaf[0]->title,
+            'category' => '',
+            'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+            'brand_link' => 'https://tonedeaf.thebrag.com',
+            'excerpt' => $tonedeaf[0]->excerpt->rendered,
+            'link' => $tonedeaf[0]->link,
+        ];
+    }
+
+    if (is_array($variety_resp) && !is_wp_error($variety_resp)) {
+        $variety = json_decode($variety_resp['body']);
+
+        $url_parts = parse_url($variety[0]->link);
+
+        $filename = str_replace('.com', '', $url_parts['host']);
+        $filename = str_replace('.thebrag', '', $filename );
+
+        $articles_arr[] = [
+            'image' => $variety[0]->yoast_head_json->og_image[0]->url,
+            'title' => $variety[0]->title,
+            'category' => '',
+            'brand_logo' => 'https://images.thebrag.com/common/brands/Variety-Australia-light.svg',
+            'brand_link' => 'https://au.variety.com',
+            'excerpt' => $variety[0]->excerpt->rendered,
+            'link' => $variety[0]->link,
+        ];
+    }
+
+    if (is_array($tmn_resp) && !is_wp_error($tmn_resp)) {
+        $tmn = json_decode($tmn_resp['body']);
+
+        $url_parts = parse_url($tmn[0]->link);
+
+        $filename = str_replace('.com', '', $url_parts['host']);
+        $filename = str_replace('.thebrag', '', $filename );
+
+        $articles_arr[] = [
+            'image' => $tmn[0]->yoast_head_json->og_image[0]->url,
+            'title' => $tmn[0]->title,
+            'category' => '',
+            'brand_logo' => 'https://images.thebrag.com/common/brands/TMN-light.svg',
+            'brand_link' => 'https://themusicnetwork.com',
+            'excerpt' => $tmn[0]->excerpt->rendered,
+            'link' => $tmn[0]->link,
+        ];
+    }
+
+    set_transient('tbm_latest_network', json_encode($articles_arr), 60 * 5);
+
+    return  $articles_arr;
 }
 
 function rest_get_votw()
@@ -543,6 +392,49 @@ function rest_get_rotw()
     ];
 }
 
+function get_remote_data( $url )
+{
+    if ($url) :        
+        $sites_html = file_get_contents( $url );
+        
+        $html = new DOMDocument();
+        @$html->loadHTML($sites_html);
+    
+        $meta_og_title = $meta_og_img = $meta_og_description = null;
+    
+        foreach ($html->getElementsByTagName('meta') as $meta) {
+            if ($meta->getAttribute('property') == 'og:image') {
+                if (!isset($meta_og_img)) {
+                    $meta_og_img = $meta->getAttribute('content');
+                    $meta_og_img = str_ireplace('&#038;nologo=1', '', $meta_og_img);
+                    $meta_og_img = str_ireplace('&nologo=1', '', $meta_og_img);
+                    $meta_og_img = str_ireplace('/img-socl/?url=', '', substr($meta_og_img, strpos($meta_og_img, '/img-socl/?url=')));
+                }
+            } elseif ($meta->getAttribute('property') == 'og:title') {
+                if (!isset($meta_og_title)) {
+                    $meta_og_title = $meta->getAttribute('content');
+                }
+            } elseif ($meta->getAttribute('property') == 'og:description') {
+                if (!isset($meta_og_description)) {
+                    $meta_og_description = $meta->getAttribute('content');
+                }
+            }
+        }
+
+        return [
+            'title' => trim($meta_og_title),
+            'excerpt' => trim($meta_og_description),
+            'image' => trim($meta_og_img)
+        ];
+    endif;
+
+    return [
+        'title' => '',
+        'excerpt' => '',
+        'image' => ''
+    ];
+}
+
 function tbm_theme_options()
 {
     wp_enqueue_script('bs', get_template_directory_uri() . '/bs/js/bootstrap.bundle.min.js', array('jquery'), '20190424', true);
@@ -586,30 +478,91 @@ function tbm_theme_options()
             endif;
         endif; // force_most_viewed
 
+        if (isset($_POST['must_read_network'])) :
+                $article_url = $_POST['must_read_network'];
+                $article_remote_data = get_remote_data( $article_url );
+
+                $url_parts = parse_url($article_url);
+
+                $filename = str_replace('.com', '', $url_parts['host']);
+                $filename = str_replace('.thebrag', '', $filename );
+
+                $articles_arr = [
+                    'image' => $article_remote_data['image'],
+                    'title' => $article_remote_data['title'],
+                    'category' => '',
+                    'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".svg",
+                    'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                    'excerpt' => $article_remote_data['excerpt'],
+                    'link' => $article_url,
+                ];
+
+                update_option('must_read_network', json_encode($articles_arr));
+            else :
+                update_option('must_read_network', '');
+        endif; // mmust_read_network
+
+        if (isset($_POST['spotlight_1_network'])) :
+            $article_url = $_POST['spotlight_1_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".svg",
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $article_remote_data['excerpt'],
+                'link' => $article_url,
+            ];
+
+            update_option('spotlight_1_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_1_network', '');
+        endif; // spotlight_1_network
+
+        if (isset($_POST['spotlight_2_network'])) :
+            $article_url = $_POST['spotlight_2_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".svg",
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $article_remote_data['excerpt'],
+                'link' => $article_url,
+            ];
+
+            update_option('spotlight_2_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_2_network', '');
+        endif; // spotlight_2_network
 
         foreach ($_POST as $key => $value) :
             if (strpos($key, 'tbm_') !== false && $key != 'tbm_featured_infinite_ID') :
                 update_option($key, sanitize_text_field($value));
-            // $curl_metadata['data'][$key] = sanitize_text_field($value);
             endif;
         endforeach;
-
-        /* if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
-            curl_post('https://the-industry-observer.com.au/wp-json/api/v1/update_theme_options', 'POST', $curl_metadata);
-            curl_post('https://tone-deaf.com.au/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
-            curl_post('https://rs-au.localhost/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
-        } else {
-            curl_post('https://theindustryobserver.thebrag.com/wp-json/api/v1/update_theme_options', 'POST', $curl_metadata);
-            curl_post('https://dontboreus.thebrag.com/wp-json/api/v1/update_theme_options', 'POST', $curl_metadata);
-            curl_post('https://tonedeaf.thebrag.com/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
-            curl_post('https://au.rollingstone.com/wp-json/api/v1/update_theme_options/', 'POST', $curl_metadata);
-        } */
 
         echo '<div class="alert alert-success">Options have been saved!</div>';
     endif;
 ?>
     <h1 class="mt-3">Theme Options</h1>
-    <!-- <h4 class="p-4 h5" style="background: gold;">Updating VOTW will also update VOTW for sites in network. You can overwrite these settings for each site individually too from their respective Wordpress theme options page.</h4> -->
+    <div class="col-md-12">
+        <hr/>
+    </div>
     <form method="post" class="form">
         <div class="row">
             <div class="col-md-6">
@@ -642,25 +595,6 @@ function tbm_theme_options()
                         </div>
                     </div>
                 </div><!-- Video of the week -->
-
-                <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <h3>DailyMotion Player</h3>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>Player ID</label>
-                            <label class="reset">x</label>
-                            <input name="tbm_floating_dm_player_id" id="tbm_floating_dm_player_id" type="text" value="<?php echo get_option('tbm_floating_dm_player_id'); ?>" placeholder="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Playlist ID</label>
-                            <label class="reset">x</label>
-                            <input name="tbm_floating_dm_playlist_id" id="tbm_floating_dm_playlist_id" type="text" value="<?php echo get_option('tbm_floating_dm_playlist_id'); ?>" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="col-md-6">
@@ -679,6 +613,12 @@ function tbm_theme_options()
                             <label>Title</label>
                             <label class="reset">x</label>
                             <input name="tbm_featured_album_title" id="tbm_featured_album_title" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_title')); ?>" placeholder="" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Link</label>
+                            <label class="reset">x</label>
+                            <input name="tbm_featured_album_link" id="tbm_featured_album_link" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_link')); ?>" placeholder="" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -702,17 +642,73 @@ function tbm_theme_options()
                             ?>
                             <button id="btn-featured-album-image" type="button" class="button">Upload / Select from Library</button>
                         </div>
-
-                        <div class="form-group">
-                            <label>Link</label>
-                            <label class="reset">x</label>
-                            <input name="tbm_featured_album_link" id="tbm_featured_album_link" type="text" value="<?php echo stripslashes(get_option('tbm_featured_album_link')); ?>" placeholder="" class="form-control">
-                        </div>
                     </div>
                 </div>
             </div>
             <!-- Record of the week -->
-
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $must_read_network = json_decode(get_option('must_read_network')); ?>
+                            <input name="must_read_network" id="must_read_network" type="text" value="<?php echo !is_null($must_read_network) ?  $must_read_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div><!-- Force Trending on Home page -->
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 1 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_1_network = json_decode(get_option('spotlight_1_network')); ?>
+                            <input name="spotlight_1_network" id="spotlight_1_network" type="text" value="<?php echo !is_null($spotlight_1_network) ? $spotlight_1_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div><!-- Featured Article for Infinite Scroll ID -->
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 2 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_2_network = json_decode(get_option('spotlight_2_network')); ?>
+                            <input name="spotlight_2_network" id="spotlight_2_network" type="text" value="<?php echo !is_null($spotlight_2_network) ? $spotlight_2_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div><!-- Featured Article for Infinite Scroll ID -->
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Force Trending on Home page</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Post ID</label>
+                            <label class="reset">x</label>
+                            <input name="force_most_viewed" id="force_most_viewed" type="number" value="<?php echo stripslashes(get_option('force_most_viewed')); ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div><!-- Force Trending on Home page -->
+            </div>
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
@@ -726,27 +722,39 @@ function tbm_theme_options()
                         </div>
                     </div>
                 </div><!-- Featured Article for Infinite Scroll ID -->
-
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
-                        <h3>Force Trending on Home page</h3>
+                        <h3>DailyMotion Player</h3>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Post ID</label>
+                            <label>Player ID</label>
                             <label class="reset">x</label>
-                            <input name="force_most_viewed" id="force_most_viewed" type="number" value="<?php echo stripslashes(get_option('force_most_viewed')); ?>" placeholder="" class="form-control">
+                            <input name="tbm_floating_dm_player_id" id="tbm_floating_dm_player_id" type="text" value="<?php echo get_option('tbm_floating_dm_player_id'); ?>" placeholder="" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Playlist ID</label>
+                            <label class="reset">x</label>
+                            <input name="tbm_floating_dm_playlist_id" id="tbm_floating_dm_playlist_id" type="text" value="<?php echo get_option('tbm_floating_dm_playlist_id'); ?>" placeholder="" class="form-control">
                         </div>
                     </div>
-                </div><!-- Force Trending on Home page -->
-                <div class="col-12">
-                    <h3>GAM Ad Unit</h3>
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <h3>GAM Ad Unit</h3>
+                        </div>
+                    </div>
                     <div class="col-12">
                         <div class="form-group">
                             <label>ID</label>
-                            <label class="reset">x</label>
                             <input name="tbm_gam_ad_unit_id" id="tbm_gam_ad_unit_id" type="text" value="<?php echo get_option('tbm_gam_ad_unit_id'); ?>" placeholder="" class="form-control">
                         </div>
                     </div>
