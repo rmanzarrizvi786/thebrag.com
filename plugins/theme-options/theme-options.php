@@ -119,7 +119,7 @@ function rest_get_most_spotlight()
                     'title' => get_the_title(),
                     'category' => $category,
                     'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                    'brank_link' => 'https://thebrag.com',
+                    'brand_link' => 'https://thebrag.com',
                     'excerpt' => $excerpt,
                     'link' => get_the_permalink(),
                 ];
@@ -169,7 +169,7 @@ function rest_get_most_read()
                 'title' => $trending_story->post_title,
                 'category' => $categories[0]->name,
                 'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brank_link' => 'https://thebrag.com',
+                'brand_link' => 'https://thebrag.com',
                 'excerpt' =>  $trending_story->trending_story_alt_text,
                 'link' => get_the_permalink(),
             ];            
@@ -181,85 +181,120 @@ function rest_get_most_read()
 
 function rest_get_trending()
 {
-    global $wpdb;
-
     $articles_arr = array();
-    $trending_story_args = [
-        'post_status' => 'publish',
-        'posts_per_page' => 1,
-    ];
-    if (get_option('most_viewed_yesterday')) {
-        $trending_story_args['p'] = get_option('most_viewed_yesterday');
+
+    $tonedeaf_resp = wp_remote_get('https://tonedeaf.thebrag.com/wp-json/tbm/most-read');
+    $rsau_resp = wp_remote_get('https://au.rollingstone.com/wp-json/tbm/most-read');
+
+    if (is_array($rsau_resp) && !is_wp_error($rsau_resp)) {
+        $trending2 = json_decode($rsau_resp['body']);
+
+        $articles_arr[] = [
+            "image" => $trending2->image,
+            "title" => $trending2->title,
+            "category" => $trending2->category,
+            "brand_logo" => $trending2->brand_logo,
+            "brand_link" => $trending2->brand_link,
+            "excerpt" => $trending2->excerpt,
+            "link" => $trending2->link
+        ];
     }
-    $trending_story_query = new WP_Query($trending_story_args);
-    if ($trending_story_query->have_posts()) :
-        while ($trending_story_query->have_posts()) :
-            $trending_story_query->the_post();
-            $trending_story_ID = get_the_ID();
-            $exclude_posts[] = $trending_story_ID;
-            $args['exclude_posts'][] = $trending_story_ID;
-        endwhile;
-        wp_reset_query();
-    endif;
 
-    $exclude_posts_str = implode(',', $exclude_posts);
-    $trending_article_ids = $wpdb->get_results(
-        "SELECT post_id FROM (
-            SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
-                ORDER BY `created_at` DESC LIMIT 10
-            ) AS temptable
-        WHERE post_id NOT IN ( {$exclude_posts_str} )
-        ORDER BY RAND()
-        LIMIT 2"
-    );
-    $trending_articles_args = [
-        'post_status' => 'publish',
-        'post_type' => array('any'),
-        'ignore_sticky_posts' => 1,
-        'posts_per_page' => 2,
-    ];
-    if ($trending_article_ids && count($trending_article_ids) > 0) :
-        $trending_articles_args['post__in'] = wp_list_pluck($trending_article_ids, 'post_id');
-    endif;
-    $trending_articles = new WP_Query($trending_articles_args);
-    if ($trending_articles->have_posts()) :
+    if (is_array($tonedeaf_resp) && !is_wp_error($tonedeaf_resp)) {
+        $trending1 = json_decode($tonedeaf_resp['body']);
 
-        $category = '';
+        $articles_arr[] = [
+            "image" => $trending1->image,
+            "title" => $trending1->title,
+            "category" => $trending1->category,
+            "brand_logo" => $trending1->brand_logo,
+            "brand_link" => $trending1->brand_link,
+            "excerpt" => $trending1->excerpt,
+            "link" => $trending1->link
+        ];
+    }
 
-        while ($trending_articles->have_posts()) :
-            $trending_articles->the_post();
-            $categories = get_the_category(get_the_ID());
+    return $articles_arr;    
+    
+    // global $wpdb;
 
-            if (isset($categories)) :
-                foreach ($categories as $cat) :
-                    if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
-                        continue;
-                    else :
-                        $category = $cat->cat_name;
-                        break;
-                    endif; // If category name is Evergreen
-                endforeach; // For Each Category
-            endif; // If there are categories for the post
+    // $articles_arr = array();
+    // $trending_story_args = [
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => 1,
+    // ];
+    // if (get_option('most_viewed_yesterday')) {
+    //     $trending_story_args['p'] = get_option('most_viewed_yesterday');
+    // }
+    // $trending_story_query = new WP_Query($trending_story_args);
+    // if ($trending_story_query->have_posts()) :
+    //     while ($trending_story_query->have_posts()) :
+    //         $trending_story_query->the_post();
+    //         $trending_story_ID = get_the_ID();
+    //         $exclude_posts[] = $trending_story_ID;
+    //         $args['exclude_posts'][] = $trending_story_ID;
+    //     endwhile;
+    //     wp_reset_query();
+    // endif;
 
-            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
-            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-            $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+    // $exclude_posts_str = implode(',', $exclude_posts);
+    // $trending_article_ids = $wpdb->get_results(
+    //     "SELECT post_id FROM (
+    //         SELECT post_id FROM `{$wpdb->prefix}tbm_trending`
+    //             ORDER BY `created_at` DESC LIMIT 10
+    //         ) AS temptable
+    //     WHERE post_id NOT IN ( {$exclude_posts_str} )
+    //     ORDER BY RAND()
+    //     LIMIT 2"
+    // );
+    // $trending_articles_args = [
+    //     'post_status' => 'publish',
+    //     'post_type' => array('any'),
+    //     'ignore_sticky_posts' => 1,
+    //     'posts_per_page' => 2,
+    // ];
+    // if ($trending_article_ids && count($trending_article_ids) > 0) :
+    //     $trending_articles_args['post__in'] = wp_list_pluck($trending_article_ids, 'post_id');
+    // endif;
+    // $trending_articles = new WP_Query($trending_articles_args);
+    // if ($trending_articles->have_posts()) :
 
-            $articles_arr[] = [
-                'image' => $image,
-                'title' => get_the_title(),
-                'category' => $category,
-                'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brank_link' => 'https://thebrag.com',
-                'excerpt' => $excerpt,
-                'link' => get_the_permalink(),
-            ];
+    //     $category = '';
 
-        endwhile;
-        wp_reset_postdata();
-    endif;
+    //     while ($trending_articles->have_posts()) :
+    //         $trending_articles->the_post();
+    //         $categories = get_the_category(get_the_ID());
 
-    return $articles_arr;
+    //         if (isset($categories)) :
+    //             foreach ($categories as $cat) :
+    //                 if (in_array($cat->cat_name, ['Instagram Explore', 'Evergreen'])) :
+    //                     continue;
+    //                 else :
+    //                     $category = $cat->cat_name;
+    //                     break;
+    //                 endif; // If category name is Evergreen
+    //             endforeach; // For Each Category
+    //         endif; // If there are categories for the post
+
+    //         $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
+    //         $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
+    //         $excerpt = trim($metadesc) != '' ? $metadesc : string_limit_words(get_the_excerpt(), 25);
+
+    //         $articles_arr[] = [
+    //             'image' => $image,
+    //             'title' => get_the_title(),
+    //             'category' => $category,
+    //             'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
+    //             'brand_link' => 'https://thebrag.com',
+    //             'excerpt' => $excerpt,
+    //             'link' => get_the_permalink(),
+    //         ];
+
+    //     endwhile;
+    //     wp_reset_postdata();
+    // endif;
+
+    // return $articles_arr;
 }
 
 function rest_get_latest()
@@ -351,7 +386,7 @@ function rest_get_latest()
                 'title' => get_the_title(),
                 'category' => $category,
                 'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brank_link' => 'https://thebrag.com',
+                'brand_link' => 'https://thebrag.com',
                 'excerpt' => $excerpt,
                 'link' => get_the_permalink(),
             ];
@@ -452,7 +487,7 @@ function rest_get_latest_network()
                 'title' => get_the_title(),
                 'category' => $category,
                 'brand_logo' => 'https://images.thebrag.com/common/brands/The-Brag_combo-light.svg',
-                'brank_link' => 'https://thebrag.com',
+                'brand_link' => 'https://thebrag.com',
                 'excerpt' => $excerpt,
                 'link' => get_the_permalink(),
             ];
