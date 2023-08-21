@@ -190,13 +190,13 @@ function rest_get_trending()
         $trending2 = json_decode($rsau_resp['body']);
 
         $articles_arr[] = [
-            "image" => $trending2->image,
-            "title" => $trending2->title,
-            "category" => $trending2->category,
-            "brand_logo" => $trending2->brand_logo,
-            "brand_link" => $trending2->brand_link,
-            "excerpt" => $trending2->excerpt,
-            "link" => $trending2->link
+            "image" => $trending2[0]->image,
+            "title" => $trending2[0]->title,
+            "category" => $trending2[0]->category,
+            "brand_logo" => $trending2[0]->brand_logo,
+            "brand_link" => $trending2[0]->brand_link,
+            "excerpt" => $trending2[0]->excerpt,
+            "link" => $trending2[0]->link
         ];
     }
 
@@ -204,13 +204,13 @@ function rest_get_trending()
         $trending1 = json_decode($tonedeaf_resp['body']);
 
         $articles_arr[] = [
-            "image" => $trending1->image,
-            "title" => $trending1->title,
-            "category" => $trending1->category,
-            "brand_logo" => $trending1->brand_logo,
-            "brand_link" => $trending1->brand_link,
-            "excerpt" => $trending1->excerpt,
-            "link" => $trending1->link
+            "image" => $trending1[0]->image,
+            "title" => $trending1[0]->title,
+            "category" => $trending1[0]->category,
+            "brand_logo" => $trending1[0]->brand_logo,
+            "brand_link" => $trending1[0]->brand_link,
+            "excerpt" => $trending1[0]->excerpt,
+            "link" => $trending1[0]->link
         ];
     }
 
