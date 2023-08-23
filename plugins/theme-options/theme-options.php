@@ -277,7 +277,7 @@ function rest_get_latest_network() {
 
         $articles_arr[] = [
             'image' => $rsau[0]->yoast_head_json->og_image[0]->url,
-            'title' => $rsau[0]->title,
+            'title' => $rsau[0]->title->rendered,
             'category' => '',
             'brand_logo' => 'https://images.thebrag.com/common/brands/au.rollingstone.png',
             'brand_link' => 'https://au.rollingstone.com',
