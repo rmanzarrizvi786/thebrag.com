@@ -343,7 +343,7 @@ function rest_get_latest_network() {
         ];
     }
 
-    set_transient('tbm_latest_network', json_encode($articles_arr), 60 * 5);
+    set_transient('tbm_latest_network', json_encode($articles_arr), 300);
 
     return  $articles_arr;
 }
