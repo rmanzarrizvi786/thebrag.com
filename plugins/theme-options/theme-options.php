@@ -73,6 +73,12 @@ function rest_get_most_spotlight()
 {
     $articles_arr = array();
 
+    if (get_option('must_read_network')) {
+        $must_read_network = json_decode(get_option('must_read_network'));
+
+        $articles_arr[] = $must_read_network;
+    }
+
     if (get_option('spotlight_1_network')) {
         $spotlight_1_network = json_decode(get_option('spotlight_1_network'));
 
@@ -83,6 +89,18 @@ function rest_get_most_spotlight()
         $spotlight_2_network = json_decode(get_option('spotlight_2_network'));
 
         $articles_arr[] = $spotlight_2_network;
+    }
+
+    if (get_option('spotlight_3_network')) {
+        $spotlight_3_network = json_decode(get_option('spotlight_3_network'));
+
+        $articles_arr[] = $spotlight_3_network;
+    }
+
+    if (get_option('spotlight_4_network')) {
+        $spotlight_4_network = json_decode(get_option('spotlight_4_network'));
+
+        $articles_arr[] = $spotlight_4_network;
     }
 
     // needs fallback option
@@ -550,6 +568,54 @@ function tbm_theme_options()
             update_option('spotlight_2_network', '');
         endif; // spotlight_2_network
 
+        if (isset($_POST['spotlight_3_network'])) :
+            $article_url = $_POST['spotlight_3_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $article_remote_data['excerpt'],
+                'link' => $article_url,
+            ];
+
+            update_option('spotlight_3_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_3_network', '');
+        endif; // spotlight_3_network
+
+        if (isset($_POST['spotlight_4_network'])) :
+            $article_url = $_POST['spotlight_4_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $article_remote_data['excerpt'],
+                'link' => $article_url,
+            ];
+
+            update_option('spotlight_4_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_4_network', '');
+        endif; // spotlight_4_network
+
         foreach ($_POST as $key => $value) :
             if (strpos($key, 'tbm_') !== false && $key != 'tbm_featured_infinite_ID') :
                 update_option($key, sanitize_text_field($value));
@@ -652,7 +718,7 @@ function tbm_theme_options()
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
-                        <h3>Must Read (Network)</h3>
+                        <h3>Spotlight Main (Network)</h3>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
@@ -662,9 +728,7 @@ function tbm_theme_options()
                             <input name="must_read_network" id="must_read_network" type="text" value="<?php echo !is_null($must_read_network) ?  $must_read_network->link : ''; ?>" placeholder="" class="form-control">
                         </div>
                     </div>
-                </div><!-- Force Trending on Home page -->
-            </div>
-            <div class="col-md-6">
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <h3>Spotlight 1 (Network)</h3>
@@ -677,7 +741,7 @@ function tbm_theme_options()
                             <input name="spotlight_1_network" id="spotlight_1_network" type="text" value="<?php echo !is_null($spotlight_1_network) ? $spotlight_1_network->link : ''; ?>" placeholder="" class="form-control">
                         </div>
                     </div>
-                </div><!-- Featured Article for Infinite Scroll ID -->
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <h3>Spotlight 2 (Network)</h3>
@@ -690,7 +754,35 @@ function tbm_theme_options()
                             <input name="spotlight_2_network" id="spotlight_2_network" type="text" value="<?php echo !is_null($spotlight_2_network) ? $spotlight_2_network->link : ''; ?>" placeholder="" class="form-control">
                         </div>
                     </div>
-                </div><!-- Featured Article for Infinite Scroll ID -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 3 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_3_network = json_decode(get_option('spotlight_3_network')); ?>
+                            <input name="spotlight_3_network" id="spotlight_3_network" type="text" value="<?php echo !is_null($spotlight_3_network) ? $spotlight_3_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 4 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_4_network = json_decode(get_option('spotlight_4_network')); ?>
+                            <input name="spotlight_4_network" id="spotlight_4_network" type="text" value="<?php echo !is_null($spotlight_4_network) ? $spotlight_4_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12">
                 <hr/>
