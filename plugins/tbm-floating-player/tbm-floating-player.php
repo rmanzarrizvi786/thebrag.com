@@ -14,6 +14,7 @@ namespace TBM;
 class FloatingPlayer {
     protected $playerId;
     protected $playlistId;
+    protected $adId;
     protected $playerTitle;
 
     public function __construct() {
@@ -35,6 +36,9 @@ class FloatingPlayer {
         if (!$this->playlistId || '' == trim($this->playlistId)) {
             return;
         }
+
+        global $post;
+
         if (function_exists('get_field') && (get_field('paid_content', $post->id) || get_field('disable_ads_in_content'))) {
             return;
         }
