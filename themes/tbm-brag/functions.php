@@ -3026,7 +3026,7 @@ function tbm_ajax_load_next_post()
 {
     global $post;
 
-     if ('single-template-featured.php' == get_page_template_slug($post->ID)) :
+     if (!is_null($post) && 'single-template-featured.php' == get_page_template_slug($post->ID)) :
         wp_die();
     endif;
 
@@ -3046,7 +3046,7 @@ function tbm_ajax_load_next_post()
         $tbm_featured_infinite_ID = $tbm_featured_infinite_IDs[array_rand($tbm_featured_infinite_IDs)];
     endif;
 
-    if ($tbm_featured_infinite_ID && $_POST['id'] != $tbm_featured_infinite_ID && !in_array($tbm_featured_infinite_ID, $exclude_posts_array)) :
+    if (isset($tbm_featured_infinite_ID) && $_POST['id'] != $tbm_featured_infinite_ID && !in_array($tbm_featured_infinite_ID, $exclude_posts_array)) :
         $prevPost = get_post($tbm_featured_infinite_ID);
     else :
         $post = get_post($_POST['id']);
