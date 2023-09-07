@@ -3753,5 +3753,5 @@ function tbm_the_excerpt( $excerpt ) {
     $excerpt = str_replace( 'm*&i*&a ', 'M.I.A. ', $excerpt );
     $excerpt = str_replace( 'Dr*& ', 'Dr. ', $excerpt );
 
-    return $excerpt;
+    return $excerpt . '.';
 }

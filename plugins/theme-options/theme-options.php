@@ -255,7 +255,7 @@ function rest_get_latest()
 
             $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
             $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-            $excerpt = trim($metadesc) != '' ? $metadesc : tbm_the_excerpt(get_the_excerpt());
+            $excerpt = tbm_the_excerpt( $metadesc );
 
             $articles_arr[] = [
                 'image' => $image,
@@ -294,7 +294,7 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
-        $excerpt = trim($rsau[0]->excerpt->rendered) != '' ? $rsau[0]->excerpt->rendered : tbm_the_excerpt(get_the_excerpt());
+        $excerpt = tbm_the_excerpt( $rsau[0]->excerpt->rendered );
 
         $articles_arr[] = [
             'image' => $rsau[0]->yoast_head_json->og_image[0]->url,
@@ -315,7 +315,7 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
-        $excerpt = trim($tonedeaf[0]->excerpt->rendered) != '' ? $tonedeaf[0]->excerpt->rendered : tbm_the_excerpt(get_the_excerpt());
+        $excerpt = tbm_the_excerpt( $tonedeaf[0]->excerpt->rendered );
 
         $articles_arr[] = [
             'image' => $tonedeaf[0]->yoast_head_json->og_image[0]->url,
@@ -336,7 +336,7 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
-        $excerpt = trim($variety[0]->excerpt->rendered) != '' ? $variety[0]->excerpt->rendered : tbm_the_excerpt(get_the_excerpt());
+        $excerpt = tbm_the_excerpt( $variety[0]->excerpt->rendered );
 
         $articles_arr[] = [
             'image' => $variety[0]->yoast_head_json->og_image[0]->url,
@@ -357,7 +357,7 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
-        $excerpt = trim($tmn[0]->excerpt->rendered) != '' ? $tmn[0]->excerpt->rendered : tbm_the_excerpt(get_the_excerpt());
+        $excerpt = tbm_the_excerpt( $tmn[0]->excerpt->rendered );
 
         $articles_arr[] = [
             'image' => $tmn[0]->yoast_head_json->og_image[0]->url,
@@ -516,7 +516,7 @@ function tbm_theme_options()
                 $filename = str_replace('.com', '', $url_parts['host']);
                 $filename = str_replace('.thebrag', '', $filename );
 
-                $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : tbm_the_excerpt(get_the_excerpt());
+                $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
                 $articles_arr = [
                     'image' => $article_remote_data['image'],
@@ -524,7 +524,7 @@ function tbm_theme_options()
                     'category' => '',
                     'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                     'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                    'excerpt' =>$excerpt,
+                    'excerpt' => $excerpt,
                     'link' => $article_url,
                 ];
 
@@ -542,7 +542,7 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
-            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : tbm_the_excerpt(get_the_excerpt());
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
             $articles_arr = [
                 'image' => $article_remote_data['image'],
@@ -568,7 +568,7 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
-            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : tbm_the_excerpt(get_the_excerpt());
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
             $articles_arr = [
                 'image' => $article_remote_data['image'],
@@ -594,7 +594,7 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
-            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : tbm_the_excerpt(get_the_excerpt());
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
             $articles_arr = [
                 'image' => $article_remote_data['image'],
@@ -620,7 +620,7 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
-            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : tbm_the_excerpt(get_the_excerpt());
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
             $articles_arr = [
                 'image' => $article_remote_data['image'],
