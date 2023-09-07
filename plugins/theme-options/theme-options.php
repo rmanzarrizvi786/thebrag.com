@@ -447,6 +447,8 @@ function get_remote_data( $url )
             }
         }
 
+        
+
         return [
             'title' => trim($meta_og_title),
             'excerpt' => trim($meta_og_description),
@@ -513,13 +515,15 @@ function tbm_theme_options()
                 $filename = str_replace('.com', '', $url_parts['host']);
                 $filename = str_replace('.thebrag', '', $filename );
 
+                $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : string_limit_words(get_the_excerpt(), 25);
+
                 $articles_arr = [
                     'image' => $article_remote_data['image'],
                     'title' => $article_remote_data['title'],
                     'category' => '',
                     'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                     'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                    'excerpt' => $article_remote_data['excerpt'],
+                    'excerpt' =>$excerpt,
                     'link' => $article_url,
                 ];
 
@@ -537,13 +541,15 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
+            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : string_limit_words(get_the_excerpt(), 25);
+
             $articles_arr = [
                 'image' => $article_remote_data['image'],
                 'title' => $article_remote_data['title'],
                 'category' => '',
                 'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                 'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $article_remote_data['excerpt'],
+                'excerpt' => $excerpt,
                 'link' => $article_url,
             ];
 
@@ -561,13 +567,15 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
+            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : string_limit_words(get_the_excerpt(), 25);
+
             $articles_arr = [
                 'image' => $article_remote_data['image'],
                 'title' => $article_remote_data['title'],
                 'category' => '',
                 'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                 'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $article_remote_data['excerpt'],
+                'excerpt' => $excerpt,
                 'link' => $article_url,
             ];
 
@@ -585,13 +593,15 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
+            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : string_limit_words(get_the_excerpt(), 25);
+
             $articles_arr = [
                 'image' => $article_remote_data['image'],
                 'title' => $article_remote_data['title'],
                 'category' => '',
                 'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                 'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $article_remote_data['excerpt'],
+                'excerpt' => $excerpt,
                 'link' => $article_url,
             ];
 
@@ -609,13 +619,15 @@ function tbm_theme_options()
             $filename = str_replace('.com', '', $url_parts['host']);
             $filename = str_replace('.thebrag', '', $filename );
 
+            $excerpt = trim($article_remote_data['excerpt']) != '' ? $article_remote_data['excerpt'] : string_limit_words(get_the_excerpt(), 25);
+
             $articles_arr = [
                 'image' => $article_remote_data['image'],
                 'title' => $article_remote_data['title'],
                 'category' => '',
                 'brand_logo' => "https://images.thebrag.com/common/brands/" . $filename . ".png",
                 'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $article_remote_data['excerpt'],
+                'excerpt' => $excerpt,
                 'link' => $article_url,
             ];
 
