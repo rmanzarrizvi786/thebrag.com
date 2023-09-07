@@ -293,13 +293,15 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
+        $excerpt = trim($rsau[0]->excerpt->rendered) != '' ? $rsau[0]->excerpt->rendered : string_limit_words(get_the_excerpt(), 25);
+
         $articles_arr[] = [
             'image' => $rsau[0]->yoast_head_json->og_image[0]->url,
             'title' => $rsau[0]->title->rendered,
             'category' => '',
             'brand_logo' => 'https://images.thebrag.com/common/brands/au.rollingstone.png',
             'brand_link' => 'https://au.rollingstone.com',
-            'excerpt' => $rsau[0]->excerpt->rendered,
+            'excerpt' => $excerpt,
             'link' => $rsau[0]->link,
         ];
     }
@@ -312,13 +314,15 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
+        $excerpt = trim($tonedeaf[0]->excerpt->rendered) != '' ? $tonedeaf[0]->excerpt->rendered : string_limit_words(get_the_excerpt(), 25);
+
         $articles_arr[] = [
             'image' => $tonedeaf[0]->yoast_head_json->og_image[0]->url,
             'title' => $tonedeaf[0]->title,
             'category' => '',
             'brand_logo' => 'https://images.thebrag.com/common/brands/tonedeaf.png',
             'brand_link' => 'https://tonedeaf.thebrag.com',
-            'excerpt' => $tonedeaf[0]->excerpt->rendered,
+            'excerpt' => $excerpt,
             'link' => $tonedeaf[0]->link,
         ];
     }
@@ -331,13 +335,15 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
+        $excerpt = trim($variety[0]->excerpt->rendered) != '' ? $variety[0]->excerpt->rendered : string_limit_words(get_the_excerpt(), 25);
+
         $articles_arr[] = [
             'image' => $variety[0]->yoast_head_json->og_image[0]->url,
             'title' => $variety[0]->title,
             'category' => '',
             'brand_logo' => 'https://images.thebrag.com/common/brands/au.variety.png',
             'brand_link' => 'https://au.variety.com',
-            'excerpt' => $variety[0]->excerpt->rendered,
+            'excerpt' => $excerpt,
             'link' => $variety[0]->link,
         ];
     }
@@ -350,13 +356,15 @@ function rest_get_latest_network() {
         $filename = str_replace('.com', '', $url_parts['host']);
         $filename = str_replace('.thebrag', '', $filename );
 
+        $excerpt = trim($tmn[0]->excerpt->rendered) != '' ? $tmn[0]->excerpt->rendered : string_limit_words(get_the_excerpt(), 25);
+
         $articles_arr[] = [
             'image' => $tmn[0]->yoast_head_json->og_image[0]->url,
             'title' => $tmn[0]->title,
             'category' => '',
             'brand_logo' => 'https://images.thebrag.com/common/brands/themusicnetwork.png',
             'brand_link' => 'https://themusicnetwork.com',
-            'excerpt' => $tmn[0]->excerpt->rendered,
+            'excerpt' => $excerpt,
             'link' => $tmn[0]->link,
         ];
     }
