@@ -18,6 +18,12 @@ function tbm_theme_options_plugin_menu()
 
 function tbm_theme_options_rest_api_init()
 {
+    register_rest_route('tbm', '/spotlight', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_network_spotlight',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/votw', array(
         'methods' => 'GET',
         'callback' => 'rest_get_votw',
@@ -27,36 +33,6 @@ function tbm_theme_options_rest_api_init()
     register_rest_route('tbm', '/rotw', array(
         'methods' => 'GET',
         'callback' => 'rest_get_rotw',
-        'permission_callback' => '__return_true',
-    ));
-
-    register_rest_route('tbm', '/spotlight', array(
-        'methods' => 'GET',
-        'callback' => 'rest_get_most_spotlight',
-        'permission_callback' => '__return_true',
-    ));
-
-    register_rest_route('tbm', '/most-read', array(
-        'methods' => 'GET',
-        'callback' => 'rest_get_most_read',
-        'permission_callback' => '__return_true',
-    ));
-
-    register_rest_route('tbm', '/trending', array(
-        'methods' => 'GET',
-        'callback' => 'rest_get_trending',
-        'permission_callback' => '__return_true',
-    ));
-
-    register_rest_route('tbm', '/latest', array(
-        'methods' => 'GET',
-        'callback' => 'rest_get_latest',
-        'permission_callback' => '__return_true',
-    ));
-
-    register_rest_route('tbm', '/latest-network', array(
-        'methods' => 'GET',
-        'callback' => 'rest_get_latest_network',
         'permission_callback' => '__return_true',
     ));
 
@@ -70,15 +46,9 @@ function tbm_theme_options_rest_api_init()
 }
 
 
-function rest_get_most_spotlight()
+function rest_get_network_spotlight()
 {
     $articles_arr = array();
-
-    if (get_option('must_read_network')) {
-        $must_read_network = json_decode(get_option('must_read_network'));
-
-        $articles_arr[] = $must_read_network;
-    }
 
     if (get_option('spotlight_1_network')) {
         $spotlight_1_network = json_decode(get_option('spotlight_1_network'));
@@ -104,6 +74,18 @@ function rest_get_most_spotlight()
         $articles_arr[] = $spotlight_4_network;
     }
 
+    if (get_option('spotlight_5_network')) {
+        $spotlight_4_network = json_decode(get_option('spotlight_5_network'));
+
+        $articles_arr[] = $spotlight_4_network;
+    }
+
+    if (get_option('spotlight_6_network')) {
+        $spotlight_4_network = json_decode(get_option('spotlight_6_network'));
+
+        $articles_arr[] = $spotlight_4_network;
+    }
+
     // needs fallback option
 
     if (count($articles_arr) > 0) {
@@ -120,268 +102,6 @@ function rest_get_most_spotlight()
         'excerpt' =>  '',
         'link' => ''
     ]);
-}
-
-function rest_get_most_read()
-{
-    if (get_option('must_read_network')) {
-        $must_read_network = json_decode(get_option('must_read_network'));
-
-        return $must_read_network;
-    }
-
-    // needs fallback option
-
-    return [
-        'image' => '',
-        'title' => '',
-        'category' => '',
-        'brand_logo_light' => '',
-        'brand_logo_dark' => '',
-        'brand_link' => '',
-        'excerpt' =>  '',
-        'link' => ''
-    ];
-}
-
-function rest_get_trending()
-{
-    $articles_arr = array();
-
-    $tonedeaf_resp = wp_remote_get('https://tonedeaf.thebrag.com/wp-json/tbm/most-read');
-    $rsau_resp = wp_remote_get('https://au.rollingstone.com/wp-json/tbm/most-read');
-
-    if (is_array($rsau_resp) && !is_wp_error($rsau_resp)) {
-        $trending2 = json_decode($rsau_resp['body']);
-
-        $articles_arr[] = [
-            "image" => $trending2[0]->image,
-            "title" => $trending2[0]->title,
-            "category" => $trending2[0]->category,
-            "brand_logo_light" => $trending2[0]->brand_logo_light,
-            "brand_logo_dark" => $trending2[0]->brand_logo_dark,
-            "brand_link" => $trending2[0]->brand_link,
-            "excerpt" => $trending2[0]->excerpt,
-            "link" => $trending2[0]->link
-        ];
-    }
-
-    if (is_array($tonedeaf_resp) && !is_wp_error($tonedeaf_resp)) {
-        $trending1 = json_decode($tonedeaf_resp['body']);
-
-        $articles_arr[] = [
-            "image" => $trending1[0]->image,
-            "title" => $trending1[0]->title,
-            "category" => $trending1[0]->category,
-            "brand_logo_light" => $trending1[0]->brand_logo_light,
-            "brand_logo_dark" => $trending1[0]->brand_logo_dark,
-            "brand_link" => $trending1[0]->brand_link,
-            "excerpt" => $trending1[0]->excerpt,
-            "link" => $trending1[0]->link
-        ];
-    }
-
-    return $articles_arr;
-}
-
-function rest_get_latest()
-{
-    global $post;
-
-    $trending_story_args = [
-        'post_status' => 'publish',
-        'posts_per_page' => 1,
-    ];
-    if (get_option('most_viewed_yesterday')) {
-        $trending_story_args['p'] = get_option('most_viewed_yesterday');
-    }
-    $trending_story_query = new WP_Query($trending_story_args);
-    if ($trending_story_query->have_posts()) :
-        while ($trending_story_query->have_posts()) :
-            $trending_story_query->the_post();
-            $trending_story_ID = get_the_ID();
-            $exclude_posts[] = $trending_story_ID;
-            $args['exclude_posts'][] = $trending_story_ID;
-        endwhile;
-        wp_reset_query();
-    endif;
-
-    $posts_per_page = 5;
-    $news_args = array(
-        'post_status' => 'publish',
-        'post_type' => array('post', 'snaps', 'dad'),
-        'ignore_sticky_posts' => 1,
-        'post__not_in' => $exclude_posts,
-        'posts_per_page' => $posts_per_page,
-    );
-    $news_query = new WP_Query($news_args);
-    $no_of_columns = 2;
-    if ($news_query->have_posts()) :
-        $count = 1;
-        $articles_arr = array();
-
-        while ($news_query->have_posts()) :
-            $news_query->the_post();
-            $post_id = get_the_ID();
-
-            $category = '';
-
-            if ('snaps' == $post->post_type) :
-                $category = 'GALLERY';
-            elseif ('dad' == $post->post_type) :
-                $categories = get_the_terms(get_the_ID(), 'dad-category');
-                if ($categories) :
-                    if ($categories[0] && 'Uncategorised' != $categories[0]->name) :
-                        $category = $categories[0]->name;
-                    elseif (isset($categories[1])) :
-                        $category = $categories[1]->name;
-                    else :
-                    endif; // If Uncategorised 
-                endif; // If there are Dad categories 
-            else :
-                $categories = get_the_category();
-                if ($categories) :
-                    if (isset($categories[0]) && 'Evergreen' != $categories[0]->cat_name) :
-                        if (0 == $categories[0]->parent) :
-                            $category = $categories[0]->cat_name;
-                        else : $parent_category = get_category($categories[0]->parent);
-                            $category = $parent_category->cat_name;
-                        endif;
-                    elseif (isset($categories[1])) :
-                        if (0 == $categories[1]->parent) :
-                            $category = $categories[1]->cat_name;
-                        else : $parent_category = get_category($categories[1]->parent);
-                            $category = $parent_category->cat_name;
-                        endif;
-                    endif; // If Evergreen 
-                endif; // If there are Dad categories 
-            endif; // If Photo Gallery 
-
-            $image = '' !== get_the_post_thumbnail() ? get_the_post_thumbnail_url() : '';
-            $metadesc = get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true);
-            $excerpt = tbm_the_excerpt( $metadesc );
-
-            $articles_arr[] = [
-                'image' => $image,
-                'title' => get_the_title(),
-                'category' => $category,
-                'brand_logo_light' => 'https://images.thebrag.com/common/brands/202309/thebrag-light.png',
-                'brand_logo_dark' => 'https://images.thebrag.com/common/brands/202309/thebrag-dark.png',
-                'brand_link' => 'https://thebrag.com',
-                'excerpt' => $excerpt,
-                'link' => get_the_permalink(),
-            ];
-            
-            $count++;
-        endwhile;
-    endif;
-
-    return $articles_arr;
-}
-
-function rest_get_latest_network() {
-    $transient = get_transient('tbm_latest_network');
-
-    if ($transient) {
-        return json_decode($transient);
-    }
-
-    $rsau_resp = wp_remote_get('https://au.rollingstone.com/wp-json/wp/v2/posts?per_page=1');
-    $tonedeaf_resp = wp_remote_get('https://tonedeaf.thebrag.com/wp-json/wp/v2/posts?per_page=1');
-    $variety_resp = wp_remote_get('http://au.variety.com/wp-json/wp/v2/posts?per_page=1');
-    $tmn_resp = wp_remote_get('https://themusicnetwork.com/wp-json/wp/v2/posts?per_page=1');
-
-    if (is_array($rsau_resp) && !is_wp_error($rsau_resp)) {
-        $rsau = json_decode($rsau_resp['body']);
-
-        $url_parts = parse_url($rsau[0]->link);
-
-        $filename = str_replace('.com', '', $url_parts['host']);
-        $filename = str_replace('.thebrag', '', $filename );
-
-        $excerpt = tbm_the_excerpt( $rsau[0]->excerpt->rendered );
-
-        $articles_arr[] = [
-            'image' => $rsau[0]->yoast_head_json->og_image[0]->url,
-            'title' => $rsau[0]->title->rendered,
-            'category' => '',
-            'brand_logo_light' => 'https://images.thebrag.com/common/brands/202309/au.rollingstone-light.png',
-            'brand_logo_dark' => 'https://images.thebrag.com/common/brands/202309/au.rollingstone-dark.png',
-            'brand_link' => 'https://au.rollingstone.com',
-            'excerpt' => $excerpt,
-            'link' => $rsau[0]->link,
-        ];
-    }
-
-    if (is_array($tonedeaf_resp) && !is_wp_error($tonedeaf_resp)) {
-        $tonedeaf = json_decode($tonedeaf_resp['body']);
-
-        $url_parts = parse_url($tonedeaf[0]->link);
-
-        $filename = str_replace('.com', '', $url_parts['host']);
-        $filename = str_replace('.thebrag', '', $filename );
-
-        $excerpt = tbm_the_excerpt( $tonedeaf[0]->excerpt->rendered );
-
-        $articles_arr[] = [
-            'image' => $tonedeaf[0]->yoast_head_json->og_image[0]->url,
-            'title' => $tonedeaf[0]->title,
-            'category' => '',
-            'brand_logo_light' => 'https://images.thebrag.com/common/brands/202309/tonedeaf-light.png',
-            'brand_logo_dark' => 'https://images.thebrag.com/common/brands/202309/tonedeaf-dark.png',
-            'brand_link' => 'https://tonedeaf.thebrag.com',
-            'excerpt' => $excerpt,
-            'link' => $tonedeaf[0]->link,
-        ];
-    }
-
-    if (is_array($variety_resp) && !is_wp_error($variety_resp)) {
-        $variety = json_decode($variety_resp['body']);
-
-        $url_parts = parse_url($variety[0]->link);
-
-        $filename = str_replace('.com', '', $url_parts['host']);
-        $filename = str_replace('.thebrag', '', $filename );
-
-        $excerpt = tbm_the_excerpt( $variety[0]->excerpt->rendered );
-
-        $articles_arr[] = [
-            'image' => $variety[0]->yoast_head_json->og_image[0]->url,
-            'title' => $variety[0]->title,
-            'category' => '',
-            'brand_logo_light' => 'https://images.thebrag.com/common/brands/202309/au.variety-light.png',
-            'brand_logo_dark' => 'https://images.thebrag.com/common/brands/202309/au.variety-dark.png',
-            'brand_link' => 'https://au.variety.com',
-            'excerpt' => $excerpt,
-            'link' => $variety[0]->link,
-        ];
-    }
-
-    if (is_array($tmn_resp) && !is_wp_error($tmn_resp)) {
-        $tmn = json_decode($tmn_resp['body']);
-
-        $url_parts = parse_url($tmn[0]->link);
-
-        $filename = str_replace('.com', '', $url_parts['host']);
-        $filename = str_replace('.thebrag', '', $filename );
-
-        $excerpt = tbm_the_excerpt( $tmn[0]->excerpt->rendered );
-
-        $articles_arr[] = [
-            'image' => $tmn[0]->yoast_head_json->og_image[0]->url,
-            'title' => $tmn[0]->title,
-            'category' => '',
-            'brand_logo_light' => 'https://images.thebrag.com/common/brands/202309/themusicnetwork-light.png',
-            'brand_logo_dark' => 'https://images.thebrag.com/common/brands/202309/themusicnetwork-dark.png',
-            'brand_link' => 'https://themusicnetwork.com',
-            'excerpt' => $excerpt,
-            'link' => $tmn[0]->link,
-        ];
-    }
-
-    set_transient('tbm_latest_network', json_encode($articles_arr), 300);
-
-    return  $articles_arr;
 }
 
 function rest_get_votw()
@@ -515,44 +235,6 @@ function tbm_theme_options()
                 update_option('force_most_viewed', '');
             endif;
         endif; // force_most_viewed
-
-        if (isset($_POST['must_read_network'])) :
-                $article_url = $_POST['must_read_network'];
-                $article_remote_data = get_remote_data( $article_url );
-
-                $url_parts = parse_url($article_url);
-
-                $filename = str_replace('.com', '', $url_parts['host']);
-                $filename = str_replace('.thebrag', '', $filename );
-
-                $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-                $height = 'h-5';
-
-                if( $filename == 'hypebeast' ) {
-                    $height = 'h-3';
-                }
-
-                if( $filename == 'lifewithoutandy' ) {
-                    $height = 'h-6';
-                }
-
-                $articles_arr = [
-                    'image' => $article_remote_data['image'],
-                    'title' => $article_remote_data['title'],
-                    'category' => '',
-                    'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                    'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                    'brand_logo_height' => $height,
-                    'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                    'excerpt' => $excerpt,
-                    'link' => $article_url,
-                ];
-
-                update_option('must_read_network', json_encode($articles_arr));
-            else :
-                update_option('must_read_network', '');
-        endif; // mmust_read_network
 
         if (isset($_POST['spotlight_1_network'])) :
             $article_url = $_POST['spotlight_1_network'];
@@ -706,6 +388,80 @@ function tbm_theme_options()
             update_option('spotlight_4_network', '');
         endif; // spotlight_4_network
 
+        if (isset($_POST['spotlight_5_network'])) :
+            $article_url = $_POST['spotlight_5_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
+
+            $height = 'h-5';
+
+            if( $filename == 'hypebeast' ) {
+                $height = 'h-3';
+            }
+
+            if( $filename == 'lifewithoutandy' ) {
+                $height = 'h-6';
+            }
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
+                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
+                'brand_logo_height' => $height,
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $excerpt,
+                'link' => $article_url,
+            ];
+            update_option('spotlight_5_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_5_network', '');
+        endif; // spotlight_5_network
+
+        if (isset($_POST['spotlight_6_network'])) :
+            $article_url = $_POST['spotlight_6_network'];
+            $article_remote_data = get_remote_data( $article_url );
+
+            $url_parts = parse_url($article_url);
+
+            $filename = str_replace('.com', '', $url_parts['host']);
+            $filename = str_replace('.thebrag', '', $filename );
+
+            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
+
+            $height = 'h-5';
+
+            if( $filename == 'hypebeast' ) {
+                $height = 'h-3';
+            }
+
+            if( $filename == 'lifewithoutandy' ) {
+                $height = 'h-6';
+            }
+
+            $articles_arr = [
+                'image' => $article_remote_data['image'],
+                'title' => $article_remote_data['title'],
+                'category' => '',
+                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
+                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
+                'brand_logo_height' => $height,
+                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+                'excerpt' => $excerpt,
+                'link' => $article_url,
+            ];
+            update_option('spotlight_6_network', json_encode($articles_arr));
+        else :
+            update_option('spotlight_6_network', '');
+        endif; // spotlight_6_network
+
         foreach ($_POST as $key => $value) :
             if (strpos($key, 'tbm_') !== false && $key != 'tbm_featured_infinite_ID') :
                 update_option($key, sanitize_text_field($value));
@@ -808,19 +564,6 @@ function tbm_theme_options()
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
-                        <h3>Spotlight Main (Network)</h3>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>URL</label>
-                            <label class="reset">x</label>
-                            <?php $must_read_network = json_decode(get_option('must_read_network')); ?>
-                            <input name="must_read_network" id="must_read_network" type="text" value="<?php echo !is_null($must_read_network) ?  $must_read_network->link : ''; ?>" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
                         <h3>Spotlight 1 (Network)</h3>
                     </div>
                     <div class="col-12">
@@ -832,21 +575,6 @@ function tbm_theme_options()
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <h3>Spotlight 2 (Network)</h3>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>URL</label>
-                            <label class="reset">x</label>
-                            <?php $spotlight_2_network = json_decode(get_option('spotlight_2_network')); ?>
-                            <input name="spotlight_2_network" id="spotlight_2_network" type="text" value="<?php echo !is_null($spotlight_2_network) ? $spotlight_2_network->link : ''; ?>" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
                         <h3>Spotlight 3 (Network)</h3>
@@ -862,6 +590,34 @@ function tbm_theme_options()
                 </div>
                 <div class="row">
                     <div class="col-12">
+                        <h3>Spotlight 5 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_5_network = json_decode(get_option('spotlight_5_network')); ?>
+                            <input name="spotlight_5_network" id="spotlight_5_network" type="text" value="<?php echo !is_null($spotlight_5_network) ? $spotlight_5_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 2 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_2_network = json_decode(get_option('spotlight_2_network')); ?>
+                            <input name="spotlight_2_network" id="spotlight_2_network" type="text" value="<?php echo !is_null($spotlight_2_network) ? $spotlight_2_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
                         <h3>Spotlight 4 (Network)</h3>
                     </div>
                     <div class="col-12">
@@ -870,6 +626,19 @@ function tbm_theme_options()
                             <label class="reset">x</label>
                             <?php $spotlight_4_network = json_decode(get_option('spotlight_4_network')); ?>
                             <input name="spotlight_4_network" id="spotlight_4_network" type="text" value="<?php echo !is_null($spotlight_4_network) ? $spotlight_4_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Spotlight 6 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $spotlight_6_network = json_decode(get_option('spotlight_6_network')); ?>
+                            <input name="spotlight_6_network" id="spotlight_6_network" type="text" value="<?php echo !is_null($spotlight_6_network) ? $spotlight_6_network->link : ''; ?>" placeholder="" class="form-control">
                         </div>
                     </div>
                 </div>
