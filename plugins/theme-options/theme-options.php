@@ -527,12 +527,23 @@ function tbm_theme_options()
 
                 $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
+                $height = 'h-5';
+
+                if( $filename == 'hypebeast' ) {
+                    $height = 'h3';
+                }
+
+                if( $filename == 'lifewithoutandy' ) {
+                    $height = 'h-6';
+                }
+
                 $articles_arr = [
                     'image' => $article_remote_data['image'],
                     'title' => $article_remote_data['title'],
                     'category' => '',
                     'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
                     'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
+                    'brand_logo_height' => $height,
                     'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
                     'excerpt' => $excerpt,
                     'link' => $article_url,
