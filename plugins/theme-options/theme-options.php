@@ -203,7 +203,7 @@ function tbm_create_spotlight_articles( $article_url ) {
 
     $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
-    $height = 'h-5';
+    $height = '1.25rem';
 
     if( $filename == 'hypebeast' ) {
         $height = '0.75rem';
