@@ -202,7 +202,7 @@ function rest_get_latest()
         wp_reset_query();
     endif;
 
-    $posts_per_page = 6;
+    $posts_per_page = 5;
     $news_args = array(
         'post_status' => 'publish',
         'post_type' => array('post', 'snaps', 'dad'),
