@@ -3743,9 +3743,12 @@ function tbm_the_excerpt( $excerpt ) {
 
     $excerpt = str_replace( 'Dr. ', 'Dr*& ', $excerpt );
 
+    $excerpt = explode('// ', $excerpt);
+    $excerpt = count( $excerpt ) > 1 ? $excerpt[1] : $excerpt[0];
     $excerpt = explode('.', $excerpt);
     $excerpt = explode('!', $excerpt[0]);
     $excerpt = explode('?', $excerpt[0]);
+    $excerpt = explode('…', $excerpt[0]);
 
     $excerpt = str_replace( 'St*& ', 'St. ', $excerpt[0] );
     $excerpt = str_replace( 'aka*& ', 'aka. ', $excerpt );
