@@ -271,6 +271,8 @@ function tbm_theme_options()
             endif;
         endif; // force_most_viewed
 
+        // Network Spotlight Articles
+
         if (isset($_POST['spotlight_1_network'])) :
             $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_1_network'] );
 
@@ -318,6 +320,56 @@ function tbm_theme_options()
         else :
             update_option('spotlight_6_network', '');
         endif; // spotlight_6_network
+
+        // Network Must Read
+
+        if (isset($_POST['mustread_1_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_1_network'] );
+
+            update_option('mustread_1_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_1_network', '');
+        endif; // mustread_1_network
+
+        if (isset($_POST['mustread_2_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_2_network'] );
+
+            update_option('mustread_2_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_2_network', '');
+        endif; // mustread_2_network
+
+        if (isset($_POST['mustread_3_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_3_network'] );
+
+            update_option('mustread_3_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_3_network', '');
+        endif; // mustread_3_network
+
+        if (isset($_POST['mustread_4_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_4_network'] );
+
+            update_option('mustread_4_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_4_network', '');
+        endif; // mustread_4_network
+
+        if (isset($_POST['mustread_5_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_5_network'] );
+
+            update_option('mustread_5_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_5_network', '');
+        endif; // mustread_5_network
+
+        if (isset($_POST['mustread_6_network'])) :
+            $articles_arr = tbm_create_spotlight_articles( $_POST['mustread_6_network'] );
+
+            update_option('mustread_6_network', json_encode($articles_arr));
+        else :
+            update_option('mustread_6_network', '');
+        endif; // mustread_6_network        
 
         foreach ($_POST as $key => $value) :
             if (strpos($key, 'tbm_') !== false && $key != 'tbm_featured_infinite_ID') :
@@ -418,6 +470,7 @@ function tbm_theme_options()
             <div class="col-md-12">
                 <hr/>
             </div>
+            <!-- Spotlight -->
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-12">
@@ -496,6 +549,92 @@ function tbm_theme_options()
                             <label class="reset">x</label>
                             <?php $spotlight_6_network = json_decode(get_option('spotlight_6_network')); ?>
                             <input name="spotlight_6_network" id="spotlight_6_network" type="text" value="<?php echo !is_null($spotlight_6_network) ? $spotlight_6_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <!-- Must Read -->
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 1 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_1_network = json_decode(get_option('mustread_1_network')); ?>
+                            <input name="mustread_1_network" id="mustread_1_network" type="text" value="<?php echo !is_null($mustread_1_network) ? $mustread_1_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 3 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_3_network = json_decode(get_option('mustread_3_network')); ?>
+                            <input name="mustread_3_network" id="mustread_3_network" type="text" value="<?php echo !is_null($mustread_3_network) ? $mustread_3_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 5 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_5_network = json_decode(get_option('mustread_5_network')); ?>
+                            <input name="mustread_5_network" id="mustread_5_network" type="text" value="<?php echo !is_null($mustread_5_network) ? $mustread_5_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 2 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_2_network = json_decode(get_option('mustread_2_network')); ?>
+                            <input name="mustread_2_network" id="mustread_2_network" type="text" value="<?php echo !is_null($mustread_2_network) ? $mustread_2_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 4 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_4_network = json_decode(get_option('mustread_4_network')); ?>
+                            <input name="mustread_4_network" id="mustread_4_network" type="text" value="<?php echo !is_null($mustread_4_network) ? $mustread_4_network->link : ''; ?>" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Must Read 6 (Network)</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>URL</label>
+                            <label class="reset">x</label>
+                            <?php $mustread_6_network = json_decode(get_option('mustread_6_network')); ?>
+                            <input name="mustread_6_network" id="mustread_6_network" type="text" value="<?php echo !is_null($mustread_6_network) ? $mustread_6_network->link : ''; ?>" placeholder="" class="form-control">
                         </div>
                     </div>
                 </div>
