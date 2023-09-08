@@ -24,6 +24,12 @@ function tbm_theme_options_rest_api_init()
         'permission_callback' => '__return_true',
     ));
 
+    register_rest_route('tbm', '/mustread', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_network_mustread',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/votw', array(
         'methods' => 'GET',
         'callback' => 'rest_get_votw',
@@ -84,6 +90,64 @@ function rest_get_network_spotlight()
         $spotlight_6_network = json_decode(get_option('spotlight_6_network'));
 
         $articles_arr[] = $spotlight_6_network;
+    }
+
+    // needs fallback option
+
+    if (count($articles_arr) > 0) {
+        return $articles_arr;
+    }
+
+    return array([
+        'image' => '',
+        'title' => '',
+        'category' => '',
+        'brand_logo_light' => '',
+        'brand_logo_dark' => '',
+        'brand_link' => '',
+        'excerpt' =>  '',
+        'link' => ''
+    ]);
+}
+
+function rest_get_network_mustread()
+{
+    $articles_arr = array();
+
+    if (get_option('mustread_1_network')) {
+        $mustread_1_network = json_decode(get_option('mustread_1_network'));
+
+        $articles_arr[] = $mustread_1_network;
+    }
+
+    if (get_option('mustread_2_network')) {
+        $mustread_2_network = json_decode(get_option('mustread_2_network'));
+
+        $articles_arr[] = $mustread_2_network;
+    }
+
+    if (get_option('mustread_3_network')) {
+        $mustread_3_network = json_decode(get_option('mustread_3_network'));
+
+        $articles_arr[] = $mustread_3_network;
+    }
+
+    if (get_option('mustread_4_network')) {
+        $mustread_4_network = json_decode(get_option('mustread_4_network'));
+
+        $articles_arr[] = $mustread_4_network;
+    }
+
+    if (get_option('mustread_5_network')) {
+        $mustread_5_network = json_decode(get_option('mustread_5_network'));
+
+        $articles_arr[] = $mustread_5_network;
+    }
+
+    if (get_option('mustread_6_network')) {
+        $mustread_6_network = json_decode(get_option('mustread_6_network'));
+
+        $articles_arr[] = $mustread_6_network;
     }
 
     // needs fallback option
