@@ -75,15 +75,15 @@ function rest_get_network_spotlight()
     }
 
     if (get_option('spotlight_5_network')) {
-        $spotlight_4_network = json_decode(get_option('spotlight_5_network'));
+        $spotlight_5_network = json_decode(get_option('spotlight_5_network'));
 
-        $articles_arr[] = $spotlight_4_network;
+        $articles_arr[] = $spotlight_5_network;
     }
 
     if (get_option('spotlight_6_network')) {
-        $spotlight_4_network = json_decode(get_option('spotlight_6_network'));
+        $spotlight_6_network = json_decode(get_option('spotlight_6_network'));
 
-        $articles_arr[] = $spotlight_4_network;
+        $articles_arr[] = $spotlight_6_network;
     }
 
     // needs fallback option
@@ -193,6 +193,41 @@ function get_remote_data( $url )
     ];
 }
 
+function tbm_create_spotlight_articles( $article_url ) {
+    $article_remote_data = get_remote_data( $article_url );
+
+    $url_parts = parse_url($article_url);
+
+    $filename = str_replace('.com', '', $url_parts['host']);
+    $filename = str_replace('.thebrag', '', $filename );
+
+    $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
+
+    $height = 'h-5';
+
+    if( $filename == 'hypebeast' ) {
+        $height = '0.75rem';
+    }
+
+    if( $filename == 'lifewithoutandy' ) {
+        $height = '1.5rem';
+    }
+
+    $articles_arr = [
+        'image' => $article_remote_data['image'],
+        'title' => $article_remote_data['title'],
+        'category' => '',
+        'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
+        'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
+        'brand_logo_height' => $height,
+        'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
+        'excerpt' => $excerpt,
+        'link' => $article_url,
+    ];
+
+    return $articles_arr;
+}
+
 function tbm_theme_options()
 {
     wp_enqueue_script('bs', get_template_directory_uri() . '/bs/js/bootstrap.bundle.min.js', array('jquery'), '20190424', true);
@@ -237,38 +272,7 @@ function tbm_theme_options()
         endif; // force_most_viewed
 
         if (isset($_POST['spotlight_1_network'])) :
-            $article_url = $_POST['spotlight_1_network'];
-            $article_remote_data = get_remote_data( $article_url );
-
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
-
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_1_network'] );
 
             update_option('spotlight_1_network', json_encode($articles_arr));
         else :
@@ -276,37 +280,7 @@ function tbm_theme_options()
         endif; // spotlight_1_network
 
         if (isset($_POST['spotlight_2_network'])) :
-            $article_url = $_POST['spotlight_2_network'];
-            $article_remote_data = get_remote_data( $article_url );
-
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_2_network'] );
 
             update_option('spotlight_2_network', json_encode($articles_arr));
         else :
@@ -314,37 +288,7 @@ function tbm_theme_options()
         endif; // spotlight_2_network
 
         if (isset($_POST['spotlight_3_network'])) :
-            $article_url = $_POST['spotlight_3_network'];
-            $article_remote_data = get_remote_data( $article_url );
-
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_3_network'] );
 
             update_option('spotlight_3_network', json_encode($articles_arr));
         else :
@@ -352,111 +296,24 @@ function tbm_theme_options()
         endif; // spotlight_3_network
 
         if (isset($_POST['spotlight_4_network'])) :
-            $article_url = $_POST['spotlight_4_network'];
-            $article_remote_data = get_remote_data( $article_url );
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_4_network'] );
 
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
             update_option('spotlight_4_network', json_encode($articles_arr));
         else :
             update_option('spotlight_4_network', '');
         endif; // spotlight_4_network
 
         if (isset($_POST['spotlight_5_network'])) :
-            $article_url = $_POST['spotlight_5_network'];
-            $article_remote_data = get_remote_data( $article_url );
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_5_network'] );
 
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
             update_option('spotlight_5_network', json_encode($articles_arr));
         else :
             update_option('spotlight_5_network', '');
         endif; // spotlight_5_network
 
         if (isset($_POST['spotlight_6_network'])) :
-            $article_url = $_POST['spotlight_6_network'];
-            $article_remote_data = get_remote_data( $article_url );
+            $articles_arr = tbm_create_spotlight_articles( $_POST['spotlight_6_network'] );
 
-            $url_parts = parse_url($article_url);
-
-            $filename = str_replace('.com', '', $url_parts['host']);
-            $filename = str_replace('.thebrag', '', $filename );
-
-            $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
-
-            $height = 'h-5';
-
-            if( $filename == 'hypebeast' ) {
-                $height = 'h-3';
-            }
-
-            if( $filename == 'lifewithoutandy' ) {
-                $height = 'h-6';
-            }
-
-            $articles_arr = [
-                'image' => $article_remote_data['image'],
-                'title' => $article_remote_data['title'],
-                'category' => '',
-                'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
-                'brand_logo_dark' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-dark.png",
-                'brand_logo_height' => $height,
-                'brand_link' => $url_parts['scheme'] . '://' . $url_parts['host'],
-                'excerpt' => $excerpt,
-                'link' => $article_url,
-            ];
             update_option('spotlight_6_network', json_encode($articles_arr));
         else :
             update_option('spotlight_6_network', '');
