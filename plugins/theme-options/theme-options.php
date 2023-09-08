@@ -530,7 +530,7 @@ function tbm_theme_options()
                 $height = 'h-5';
 
                 if( $filename == 'hypebeast' ) {
-                    $height = 'h3';
+                    $height = 'h-3';
                 }
 
                 if( $filename == 'lifewithoutandy' ) {
