@@ -283,6 +283,10 @@ function tbm_create_spotlight_articles( $article_url ) {
         $height = '1.75rem';
     }
 
+    if( $filename == 'gamerevolution' ) {
+        $height = '1rem';
+    }
+
     $articles_arr = [
         'image' => $article_remote_data['image'],
         'title' => $article_remote_data['title'],
