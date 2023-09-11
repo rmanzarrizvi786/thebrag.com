@@ -264,6 +264,7 @@ function tbm_create_spotlight_articles( $article_url ) {
 
     $filename = str_replace('.com', '', $url_parts['host']);
     $filename = str_replace('.thebrag', '', $filename );
+    $filename = str_replace('www.', '', $filename );
 
     $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
