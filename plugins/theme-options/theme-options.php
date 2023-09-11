@@ -288,6 +288,10 @@ function tbm_create_spotlight_articles( $article_url ) {
         $height = '1rem';
     }
 
+    if( $filename == 'comingsoon' ) {
+        $height = '1.75rem';
+    }
+
     $articles_arr = [
         'image' => $article_remote_data['image'],
         'title' => $article_remote_data['title'],
