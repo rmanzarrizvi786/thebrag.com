@@ -262,11 +262,11 @@ function tbm_create_spotlight_articles( $article_url ) {
 
     $url_parts = parse_url($article_url);
 
-    $filename = str_replace('.thebrag', '', $filename );
+    $filename = str_replace('.thebrag', '', $url_parts['host'] );
     $filename = str_replace('www.', '', $filename );
     $filename = str_replace('editorial.', '', $filename );
-    $filename = str_replace('.com', '', $url_parts['host']);
-    $filename = str_replace('.net', '', $url_parts['host']);
+    $filename = str_replace('.com', '', $filename);
+    $filename = str_replace('.net', '', $filename);
 
     $excerpt = tbm_the_excerpt( $article_remote_data['excerpt'] );
 
