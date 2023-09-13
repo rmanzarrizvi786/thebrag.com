@@ -99,6 +99,18 @@
 <script>
   jQuery(document).ready(function($) {
     $(window).trigger('scroll');
+
+    const searchForm = document.getElementById('searchform')
+
+    searchForm?.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const searchInput = document.querySelector('#searchform input[name="s"]')
+
+        if (searchInput?.value) {
+            window.location.href = `/search/${ searchInput.value }`
+        }
+    })
   });
 </script>
 
@@ -118,21 +130,6 @@ position: fixed;
 
 <!-- 22071836792/outofpage/outofpage -->
 <div data-fuse="22779881596"></div>
-
-<script>
-    const searchForm = document.getElementById('searchform')
-
-    searchForm?.addEventListener('submit', e => {
-        e.preventDefault()
-
-        const searchInput = document.querySelector('#searchform input[name="s"]')
-
-        if (searchInput?.value) {
-            window.location.href = `/search/${ searchInput.value }`
-        }
-    })
-</script>
-
 </body>
 
 </html>
