@@ -443,7 +443,7 @@ function td_ajax_search()
             $return[] = [get_the_ID(), get_the_title(), get_the_permalink(), get_the_date('d M, Y'), $excerpt, $thumbnail, $metadesc];
         }
     }
-    //    $return[] = ['0', '---- Search for ' . $_POST['term'] . ' ----', '?s=' . $_POST['term'], date('d M, Y'), ''];
+    //    $return[] = ['0', '---- Search for ' . $_POST['term'] . ' ----', '/search/' . $_POST['term'], date('d M, Y'), ''];
     echo json_encode($return);
     die();
 }
@@ -3758,3 +3758,14 @@ function tbm_the_excerpt( $excerpt ) {
 
     return $excerpt . '.';
 }
+
+# Change Wordpress search URL
+
+function wpb_change_search_url() {
+    if ( is_search() && ! empty( $_GET['s'] ) ) {
+        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) );
+        exit();
+    }
+}
+
+add_action( 'template_redirect', 'wpb_change_search_url' );
