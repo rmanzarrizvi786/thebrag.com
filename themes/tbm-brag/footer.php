@@ -100,15 +100,23 @@
   jQuery(document).ready(function($) {
     $(window).trigger('scroll');
 
-    const searchForm = document.getElementById('searchform')
+    const searchForm = $('#searchform button')
 
-    searchForm?.addEventListener('submit', e => {
-        e.preventDefault()
+    searchForm.on('click', e => {
+        const searchInput = $('#s').first()
 
-        const searchInput = document.querySelector('#searchform input[name="s"]')
+        if (searchInput.val()) {
+            window.location.href = `/search/${ searchInput.val() }`
+        }
+    })
 
-        if (searchInput?.value) {
-            window.location.href = `/search/${ searchInput.value }`
+    $('#searchform').on('submit', e => {
+      e.preventDefault()
+
+        const searchInput = $('#s').first()
+
+        if (searchInput.val()) {
+            window.location.href = `/search/${ searchInput.val() }`
         }
     })
   });
