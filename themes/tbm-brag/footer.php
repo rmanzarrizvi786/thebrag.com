@@ -110,14 +110,16 @@
         }
     })
 
-    $('#searchform').on('submit', e => {
-      e.preventDefault()
+    $('#searchform').on('keypress', e => {
+      if (event.key === "Enter") {
+        e.preventDefault()
 
         const searchInput = $('#s').first()
 
         if (searchInput.val()) {
             window.location.href = `/search/${ searchInput.val() }`
         }
+      }
     })
   });
 </script>
