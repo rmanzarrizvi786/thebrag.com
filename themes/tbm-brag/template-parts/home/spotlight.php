@@ -20,6 +20,13 @@
                     'posts_per_page' => 3,
                     'orderby'        => 'rand',
                     'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
+                    'meta_query' => array(
+                        array(
+                            'key' => 'not_brand_safe',
+                            'value' => 0,
+                            'compare' => 'LIKE',
+                        )
+                    )
                 ];
                 $spotlight_articles = new WP_Query($spotlight_articles_args);
                 if ($spotlight_articles->have_posts()) :

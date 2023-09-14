@@ -20,6 +20,13 @@ if ($spotlight_article_ids && count($spotlight_article_ids) > 0) :
         'post_type' => array('post', 'country'),
         'ignore_sticky_posts' => 1,
         'post__in' => wp_list_pluck($spotlight_article_ids, 'post_id'),
+        'meta_query' => array(
+            array(
+                'key' => 'not_brand_safe',
+                'value' => 0,
+                'compare' => 'LIKE',
+            )
+        )
     );
     $spotlight_articles = new WP_Query($spotlight_articles_args);
 endif;
