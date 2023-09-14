@@ -22,10 +22,10 @@ $logo_alt = isset( $logo_alt ) ? $logo_alt : 'The Brag';
             <li class="nav-item"><a href="<?php echo home_url('/observer/'); ?>" class="nav-link px-2 text-white"><i class="fa fa-envelope fa-lg" aria-hidden=true></i></a></li>
         </ul>
     </nav>
-    <form role="search" method="get" id="searchform-mobile" class="searchform form-inline justify-content-center my-1" action="<?php echo esc_url( home_url( '/' ) ); ?>" style="">
+    <div role="search" method="get" id="searchform-mobile" class="searchform form-inline justify-content-center my-1" action="<?php echo esc_url( home_url( '/' ) ); ?>" style="">
         <div><input type="text" name="s" class="search-field form-control" placeholder="Search..." autocomplete="off" aria-label="Search"></div>
         <button type="submit" class="btn" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
-    </form>
+    </div>
     <div id="menu" class="mt-3" style="width: 300px; margin: auto;">
       <h4 class="mt-2 text-white menu-genres-header pb-2" style="margin-left: .7rem;">What do you love?</h4>
         <?php

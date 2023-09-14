@@ -100,24 +100,18 @@
   jQuery(document).ready(function($) {
     $(window).trigger('scroll');
 
-    const searchForm = $('#searchform button')
-
-    searchForm.on('click', e => {
-        const searchInput = $('#s').first()
+    $('div[role="search"] button').on('click', function(e) {
+        const searchInput = $(this).parent().find(('input[name="s"]'))
 
         if (searchInput.val()) {
             window.location.href = `/search/${ searchInput.val() }`
         }
     })
 
-    $('#searchform').on('keypress', e => {
-      if (event.key === "Enter") {
-        e.preventDefault()
-
-        const searchInput = $('#s').first()
-
-        if (searchInput.val()) {
-            window.location.href = `/search/${ searchInput.val() }`
+    $('input[name="s"]').on('keypress', e => {
+      if (e.key === "Enter") {
+        if (e.target.value) {
+            window.location.href = `/search/${ e.target.value }`
         }
       }
     })

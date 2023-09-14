@@ -8,12 +8,14 @@
 
 <div class="container search bg-yellow rounded-top">
 
-    <form role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
+    <div role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
         <div class="d-flex p-5 align-items-start">
-            <input type="search" class="search-field form-control" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s" id="s">
-            <input type="submit" class="search-submit btn btn-dark" value="Search">
+            <input type="search" class="search-field form-control" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s">
+            <button type="button" class="search-submit btn btn-dark">
+                Search
+            </button>
         </div>
-    </form>
+    </div>
     <div class="d-flex flex-wrap align-items-start mt-2 latest px-2">
         <?php
         $s = get_search_query();
@@ -21,7 +23,14 @@
         $args = array(
             's' => $s,
             'paged' => $paged,
-            'post_type' => 'post'
+            'post_type' => 'post',
+            'meta_query' => array(
+                array(
+                    'key' => 'not_brand_safe',
+                    'value' => 0,
+                    'compare' => 'LIKE',
+                )
+            )
         );
 
         // The Query

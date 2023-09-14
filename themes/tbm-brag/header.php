@@ -330,7 +330,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     <div id="mobile-nav-wrap" class="nav-wrap container flex-column p-r" style="display: none;">
       <div id="search-nav-wrap" class="w-100 d-flex flex-column">
         <div id="top-search-wrap-mobile" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: rgba(255,255,255,.75); border-radius: .5rem; width: 320px; transition: .25s left linear; border: 1px solid rgba(255,255,255,.15);">
-          <form role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
+          <div role="search" method="get" id="searchform" class="searchform d-flex justify-content-center" action="<?php echo esc_url(home_url('/')); ?>" style="">
             <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
               <img src="<?php echo ICONS_URL; ?>cross-dark.svg" width="16" height="16" alt="<" style="width: 8px; height: auto;">
             </div>
@@ -339,7 +339,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
             </div>
             <button type="button" class="btn p-2" aria-label="Search" style="padding: .25rem .5rem .5rem; background-color: rgba(0,0,0,.5) !important; border-radius: 0; border-radius: .5rem;">
               <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
-          </form>
+            </div>
         </div>
 
         <div id="nav-primary" class="nav w-100 my-0 flex-fill">
@@ -426,7 +426,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
 
       <div class="nav-wrap container d-md-flex flex-column flex-md-row p-r">
         <div id="top-search-wrap" style="position: absolute; top: -.25rem; left: 0; z-index: 10; background: #fff; border-radius: .5rem; width: 320px; transition: .25s left linear; box-shadow: 15px 0 10px #000; display: none;">
-          <form role="search" id="searchform" class="searchform d-flex justify-content-center" style="">
+          <div role="search" id="searchform" class="searchform d-flex justify-content-center" style="">
             <div class="btn btn-close-top-search" style="padding: .25rem; margin: auto .25rem; opacity: .5;">
               <img src="<?php echo ICONS_URL; ?>cross-dark.svg" width="16" height="16" alt="<" style="width: 8px; height: auto;">
             </div>
@@ -435,7 +435,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
             </div>
             <button type="button" class="btn p-2" aria-label="Search" style="padding: .25rem .5rem .5rem; background-color: #fff !important; border-radius: 0; border-radius: .5rem;">
               <img src="<?php echo ICONS_URL; ?>magnifying-glass-dark.svg" width="22" height="22"></button>
-            </form>
+          </div>
         </div>
         <div class="btn d-block d-md-none btn-close-menu">
           <img src="<?php echo ICONS_URL; ?>chevron-thin-left.svg" width="24" height="24" alt="<">
