@@ -304,6 +304,9 @@ function tbm_create_spotlight_articles( $article_url ) {
         $height = '1rem';
     }
 
+    if( $filename == 'billboard' ) {
+        $height = '1rem';
+    }
 
     $articles_arr = [
         'image' => $article_remote_data['image'],
