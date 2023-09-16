@@ -472,6 +472,14 @@ function tbm_theme_options()
             endif;
         endforeach;
 
+        require_once( dirname( __FILE__ ) . '/includes/cloudflare.php' );
+
+        $cf = new cloudflare_api( 'toby.smith@thebrag.media', 'c26b95e5f5b04b0e2054d936fca543a57c03a' );
+
+        wp_remote_get( 'https://thebrag.com/purge/' );
+
+        $response = $cf->zone_file_purge( 'thebrag.com', 'thebrag.com' );
+
         echo '<div class="alert alert-success">Options have been saved!</div>';
     endif;
 ?>
