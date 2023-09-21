@@ -73,67 +73,67 @@ function rest_get_networklist() {
             'title' => 'Variety Australia',
             'url' => 'https://au.variety.com',
             'logo' =>  $cdn_url  . 'au.variety-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'The Brag',
             'url' => 'https://thebrag.com',
             'logo' =>  $cdn_url  . 'thebrag-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'The Hollywood Reporter',
             'url' => 'https://www.hollywoodreporter.com',
             'logo' =>  $cdn_url  . 'hollywoodreporter-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Coming Soon',
             'url' => 'https://www.comingsoon.net',
             'logo' =>  $cdn_url  . 'comingsoon-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Rotten Tomatoes',
             'url' => 'https://www.rottentomatoes.com',
             'logo' =>  $cdn_url  . 'rottentomatoes-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'IndieWire',
             'url' => 'https://www.indiewire.com',
             'logo' =>  $cdn_url  . 'indiewire-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Deadline',
             'url' => 'https://deadline.com',
             'logo' =>  $cdn_url  . 'deadline-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'TV Line',
             'url' => 'https://tvline.com',
             'logo' =>  $cdn_url  . 'tvline-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Vibe',
             'url' => 'https://www.vibe.com',
             'logo' =>  $cdn_url  . 'vibe-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'Playwire',
             'url' => '',
             'logo' =>  $cdn_url  . 'playwire-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'The Brag Jobs',
             'url' => 'https://thebrag.com/jobs',
             'logo' =>  $cdn_url  . 'thebragjobs-light.png',
-            'width' => 'w-20'
+            'width' => '5rem'
         ]
     ];
 
@@ -144,37 +144,37 @@ function rest_get_networklist() {
             'title' => 'Rolling Stone Australia',
             'url' => 'https://au.rollingstone.com',
             'logo' =>  $cdn_url  . 'au.rollingstone-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Tone Deaf',
             'url' => 'https://tonedeaf.thebrag.com',
             'logo' =>  $cdn_url  . 'tonedeaf-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'The Music Network',
             'url' => 'https://themusicnetwork.com',
             'logo' =>  $cdn_url  . 'themusicnetwork-light.png',
-            'width' => 'w-20'
+            'width' => '5rem'
         ],
         [
             'title' => 'Billboard',
             'url' => 'https://www.billboard.com',
             'logo' =>  $cdn_url  . 'billboard-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Life Without Andy',
             'url' => 'https://lifewithoutandy.com',
             'logo' =>  $cdn_url  . 'lifewithoutandy-light.png',
-            'width' => 'w-16'
+            'width' => '4rem'
         ],
         [
             'title' => 'Vibe',
             'url' => 'https://www.vibe.com',
             'logo' =>  $cdn_url  . 'vibe-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ]
     ];
 
@@ -185,61 +185,61 @@ function rest_get_networklist() {
             'title' => 'Hypebeast',
             'url' => 'https://hypebeast.com',
             'logo' =>  $cdn_url  . 'hypebeast-light.png',
-            'width' => 'w-28'
+            'width' => '7rem'
         ],
         [
             'title' => 'Footwear News',
             'url' => 'https://footwearnews.com',
             'logo' =>  $cdn_url  . 'footwearnews-light.png',
-            'width' => 'w-16'
+            'width' => '4rem'
         ],
         [
             'title' => 'BGR',
             'url' => 'https://bgr.com',
             'logo' =>  $cdn_url  . 'bgr-light.png',
-            'width' => 'w-20'
+            'width' => '5rem'
         ],
         [
             'title' => 'Art News',
             'url' => 'https://www.artnews.com',
             'logo' =>  $cdn_url  . 'artnews-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'Gold Derby',
             'url' => 'https://www.goldderby.com',
             'logo' =>  $cdn_url  . 'goldderby-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Sourcing Journal',
             'url' => 'https://sourcingjournal.com',
             'logo' =>  $cdn_url  . 'sourcingjournal-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'Sportico',
             'url' => 'https://www.sportico.com',
             'logo' =>  $cdn_url  . 'sportico-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'Spy',
             'url' => 'https://spy.com',
             'logo' =>  $cdn_url  . 'spy-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'Style Caster',
             'url' => 'https://stylecaster.com',
             'logo' =>  $cdn_url  . 'stylecaster-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ],
         [
             'title' => 'BlogHer',
             'url' => 'https://www.blogher.com',
             'logo' =>  $cdn_url  . 'blogher-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ]
     ];
 
@@ -250,19 +250,19 @@ function rest_get_networklist() {
             'title' => 'She Knows',
             'url' => 'https://www.sheknows.com',
             'logo' =>  $cdn_url  . 'sheknows-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Toon Goggles',
             'url' => 'https://www.toongoggles.com',
             'logo' =>  $cdn_url  . 'toongoggles-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Playwire',
             'url' => '',
             'logo' =>  $cdn_url  . 'playwire-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ]
     ];
 
@@ -273,49 +273,49 @@ function rest_get_networklist() {
             'title' => 'Crunchyroll',
             'url' => 'https://www.crunchyroll.com',
             'logo' =>  $cdn_url  . 'crunchyroll-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Funimation',
             'url' => 'https://www.funimation.com/',
             'logo' =>  $cdn_url  . 'funimation-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Game Revolution',
             'url' => 'https://www.gamerevolution.com',
             'logo' =>  $cdn_url  . 'gamerevolution-light.png',
-            'width' => 'w-36'
+            'width' => '9rem'
         ],
         [
             'title' => 'Playstation Lifestyle',
             'url' => 'https://www.playstationlifestyle.net',
             'logo' =>  $cdn_url  . 'playstationlifestyle-light.png',
-            'width' => 'w-36'
+            'width' => '9rem'
         ],
         [
             'title' => 'Enthusiast Gaming',
             'url' => 'https://www.enthusiastgaming.com',
             'logo' =>  $cdn_url  . 'enthusiastgaming-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Gamelancer',
             'url' => 'https://gamelancer.com',
             'logo' =>  $cdn_url  . 'gamelancer-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Superhero Hype',
             'url' => 'https://www.superherohype.com',
             'logo' =>  $cdn_url  . 'superherohype-light.png',
-            'width' => 'w-36'
+            'width' => '9rem'
         ],
         [
             'title' => 'Playwire',
             'url' => '',
             'logo' =>  $cdn_url  . 'playwire-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ]
     ];
 
@@ -326,13 +326,13 @@ function rest_get_networklist() {
             'title' => 'Rolling Stone New Zealand',
             'url' => 'https://nz.rollingstone.com',
             'logo' =>  $cdn_url  . 'nz.rollingstone-light.png',
-            'width' => 'w-32'
+            'width' => '8rem'
         ],
         [
             'title' => 'Tone Deaf NZ',
             'url' => 'https://tonedeaf.nz',
             'logo' =>  $cdn_url  . 'tonedeaf-nz-light.png',
-            'width' => 'w-24'
+            'width' => '6rem'
         ]
     ];
 
