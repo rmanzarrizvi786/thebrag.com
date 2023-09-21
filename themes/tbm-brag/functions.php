@@ -5,6 +5,7 @@
 define('ICONS_URL', 'https://cdn.thebrag.com/icons/');
 define('CDN_URL', 'https://cdn.thebrag.com/tb/');
 define('OBSERVER_CDN_URL', 'https://cdn.thebrag.com/observer/');
+define('IMAGES_R2_CDN_URL', 'https://images-r2.thebrag.com/');
 
 // Add default posts and comments RSS feed links to head.
 add_theme_support('automatic-feed-links');

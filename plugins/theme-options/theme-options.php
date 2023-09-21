@@ -42,6 +42,12 @@ function tbm_theme_options_rest_api_init()
         'permission_callback' => '__return_true',
     ));
 
+    register_rest_route('tbm', '/networklist', array(
+        'methods' => 'GET',
+        'callback' => 'rest_get_networklist',
+        'permission_callback' => '__return_true',
+    ));
+
     register_rest_route('tbm', '/floating_dailymotion_playlist_id', array(
         'methods' => 'GET',
         'callback' => function () {
@@ -51,6 +57,317 @@ function tbm_theme_options_rest_api_init()
     ));
 }
 
+function rest_get_networklist() {
+    // tonedeaf-light.png
+
+    if (!defined('IMAGES_R2_CDN_URL')) {
+        define('IMAGES_R2_CDN_URL', ''); // fallback
+    }
+
+    $cdn_url = IMAGES_R2_CDN_URL . 'common/brands/202309/';
+
+    // # Entertainment
+
+    $entertainment = [
+        [
+            'title' => 'Variety Australia',
+            'url' => 'https://au.variety.com',
+            'logo' =>  $cdn_url  . 'au.variety-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'The Brag',
+            'url' => 'https://thebrag.com',
+            'logo' =>  $cdn_url  . 'thebrag-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'The Hollywood Reporter',
+            'url' => 'https://www.hollywoodreporter.com',
+            'logo' =>  $cdn_url  . 'hollywoodreporter-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Coming Soon',
+            'url' => 'https://www.comingsoon.net',
+            'logo' =>  $cdn_url  . 'comingsoon-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Rotten Tomatoes',
+            'url' => 'https://www.rottentomatoes.com',
+            'logo' =>  $cdn_url  . 'rottentomatoes-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'IndieWire',
+            'url' => 'https://www.indiewire.com',
+            'logo' =>  $cdn_url  . 'indiewire-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Deadline',
+            'url' => 'https://deadline.com',
+            'logo' =>  $cdn_url  . 'deadline-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'TV Line',
+            'url' => 'https://tvline.com',
+            'logo' =>  $cdn_url  . 'tvline-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Vibe',
+            'url' => 'https://www.vibe.com',
+            'logo' =>  $cdn_url  . 'vibe-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'Playwire',
+            'url' => '',
+            'logo' =>  $cdn_url  . 'playwire-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'The Brag Jobs',
+            'url' => 'https://thebrag.com/jobs',
+            'logo' =>  $cdn_url  . 'thebragjobs-light.png',
+            'width' => 'w-20'
+        ]
+    ];
+
+    // # Music
+
+    $music = [
+        [
+            'title' => 'Rolling Stone Australia',
+            'url' => 'https://au.rollingstone.com',
+            'logo' =>  $cdn_url  . 'au.rollingstone-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Tone Deaf',
+            'url' => 'https://tonedeaf.thebrag.com',
+            'logo' =>  $cdn_url  . 'tonedeaf-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'The Music Network',
+            'url' => 'https://themusicnetwork.com',
+            'logo' =>  $cdn_url  . 'themusicnetwork-light.png',
+            'width' => 'w-20'
+        ],
+        [
+            'title' => 'Billboard',
+            'url' => 'https://www.billboard.com',
+            'logo' =>  $cdn_url  . 'billboard-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Life Without Andy',
+            'url' => 'https://lifewithoutandy.com',
+            'logo' =>  $cdn_url  . 'lifewithoutandy-light.png',
+            'width' => 'w-16'
+        ],
+        [
+            'title' => 'Vibe',
+            'url' => 'https://www.vibe.com',
+            'logo' =>  $cdn_url  . 'vibe-light.png',
+            'width' => 'w-24'
+        ]
+    ];
+
+    // # Fashion / Culture
+
+    $fashion = [
+        [
+            'title' => 'Hypebeast',
+            'url' => 'https://hypebeast.com',
+            'logo' =>  $cdn_url  . 'hypebeast-light.png',
+            'width' => 'w-28'
+        ],
+        [
+            'title' => 'Footwear News',
+            'url' => 'https://footwearnews.com',
+            'logo' =>  $cdn_url  . 'footwearnews-light.png',
+            'width' => 'w-16'
+        ],
+        [
+            'title' => 'BGR',
+            'url' => 'https://bgr.com',
+            'logo' =>  $cdn_url  . 'bgr-light.png',
+            'width' => 'w-20'
+        ],
+        [
+            'title' => 'Art News',
+            'url' => 'https://www.artnews.com',
+            'logo' =>  $cdn_url  . 'artnews-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'Gold Derby',
+            'url' => 'https://www.goldderby.com',
+            'logo' =>  $cdn_url  . 'goldderby-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Sourcing Journal',
+            'url' => 'https://sourcingjournal.com',
+            'logo' =>  $cdn_url  . 'sourcingjournal-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'Sportico',
+            'url' => 'https://www.sportico.com',
+            'logo' =>  $cdn_url  . 'sportico-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'Spy',
+            'url' => 'https://spy.com',
+            'logo' =>  $cdn_url  . 'spy-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'Style Caster',
+            'url' => 'https://stylecaster.com',
+            'logo' =>  $cdn_url  . 'stylecaster-light.png',
+            'width' => 'w-24'
+        ],
+        [
+            'title' => 'BlogHer',
+            'url' => 'https://www.blogher.com',
+            'logo' =>  $cdn_url  . 'blogher-light.png',
+            'width' => 'w-24'
+        ]
+    ];
+
+    // # Family / Kids
+
+    $family = [
+        [
+            'title' => 'She Knows',
+            'url' => 'https://www.sheknows.com',
+            'logo' =>  $cdn_url  . 'sheknows-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Toon Goggles',
+            'url' => 'https://www.toongoggles.com',
+            'logo' =>  $cdn_url  . 'toongoggles-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Playwire',
+            'url' => '',
+            'logo' =>  $cdn_url  . 'playwire-light.png',
+            'width' => 'w-24'
+        ]
+    ];
+
+    // # Gaming / Anime
+
+    $gaming = [
+        [
+            'title' => 'Crunchyroll',
+            'url' => 'https://www.crunchyroll.com',
+            'logo' =>  $cdn_url  . 'crunchyroll-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Funimation',
+            'url' => 'https://www.funimation.com/',
+            'logo' =>  $cdn_url  . 'funimation-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Game Revolution',
+            'url' => 'https://www.gamerevolution.com',
+            'logo' =>  $cdn_url  . 'gamerevolution-light.png',
+            'width' => 'w-36'
+        ],
+        [
+            'title' => 'Playstation Lifestyle',
+            'url' => 'https://www.playstationlifestyle.net',
+            'logo' =>  $cdn_url  . 'playstationlifestyle-light.png',
+            'width' => 'w-36'
+        ],
+        [
+            'title' => 'Enthusiast Gaming',
+            'url' => 'https://www.enthusiastgaming.com',
+            'logo' =>  $cdn_url  . 'enthusiastgaming-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Gamelancer',
+            'url' => 'https://gamelancer.com',
+            'logo' =>  $cdn_url  . 'gamelancer-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Superhero Hype',
+            'url' => 'https://www.superherohype.com',
+            'logo' =>  $cdn_url  . 'superherohype-light.png',
+            'width' => 'w-36'
+        ],
+        [
+            'title' => 'Playwire',
+            'url' => '',
+            'logo' =>  $cdn_url  . 'playwire-light.png',
+            'width' => 'w-24'
+        ]
+    ];
+
+    // # New Zealand / Aotearoa
+
+    $newzealand = [
+        [
+            'title' => 'Rolling Stone New Zealand',
+            'url' => 'https://nz.rollingstone.com',
+            'logo' =>  $cdn_url  . 'nz.rollingstone-light.png',
+            'width' => 'w-32'
+        ],
+        [
+            'title' => 'Tone Deaf NZ',
+            'url' => 'https://tonedeaf.nz',
+            'logo' =>  $cdn_url  . 'tonedeaf-nz-light.png',
+            'width' => 'w-24'
+        ]
+    ];
+
+    $verticals = [
+        [
+            'title' => 'Music',
+            'sites' => $music
+        ],
+        [
+            'title' => 'Entertainment',
+            'sites' => $entertainment
+        ],
+        [
+            'title' => 'Gaming / Anime',
+            'sites' => $gaming
+        ],
+        [
+            'title' => 'Fashion / Culture',
+            'sites' => $fashion
+        ],
+        [
+            'title' => 'Family / Kids',
+            'sites' => $family
+        ],
+        [
+            'title' => 'Aotearoa',
+            'sites' => $newzealand
+        ]
+    ];
+
+    return wp_send_json_success([
+        'header_image' =>  $cdn_url . "TBM_White.png",
+        'verticals' => $verticals
+    ]);
+}
 
 function rest_get_network_spotlight()
 {
@@ -478,7 +795,7 @@ function tbm_theme_options()
 
         wp_remote_get( 'https://thebrag.com/purge/' );
 
-        $response = $cf->zone_file_purge( 'thebrag.com', 'thebrag.com' );
+        $cf->zone_file_purge( 'thebrag.com', 'thebrag.com' );
 
         echo '<div class="alert alert-success">Options have been saved!</div>';
     endif;
@@ -1117,13 +1434,13 @@ add_action('wp_footer', function () {
         fusetag.onSlotRenderEnded((e) => {
             if (e.slotId === 'fuse-slot-22339066295-1' || e.slotId === 'fuse-slot-22339226185-1') {
                 googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-                    const slot = event.slot
+                    $slot = event.slot
                     if (slot.getSlotElementId() === 'fuse-slot-22339066295-1' || slot.getSlotElementId() === 'fuse-slot-22339226185-1') {
                         if (event.creativeId === 138373276463) {
-                            const skin = document.getElementById('skin')
+                            $skin = document.getElementById('skin')
                             skin.style.setProperty('display', 'none', 'important')
 
-                            const ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
+                            $ad_billboard = parent.document.querySelector('.ad-billboard .mx-auto')
 
                             ad_billboard.style.position = 'fixed'
                             ad_billboard.style.zIndex = 999
@@ -1169,7 +1486,7 @@ add_action('wp_footer', function () {
                 tbm_t = tbm_e.indexOf("; tbm_sm_seen=");
             if (-1 == tbm_t) {
                 {
-                    const e = (e, t, n, s) => {
+                    $e = (e, t, n, s) => {
                             var c, o, r;
                             e.SMCX = e.SMCX || [], t.getElementById(s) || (o = (c = t.getElementsByTagName(n))[c.length - 1], (r = t.createElement(n)).type = "text/javascript", r.async = !0, r.id = s, r.src = "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd36CitCEEwoE44pTCPBWttcrfN2mODXNCsr6H61j_2BkMD.js", o.parentNode.insertBefore(r, o))
                         },
