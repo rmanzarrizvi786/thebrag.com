@@ -2276,6 +2276,21 @@ function feed_limit_ppp($query)
 }
 add_action('pre_get_posts', 'feed_limit_ppp');
 
+function exclude_featured_post( $query ) {
+    if ( !is_admin() ) {
+        $meta_query = $query->get('meta_query')? : [];
+
+        $meta_query[] = [
+            'key' => 'not_brand_safe',
+            'value' => 0,
+            'compare' => 'LIKE'
+        ];
+
+        $query->set('meta_query', $meta_query);
+    }
+}
+add_action( 'pre_get_posts', 'exclude_featured_post' );
+
 // Taxonomy - Feature - For Cover Story, etc.
 /*
 register_taxonomy(
