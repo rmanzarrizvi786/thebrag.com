@@ -2277,7 +2277,7 @@ function feed_limit_ppp($query)
 add_action('pre_get_posts', 'feed_limit_ppp');
 
 function exclude_featured_post( $query ) {
-    if ( !is_admin() ) {
+    if ( !is_admin() && $query->is_main_query() ) {
         $meta_query = $query->get('meta_query')? : [];
 
         $meta_query[] = [
@@ -2289,7 +2289,7 @@ function exclude_featured_post( $query ) {
         $query->set('meta_query', $meta_query);
     }
 }
-add_action( 'pre_get_posts', 'exclude_featured_post' );
+// add_action( 'pre_get_posts', 'exclude_featured_post' );
 
 // Taxonomy - Feature - For Cover Story, etc.
 /*
