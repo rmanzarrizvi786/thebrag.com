@@ -7,6 +7,13 @@ $news_args = [
     'posts_per_page' => 8,
     'post__not_in' => $exclude_posts,
     'paged' => $paged,
+    'meta_query' => array(
+        array(
+            'key' => 'not_brand_safe',
+            'value' => 0,
+            'compare' => 'LIKE',
+        )
+    )
 ];
 if (isset($cat_id)) {
     $news_args['cat'] = $cat_id;

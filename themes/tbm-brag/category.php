@@ -15,6 +15,13 @@ $hero_stories_args = [
     'post_status' => 'publish',
     'posts_per_page' => 4,
     'cat' => $cat_id,
+    'meta_query' => array(
+        array(
+            'key' => 'not_brand_safe',
+            'value' => 0,
+            'compare' => 'LIKE',
+        )
+    )
 ];
 $hero_stories_query = new WP_Query($hero_stories_args);
 $hero_stories = [];

@@ -50,6 +50,13 @@ foreach ($cats_home as $i => $category) :
         // 'post__not_in' => $exclude_posts,
         'posts_per_page' => 5,
         'category__in' => $category->term_id,
+        'meta_query' => array(
+            array(
+                'key' => 'not_brand_safe',
+                'value' => 0,
+                'compare' => 'LIKE',
+            )
+        )
     );
     $news_query = new WP_Query($news_args);
     if ($news_query->have_posts()) :

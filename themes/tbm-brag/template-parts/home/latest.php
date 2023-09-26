@@ -8,6 +8,13 @@ $news_args = array(
     // 'post__not_in' => $exclude_posts,
     'posts_per_page' => $posts_per_page,
     'paged' => $paged,
+    'meta_query' => array(
+        array(
+            'key' => 'not_brand_safe',
+            'value' => 0,
+            'compare' => 'LIKE',
+        )
+    )
 );
 $news_query = new WP_Query($news_args);
 $no_of_columns = 2;
