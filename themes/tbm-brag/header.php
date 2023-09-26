@@ -112,7 +112,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     echo file_get_contents(get_template_directory() . '/css/nav.css');
     echo file_get_contents(get_template_directory() . '/css/observer-list.css');
 
-    if (is_front_page() || is_home() || is_archive() || is_category()) {
+    if (is_front_page() || is_home() || is_archive() || is_category() || is_page('latest')) {
       echo file_get_contents(get_template_directory() . '/css/home-trending.css');
     }
     ?>

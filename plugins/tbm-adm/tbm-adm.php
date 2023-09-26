@@ -145,7 +145,7 @@ class TBMAds
       $post_type = get_post_type(get_the_ID());
 
       $section = 'homepage';
-      if (is_home() || is_front_page()) {
+      if (is_home() || is_front_page() || is_page('latest')) {
         $section = 'homepage';
       } elseif (is_category()) {
         $term = get_queried_object();

@@ -3209,7 +3209,7 @@ function render_ad_tag($tag, $slot_no = 1)
 {
     global $post;
 
-    if(!is_home() && !is_front_page()) {
+    if(!is_home() && !is_front_page() && !is_page('latest')) {
         if (function_exists('get_field') && isset($post) && get_field('paid_content', $post->ID)) {
             return;
         }
