@@ -622,8 +622,6 @@ function get_remote_data( $url )
             }
         }
 
-        
-
         return [
             'title' => trim($meta_og_title),
             'excerpt' => trim($meta_og_description),
@@ -689,8 +687,10 @@ function tbm_create_spotlight_articles( $article_url ) {
         $height = '1rem';
     }
 
+    $image = $article_remote_data['image'] = str_ireplace('https://images.thebrag.com/cdn-cgi/image/fit=crop,width=1200,height=628/', '', $article_remote_data['image']);
+
     $articles_arr = [
-        'image' => $article_remote_data['image'],
+        'image' => $image,
         'title' => $article_remote_data['title'],
         'category' => '',
         'brand_logo_light' => "https://images.thebrag.com/common/brands/202309/" . $filename . "-light.png",
