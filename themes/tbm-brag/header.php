@@ -28,6 +28,8 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
   <meta name="msapplication-config" content="/icons/browserconfig.xml">
   <meta name="theme-color" content="#b98d5b">
 
+  <meta name='impact-site-verification' value='-771456124'>
+
   <link rel="preconnect" href="https://cdn.onesignal.com/">
   <link rel="preconnect" href="https://www.googletagservices.com/">
   <link rel="preconnect" href="//cdn.publift.com/">
