@@ -3786,3 +3786,10 @@ function wpb_change_search_url() {
 }
 
 add_action( 'template_redirect', 'wpb_change_search_url' );
+
+add_filter( 'preview_post_link', 'the_preview_fix' );
+
+function the_preview_fix() {
+    $preview_id = get_the_ID();
+    return "/p?id=$preview_id";
+}
