@@ -1686,9 +1686,10 @@ class BragObserver
       if (isset($data['post_images'])) :
         foreach ($data['post_images'] as $key => $image_url) :
           if ($image_url) :
-            // $data['post_images'][$key] = $this->resize_image($image_url, 660, 370, $data['post_links'][$key]);
-            $image_url_edit = str_replace("https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/", "", $image_url);
-            $image_url = empty($image_url_edit) ? $image_url : $image_url_edit;
+            if( str_contains( $image_url, 'https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/' ) ) {
+              $data['post_images'][$key] = $image_url;
+            }
+
             $data['post_images'][$key] = "https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/$image_url";
           endif;
         endforeach;
