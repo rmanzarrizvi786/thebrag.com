@@ -26,7 +26,7 @@ if (!is_null($id)) :
       u.ID,
       u.user_email
     FROM {$wpdb->base_prefix}observer_lead_generator_responses r
-      JOIN {$wpdb->base_prefix}users u
+    LEFT JOIN {$wpdb->base_prefix}users u
         ON r.user_id = u.ID
     WHERE r.lead_generator_id = {$id}
   ";
@@ -37,6 +37,9 @@ if (!is_null($id)) :
     ORDER BY r.id DESC
   ";
   $reviews = $wpdb->get_results($reviews_query);
+
+  //echo $reviews_query;
+
   if ($reviews) :
 ?>
     <h1><?php echo $lead_generator->title; ?></h1>
@@ -47,6 +50,7 @@ if (!is_null($id)) :
       <div class="col d-flex align-items-center">
         <a href="<?php echo remove_query_arg(['status']); ?>" class="btn btn-sm <?php echo is_null($status) ? 'btn-primary' : ''; ?>">All</a>
         <a href="<?php echo add_query_arg(['status' => 'verified']); ?>" class="btn btn-sm <?php echo !is_null($status) ? 'btn-primary' : ''; ?>">Verified</a>
+       
       </div>
     </div>
     <table class="table table-sm table-hover table-bordered mt-3" id="list-reviews">

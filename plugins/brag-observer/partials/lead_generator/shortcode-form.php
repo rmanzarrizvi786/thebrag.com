@@ -65,7 +65,7 @@ function observer_lead_generator_form($atts)
                 $q1opts = explode(',', $lead_generator_atts['q1opts']);
                 $q1opts = array_map('trim', $q1opts);
 
-                if (count($q1opts) > 0) :
+                if (count($q1opts) > 0 && $q1opts[0] != '') :
             ?>
               <div class="col-12">
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response1"><?php echo $lead_generator->question1; ?></label>
@@ -93,8 +93,8 @@ function observer_lead_generator_form($atts)
 
                 $q2opts = explode(',', $lead_generator_atts['q2opts']);
                 $q2opts = array_map('trim', $q2opts);
-
-                if (count($q1opts) > 0) :
+                
+                if (count($q2opts) > 0 && $q2opts[0] != '') :
             ?>
               <div class="col-12">
                 <label for="lead_generator<?php echo $lead_generator->id; ?>-response2"><?php echo $lead_generator->question2; ?></label>
