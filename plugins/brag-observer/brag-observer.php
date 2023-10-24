@@ -1688,9 +1688,9 @@ class BragObserver
           if ($image_url) :
             if( str_contains( $image_url, 'https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/' ) ) {
               $data['post_images'][$key] = $image_url;
+            } else {
+              $data['post_images'][$key] = "https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/$image_url";
             }
-
-            $data['post_images'][$key] = "https://images.thebrag.com/cdn-cgi/image/fit=crop,width=660,height=370/$image_url";
           endif;
         endforeach;
       endif;
