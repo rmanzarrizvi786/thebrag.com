@@ -62,7 +62,7 @@ $lead_generators = $wpdb->get_results($lead_generators_query);
     ?>
       <tr>
         <th>
-          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-lead-generator', 'action' => 'details', 'id' => $lead_generator->id, 'status' => 'verified']); ?>" class="btn btn-sm btn-primary"><?php echo $lead_generator->title; ?></a>
+          <a href="<?php echo add_query_arg(['page' => 'brag-observer-manage-lead-generator', 'action' => 'details', 'id' => $lead_generator->id]); ?>" class="btn btn-sm btn-primary"><?php echo $lead_generator->title; ?></a>
           <small>(Created: <?php echo date('d M, Y', strtotime($lead_generator->created_at)); ?>)</small>
         </th>
         <td><?php echo $lead_generator->question1; ?></td>
