@@ -1623,6 +1623,7 @@ class BragObserver
             $meta_og_img = $meta->getAttribute('content');
             $meta_og_img = str_ireplace('&#038;nologo=1', '', $meta_og_img);
             $meta_og_img = str_ireplace('&nologo=1', '', $meta_og_img);
+            $meta_og_img = str_ireplace('https://images.thebrag.com/cdn-cgi/image/fit=crop,width=1200,height=628/', '', $meta_og_img);
             $meta_og_img = str_ireplace('/img-socl/?url=', '', substr($meta_og_img, strpos($meta_og_img, '/img-socl/?url=')));
           }
         } elseif ($meta->getAttribute('property') == 'og:title') {
