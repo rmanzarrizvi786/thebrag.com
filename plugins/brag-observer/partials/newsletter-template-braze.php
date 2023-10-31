@@ -845,10 +845,9 @@ function print_video_record_of_week($newsletter)
 			} else {
 				if (isset($_GET['action']) && 'show-html' == $_GET['action']) {
 				?>
-					<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color:rgba(0,0,0,.75); display: flex; justify-content: center; align-items: center;">
+					<!-- <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color:rgba(0,0,0,.75); display: flex; justify-content: center; align-items: center;">
 						<div style="background-color: #fff; padding: 2rem;">Failed to load ROTW. Please refresh the page to try again.</div>
-						<?php echo is_array($rotw_response) && !is_wp_error($rotw_response) && wp_remote_retrieve_response_code($rotw_response) == 200; ?>
-					</div>
+					</div> -->
 			<?php
 				}
 			}
