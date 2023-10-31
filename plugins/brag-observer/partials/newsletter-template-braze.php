@@ -795,7 +795,7 @@ function print_video_record_of_week($newsletter)
 			<?php
 		endif; // If Featured Video is available
 
-		$rotw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/rotw?v=' . date('Ymd'));
+		$rotw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/rotw?v='  .rand(11111,99999));
 		$featured_record_alt = '';
 		if (is_array($rotw_response) && !is_wp_error($rotw_response) && wp_remote_retrieve_response_code($rotw_response) == 200) {
 			$rotw = json_decode($rotw_response['body']);
