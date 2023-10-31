@@ -795,7 +795,7 @@ function print_video_record_of_week($newsletter)
 			<?php
 		endif; // If Featured Video is available
 
-		$rotw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/rotw?v='  . rand(11111,99999));
+		$rotw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/rotw?v='  . rand(11111, 9999999));
 		$featured_record_alt = '';
 		if (is_array($rotw_response) && !is_wp_error($rotw_response) && wp_remote_retrieve_response_code($rotw_response) == 200) {
 			$rotw = json_decode($rotw_response['body']);
@@ -847,6 +847,7 @@ function print_video_record_of_week($newsletter)
 				?>
 					<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color:rgba(0,0,0,.75); display: flex; justify-content: center; align-items: center;">
 						<div style="background-color: #fff; padding: 2rem;">Failed to load ROTW. Please refresh the page to try again.</div>
+						<?php echo is_array($rotw_response) && !is_wp_error($rotw_response) && wp_remote_retrieve_response_code($rotw_response) == 200; ?>
 					</div>
 			<?php
 				}
