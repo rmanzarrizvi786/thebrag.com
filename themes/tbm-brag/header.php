@@ -57,13 +57,8 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     <meta name="twitter:image" content="<?php
                                         if (has_post_thumbnail()) {
                                           $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
-                                          $type = @exif_imagetype($src[0]);
 
-                                          if ($type != false && ($type == (IMAGETYPE_PNG || IMAGETYPE_JPEG))) {
-                                            echo home_url("/img-socl/?url={$src[0]}&nologo=1");
-                                          } else {
-                                            echo $src[0];
-                                          }
+                                          echo "https://images.thebrag.com/cdn-cgi/image/fit=crop,width=1200,height=628/$src[0]";
                                         }
                                         ?>">
 

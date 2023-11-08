@@ -898,7 +898,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Post" src="https://images.thebrag.com/tb/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
+														<img align="none" class="" width="580" alt="Top Industry Post" src="https://images-rs.thebrag.com/tb/uploads/edm/Top-Industry-Post.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 100%;border: none; width: auto; max-width: 580px;">
 													</a>
 													<br>
 													<a href="<?php echo $top_i_tweet_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
@@ -949,7 +949,7 @@ function print_video_record_of_week($newsletter)
 											<tr style="padding:0;text-align:center;vertical-align:top">
 												<td style="border: 3px solid #3298d3; width: 580px;">
 													<a href="<?php echo $birthday_shoutout_link; ?>" target="_blank" style="color: #231f20;text-decoration: none;">
-														<img align="none" class="" width="580" alt="Top Industry Tweet" src="https://images.thebrag.com/tb/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
+														<img align="none" class="" width="580" alt="Top Industry Tweet" src="https://images-rs.thebrag.com/tb/uploads/edm/Birthday-Shout-Out.jpg" style="outline: none;-ms-interpolation-mode: bicubic;max-width: 580px;border: none; width: auto;">
 													</a>
 													<br>
 													<div style="text-align: center;">
@@ -1257,7 +1257,7 @@ function print_video_record_of_week($newsletter)
 
 		$pub_logo = null;
 
-		$pubs_base_url = 'https://images.thebrag.com/common/pubs/';
+		$pubs_base_url = 'https://images-r2.thebrag.com/common/pubs/';
 
 		$parse = parse_url($url);
 
@@ -1497,7 +1497,7 @@ function print_video_record_of_week($newsletter)
 
 		$pub_logo = null;
 
-		$pubs_base_url = 'https://images.thebrag.com/common/pubs/';
+		$pubs_base_url = 'https://images-r2.thebrag.com/common/pubs/';
 
 		$parse = parse_url($url);
 

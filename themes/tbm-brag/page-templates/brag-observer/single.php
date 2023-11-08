@@ -252,7 +252,7 @@ $refer_code = isset($_GET['rc']) ? sanitize_text_field($_GET['rc']) : null;
         ?>
           <li class="nav-item">
             <a href="<?php echo $brand_details['link']; ?>" title="<?php echo $brand_details['title']; ?>" target="_blank" class="nav-link my-2">
-              <img src="https://images.thebrag.com/common/pubs/<?php echo $brand_details['logo_name']; ?>.jpg" alt="<?php echo $brand_details['title']; ?>" class="lazyload" style="height: <?php echo 'lwa' == $brand ? '40' : '25'; ?>px;">
+              <img src="https://images-r2.thebrag.com/common/pubs/<?php echo $brand_details['logo_name']; ?>.jpg" alt="<?php echo $brand_details['title']; ?>" class="lazyload" style="height: <?php echo 'lwa' == $brand ? '40' : '25'; ?>px;">
             </a>
           </li><!-- Rolling Stone Australia -->
         <?php endforeach; ?>

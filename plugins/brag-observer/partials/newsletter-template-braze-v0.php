@@ -1322,7 +1322,7 @@ function print_video_record_of_week($newsletter)
 
 		$pub_logo = null;
 
-		$pubs_base_url = 'https://images.thebrag.com/common/pubs/';
+		$pubs_base_url = 'https://images-r2.thebrag.com/common/pubs/';
 
 		$parse = parse_url($url);
 
@@ -1562,7 +1562,7 @@ function print_video_record_of_week($newsletter)
 
 		$pub_logo = null;
 
-		$pubs_base_url = 'https://images.thebrag.com/common/pubs/';
+		$pubs_base_url = 'https://images-r2.thebrag.com/common/pubs/';
 
 		$parse = parse_url($url);
 
