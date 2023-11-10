@@ -51,16 +51,16 @@ class LeadGenerator extends BragObserver
   }
 
   /*
-  * Manage lead_generator - Show form
-  */
+   * Manage lead_generator - Show form
+   */
   public function manage_lead_generator_show_form()
   {
     include __DIR__ . '/../partials/lead_generator/manage.php';
   } // Add/Edit Solus
 
   /*
-  * View list of lead_generators
-  */
+   * View list of lead_generators
+   */
   public function view_lead_generators_list()
   {
     include __DIR__ . '/../partials/lead_generator/list.php';
@@ -75,8 +75,8 @@ class LeadGenerator extends BragObserver
   }
 
   /*
-  * Save lead_generator
-  */
+   * Save lead_generator
+   */
   public function save_lead_generator()
   {
     if ($_POST['data']) {
@@ -91,13 +91,13 @@ class LeadGenerator extends BragObserver
         'title',
       ];
 
-      foreach ($required_fields as $required_field) :
-        if (!isset($data[$required_field]) || '' == $data[$required_field]) :
-          $errors[] = ucfirst(str_replace(array('-', '_',), ' ', $required_field)) . ' is required.';
+      foreach ($required_fields as $required_field):
+        if (!isset($data[$required_field]) || '' == $data[$required_field]):
+          $errors[] = ucfirst(str_replace(array('-', '_', ), ' ', $required_field)) . ' is required.';
         endif;
       endforeach; // For Each $required_fields
 
-      if (count($errors) > 0) :
+      if (count($errors) > 0):
         wp_send_json_error($errors);
       endif;
 
@@ -106,7 +106,7 @@ class LeadGenerator extends BragObserver
 
       $values = [
         'title' => $data['title'],
-        'list_id' => implode(',', $data['list_id']),
+        'list_id' => isset($data['list_id']) ? implode(',', $data['list_id']) : '',
         'msg_thanks' => $data['msg_thanks'],
         'msg_thanks_verify' => $data['msg_thanks_verify'],
         'question1' => $data['question1'],
@@ -115,13 +115,13 @@ class LeadGenerator extends BragObserver
         'footer_text' => $data['footer_text'],
       ];
 
-      if (isset($data['id'])) :
+      if (isset($data['id'])):
         $wpdb->update(
           $table,
           $values,
           array('id' => $data['id'])
         );
-      else :
+      else:
         $values['created_at'] = current_time('mysql');
         $wpdb->insert(
           $table,
@@ -133,8 +133,8 @@ class LeadGenerator extends BragObserver
   } // save_lead_generator()
 
   /*
-  * Shortcode: lead_generator
-  */
+   * Shortcode: lead_generator
+   */
   public function shortcode_observer_lead_generator_form($atts)
   {
     require_once __DIR__ . '/../partials/lead_generator/shortcode-form.php';
@@ -143,8 +143,8 @@ class LeadGenerator extends BragObserver
   } // shortcode_observer_lead_generator_form()
 
   /*
-  * Save Review - Frontend
-  */
+   * Save Review - Frontend
+   */
   public function save_lead_generator_review($formData = [], $is_rest = false)
   {
 
@@ -168,13 +168,13 @@ class LeadGenerator extends BragObserver
 
     $verified = false;
     $message = '';
-    if (is_user_logged_in() && !$is_rest) :
+    if (is_user_logged_in() && !$is_rest):
       $user = wp_get_current_user();
       $verified = true;
       $message = !is_null($lead_generator->msg_thanks) ? $lead_generator->msg_thanks : 'Thank you! Your feedback has been submitted.';
 
       update_user_meta($user->ID, 'is_activated', 1);
-    else :
+    else:
       $formData['email'] = trim($formData['email']);
       if (!isset($formData['email']) || !is_email($formData['email'])) {
         $errors[] = 'Please enter a valid email address.';
@@ -282,8 +282,8 @@ class LeadGenerator extends BragObserver
 
 
   /*
-  * Subscribe to list
-  */
+   * Subscribe to list
+   */
   public function subscribe($user_id, $list_id)
   {
     global $wpdb;
@@ -315,8 +315,8 @@ class LeadGenerator extends BragObserver
   } // subscribe()
 
   /*
-  * Create a new user
-  */
+   * Create a new user
+   */
   public function create_user($email)
   {
     $user_pass = wp_generate_password();
@@ -337,15 +337,15 @@ class LeadGenerator extends BragObserver
   } // create_user()
 
   /*
-  * REST: API Endpoints
-  */
+   * REST: API Endpoints
+   */
   public function _rest_api_init()
   {
   }
 
   /*
-  * REST: Get form
-  */
+   * REST: Get form
+   */
   public function get_form($args = [])
   {
     if (empty($args) || !isset($args['id']))
