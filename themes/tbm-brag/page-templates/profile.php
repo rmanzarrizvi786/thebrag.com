@@ -18,18 +18,29 @@ use Auth0\SDK\Auth0;
 use Auth0\SDK\API\Authentication;
 use Auth0\SDK\API\Management;
 
-$dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
-$dotenv->load();
+// $dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
+// $dotenv->load();
+
+// $auth0_api = new Authentication(
+//   $_ENV['AUTH0_DOMAIN'],
+//   $_ENV['AUTH0_CLIENT_ID']
+// );
+
+// $config = [
+//   'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
+//   'client_id' => $_ENV['AUTH0_CLIENT_ID'],
+//   'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+// ];
 
 $auth0_api = new Authentication(
-  $_ENV['AUTH0_DOMAIN'],
-  $_ENV['AUTH0_CLIENT_ID']
+  AUTH0_DOMAIN,
+  AUTH0_CLIENT_ID
 );
 
 $config = [
-  'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-  'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-  'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+  AUTH0_CLIENT_SECRET,
+  AUTH0_CLIENT_ID,
+  AUTH0_MANAGEMENT_AUDIENCE,
 ];
 
 try {
