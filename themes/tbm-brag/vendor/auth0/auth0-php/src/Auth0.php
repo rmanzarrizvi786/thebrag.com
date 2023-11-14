@@ -267,17 +267,17 @@ class Auth0
      */
     public function __construct(array $config)
     {
-        $this->domain = $config['domain'] ?? $_ENV['AUTH0_DOMAIN'] ?? null;
+        $this->domain = $config['domain'] ?? AUTH0_DOMAIN ?? null;
         if (empty($this->domain)) {
             throw new CoreException('Invalid domain');
         }
 
-        $this->clientId = $config['client_id'] ?? $_ENV['AUTH0_CLIENT_ID'] ?? null;
+        $this->clientId = $config['client_id'] ?? AUTH0_CLIENT_ID ?? null;
         if (empty($this->clientId)) {
             throw new CoreException('Invalid client_id');
         }
 
-        $this->redirectUri = $config['redirect_uri'] ?? $_ENV['AUTH0_REDIRECT_URI'] ?? null;
+        $this->redirectUri = $config['redirect_uri'] ?? AUTH0_REDIRECT_URI ?? null;
         if (empty($this->redirectUri)) {
             throw new CoreException('Invalid redirect_uri');
         }

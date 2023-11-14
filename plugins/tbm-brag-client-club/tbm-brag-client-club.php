@@ -701,14 +701,14 @@ class BragClientClub
     $dotenv->load();
 
     $auth0_api = new \Auth0\SDK\API\Authentication(
-      $_ENV['AUTH0_DOMAIN'],
-      $_ENV['AUTH0_CLIENT_ID']
+      AUTH0_DOMAIN,
+      AUTH0_CLIENT_ID
     );
 
     $config = [
-      'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-      'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-      'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+      'client_secret' => AUTH0_CLIENT_SECRET,
+      'client_id' => AUTH0_CLIENT_ID,
+      'audience' => AUTH0_MANAGEMENT_AUDIENCE,
     ];
 
     $wp_auth0_id = get_user_meta($user_id, $wpdb->prefix . 'auth0_id', true);

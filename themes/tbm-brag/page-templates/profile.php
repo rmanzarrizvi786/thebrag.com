@@ -22,14 +22,14 @@ use Auth0\SDK\API\Management;
 // $dotenv->load();
 
 // $auth0_api = new Authentication(
-//   $_ENV['AUTH0_DOMAIN'],
-//   $_ENV['AUTH0_CLIENT_ID']
+//   AUTH0_DOMAIN,
+//   AUTH0_CLIENT_ID
 // );
 
 // $config = [
-//   'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-//   'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-//   'audience' => $_ENV['AUTH0_MANAGEMENT_AUDIENCE'],
+//   'client_secret' => AUTH0_CLIENT_SECRET,
+//   'client_id' => AUTH0_CLIENT_ID,
+//   'audience' => AUTH0_MANAGEMENT_AUDIENCE,
 // ];
 
 $auth0_api = new Authentication(
@@ -56,13 +56,13 @@ if (isset($access_token)) {
   // Instantiate the base Auth0 class.
   $auth0 = new Auth0([
     // The values below are found on the Application settings tab.
-    'domain' => $_ENV['AUTH0_DOMAIN'],
-    'client_id' => $_ENV['AUTH0_CLIENT_ID'],
-    'client_secret' => $_ENV['AUTH0_CLIENT_SECRET'],
-    'redirect_uri' => $_ENV['AUTH0_REDIRECT_URI'],
+    'domain' => AUTH0_DOMAIN,
+    'client_id' => AUTH0_CLIENT_ID,
+    'client_secret' => AUTH0_CLIENT_SECRET,
+    'redirect_uri' => AUTH0_REDIRECT_URI,
   ]);
 
-  $mgmt_api = new Management($access_token, $_ENV['AUTH0_DOMAIN']);
+  $mgmt_api = new Management($access_token, AUTH0_DOMAIN);
   try {
     if ($wp_auth0_id = get_user_meta($current_user->ID, 'wp_auth0_id', true)) {
       $auth0_user = $mgmt_api->users()->get($wp_auth0_id);
