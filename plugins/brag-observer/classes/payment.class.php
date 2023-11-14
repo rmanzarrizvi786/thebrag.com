@@ -32,7 +32,7 @@ class Payment
     }
 
     // Include Stripe SDK
-    require_once(plugin_dir_path(__FILE__) . '../vendor/autoload.php');
+    // require_once(plugin_dir_path(__FILE__) . '../vendor/autoload.php');
 
     $this->stripe = new \Stripe\StripeClient(
       $this->stripeConfigs['secret_key']
