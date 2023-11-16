@@ -60,7 +60,7 @@ class MediaHelper
 
     public function parse_request()
     {
-        if (strpos($_SERVER["REQUEST_URI"],  '/img-socl/') !== FALSE) {
+        if (strpos($_SERVER["REQUEST_URI"], '/img-socl/') !== FALSE) {
             global $wp_query;
             $url = isset($_GET['url']) ? trim($_GET['url']) : null;
 
@@ -77,7 +77,7 @@ class MediaHelper
                 return;
             }
 
-            $image =  $this->generate_image($url);
+            $image = $this->generate_image($url);
             if (!$image) {
                 $wp_query->set_404();
                 status_header(404);
@@ -191,10 +191,10 @@ class MediaHelper
         $post_id = get_the_ID();
         $attachment_id = get_post_thumbnail_id($post_id);
         $image_attributes = wp_get_attachment_image_src($attachment_id, "full");
-        $image_src = $image_attributes[0];
+        $image_src = isset($image_attributes[0]) ? $image_attributes[0] : '';
         if (!empty($image_src) && get_post_mime_type(get_post_thumbnail_id()) == 'image/webp') { ?>
             <meta property="og:image" content="<?php echo $image_src; ?>">
-<?php }
+        <?php }
     } // wp_head()
 }
 
