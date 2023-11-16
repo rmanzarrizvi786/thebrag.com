@@ -47,6 +47,11 @@
   $img_src1 = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'full');
   $img_src2 = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'thumbnail');
   $img_src3 = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'medium');
+
+  $img_src1 = isset($img_src1)? $img_src1 :'';
+  $img_src2 = isset($img_src2)? $img_src2 :'';
+  $img_src3 = isset($img_src3)? $img_src3 :'';
+
   array_push($post_featured_images, '"' . $img_src1[0] . '"', '"' . $img_src2[0] . '"', '"' . $img_src3[0] . '"');
 
   if (get_field('author')) {
