@@ -1844,6 +1844,8 @@ class BragObserver
   */
   public static function resize_image($url, $thumb_width, $thumb_height, $link_url = null, $import_dir_part = NULL, $filename = NULL)
   {
+    return "https://images.thebrag.com/cdn-cgi/image/fit=crop,width=$thumb_width,height=$thumb_height/$url";
+
     $dir = wp_upload_dir();
 
     $path = explode('?', $url);
