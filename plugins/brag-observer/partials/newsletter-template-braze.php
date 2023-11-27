@@ -763,7 +763,7 @@ function print_video_record_of_week($newsletter)
 									<tr>
 										<td colspan="2" style="display:table-cell!important; line-height:0!important; height:auto!important;">
 											<a target="_blank" style="display: block;" href="<?php echo $featured_video_link; ?>" rel="nofollow">
-												<img src="<?php echo $featured_video_img; ?>?v=<?php echo time(); ?>" alt="<?php echo $featured_video_alt; ?>" title="<?php echo $featured_video_alt; ?>" border="0" style="width:100%">
+												<img src="<?php echo $featured_video_img; ?>" alt="<?php echo $featured_video_alt; ?>" title="<?php echo $featured_video_alt; ?>" border="0" style="width:100%">
 											</a>
 										</td>
 									</tr>
@@ -818,7 +818,7 @@ function print_video_record_of_week($newsletter)
 									<tr>
 										<td colspan="2" style="display:table-cell!important; line-height:0!important; height:auto!important;">
 											<a target="_blank" style="display: block;" href="<?php echo $rotw->link; ?>" rel="nofollow">
-												<img src="<?php echo $featured_record_img; ?>?v=<?php echo time(); ?>" alt="<?php echo $featured_record_alt; ?>" title="<?php echo $featured_record_alt; ?>" border="0" style="width:100%">
+												<img src="<?php echo $featured_record_img; ?>" alt="<?php echo $featured_record_alt; ?>" title="<?php echo $featured_record_alt; ?>" border="0" style="width:100%">
 											</a>
 										</td>
 									</tr>
