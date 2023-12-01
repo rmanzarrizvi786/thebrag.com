@@ -83,8 +83,15 @@ get_header();
                   } elseif ('enable-auto-renew' == $action) {
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/enable-auto-renew.php';
                   }
-                } // If $subscription
-              } else { // $action is NULL i.e. show all active subscriptions
+                } // If $subscription ?>
+                <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->library_link)) { ?>
+                <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
+                <p>
+                  <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
+                  <a href="<?php echo $subscription->library_link; ?>" target="_blank">Library</a>
+                </p>
+              <?php } ?>                          
+              <?php } else { // $action is NULL i.e. show all active subscriptions
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) {
                   include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 } // If $subscriptions
