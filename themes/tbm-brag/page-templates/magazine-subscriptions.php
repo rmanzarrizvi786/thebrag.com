@@ -97,7 +97,7 @@ get_header();
                       <a href="<?php echo $subscriptions[0]->express_library_link; ?>" target="_blank">Past Issues Library</a><br />
                     </p>
                     </div>
-                  <?php } ?>
+                  <?php }
                 } // If $subscriptions
                 else {
               ?>
