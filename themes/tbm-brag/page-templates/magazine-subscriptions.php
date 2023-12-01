@@ -68,11 +68,10 @@ get_header();
               if (!is_null($action) && !is_null($sub_id) && in_array($sub_id, $sub_ids)) {
                 // $subscription = $bo->getMagSubscription( $sub_id );
                 if ($subscription) { ?>
-                <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->express_library_link)) { ?>
+                <?php if (!is_null($subscription->latest_issue_link)) { ?>
                 <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
                 <p>
                   <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
-                  <a href="<?php echo $subscription->express_library_link; ?>" target="_blank">Library</a>
                 </p>
               <?php } ?>
                 <?php
