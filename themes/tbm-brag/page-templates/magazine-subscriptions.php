@@ -87,11 +87,12 @@ get_header();
                 ?>              
               <?php } else { // $action is NULL i.e. show all active subscriptions
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) { ?>
-                  <?php if (!is_null($subscriptions[0]->latest_issue_link) && !empty($subscriptions[0]->latest_issue_link)) { ?>
+                  <?php if (!is_null($subscriptions[0]->latest_issue_link) && !empty($subscriptions[0]->latest_issue_link) && !is_null($subscriptions[0]->express_library_link) && !empty($subscriptions[0]->express_library_link)) { ?>
                     <div class="col-md-9" style="margin-bottom: 15px;">
-                    <h3>Digital Magazine</h3>
+                    <h3>Digital Magazine Subscription</h3>
                     <p>
-                      <a href="<?php echo $subscriptions[0]->latest_issue_link; ?>" target="_blank">Issue</a><br />
+                      <a href="<?php echo $subscriptions[0]->latest_issue_link; ?>" target="_blank">Read Latest Issue</a><br />
+                      <a href="<?php echo $subscriptions[0]->express_library_link; ?>" target="_blank">Past Issues Library</a><br />
                     </p>
                     </div>
                   <?php } ?>
