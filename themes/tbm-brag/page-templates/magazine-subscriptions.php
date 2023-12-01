@@ -83,7 +83,9 @@ get_header();
                   } elseif ('enable-auto-renew' == $action) {
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/enable-auto-renew.php';
                   }
-                } // If $subscription ?>
+                var_dump($subscription);
+                } // If $subscription 
+                ?>
                 <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->library_link)) { ?>
                 <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
                 <p>
