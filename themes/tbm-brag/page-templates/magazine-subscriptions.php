@@ -67,14 +67,7 @@ get_header();
 
               if (!is_null($action) && !is_null($sub_id) && in_array($sub_id, $sub_ids)) {
                 // $subscription = $bo->getMagSubscription( $sub_id );
-                if ($subscription) { ?>
-                <?php if (!is_null($subscription->latest_issue_link)) { ?>
-                <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
-                <p>
-                  <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
-                </p>
-              <?php } ?>
-                <?php
+                if ($subscription) {
                   // $subscription = $subscription[0];
                   if ('update_billing_shipping' == $action) {
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/update-billing-shipping.php';
@@ -93,8 +86,15 @@ get_header();
                 } // If $subscription 
                 ?>              
               <?php } else { // $action is NULL i.e. show all active subscriptions
-                if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) {
-                  include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
+                if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) { ?>
+                  <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->express_library_link)) { ?>
+                    <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
+                    <p>
+                      <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
+                      <a href="<?php echo $subscription->express_library_link; ?>" target="_blank">Library</a>
+                    </p>
+                  <?php } ?>
+                  <?php include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 } // If $subscriptions
                 else {
               ?>
