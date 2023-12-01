@@ -87,8 +87,10 @@ get_header();
                 ?>              
               <?php } else { // $action is NULL i.e. show all active subscriptions
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) { ?>
+                  <?php include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php'; ?>
                   <?php if (!is_null($subscriptions[0]->latest_issue_link) && !empty($subscriptions[0]->latest_issue_link) && !is_null($subscriptions[0]->express_library_link) && !empty($subscriptions[0]->express_library_link)) { ?>
-                    <div class="col-md-9" style="margin-bottom: 15px;">
+                    <hr />
+                    <div class="col-md-9" style="margin-top: 15px;">
                     <h3>Digital Magazine Subscription</h3>
                     <p>
                       <a href="<?php echo $subscriptions[0]->latest_issue_link; ?>" target="_blank">Read Latest Issue</a><br />
@@ -96,7 +98,6 @@ get_header();
                     </p>
                     </div>
                   <?php } ?>
-                  <?php include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
                 } // If $subscriptions
                 else {
               ?>
