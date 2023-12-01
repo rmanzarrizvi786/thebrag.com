@@ -48,7 +48,6 @@ get_header();
 
       <div class="row align-items-start">
         <div class="col-md-3 mb-3">
-          123
           <div style="position: sticky; top: 100px; text-align: center;">
             <?php $current_issue_img = file_get_contents('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
             ?>
@@ -68,7 +67,15 @@ get_header();
 
               if (!is_null($action) && !is_null($sub_id) && in_array($sub_id, $sub_ids)) {
                 // $subscription = $bo->getMagSubscription( $sub_id );
-                if ($subscription) {
+                if ($subscription) { ?>
+                <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->library_link)) { ?>
+                <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
+                <p>
+                  <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
+                  <a href="<?php echo $subscription->library_link; ?>" target="_blank">Library</a>
+                </p>
+              <?php } ?>
+                <?php
                   // $subscription = $subscription[0];
                   if ('update_billing_shipping' == $action) {
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/update-billing-shipping.php';
@@ -85,14 +92,7 @@ get_header();
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/enable-auto-renew.php';
                   }
                 } // If $subscription 
-                ?>
-                <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->library_link)) { ?>
-                <div class="col-md-9" style="margin-bottom: 15px;"><h3>Digital Magazine</h3></div>
-                <p>
-                  <a href="<?php echo $subscription->latest_issue_link; ?>" target="_blank">Issue</a><br />
-                  <a href="<?php echo $subscription->library_link; ?>" target="_blank">Library</a>
-                </p>
-              <?php } ?>                          
+                ?>              
               <?php } else { // $action is NULL i.e. show all active subscriptions
                 if ($subscriptions && is_array($subscriptions) && count($subscriptions) > 0) {
                   include get_template_directory() . '/page-templates/brag-observer/mag-sub/list.php';
