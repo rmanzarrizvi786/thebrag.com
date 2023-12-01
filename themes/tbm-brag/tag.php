@@ -4,25 +4,32 @@
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $exclude_posts = [];
 $tag = $wp_query->get_queried_object();
-$tag_id = $tag->term_id;
+$tag_id = isset($tag->term_id) ? $tag->term_id : 0;
 
 $hero_stories_args = [
     'post_status' => 'publish',
     'posts_per_page' => 4,
-    'tag_id' => $tag_id,
+    //'tag_id' => $tag_id,
 ];
+if ($tag_id > 0) {
+    $hero_stories_args['tag_id'] = $tag_id;
+}
+
 $hero_stories_query = new WP_Query($hero_stories_args);
 $hero_stories = [];
-if ($hero_stories_query->have_posts()) :
+if ($hero_stories_query->have_posts()):
     $hero_stories = $hero_stories_query->posts;
     wp_reset_query();
 endif;
 $exclude_posts = array_merge($exclude_posts, wp_list_pluck($hero_stories, 'ID'));
 
 $template_args = [
-    'tag_id' => $tag_id,
+    //'tag_id' => $tag_id,
     'paged' => $paged,
 ];
+if ($tag_id > 0) {
+    $template_args['tag_id'] = $tag_id;
+}
 ?>
 
 <div class="ad-billboard ad-billboard-top container py-1 py-md-2">
