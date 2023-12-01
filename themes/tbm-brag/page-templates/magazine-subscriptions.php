@@ -48,6 +48,7 @@ get_header();
 
       <div class="row align-items-start">
         <div class="col-md-3 mb-3">
+          123
           <div style="position: sticky; top: 100px; text-align: center;">
             <?php $current_issue_img = file_get_contents('https://au.rollingstone.com/wp-json/tbm_mag_sub/v1/next_issue_img');
             ?>
@@ -83,7 +84,6 @@ get_header();
                   } elseif ('enable-auto-renew' == $action) {
                     include get_template_directory() . '/page-templates/brag-observer/mag-sub/enable-auto-renew.php';
                   }
-                var_dump($subscription);
                 } // If $subscription 
                 ?>
                 <?php if (!is_null($subscription->latest_issue_link) && !is_null($subscription->library_link)) { ?>
