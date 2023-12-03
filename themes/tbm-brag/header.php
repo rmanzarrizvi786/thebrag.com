@@ -179,7 +179,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
           'parent' => null,
           'orderby'    => 'count',
           'order' => 'DESC',
-          'exclude' => array_merge($exclude_cats, $menu_cats_ids),
+          'exclude' => array_merge($exclude_cats, $menu_cats_ids, [ 53 ]),
           'number' => $number_of_menu_items - count($menu_cats)
         )
       );
