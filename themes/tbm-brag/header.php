@@ -142,6 +142,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     $user_id = $current_user->ID;
     $my_subs = $wpdb->get_results("SELECT s.list_id FROM {$wpdb->prefix}observer_subs s JOIN {$wpdb->prefix}observer_lists l ON l.id = s.list_id WHERE user_id = '{$user_id}' AND s.status = 'subscribed' AND l.related_site='thebrag.com' ");
     $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
+    $my_sub_lists = array_diff( $my_sub_lists, [ 53 ]);
   endif;
 
   ob_start();
