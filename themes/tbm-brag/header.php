@@ -142,7 +142,6 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
     $user_id = $current_user->ID;
     $my_subs = $wpdb->get_results("SELECT s.list_id FROM {$wpdb->prefix}observer_subs s JOIN {$wpdb->prefix}observer_lists l ON l.id = s.list_id WHERE user_id = '{$user_id}' AND s.status = 'subscribed' AND l.related_site='thebrag.com' ");
     $my_sub_lists = wp_list_pluck($my_subs, 'list_id');
-    $my_sub_lists = array_diff( $my_sub_lists, [ 53 ] );
   endif;
 
   ob_start();
@@ -154,7 +153,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
         // 'hide_empty' => '0',
         'orderby'    => 'count',
         'order' => 'DESC',
-        'exclude' => $exclude_cats,
+        'exclude' => array_merge($exclude_cats, [305297]),
         'meta_query' => array(
           array(
             'key'     => 'observer-topic',
@@ -179,7 +178,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
           'parent' => null,
           'orderby'    => 'count',
           'order' => 'DESC',
-          'exclude' => array_merge($exclude_cats, $menu_cats_ids, [ 53 ]),
+          'exclude' => array_merge($exclude_cats, $menu_cats_ids, [305297]),
           'number' => $number_of_menu_items - count($menu_cats)
         )
       );
@@ -207,7 +206,7 @@ $current_url = home_url(add_query_arg([], $GLOBALS['wp']->request));
         'parent' => null,
         'orderby'    => 'count',
         'order' => 'DESC',
-        'exclude' => $exclude_cats,
+        'exclude' => array_merge($exclude_cats, [305297]),
       )
     );
 
