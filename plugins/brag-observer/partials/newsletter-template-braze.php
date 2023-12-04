@@ -703,8 +703,9 @@ function print_video_record_of_week($newsletter)
 {
 	if (isset($newsletter->details->hide_video_record))
 		return;
-	$featured_video = get_option('tbm_featured_video');
+	// $featured_video = get_option('tbm_featured_video');
 	// $featured_video_link = get_option('tbm_featured_video_link');
+	$featured_video = ""; // temp fix
 	$featured_video_link = ""; // temp fix
 	// $featured_video_img_src = 'https://i.ytimg.com/vi/' . $featured_video . '/0.jpg';
 
