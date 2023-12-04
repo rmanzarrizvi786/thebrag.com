@@ -551,16 +551,17 @@ function rest_get_network_mustread()
 
 function rest_get_votw()
 {
-    return [
-        'image' => "",
-        'artist' => "",
-        'song' => "",
-        'link' => ""
-    ];
 
     $featured_yt_vid_id = NULL;
     $featured_video = get_option('tbm_featured_video');
     $tbm_featured_video_link = get_option('tbm_featured_video_link');
+    return [
+        'image' => "",
+        'artist' => get_option('tbm_featured_video_artist') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_artist'))) : '',
+        'song' => get_option('tbm_featured_video_song') ? '' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) : '',
+        'link' => $tbm_featured_video_link,
+    ];
+
     if (!is_null($featured_video) && $featured_video != '') :
         parse_str(parse_url($featured_video, PHP_URL_QUERY), $featured_video_vars);
         $featured_yt_vid_id = isset($featured_video_vars['v']) ? $featured_video_vars['v'] : NULL;

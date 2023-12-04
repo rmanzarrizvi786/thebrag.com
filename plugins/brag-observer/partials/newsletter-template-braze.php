@@ -703,51 +703,14 @@ function print_video_record_of_week($newsletter)
 {
 	if (isset($newsletter->details->hide_video_record))
 		return;
-	// $featured_video = get_option('tbm_featured_video');
-	// $featured_video_link = get_option('tbm_featured_video_link');
-	$featured_video = ""; // temp fix
-	$featured_video_link = ""; // temp fix
-	$featured_video_img_src = "";
-	$featured_video_img = "";
-	// $featured_video_img_src = 'https://i.ytimg.com/vi/' . $featured_video . '/0.jpg';
 
-	$featured_video_link = $featured_video;
+	$votw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/votw?v='  . rand(11111, 9999999));
 	
-	if (!empty($featured_video_link)) {
-		$tbm_featured_video_link_html = file_get_contents($featured_video_link);
-	} else {
-		$tbm_featured_video_link_html = '';
-	}
-
-	if( !empty($tbm_featured_video_link_html) ) {
-		$tbm_featured_video_link_html_dom = new DOMDocument();
-		@$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
-		// $meta_og_img_tbm_featured_video_link = null;
-		foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
-			if ($meta->getAttribute('property') == 'og:image') {
-				$featured_video_img_src = $meta->getAttribute('content');
-				$featured_video_img_src = str_ireplace('&#038;nologo=1', '', substr($featured_video_img_src, strpos($featured_video_img_src, '/img-socl/?url=')));
-				$featured_video_img_src = str_ireplace('&nologo=1', '', $featured_video_img_src);
-				$featured_video_img_src = str_ireplace('/img-socl/?url=', '', $featured_video_img_src);
-				break;
-			}
-		}
-	}
-
-	if (!is_null($featured_video) && $featured_video != '') :
-		parse_str(parse_url($featured_video, PHP_URL_QUERY), $featured_video_vars);
-		// $featured_yt_vid_id = $featured_video_vars['v'];
-		$featured_video_alt = '';
-		if (get_option('tbm_featured_video_artist')) {
-			$featured_video_alt .= esc_html(stripslashes(get_option('tbm_featured_video_artist')));
-		}
-		if (get_option('tbm_featured_video_song')) {
-			$featured_video_alt .= ' - \'' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) . '\'';
-		}
-
-		if(!empty($featured_video_img_src)) {
-			$featured_video_img =  BragObserver::resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
-		}
+	if (is_array($votw_response) && !is_wp_error($votw_response) && wp_remote_retrieve_response_code($votw_response) == 200) {
+		$votw = json_decode($votw_response['body']);
+		$featured_video_link = esc_html(stripslashes($votw->link));
+		$featured_video_alt = esc_html(stripslashes($votw->artist)) . ' - ' .  esc_html(stripslashes($votw->song));
+		$featured_video_img =  BragObserver::resize_image($votw->image, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
 ?>
 		<tr>
 			<td style="background-color:#ffffff;">
@@ -779,10 +742,10 @@ function print_video_record_of_week($newsletter)
 										<td class="mcnTextContent" valign="top" style="padding: 9px 9px 9px 9px;color: #ffffff;font-family: Helvetica;font-size: 12px;font-style: normal;font-weight: normal;line-height: 150%;text-align: center;height:110px;" width="546">
 											<h1 class="null" style="text-align: center; padding: 0; margin: 0;">
 												<font color="#ffffff" size="4"><?php if (get_option('tbm_featured_video_artist')) {
-																					echo '' . esc_html(stripslashes(get_option('tbm_featured_video_artist')));
+																					echo '' . esc_html(stripslashes($votw->artist));
 																				}
 																				if (get_option('tbm_featured_video_song')) {
-																					echo '<br><em>\'' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) . '\'</em>';
+																					echo '<br><em>\'' . esc_html(stripslashes($votw->song)) . '\'</em>';
 																				} ?></font>
 											</h1>
 										</td>
@@ -801,7 +764,7 @@ function print_video_record_of_week($newsletter)
 				<td align="center" valign="top" width="350" style="max-width:350px">
             <![endif]-->
 			<?php
-		endif; // If Featured Video is available
+		} // If Featured Video is available
 
 		$rotw_response = wp_remote_get('https://thebrag.com/wp-json/tbm/rotw?v='  . rand(11111, 9999999));
 		$featured_record_alt = '';
