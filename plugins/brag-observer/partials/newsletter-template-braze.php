@@ -707,6 +707,8 @@ function print_video_record_of_week($newsletter)
 	// $featured_video_link = get_option('tbm_featured_video_link');
 	$featured_video = ""; // temp fix
 	$featured_video_link = ""; // temp fix
+	$featured_video_img_src = "";
+	$featured_video_img = "";
 	// $featured_video_img_src = 'https://i.ytimg.com/vi/' . $featured_video . '/0.jpg';
 
 	$featured_video_link = $featured_video;
@@ -717,16 +719,18 @@ function print_video_record_of_week($newsletter)
 		$tbm_featured_video_link_html = '';
 	}
 
-	$tbm_featured_video_link_html_dom = new DOMDocument();
-	@$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
-	// $meta_og_img_tbm_featured_video_link = null;
-	foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
-		if ($meta->getAttribute('property') == 'og:image') {
-			$featured_video_img_src = $meta->getAttribute('content');
-			$featured_video_img_src = str_ireplace('&#038;nologo=1', '', substr($featured_video_img_src, strpos($featured_video_img_src, '/img-socl/?url=')));
-			$featured_video_img_src = str_ireplace('&nologo=1', '', $featured_video_img_src);
-			$featured_video_img_src = str_ireplace('/img-socl/?url=', '', $featured_video_img_src);
-			break;
+	if( !empty($tbm_featured_video_link_html) ) {
+		$tbm_featured_video_link_html_dom = new DOMDocument();
+		@$tbm_featured_video_link_html_dom->loadHTML($tbm_featured_video_link_html);
+		// $meta_og_img_tbm_featured_video_link = null;
+		foreach ($tbm_featured_video_link_html_dom->getElementsByTagName('meta') as $meta) {
+			if ($meta->getAttribute('property') == 'og:image') {
+				$featured_video_img_src = $meta->getAttribute('content');
+				$featured_video_img_src = str_ireplace('&#038;nologo=1', '', substr($featured_video_img_src, strpos($featured_video_img_src, '/img-socl/?url=')));
+				$featured_video_img_src = str_ireplace('&nologo=1', '', $featured_video_img_src);
+				$featured_video_img_src = str_ireplace('/img-socl/?url=', '', $featured_video_img_src);
+				break;
+			}
 		}
 	}
 
@@ -741,7 +745,9 @@ function print_video_record_of_week($newsletter)
 			$featured_video_alt .= ' - \'' . esc_html(stripslashes(get_option('tbm_featured_video_song'))) . '\'';
 		}
 
-		$featured_video_img =  BragObserver::resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
+		if(!empty($featured_video_img_src)) {
+			$featured_video_img =  BragObserver::resize_image($featured_video_img_src, 660, 370, null, '/edm/featured/', 'featured-vid-' . date('Y\wW') . '-n.jpg');
+		}
 ?>
 		<tr>
 			<td style="background-color:#ffffff;">
