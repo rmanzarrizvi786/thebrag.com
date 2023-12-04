@@ -551,6 +551,13 @@ function rest_get_network_mustread()
 
 function rest_get_votw()
 {
+    return [
+        'image' => "",
+        'artist' => "",
+        'song' => "",
+        'link' => ""
+    ];
+
     $featured_yt_vid_id = NULL;
     $featured_video = get_option('tbm_featured_video');
     $tbm_featured_video_link = get_option('tbm_featured_video_link');
