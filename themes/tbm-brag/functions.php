@@ -3061,15 +3061,23 @@ function tbm_mail_from_name($from_name)
 add_action('phpmailer_init', 'tbm_send_smtp_email');
 function tbm_send_smtp_email($phpmailer)
 {
+    // $phpmailer->isSMTP();
+    // $phpmailer->Host = 'smtp.gmail.com';
+    // $phpmailer->SMTPAuth = true;
+    // $phpmailer->Port = 587;
+    // $phpmailer->Username = 'noreply@thebrag.media';
+    // $phpmailer->Password = '<%QA5hXy1';
+    // $phpmailer->SMTPSecure = 'tls';
+    // $phpmailer->From = 'noreply@thebrag.media';
+
     $phpmailer->isSMTP();
-    $phpmailer->Host = 'smtp.gmail.com';
+    $phpmailer->Host = 'smtp.sparkpostmail.com';
     $phpmailer->SMTPAuth = true;
     $phpmailer->Port = 587;
-    $phpmailer->Username = 'noreply@thebrag.media';
-    $phpmailer->Password = '<%QA5hXy1';
+    $phpmailer->Username = 'SMTP_Injection';
+    $phpmailer->Password = '909bde593bd0f2fdca4f0ba0c9f44949ac57f1d1';
     $phpmailer->SMTPSecure = 'tls';
-    $phpmailer->From = 'noreply@thebrag.media';
-    // $phpmailer->FromName   = 'The Brag';
+    $phpmailer->From = 'noreply@media.thebrag.media';
 
     $phpmailer->IsSMTP();
 }
