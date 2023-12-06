@@ -1,7 +1,7 @@
 <?php
 /*
-* Template Name: Verify Response (Observer Lead Generation)
-*/
+ * Template Name: Verify Response (Observer Lead Generation)
+ */
 
 $errors = [];
 $messages = [];
@@ -114,28 +114,32 @@ get_template_part('page-templates/brag-observer/header');
     <div id="update-profile" class="col-sm-9 col-lg-9 my-5">
       <main class="site-main" role="main">
 
-        <?php if (!empty($errors)) : ?>
+        <?php if (!empty($errors)): ?>
           <div class="alert alert-danger">
-            <?php foreach ($errors as $error) : ?>
-              <div><?php echo $error; ?></div>
+            <?php foreach ($errors as $error): ?>
+              <div>
+                <?php echo $error; ?>
+              </div>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
 
-        <?php if (!empty($messages)) : ?>
+        <?php if (!empty($messages)): ?>
           <div class="alert alert-success">
-            <?php foreach ($messages as $message) : ?>
-              <div><?php echo $message; ?></div>
+            <?php foreach ($messages as $message): ?>
+              <div>
+                <?php echo $message; ?>
+              </div>
             <?php endforeach; ?>
           </div>
 
           <?php
           $redirectTo = home_url('/observer-subscriptions/');
 
-          if (!is_null($redirectTo)) :
-          ?>
+          if (!is_null($redirectTo)):
+            ?>
             <script>
-              window.setTimeout(function() {
+              window.setTimeout(function () {
                 window.location = '<?php echo $redirectTo; ?>';
               }, 3000);
             </script>

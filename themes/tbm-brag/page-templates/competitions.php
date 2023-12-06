@@ -17,7 +17,11 @@ foreach ($urls as $url) {
   $responseBody = wp_remote_retrieve_body($response);
 
   if ($responseBody) {
-    $all_competitions = array_merge($all_competitions, json_decode($responseBody));
+    $responseBodyArray = json_decode($responseBody);
+    if (is_array($responseBodyArray)) {
+      $all_competitions = array_merge($all_competitions, $responseBodyArray);
+    }
+
   }
 }
 
@@ -132,13 +136,13 @@ if (is_user_logged_in()) {
     <?php get_template_part('template-parts/account/menu', 'left'); ?>
     <div class="col-12 col-md-9">
 
-      <?php if ($new_competitions) : ?>
+      <?php if ($new_competitions): ?>
 
         <h2 class="my-2 px-1 px-md-3">New Competitions</h2>
 
         <div class="d-flex flex-wrap align-items-start">
           <?php
-          foreach ($new_competitions as $competition) :
+          foreach ($new_competitions as $competition):
             if (strtotime($competition->competition_end_date) < strtotime(date('Y-m-d')))
               continue;
 
@@ -146,16 +150,18 @@ if (is_user_logged_in()) {
               continue;
 
             array_push($exclude_competitions, $competition->lead_generator);
-          ?>
+            ?>
             <article class="col-6 d-flex flex-column align-items-center mb-2 mb-md-4 p-1 p-md-2">
               <a href="<?php echo $competition->link; ?>" target="_blank" class="d-block w-100 text-dark">
                 <div class="post-thumbnail rounded">
-                  <?php if ($competition->image && '' != trim($competition->image)) : ?>
+                  <?php if ($competition->image && '' != trim($competition->image)): ?>
                     <img src="<?php echo $competition->image; ?>" class="rounded">
                   <?php endif; ?>
                 </div>
                 <div class="post-content align-self-start">
-                  <h5 class="mt-3 mb-2"><?php echo $competition->title; ?></h5>
+                  <h5 class="mt-3 mb-2">
+                    <?php echo $competition->title; ?>
+                  </h5>
                 </div>
               </a>
             </article>
@@ -167,10 +173,10 @@ if (is_user_logged_in()) {
 
 
       <?php
-      if (is_user_logged_in()) :
+      if (is_user_logged_in()):
         $comp_credits = get_user_meta($current_user->ID, 'comp_credits', true);
-        if ($my_competitions) :
-      ?>
+        if ($my_competitions):
+          ?>
 
           <style>
             .btn-social-icon {
@@ -232,7 +238,7 @@ if (is_user_logged_in()) {
           <div class="container-fluid">
             <div class="row">
               <?php
-              foreach ($my_competitions as $competition) :
+              foreach ($my_competitions as $competition):
                 if (strtotime($competition->competition_end_date) < strtotime(date('Y-m-d')))
                   continue;
 
@@ -240,16 +246,18 @@ if (is_user_logged_in()) {
                   continue;
 
                 array_push($exclude_competitions, $competition->lead_generator);
-              ?>
+                ?>
                 <article class="col-lg-3 col-md-4 col-6 d-flex flex-column align-items-center justify-content-between mb-4">
                   <a href="<?php echo $competition->link; ?>" target="_blank" class="d-block w-100 mb-3">
                     <div class="post-thumbnail">
-                      <?php if ($competition->image && '' != trim($competition->image)) : ?>
+                      <?php if ($competition->image && '' != trim($competition->image)): ?>
                         <img src="<?php echo $competition->image; ?>">
                       <?php endif; ?>
                     </div>
                     <div class="post-content align-self-start">
-                      <h5 class="mt-3 mb-2"><?php echo $competition->title; ?></h5>
+                      <h5 class="mt-3 mb-2">
+                        <?php echo $competition->title; ?>
+                      </h5>
                     </div>
                   </a>
                   <?php
@@ -269,44 +277,60 @@ if (is_user_logged_in()) {
       */
 
                   if (0) { // Disabled to activate later with changed to Brag Bucks
-                  ?>
-                    <div>My credits: <?php echo isset($comp_credits[$competition->lead_generator]) ? $comp_credits[$competition->lead_generator] : 0; ?></div>
+                    ?>
+                    <div>My credits:
+                      <?php echo isset($comp_credits[$competition->lead_generator]) ? $comp_credits[$competition->lead_generator] : 0; ?>
+                    </div>
 
                     <div class="row mt-4">
                       <div class="col">
                         <div class="row">
                           <div class="col px-1 mb-4 d-flex d-sm-none justify-content-center">
-                            <a class="btn-social-icon sms-button" id="share_sms" href="sms:?body=<?php echo urlencode($referral_link . '&utm_source=share_sms'); ?>"><i class="fas fa-sms" aria-hidden="true"></i></a>
+                            <a class="btn-social-icon sms-button" id="share_sms"
+                              href="sms:?body=<?php echo urlencode($referral_link . '&utm_source=share_sms'); ?>"><i
+                                class="fas fa-sms" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex d-sm-none justify-content-center">
-                            <a class="btn-social-icon whatsapp-button" id="share_whatsapp" href="whatsapp://send?text=<?php echo urlencode($referral_link . '&utm_source=share_whatsapp'); ?>"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                            <a class="btn-social-icon whatsapp-button" id="share_whatsapp"
+                              href="whatsapp://send?text=<?php echo urlencode($referral_link . '&utm_source=share_whatsapp'); ?>"><i
+                                class="fa fa-whatsapp" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex d-sm-none justify-content-center">
-                            <a class="btn-social-icon messenger-button" id="share_messenger" href="fb-messenger://share/?link=<?php echo urlencode($referral_link . '&utm_source=share_messenger'); ?>"><i class="fab fa-facebook-messenger" aria-hidden="true"></i></a>
+                            <a class="btn-social-icon messenger-button" id="share_messenger"
+                              href="fb-messenger://share/?link=<?php echo urlencode($referral_link . '&utm_source=share_messenger'); ?>"><i
+                                class="fab fa-facebook-messenger" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex justify-content-center">
-                            <a class="btn-share btn-social-icon facebook-button" id="share_facebook" href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($referral_link . '&utm_source=share_facebook'); ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a class="btn-share btn-social-icon facebook-button" id="share_facebook"
+                              href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($referral_link . '&utm_source=share_facebook'); ?>"><i
+                                class="fa fa-facebook" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex justify-content-center">
-                            <a class="btn-share btn-social-icon twitter-button" id="share_twitter" href="https://twitter.com/intent/tweet?text=&url=<?php echo urlencode($referral_link . '&utm_source=share_twitter'); ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a class="btn-share btn-social-icon twitter-button" id="share_twitter"
+                              href="https://twitter.com/intent/tweet?text=&url=<?php echo urlencode($referral_link . '&utm_source=share_twitter'); ?>"><i
+                                class="fa fa-twitter" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex justify-content-center">
-                            <a class="btn-share btn-social-icon linkedin-button" id="share_linkedin" href="https://www.linkedin.com/shareArticle/?mini=true&url=<?php echo urlencode($referral_link . '&utm_source=share_linkedin'); ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a class="btn-share btn-social-icon linkedin-button" id="share_linkedin"
+                              href="https://www.linkedin.com/shareArticle/?mini=true&url=<?php echo urlencode($referral_link . '&utm_source=share_linkedin'); ?>"><i
+                                class="fa fa-linkedin" aria-hidden="true"></i></a>
                           </div>
                           <div class="col px-1 mb-4 d-flex justify-content-center">
-                            <a class="btn-share-email btn-social-icon email-button" id="share_email" href="mailto:?subject=&body=<?php echo urlencode($referral_link . '&utm_source=share_linkedin'); ?>"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                            <a class="btn-share-email btn-social-icon email-button" id="share_email"
+                              href="mailto:?subject=&body=<?php echo urlencode($referral_link . '&utm_source=share_linkedin'); ?>"><i
+                                class="fas fa-envelope" aria-hidden="true"></i></a>
                           </div>
                         </div>
                       </div>
                     </div>
-                  <?php  } ?>
+                  <?php } ?>
                 </article>
-              <?php
+                <?php
               endforeach; // For Each Entry
               ?>
             </div>
           </div>
-      <?php
+          <?php
         endif; // If $my_competitions
       endif; // If user is logged in 
       ?>
