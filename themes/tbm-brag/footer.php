@@ -14,7 +14,7 @@
 <noscript id="deferred-styles">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@200;300;500&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" id="tbm-css" href="<?php echo CDN_URL; ?>css/style.css?v=20220629" type="text/css"
+  <link rel="stylesheet" id="tbm-css" href="<?php echo CDN_URL; ?>css/style.css?v=20231206.1" type="text/css"
     media="all" />
   <!-- <link rel="stylesheet" id="tbm-css" href="<?php echo get_template_directory_uri(); ?>/css/style.css?v=<?php echo time(); ?>" type="text/css" media="all" /> -->
 </noscript>
