@@ -11,15 +11,13 @@
 
 namespace TBM;
 
-class FloatingPlayer
-{
+class FloatingPlayer {
     protected $playerId;
     protected $playlistId;
     protected $adId;
     protected $playerTitle;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->playerId = get_option('tbm_floating_dm_player_id', '');
         $this->playlistId = get_option('tbm_floating_dm_playlist_id', '');
         $this->adId = get_option('tbm_gam_ad_unit_id', '');
@@ -28,8 +26,7 @@ class FloatingPlayer
         add_action('wp_footer', [$this, 'wp_footer']);
     }
 
-    public function wp_footer()
-    {
+    public function wp_footer() {
         if (!is_single()) {
             return;
         }
@@ -140,8 +137,8 @@ class FloatingPlayer
         </div>
         <script src="https://geo.dailymotion.com/libs/player/<?php echo $this->playerId; ?>.js"></script>
         <script>
-            jQuery(document).ready(function ($) {
-                $(window).on('scroll', function () {
+            jQuery(document).ready(function($) {
+                $(window).on('scroll', function() {
                     if (screen.width < 768) {
                         if ($(window).scrollTop() >= screen.height / 2) {
                             $('#floating-player-wrap').addClass('scrolled')
@@ -151,7 +148,7 @@ class FloatingPlayer
                     }
                 })
 
-                $('.floating-player-close').on('click', function () {
+                $('.floating-player-close').on('click', function() {
                     $('#floating-player-wrap').detach()
                 })
                 dailymotion.createPlayer("floating-player", {
@@ -159,13 +156,12 @@ class FloatingPlayer
                     params: {
                         customConfig: {
                             customParams: '/22071836792/<?php echo $this->adId; ?>/preroll'
-                        },
-                        mute:false
+                        }
                     }
                 })
                     .then((player) => {
                         $('#floating-player-wrap').show()
-                        //player.setMute(true)
+                        player.setMute(true)
                     })
                     .catch((e) => console.error(e))
             })
