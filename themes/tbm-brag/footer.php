@@ -82,36 +82,36 @@
   }
   ?>
   <script type="application/ld+json">
-          {
-            "@context": "http://schema.org",
-            "@type": "<?php echo !in_category('evergreen', $post) ? "NewsArticle" : "BlogPosting"; ?>",
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": "<?php echo get_permalink(); ?>"
-            },
-            "headline": "<?php echo get_the_title(); ?>",
-            "image": [
-              <?php if (count($post_featured_images) > 0):
-                echo implode(',', $post_featured_images);
-              endif; ?>
-            ],
-            "datePublished": "<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>",
-            "dateModified": "<?php echo the_modified_date('Y-m-d\TH:i:s+10:00'); ?>",
-            "author": {
-              "@type": "Person",
-              "name": "<?php echo htmlspecialchars($author, ENT_QUOTES); ?>"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "<?php echo get_bloginfo('name'); ?>",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "<?php echo CDN_URL; ?>The-Brag-300px.png"
-              }
-            },
-            "description": "<?php echo get_bloginfo('description'); ?>"
-          }
-        </script>
+            {
+              "@context": "http://schema.org",
+              "@type": "<?php echo !in_category('evergreen', $post) ? "NewsArticle" : "BlogPosting"; ?>",
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "<?php echo get_permalink(); ?>"
+              },
+              "headline": "<?php echo get_the_title(); ?>",
+              "image": [
+                <?php if (count($post_featured_images) > 0):
+                  echo implode(',', $post_featured_images);
+                endif; ?>
+              ],
+              "datePublished": "<?php echo date('Y-m-d\TH:i:s+10:00', get_the_time('U')); ?>",
+              "dateModified": "<?php echo the_modified_date('Y-m-d\TH:i:s+10:00'); ?>",
+              "author": {
+                "@type": "Person",
+                "name": "<?php echo htmlspecialchars($author, ENT_QUOTES); ?>"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "<?php echo get_bloginfo('name'); ?>",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "<?php echo CDN_URL; ?>The-Brag-300px.png"
+                }
+              },
+              "description": "<?php echo get_bloginfo('description'); ?>"
+            }
+          </script>
 <?php endif; ?>
 
 <div id="overlay" class="d-none"></div>
@@ -152,7 +152,22 @@ position: fixed;
   <?php // render_ad_tag('mob_sticky'); 
   ?>
 </div> -->
-
+<script>
+  jQuery(document).ready(function ($) {
+    $(".op-interactive iframe").each(function () {
+      var dmVideoPath = $(this).attr('src');
+      var res1 = dmVideoPath.replace('geo', "www");
+      var res2 = res1.replace('player.html?', "embed/");
+      var res3 = res2.replace('video=', "video/");
+      var lastCharacter = res3.charAt(res3.length - 1);
+      if (lastCharacter == '&') {
+        res3 = res3.slice(0, -1);
+      }
+      $(this).attr('src', res3);
+      res3 = '';
+    });
+  }); 
+</script>
 <!-- 22071836792/outofpage/outofpage -->
 <div data-fuse="22779881596"></div>
 </body>
