@@ -1104,7 +1104,7 @@ function gig_details()
 
     include('gig-date-time-form.php');
     ?>
-                <?php
+                    <?php
 }
 
 add_action('init', 'register_cpt_snaps');
@@ -1377,9 +1377,9 @@ function custom_add_meta_description_tag()
 
         $description .= get_the_title() . $dates_desc . $venues_desc . $price_desc . $genre_desc . $artist_desc;
         ?>
-                                <meta name="description" content="<?php echo $description; ?>" />
-                            <?php
-                            wp_reset_query();
+                                        <meta name="description" content="<?php echo $description; ?>" />
+                                    <?php
+                                    wp_reset_query();
     }
 }
 add_action('wp_head', 'custom_add_meta_description_tag', 1);
@@ -1419,125 +1419,125 @@ function ssm_amp_additional_css_styles($amp_template)
 {
     // only CSS here please...
     ?>
-                html { background: #ffffff; }
-                body { font-family: 'Sans-serif', 'Arial'; background: #ffffff; }
-                a, a:visited, a:hover, a:active, a:focus { color: #2982b3; }
-                amp-img{max-width: 100%;height:auto;}
-                .amp-wp-header {
-                padding: 0;
-                background: #fff;
-                position: absolute; top: 0; margin: auto; width: 100%; z-index: 999999;
-                }
-                .amp-wp-header div.amp-wp-header-inner {
-                position: fixed;
-                top: 0;
-                background: #fff;
-                margin: auto;
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-                padding: 7px;
-                border-bottom: 1px solid #ccc;
-                }
-                .amp-wp-header a {
-                background-image: url( '<?php echo CDN_URL; ?>The-Brag-300px.png' );
-                background-repeat: no-repeat;
-                background-size: contain;
-                display: block;
-                height: 30px;
-                width: 170px;
-                margin: 0 auto;
-                text-indent: -9999px;
-                background-position: center;
-                }
-                .amp-wp-title { color: #0f0c0c; }
-                .amp-wp-article, .amp-wp-article-header { margin-top: 0; background: #fff; }
-                .amp-wp-article { padding: 55px 0 10px 0; }
-                #pagination { border-top: 1px solid #ccc; }
-                #pagination .prev a, #pagination .next a {
-                display: block;
-                margin-bottom: 12px;
-                background: #fefefe;
-                text-decoration: none;
-                font-size: 0.8rem;
-                padding: 5px 15px;
-                color: #666;
-                }
-                #pagination .prev a { text-align: left; }
-                #pagination .next a { text-align: right; }
-                .related-stories-wrap { background:#1fcabf; background: #fff; margin-top: 0px; padding: 10px 0; width: 100%; border-top: 1px solid #cecece; }
-                .related-stories-wrap .title { margin:0 0 15px 0; padding:0 10px; text-transform:uppercase; font-size:20px; line-height:22px; }
-                .related-story { min-height: 100px; clear: both; border-bottom: 1px solid #dedede; padding: 10px 0; }
-                .related-story .post-thumbnail { float: left; overflow: hidden; padding: 0 10px; }
-                .related-story .post-thumbnail amp-img { width: 100px; height: auto; }
-                .related-story .post-content { padding: 0 10px; margin-left: 160px; }
-                .related-story .post-content .excerpt { font-size: 0.8rem; line-height: 1.2rem; }
-                .related-story h2 { font-size: 1.2rem; line-height: 1rem; margin: 0 0 5px 0; }
-                .related-story a { text-decoration: none; font-size: 14px; }
-                .share-buttons-bottom {
-                position:fixed; text-align: center; bottom: 0; padding-top: 10px; width: 100%; background: #fff; z-index: 9999;
-                }
-                .hamburger {
-                position: relative;
-                padding: 9px 10px;
-                background-color: transparent;
-                background-image: none;
-                border: 1px solid transparent;
-                border-radius: 4px;
-                }
-                .hamburger .icon-bar {
-                display: block;
-                width: 22px;
-                height: 2px;
-                border-radius: 1px;
-                background-color: #888;
-                }
-                .hamburger .icon-bar+.icon-bar {
-                margin-top: 4px;
-                }
-                amp-sidebar {
-                width: 318px;
-                background-color: #0f0c0c;
-                }
-                amp-sidebar .menu {
-                margin: 0;
-                background-color: #0f0c0c;
-                box-shadow: 0 100vh 0 100vh #000;
-                }
-                amp-sidebar .menu li {
-                padding: 0;
-                border: none;
-                border-bottom: 1px solid #303030;
-                }
-                amp-sidebar .menu li a {
-                font-size: 1.25rem;
-                font-weight: 700;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                height: auto;
-                padding: .8125rem 1.25rem;
-                color: #fff;
-                text-decoration: none;
-                line-height: 1;
-                }
-                .comp-footer a {
-                display: block;
-                background-color: #fff;
-                border-radius: 1rem;
-                padding: 1rem;
-                text-align: center;
-                text-decoration: none;
-                color: #B98D5B;
-                border: 1px solid #B98D5B;
-                box-shadow: 0 0 5px;
-                margin: 2rem auto;
-                }
-                amp-social-share.rounded {
-                border-radius: 50%;
-                background-size: 80%;
-                }
-            <?php
+                    html { background: #ffffff; }
+                    body { font-family: 'Sans-serif', 'Arial'; background: #ffffff; }
+                    a, a:visited, a:hover, a:active, a:focus { color: #2982b3; }
+                    amp-img{max-width: 100%;height:auto;}
+                    .amp-wp-header {
+                    padding: 0;
+                    background: #fff;
+                    position: absolute; top: 0; margin: auto; width: 100%; z-index: 999999;
+                    }
+                    .amp-wp-header div.amp-wp-header-inner {
+                    position: fixed;
+                    top: 0;
+                    background: #fff;
+                    margin: auto;
+                    width: 100%;
+                    max-width: 100%;
+                    box-sizing: border-box;
+                    padding: 7px;
+                    border-bottom: 1px solid #ccc;
+                    }
+                    .amp-wp-header a {
+                    background-image: url( '<?php echo CDN_URL; ?>The-Brag-300px.png' );
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    display: block;
+                    height: 30px;
+                    width: 170px;
+                    margin: 0 auto;
+                    text-indent: -9999px;
+                    background-position: center;
+                    }
+                    .amp-wp-title { color: #0f0c0c; }
+                    .amp-wp-article, .amp-wp-article-header { margin-top: 0; background: #fff; }
+                    .amp-wp-article { padding: 55px 0 10px 0; }
+                    #pagination { border-top: 1px solid #ccc; }
+                    #pagination .prev a, #pagination .next a {
+                    display: block;
+                    margin-bottom: 12px;
+                    background: #fefefe;
+                    text-decoration: none;
+                    font-size: 0.8rem;
+                    padding: 5px 15px;
+                    color: #666;
+                    }
+                    #pagination .prev a { text-align: left; }
+                    #pagination .next a { text-align: right; }
+                    .related-stories-wrap { background:#1fcabf; background: #fff; margin-top: 0px; padding: 10px 0; width: 100%; border-top: 1px solid #cecece; }
+                    .related-stories-wrap .title { margin:0 0 15px 0; padding:0 10px; text-transform:uppercase; font-size:20px; line-height:22px; }
+                    .related-story { min-height: 100px; clear: both; border-bottom: 1px solid #dedede; padding: 10px 0; }
+                    .related-story .post-thumbnail { float: left; overflow: hidden; padding: 0 10px; }
+                    .related-story .post-thumbnail amp-img { width: 100px; height: auto; }
+                    .related-story .post-content { padding: 0 10px; margin-left: 160px; }
+                    .related-story .post-content .excerpt { font-size: 0.8rem; line-height: 1.2rem; }
+                    .related-story h2 { font-size: 1.2rem; line-height: 1rem; margin: 0 0 5px 0; }
+                    .related-story a { text-decoration: none; font-size: 14px; }
+                    .share-buttons-bottom {
+                    position:fixed; text-align: center; bottom: 0; padding-top: 10px; width: 100%; background: #fff; z-index: 9999;
+                    }
+                    .hamburger {
+                    position: relative;
+                    padding: 9px 10px;
+                    background-color: transparent;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    }
+                    .hamburger .icon-bar {
+                    display: block;
+                    width: 22px;
+                    height: 2px;
+                    border-radius: 1px;
+                    background-color: #888;
+                    }
+                    .hamburger .icon-bar+.icon-bar {
+                    margin-top: 4px;
+                    }
+                    amp-sidebar {
+                    width: 318px;
+                    background-color: #0f0c0c;
+                    }
+                    amp-sidebar .menu {
+                    margin: 0;
+                    background-color: #0f0c0c;
+                    box-shadow: 0 100vh 0 100vh #000;
+                    }
+                    amp-sidebar .menu li {
+                    padding: 0;
+                    border: none;
+                    border-bottom: 1px solid #303030;
+                    }
+                    amp-sidebar .menu li a {
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    height: auto;
+                    padding: .8125rem 1.25rem;
+                    color: #fff;
+                    text-decoration: none;
+                    line-height: 1;
+                    }
+                    .comp-footer a {
+                    display: block;
+                    background-color: #fff;
+                    border-radius: 1rem;
+                    padding: 1rem;
+                    text-align: center;
+                    text-decoration: none;
+                    color: #B98D5B;
+                    border: 1px solid #B98D5B;
+                    box-shadow: 0 0 5px;
+                    margin: 2rem auto;
+                    }
+                    amp-social-share.rounded {
+                    border-radius: 50%;
+                    background-size: 80%;
+                    }
+                <?php
 }
 add_filter('amp_content_max_width', 'ssm_amp_change_content_width');
 function ssm_amp_change_content_width($content_max_width)
@@ -1817,45 +1817,45 @@ function show_related_posts($post_id, $main_post, $number_of_posts = 3)
         return;
     endif;
     ?>
-                <h2 class="title-related-articles">Related Articles</h2>
-                <div class="related-stories-wrap">
+                    <h2 class="title-related-articles">Related Articles</h2>
+                    <div class="related-stories-wrap">
 
-                    <?php
-                    $tags = wp_get_post_tags($post_id);
-                    $arg_tags = array();
-                    foreach ($tags as $tag) {
-                        array_push($arg_tags, $tag->term_id);
-                    }
-                    $args = array(
-                        'post_status' => 'publish',
-                        'tag__in' => $arg_tags,
-                        'post__not_in' => array($post_id),
-                        'posts_per_page' => $number_of_posts,
-                        'orderby' => 'rand',
-                        'date_query' => array(
-                            'column' => 'post_date',
-                            'after' => '-60 days'
-                        )
-                    );
-                    $related_posts_query = new WP_Query($args);
-                    $require_more_posts = 3; //count( $related_posts_query->have_posts() ) < $number_of_posts ? $number_of_posts - count( $related_posts_query->have_posts() ) : 0;
-                    if (count($arg_tags) > 0 && $related_posts_query->have_posts()):
-                        while ($related_posts_query->have_posts()):
-                            $related_posts_query->the_post();
-                            echo '<!-- Related Posts -->';
-                            include('partials/related-posts.php');
-                            $require_more_posts--;
-                        endwhile;
-                        wp_reset_query();
-                    endif;
+                        <?php
+                        $tags = wp_get_post_tags($post_id);
+                        $arg_tags = array();
+                        foreach ($tags as $tag) {
+                            array_push($arg_tags, $tag->term_id);
+                        }
+                        $args = array(
+                            'post_status' => 'publish',
+                            'tag__in' => $arg_tags,
+                            'post__not_in' => array($post_id),
+                            'posts_per_page' => $number_of_posts,
+                            'orderby' => 'rand',
+                            'date_query' => array(
+                                'column' => 'post_date',
+                                'after' => '-60 days'
+                            )
+                        );
+                        $related_posts_query = new WP_Query($args);
+                        $require_more_posts = 3; //count( $related_posts_query->have_posts() ) < $number_of_posts ? $number_of_posts - count( $related_posts_query->have_posts() ) : 0;
+                        if (count($arg_tags) > 0 && $related_posts_query->have_posts()):
+                            while ($related_posts_query->have_posts()):
+                                $related_posts_query->the_post();
+                                echo '<!-- Related Posts -->';
+                                include('partials/related-posts.php');
+                                $require_more_posts--;
+                            endwhile;
+                            wp_reset_query();
+                        endif;
 
-                    if ($require_more_posts > 0):
-                        show_random_posts($post_id, $require_more_posts);
-                    endif;
-                    ?>
-                    <div class="clear"></div>
-                </div>
-            <?php
+                        if ($require_more_posts > 0):
+                            show_random_posts($post_id, $require_more_posts);
+                        endif;
+                        ?>
+                        <div class="clear"></div>
+                    </div>
+                <?php
 }
 
 function show_random_posts($post_id, $number_of_posts)
@@ -2058,66 +2058,66 @@ function ssm_limit_image_size($file)
 // Add JS to make Alt Text compulsory
 add_action('admin_footer', function () {
     ?>
-                <script type="text/javascript">
-                    jQuery(document).ready(function($) {
-                        var checkForAlt = function(showNotice) {
-                            var showNotice = (typeof showNotice !== 'undefined') ? showNotice : false;
-                            var $altText = $('.media-modal-content label[data-setting="alt"] input');
-                            if (!$altText.length) {
-                                $altText = $('.media-frame-content .media-embed .embed-media-settings .column-settings label.alt-text input');
-                            }
-                            var $parent = $('.media-frame-toolbar .media-toolbar-primary');
-                            //                if ( ! $altText.length ) { // No image selected in the first place; bail out
-                            //                    return;
-                            //                }
-                            if (!$altText.length || $altText.val().length) {
-                                $parent.addClass('ssm-has-alt-text');
-                                $altText.removeClass('ssm-alt-error');
-                                return true;
-                            } else {
-                                $parent.removeClass('ssm-has-alt-text');
-                                if (showNotice) {
-                                    alert('Missing Alt Text!');
-                                    $altText.focus();
+                    <script type="text/javascript">
+                        jQuery(document).ready(function($) {
+                            var checkForAlt = function(showNotice) {
+                                var showNotice = (typeof showNotice !== 'undefined') ? showNotice : false;
+                                var $altText = $('.media-modal-content label[data-setting="alt"] input');
+                                if (!$altText.length) {
+                                    $altText = $('.media-frame-content .media-embed .embed-media-settings .column-settings label.alt-text input');
                                 }
-                                $altText.addClass('ssm-alt-error');
-                                return false;
-                            }
-                        };
-                        // Bind to keyup
-                        $('body').on('keyup', '.media-modal-content label[data-setting="alt"] input', function() {
-                            checkForAlt();
+                                var $parent = $('.media-frame-toolbar .media-toolbar-primary');
+                                //                if ( ! $altText.length ) { // No image selected in the first place; bail out
+                                //                    return;
+                                //                }
+                                if (!$altText.length || $altText.val().length) {
+                                    $parent.addClass('ssm-has-alt-text');
+                                    $altText.removeClass('ssm-alt-error');
+                                    return true;
+                                } else {
+                                    $parent.removeClass('ssm-has-alt-text');
+                                    if (showNotice) {
+                                        alert('Missing Alt Text!');
+                                        $altText.focus();
+                                    }
+                                    $altText.addClass('ssm-alt-error');
+                                    return false;
+                                }
+                            };
+                            // Bind to keyup
+                            $('body').on('keyup', '.media-modal-content label[data-setting="alt"] input', function() {
+                                checkForAlt();
+                            });
+                            // Bind to the 'Inesert into post' button
+                            $('body').on('mouseenter mouseleave click', '.media-frame-toolbar .media-toolbar-primary', function(e) {
+                                checkForAlt(e.type === "click");
+                            });
                         });
-                        // Bind to the 'Inesert into post' button
-                        $('body').on('mouseenter mouseleave click', '.media-frame-toolbar .media-toolbar-primary', function(e) {
-                            checkForAlt(e.type === "click");
-                        });
-                    });
-                </script>
-                <style type="text/css">
-                    .media-frame-toolbar .media-toolbar-primary {
-                        position: relative;
-                    }
+                    </script>
+                    <style type="text/css">
+                        .media-frame-toolbar .media-toolbar-primary {
+                            position: relative;
+                        }
 
-                    .media-frame-toolbar .media-toolbar-primary:after {
-                        display: block;
-                        background: transparent;
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                    }
+                        .media-frame-toolbar .media-toolbar-primary:after {
+                            display: block;
+                            background: transparent;
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            left: 0;
+                        }
 
-                    .media-frame-toolbar .media-toolbar-primary.ssm-has-alt-text:after {
-                        display: none;
-                    }
+                        .media-frame-toolbar .media-toolbar-primary.ssm-has-alt-text:after {
+                            display: none;
+                        }
 
-                    .ssm-alt-error {
-                        border: 1px solid #ff0000 !important;
-                    }
-                </style>
+                        .ssm-alt-error {
+                            border: 1px solid #ff0000 !important;
+                        }
+                    </style>
 <?php });
 
 //add_action( 'wp_head', 'ssm_inject_alexa_code' );
@@ -2259,17 +2259,17 @@ function ssm_inject_minutemedia($content)
     $paragraphAfter = 0;
     ob_start();
     ?>
-                <div id='brag_minute_media'>
-                    <script>
-                        googletag.cmd.push(function() {
-                            googletag.display('brag_minute_media');
-                        });
-                    </script>
-                </div>
-            <?php
-            $tag = ob_get_clean();
-            $content = $tag . $content;
-            return $content;
+                    <div id='brag_minute_media'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('brag_minute_media');
+                            });
+                        </script>
+                    </div>
+                <?php
+                $tag = ob_get_clean();
+                $content = $tag . $content;
+                return $content;
     // return ssm_insert_after_paragraph( $tag, $paragraphAfter, $content );
 }
 // add_filter('the_content', 'ssm_inject_minutemedia');
@@ -2615,33 +2615,33 @@ add_action('wp_head', 'ssm_inject_fb_pixel');
 function ssm_inject_fb_pixel()
 {
     ?>
-                <!-- Facebook Pixel Code -->
-                <script>
-                    ! function(f, b, e, v, n, t, s) {
-                        if (f.fbq) return;
-                        n = f.fbq = function() {
-                            n.callMethod ?
-                                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                        };
-                        if (!f._fbq) f._fbq = n;
-                        n.push = n;
-                        n.loaded = !0;
-                        n.version = '2.0';
-                        n.queue = [];
-                        t = b.createElement(e);
-                        t.async = !0;
-                        t.src = v;
-                        s = b.getElementsByTagName(e)[0];
-                        s.parentNode.insertBefore(t, s)
-                    }(window, document, 'script',
-                        'https://connect.facebook.net/en_US/fbevents.js');
-                    fbq('init', '243859349395737');
-                    fbq('track', 'PageView');
-                    fbq.disablePushState = true;
-                </script>
-                <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=243859349395737&ev=PageView&noscript=1" /></noscript>
-                <!-- End Facebook Pixel Code -->
-            <?php
+                    <!-- Facebook Pixel Code -->
+                    <script>
+                        ! function(f, b, e, v, n, t, s) {
+                            if (f.fbq) return;
+                            n = f.fbq = function() {
+                                n.callMethod ?
+                                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                            };
+                            if (!f._fbq) f._fbq = n;
+                            n.push = n;
+                            n.loaded = !0;
+                            n.version = '2.0';
+                            n.queue = [];
+                            t = b.createElement(e);
+                            t.async = !0;
+                            t.src = v;
+                            s = b.getElementsByTagName(e)[0];
+                            s.parentNode.insertBefore(t, s)
+                        }(window, document, 'script',
+                            'https://connect.facebook.net/en_US/fbevents.js');
+                        fbq('init', '243859349395737');
+                        fbq('track', 'PageView');
+                        fbq.disablePushState = true;
+                    </script>
+                    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=243859349395737&ev=PageView&noscript=1" /></noscript>
+                    <!-- End Facebook Pixel Code -->
+                <?php
 }
 
 /*
@@ -3699,16 +3699,16 @@ add_filter('the_content', function ($content) {
 function inject_roymorgan()
 {
     ?>
-                <script type="text/javascript">
-                    jQuery(function() {
-                        var cachebuster = Date.now();
-                        var script = document.createElement('script');
-                        script.src = 'https://pixel.roymorgan.com/stats_v2/Tress.php?u=k7b7oit54p&ca=20005195&a=6id59hbq' + '&cb=' + cachebuster;
-                        script.async = true;
-                        document.body.appendChild(script);
-                    });
-                </script>
-            <?php
+                    <script type="text/javascript">
+                        jQuery(function() {
+                            var cachebuster = Date.now();
+                            var script = document.createElement('script');
+                            script.src = 'https://pixel.roymorgan.com/stats_v2/Tress.php?u=k7b7oit54p&ca=20005195&a=6id59hbq' + '&cb=' + cachebuster;
+                            script.async = true;
+                            document.body.appendChild(script);
+                        });
+                    </script>
+                <?php
 }
 
 /*
@@ -3782,14 +3782,14 @@ add_action('wp_footer', 'inject_ga4', 99, 2);
 function inject_ga4()
 {
     ?>
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-L8V4HEDPRH"></script>
-                <script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-L8V4HEDPRH');
-                </script>
-                <?php
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L8V4HEDPRH"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-L8V4HEDPRH');
+                    </script>
+                    <?php
 }
 
 # Create excerpt at the end of a sentence
