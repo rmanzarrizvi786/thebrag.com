@@ -1,12 +1,17 @@
 <?php
 extract($args);
 $story_ID = $story->ID;
+
+$story_src_img = isset($story_src[0]) ? $story_src[0] : '';
+
 ?>
 <a href="<?php the_permalink($story); ?>">
     <div class="story-hero text-white d-flex flex-column rounded justify-content-start" style="height: 100% !important">
         <div class="featured-img rounded">
             <div>
-                <img src="<?php echo $story_src[0]; ?>" alt="<?php echo $story_alt_text; ?>" title="<?php echo $story_alt_text; ?>" class="rounded" loading="lazy" width="1200" height="625" style="width: 100%; height: auto;">
+                <img src="<?php echo $story_src_img; ?>" alt="<?php echo $story_alt_text; ?>"
+                    title="<?php echo $story_alt_text; ?>" class="rounded" loading="lazy" width="1200" height="625"
+                    style="width: 100%; height: auto;">
             </div>
         </div>
         <div class="details-wrap">
@@ -25,20 +30,21 @@ $story_ID = $story->ID;
             <div class="read-article-wrap pt-2">
                 <div class="d-flex justify-content-between">
                     <div class="read-article d-flex">
-                        <span><img src="<?php echo ICONS_URL; ?>icon_arrow-right.svg" width="20" height="20" alt=">"></span>
+                        <span><img src="<?php echo ICONS_URL; ?>icon_arrow-right.svg" width="20" height="20"
+                                alt=">"></span>
                         <span>Read Article</span>
                     </div>
                     <?php
                     $author_byline = '';
-                    if (get_field('author', $story_ID) || get_field('Author', $story_ID)) :
-                        if (get_field('author', $story_ID)) :
+                    if (get_field('author', $story_ID) || get_field('Author', $story_ID)):
+                        if (get_field('author', $story_ID)):
                             $author_byline = get_field('author', $story_ID);
-                        elseif (get_field('Author', $story_ID)) :
+                        elseif (get_field('Author', $story_ID)):
                             $author_byline = get_field('Author', $story_ID);
                         endif; // If custom author is set
-
+                    
                         $author_img_src = get_field('author_profile_picture', $story_ID) ? wp_get_attachment_image_src(get_field('author_profile_picture', $story_ID), 'thumbnail') : CDN_URL . 'default-avatar-4.png';
-                    else : // If custom author has not been set
+                    else: // If custom author has not been set
                         $author_byline = get_the_author_meta('display_name', $story->post_author);
                     endif; // If custom author is set
                     ?>
@@ -48,7 +54,7 @@ $story_ID = $story->ID;
                                 <?php
                                 if (isset($author_img_src)) {
                                     if ($author_img_src) {
-                                        echo  '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
+                                        echo '<img src="' . $author_img_src . '" class="rounded" width="24" height="24">';
                                     }
                                 } else {
                                     echo get_avatar($story->post_author, 24, CDN_URL . 'default-avatar-4.png', '', array('class' => 'rounded'));
